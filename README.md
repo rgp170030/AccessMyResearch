@@ -4,7 +4,7 @@ Access My Research is being significantly overhauled to be more modern, responsi
 ## Goal
 Make Access My Research functional, beautiful, and quick
 
-## Getting Started
+## Getting Started in the CLI 
 1) From the AccessMyResearch (root) directory, run "npm install"
 2) Next, run "npm run dev" to build and test the code
 
@@ -14,6 +14,13 @@ Make Access My Research functional, beautiful, and quick
 3) npm run dev   - automatically builds all changes & runs the code locally/on network
 4) npm run serve - Serves the code (not going to be useful for a while)
 5) npm run lint  - Starts the Vue linter
+
+## Using Docker
+- You'll need [https://docs.docker.com/get-docker/]docker
+- Run ``docker build .`` from the base directory containing the docker file
+- If the build is successful, you will see an image name consisting of numbers as the final console output
+- Run ``docker run -it -d -p 8080:8080 --rm --name AMR <the first 3 of the image name consisting of numbers>
+- Check ``docker ps`` and see it running! You should be able to access at 127.0.0.1:8080
 
 ## File Structure
 |-- Access My Research
