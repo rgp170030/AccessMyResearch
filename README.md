@@ -156,7 +156,8 @@ Make Access My Research functional, beautiful, and quick
                 |   |-- DarkTable.vue
                 |   |-- LightTable.vue
                 |-- projects.js
-                |-- users.js ```
+                |-- users.js 
+```
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
