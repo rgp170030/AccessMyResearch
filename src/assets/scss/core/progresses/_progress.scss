@@ -1,16 +1,14 @@
 //
-// Progress
+//Progress
 //
 
-
-// Progress container
+//Progress container
 .progress-wrapper {
     position: relative;
     padding-top: 1.5rem;
 }
 
-
-// General styles
+//General styles
 .progress {
     height: 8px;
     margin-bottom: $spacer;
@@ -30,9 +28,7 @@
     }
 }
 
-
-// Progress inner elements
-
+//Progress inner elements
 .progress-heading {
     font-size: 14px;
     font-weight: 500;

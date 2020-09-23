@@ -1,10 +1,8 @@
 //
-// Footer
+//Footer
 //
 
-
-// General styles
-
+//General styles
 .footer {
     background: $footer-bg;
     padding: $footer-padding-y $footer-padding-x;
@@ -45,18 +43,14 @@
     }
 }
 
-
-// Dark footer
-
+//Dark footer
 .footer-dark {
     .col-footer .heading {
         color: $white;
     }
 }
 
-
-// Footer nav used for copyright and some links, but not limited to this
-
+//Footer nav used for copyright and some links, but not limited to this
 .nav-footer {
     .nav-link {
         font-size: $font-size-sm;
@@ -69,9 +63,7 @@
     }
 }
 
-
-// Footer with cards over
-
+//Footer with cards over
 .footer.has-cards {
     overflow: hidden;
     padding-top: 500px;

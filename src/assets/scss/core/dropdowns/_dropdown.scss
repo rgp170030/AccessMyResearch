@@ -1,9 +1,8 @@
 //
-// Dropdown
+//Dropdown
 //
 
-// General styles
-
+//General styles
 .dropdown,
 .dropup,
 .dropright,
@@ -36,8 +35,7 @@
 }
 
 
-// Media components inside dropdown link
-
+//Media components inside dropdown link
 .dropdown-menu {
     a.media {
 
@@ -60,9 +58,7 @@
     }
 }
 
-
-// Size variations
-
+//Size variations
 .dropdown-menu-sm {
     min-width: 100px;
     border: $border-radius-lg;

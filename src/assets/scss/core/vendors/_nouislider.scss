@@ -1,10 +1,8 @@
 //
-// NoUi Slider
+//NoUI Slider
 //
 
-
-// Original styles
-
+//Original styles
 .noUi-target,
 .noUi-target * {
     -webkit-touch-callout: none;
@@ -28,9 +26,7 @@
     z-index: 1;
 }
 
-
-// Wrapper for all connect elements
-
+//Wrapper for all connect elements
 .noUi-connects {
     overflow: hidden;
     z-index: 0;
@@ -47,7 +43,6 @@
     width: 100%;
     transform-origin: 0 0;
 }
-
 
 html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
     left: 100%;
@@ -131,10 +126,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     outline: none;
 }
 
-
 /* Disabled state;
  */
-
 [disabled] .noUi-connect {
     background: #B8B8B8;
 }
@@ -145,11 +138,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     cursor: not-allowed;
 }
 
-
 /* Base;
- *
  */
-
 .noUi-pips,
 .noUi-pips * {
     -moz-box-sizing: border-box;
@@ -161,11 +151,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     color: #999;
 }
 
-
 /* Values;
- *
  */
-
 .noUi-value {
     position: absolute;
     white-space: nowrap;
@@ -177,11 +164,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     font-size: 10px;
 }
 
-
 /* Markings;
- *
  */
-
 .noUi-marker {
     position: absolute;
     background: #CCC;
@@ -195,11 +179,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     background: #AAA;
 }
 
-
 /* Horizontal layout;
- *
  */
-
 .noUi-pips-horizontal {
     padding: 10px 0;
     height: 80px;
@@ -230,11 +211,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     height: 15px;
 }
 
-
 /* Vertical layout;
- *
  */
-
 .noUi-pips-vertical {
     padding: 0 10px;
     height: 100%;
@@ -293,9 +271,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     right: 120%;
 }
 
-
-//  Custom styles
-
+//Custom styles
 .noUi-target {
     background: $noui-target-bg;
     border-radius: $noui-target-border-radius;
@@ -308,7 +284,6 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .noUi-horizontal {
     height: $noui-target-thickness;
 }
-
 
 .noUi-vertical {
     width: $noui-target-thickness;
@@ -345,9 +320,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     background: $cyan;
 }
 
-
-/* Disabled state */
-
+//Disabled state
 [disabled] .noUi-connect,
 [disabled].noUi-connect {
     background: $noui-slider-connect-disabled-bg;
@@ -358,8 +331,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     cursor: not-allowed;
 }
 
-/* Range slider value labels */
-
+//Range slider value labels
 .range-slider-value {
     font-size: $font-size-xs;
     font-weight: 500;

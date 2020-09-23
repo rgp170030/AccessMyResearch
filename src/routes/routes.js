@@ -20,9 +20,19 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Upload.vue')
       },
       {
+        path: '/ask',
+        name: 'ask an expert',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Ask.vue')
+      },
+      {
         path: '/collections',
         name: 'my collections',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Collections.vue')
+      },
+      {
+        path: '/messages',
+        name: 'messages',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Messages.vue')
       },
       {
         path: '/profile',
@@ -30,9 +40,39 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/UserProfile.vue')
       },
       {
-        path: '/ask',
-        name: 'ask an expert',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Ask.vue')
+        path: '/notifications',
+        name: 'notifications',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Notifications.vue')
+      },
+      {
+        path: '/activity',
+        name: 'activity',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Activity.vue')
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Settings.vue')
+      },
+      {
+        path: '/donate',
+        name: 'donate',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Donate.vue')
+      },
+      {
+        path: '/contact',
+        name: 'contact us',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Contact.vue')
+      },
+      {
+        path: '/help',
+        name: 'help',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Help.vue')
+      },
+      {
+        path: '/about',
+        name: 'about',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/About.vue')
       }
     ]
   },
@@ -51,21 +91,6 @@ const routes = [
         name: 'register',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
       },
-      // {
-      //   path: '/contact',
-      //   name: 'contact us',
-      //   component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Contact.vue')
-      // },
-      // {
-      //   path: '/help',
-      //   name: 'help',
-      //   component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Help.vue')
-      // },
-      // {
-      //   path: '/about',
-      //   name: 'about',
-      //   component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/About.vue')
-      // },
       { path: '*', component: NotFound }
     ]
   }

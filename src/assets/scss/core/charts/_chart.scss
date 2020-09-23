@@ -1,5 +1,5 @@
 //
-// Chart
+//Chart
 //
 
 .chart {
@@ -7,16 +7,12 @@
     height: $chart-height;
 }
 
-
-// Size variations
-
+//Size variations
 .chart-sm {
     height: $chart-height-sm;
 }
 
-
-// Legend
-
+//Legend
 .chart-legend {
     display: flex;
     justify-content: center;
@@ -43,9 +39,7 @@
     border-radius: 50%;
 }
 
-
-// Tooltip
-
+//Tooltip
 #chart-tooltip {
     z-index: 0;
 
@@ -56,9 +50,7 @@
     }
 }
 
-
-// Chart info overlay
-
+//Chart info overlay
 .chart-info-overlay {
   position: absolute;
   top: 0;

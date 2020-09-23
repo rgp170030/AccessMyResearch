@@ -1,10 +1,8 @@
 //
-// Nav pills
+//Nav pills
 //
 
-
-// General styles
-
+//General styles
 .nav-pills {
     .nav-item:not(:last-child) {
         padding-right: $nav-pills-space-x;
@@ -45,9 +43,7 @@
     }
 }
 
-
-// Rounded circle nav pills
-
+//Rounded circle nav pills
 .nav-pills-circle {
     .nav-link {
         text-align: center;

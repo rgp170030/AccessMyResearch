@@ -4,6 +4,16 @@ Access My Research is being significantly overhauled to be more modern, responsi
 ## Goal
 Make Access My Research functional, beautiful, and quick
 
+## Getting Started
+1) From the AccessMyResearch (root) directory, run "npm install"
+2) Next, run "npm run dev" to build and test the code
+
+## Other Commands
+1) npm run build - Builds the code
+2) npm run dev   - automatically builds all changes & runs the code locally/on network
+3) npm run serve - Serves the code (not going to be useful for a while)
+4) npm run lint  - Starts the Vue linter
+
 ## File Structure
 |-- Access My Research
     |-- .gitignore

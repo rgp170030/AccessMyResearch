@@ -69,13 +69,13 @@
           </b-col>
           <b-col xl="6" class="col-xl-6">
             <b-nav align="center" class="nav-footer justify-content-lg-end">
-              <b-nav-item href="/contact">
+              <b-nav-item to="/contact">
                 Contact Us 
               </b-nav-item>
-              <b-nav-item href="/help">
+              <b-nav-item to="/help">
                 Help
               </b-nav-item>
-              <b-nav-item href="/about">
+              <b-nav-item to="/about">
                 About
               </b-nav-item>
             </b-nav>

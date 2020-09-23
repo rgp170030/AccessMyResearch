@@ -1,11 +1,8 @@
 //
-// Vertical navbar
+//Vertical navbar
 //
 
-
-// Vertical
-//
-// Creates a vertically aligned version of the navbar
+//Creates a vertically aligned version of the navbar
 .navbar-vertical {
     box-shadow: $navbar-vertical-box-shadow;
     
@@ -14,17 +11,13 @@
         border-style: solid;
     }
 
-
-    // Navbar light
-
+    //Navbar light
     .navbar-light {
         background-color: $navbar-light-bg;
         border-color: $navbar-light-border-color;
     }
 
-
-    // Navbar brand
-
+    //Navbar brand
     .navbar-brand {
         margin-right: 0;
     }
@@ -36,8 +29,7 @@
     }
 
 
-    // Navbar collapse
-
+    //Navbar collapse
     @include media-breakpoint-up(md) {
         .navbar-collapse {
             margin-left: -$navbar-padding-x;
@@ -53,17 +45,13 @@
         }
     }
 
-
-
-    // Navbar navigaton
-
+    //Navbar navigaton
     .navbar-nav {
         margin-left: -$navbar-padding-x;
         margin-right: -$navbar-padding-x;
 
 
-        // Navbar link
-
+        //Navbar link
         .nav-link {
             padding-left: $navbar-padding-x;
             padding-right: $navbar-padding-x;
@@ -82,18 +70,14 @@
                 }
             }
 
-
-            // Icon
-
+            //Icon
             > i {
                 min-width: $navbar-icon-min-width;
                 font-size: .9375rem;
                 line-height: ($font-size-base * $line-height-base);
             }
 
-
-            // Dropdown
-
+            //Dropdown
             .dropdown-menu {
                 border: none;
 
@@ -104,8 +88,7 @@
         }
     }
 
-
-    // Navbar navigation
+    //Navbar navigation
     .navbar-nav .nav-link {
         display: flex;
         align-items: center;
@@ -124,7 +107,7 @@
             margin-left: auto;
             color: $text-muted;
             transition: $transition-base;
-        } // Expanded
+        } //Expanded
         &[aria-expanded="true"] {
 
             &:after {
@@ -133,18 +116,17 @@
         }
     }
 
-    // Second level
+    //Second level
     .navbar-nav .nav .nav-link {
         padding-left: $navbar-padding-x + $navbar-icon-min-width;
     }
 
-    // Third level
+    //Third level
     .navbar-nav .nav .nav .nav-link {
         padding-left: $navbar-padding-x * 1.5 + $navbar-icon-min-width;
     }
 
-
-    // Navbar heading
+    //Navbar heading
     .navbar-heading {
         padding-top: $nav-link-padding-y;
         padding-bottom: $nav-link-padding-y;
@@ -153,8 +135,7 @@
         letter-spacing: .04em;
     }
 
-
-    // Expanded navbar specific styles
+    //Expanded navbar specific styles
     &.navbar-expand {
         @each $breakpoint,
         $dimension in $grid-breakpoints {
@@ -172,35 +153,32 @@
 
                     overflow-y: auto;
 
-                    // Container
+                    //Container
                     >[class*="container"] {
                         flex-direction: column;
                         align-items: stretch;
                         min-height: 100%;
                         padding-left: 0;
-                        padding-right: 0; // Target IE 10 & 11
+                        padding-right: 0; //Target IE 10 & 11
                         @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
                             min-height: none;
                             height: 100%;
                         }
                     }
 
-
-                    // Fixes the vertical navbar to the left
+                    //Fixes the vertical navbar to the left
                     &.fixed-left {
                         left: 0;
                         border-width: 0 1px 0 0;
                     }
 
-
-                    // Fixed the vertical navbar to the right
+                    //Fixed the vertical navbar to the right
                     &.fixed-right {
                         right: 0;
                         border-width: 0 0 0 1px;
                     }
 
-
-                    // Navbar collapse
+                    //Navbar collapse
                     .navbar-collapse {
                         flex: 1;
                         display: flex;
@@ -216,8 +194,7 @@
                         }
                     }
 
-
-                    // Navbar navigation
+                    //Navbar navigation
                     .navbar-nav {
                         flex-direction: column;
                         margin-left: -$navbar-vertical-padding-x;
@@ -239,19 +216,17 @@
                         }
                     }
 
-
-                    // Second level
+                    //Second level
                     .navbar-nav .nav .nav-link {
                         padding-left: $navbar-vertical-padding-x + $navbar-icon-min-width;
                     }
 
-
-                    // Third level
+                    //Third level
                     .navbar-nav .nav .nav .nav-link {
                         padding-left: $navbar-vertical-padding-x * 1.5 + $navbar-icon-min-width;
                     }
 
-                    // Navbar brand
+                    //Navbar brand
                     .navbar-brand {
                         display: block;
                         text-align: center;
@@ -263,7 +238,7 @@
                         max-height: 2.5rem;
                     }
 
-                    // Navbar user
+                    //Navbar user
                     .navbar-user {
                         margin-left: -$navbar-vertical-padding-x;
                         margin-right: -$navbar-vertical-padding-x;
@@ -273,7 +248,7 @@
                         padding-right: $navbar-vertical-padding-x;
                         border-top: 1px solid $border-color;
 
-                        // Dropup menu
+                        //Dropup menu
                         .dropup .dropdown-menu {
                             left: 50%;
                             transform: translateX(-50%);

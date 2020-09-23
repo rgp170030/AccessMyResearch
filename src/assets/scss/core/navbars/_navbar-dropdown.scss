@@ -1,4 +1,6 @@
-// Dropdown menu
+//
+//Dropdown menu
+//
 
 @include media-breakpoint-up(md) {
     .navbar {
@@ -72,8 +74,7 @@
         }
 
 
-        // Keyframes
-
+        //Keyframes
         @keyframes show-navbar-dropdown {
             0% {
                 opacity: 0;

@@ -1,9 +1,8 @@
 //
-// Form validation
+//Form validation
 //
 
-// Validation
-
+//Validation
 .has-success,
 .has-danger {
     position: relative;
@@ -39,9 +38,7 @@
             border-color: $input-focus-border-color;
         }
 
-
-        // Placeholder
-
+        //Placeholder
         &::placeholder {
             color: $form-feedback-valid-color;
         }
@@ -62,8 +59,7 @@
             border-color: $input-focus-border-color;
         }
 
-        // Placeholder
-
+        //Placeholder
         &::placeholder {
             color: $form-feedback-invalid-color;
         }

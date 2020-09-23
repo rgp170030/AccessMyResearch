@@ -1,16 +1,15 @@
 //
-// Shadows
+//Shadows
 //
 
-// General styles
+//General styles
 [class*="shadow"] {
 	@if $enable-transitions {
         transition: $transition-base;
     }
 }
 
-
-// Size variations
+//Size variations
 .shadow-sm--hover:hover {
 	box-shadow: $box-shadow-sm !important;
 }

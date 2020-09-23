@@ -1,5 +1,5 @@
 //
-// Spacing
+//Spacing
 //
 
 .row.row-grid > [class*="col-"] + [class*="col-"] {
@@ -26,9 +26,7 @@
     margin-top: 3rem;
 }
 
-
-// Negative margins and paddings
-
+//Negative margins and paddings
 @media(min-width: 992px) {
     [class*="mt--"],
     [class*="mr--"],
@@ -38,8 +36,7 @@
     }
 
 
-    // Large negative margins in pixels
-
+    //Large negative margins in pixels
     .mt--100 {
         margin-top: -100px !important;
     }
@@ -72,8 +69,7 @@
     }
 
 
-    // Large margins in pixels
-
+    //Large margins in pixels
     .pt-100 {
         padding-top: 100px !important;
     }

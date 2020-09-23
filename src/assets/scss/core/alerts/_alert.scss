@@ -1,13 +1,12 @@
 //
-// Alert
+//Alert
 //
 
 .alert {
     font-size: $font-size-sm;
 }
 
-// Alert heading
-
+//Alert heading
 .alert-heading {
     font-weight: $font-weight-bold;
     font-size: $h4-font-size;
@@ -15,7 +14,7 @@
 }
 
 
-// Alert icon
+//Alert icon
 .alert-icon {
     font-size: 1.25rem;
     margin-right: 1.25rem;
@@ -29,15 +28,14 @@
 }
 
 
-// Alert text next to an alert icon
+//Alert text next to an alert icon
 .alert-text {
     display: inline-block;
     vertical-align: middle;
 }
 
 
-// Alert links
-
+//Alert links
 [class*="alert-"] {
     .alert-link {
         color: $white;

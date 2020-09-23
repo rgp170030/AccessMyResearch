@@ -1,8 +1,7 @@
 //
-// Floating
-// floating animation utility class
+//Floating
+//floating animation utility class
 //
-
 
 .floating {
 	animation: floating 3s ease infinite;
@@ -13,9 +12,7 @@
     }
 }
 
-
-// Size variations
-
+//Size variations
 .floating-lg {
 	animation: floating-lg 3s ease infinite;
 }
@@ -24,9 +21,7 @@
 	animation: floating-sm 3s ease infinite;
 }
 
-
-// Keyframes
-
+//Keyframes
 @keyframes floating-lg {
     0% {
         transform: translateY(0px)

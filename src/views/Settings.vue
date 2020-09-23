@@ -4,7 +4,7 @@
         <card class="min-vh-100 main_body center">
             <div class="row card text-black">
                 <div class="col-lg mx-auto form p-4">
-                    <p> This will be the help page</p>
+                    <p> This will be the settings page</p>
                 </div>
             </div>
         </card>

@@ -1,9 +1,8 @@
 //
-// Icon buttons
+//Icon buttons
 //
 
-// General styles
-
+//General styles
 .btn {
    position: relative;
    text-transform: $btn-text-transform;
@@ -21,9 +20,7 @@
       margin-right: .5rem;
    }
 
-
-   // Icons
-
+   //Icons
    i:not(:first-child),
    svg:not(:first-child) {
       margin-left: .5rem;
@@ -35,9 +32,7 @@
    }
 }
 
-
-// Remove translateY and margin animation when btn is included in a btn-group or input-group
-
+//Remove translateY and margin animation when btn is included in a btn-group or input-group
 .btn-group,
 .input-group {
    .btn {
@@ -46,9 +41,7 @@
    }
 }
 
-
-// Size variations
-
+//Size variations
 .btn-sm {
    font-size: $input-btn-font-size-sm;
 }
@@ -57,10 +50,7 @@
    font-size: $input-btn-font-size-lg;
 }
 
-
-// Some quick fixes (to revise)
-
-// Fixes
+//Some quick fixes (to revise)
 [class*="btn-outline-"] {
    border-width: 1px;
 }
