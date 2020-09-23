@@ -8,6 +8,10 @@ yarn-error.log*
 test/unit/coverage
 
 package-lock.json
+.editorconfig
+.eslintrc
+.postcssrc
+intellij.webpack.js
 
 # Editor directories and files
 .idea
@@ -15,4 +19,3 @@ package-lock.json
 *.ntvs*
 *.njsproj
 *.sln
-README.md
