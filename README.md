@@ -1,8 +1,7 @@
-## [Access My Research]
+## **Access My Research**
 Access My Research is being significantly overhauled to be more modern, responsive, & better documented.
 
 ## File Structure
-Within the download you'll find the following directories and files:
 |-- Access My Research
     |-- .gitignore
     |-- .gitattributes
