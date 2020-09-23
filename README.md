@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 ## [Access My Research]
 Access My Research is being significantly overhauled to be more modern, responsive, & better documented.
 
 ## File Structure
 Within the download you'll find the following directories and files:
-
-```
 |-- Access My Research
     |-- .gitignore
     |-- .gitattributes
@@ -139,7 +136,6 @@ Within the download you'll find the following directories and files:
                 |   |-- LightTable.vue
                 |-- projects.js
                 |-- users.js
-```
 
 **Original Template Information**
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
@@ -147,6 +143,3 @@ You will save a lot of time going from prototyping to full-functional code, beca
 Every element has multiple states for colors, styles, hover, focus, that you can easily access and use.
 - Copyright 2020 Creative Tim (https://www.creative-tim.com/?ref=bvad-github-readme)
 - Licensed under MIT (https://github.com/creativetimofficial/vue-argon-dashboard/blob/master/LICENSE.md)
-=======
-AccessMyResearch vue web app
->>>>>>> 39ed4e1f19e731c50ae6bca3f4c2895784de6c13
