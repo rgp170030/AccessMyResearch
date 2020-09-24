@@ -18,8 +18,8 @@ Make Access My Research functional, beautiful, and quick
 ## Using Docker
 - You'll need [to install docker](https://docs.docker.com/get-docker/)
 - Run ``docker build .`` from the base directory containing the docker file
-- If the build is successful, you will see an image name consisting of numbers as the final console output
-- Run ``docker run -it -d -p 8080:8080 --rm --name AMR <the first 3 of the image name consisting of numbers>``
+- If the build is successful, you will see an image name as the final console output
+- Run ``docker run -it -d -p 8080:8080 --rm --name AMR <the first 3 characters of the image name>``
 - Check ``docker ps`` and see it running! You should be able to access at 127.0.0.1:8080
 
 ## File Structure
