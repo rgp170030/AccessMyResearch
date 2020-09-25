@@ -35,16 +35,12 @@
                <span class="nav-link-inner--text">Home</span>
            </b-nav-item>
            <b-nav-item to="/register">
-               <i class="ni ni-circle-08"></i>
+               <i class="far fa-user"></i>
                <span class="nav-link-inner--text">Register</span>
            </b-nav-item>
            <b-nav-item to="/login">
-               <i class="ni ni-key-25"></i>
+               <i class="fas fa-user circle"></i>
                <span class="nav-link-inner--text">Login</span>
-           </b-nav-item>
-           <b-nav-item to="/profile">
-               <i class="ni ni-single-02"></i>
-               <span class="nav-link-inner--text">Profile</span>
            </b-nav-item>
        </b-navbar-nav>
      </template>

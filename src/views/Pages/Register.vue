@@ -46,7 +46,7 @@
                 <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
                   <base-input alternative
                               class="mb-3"
-                              prepend-icon="ni ni-hat-3"
+                              prepend-icon="fas fa-user"
                               placeholder="Name"
                               name="Name"
                               :rules="{required: true}"
@@ -55,7 +55,7 @@
 
                   <base-input alternative
                               class="mb-3"
-                              prepend-icon="ni ni-email-83"
+                              prepend-icon="fas fa-envelope"
                               placeholder="Email"
                               name="Email"
                               :rules="{required: true, email: true}"
@@ -64,7 +64,7 @@
 
                   <base-input alternative
                               class="mb-3"
-                              prepend-icon="ni ni-lock-circle-open"
+                              prepend-icon="fas fa-lock-open"
                               placeholder="password"
                               type="password"
                               name="Password"
