@@ -9,52 +9,78 @@
             </router-link>
             <slot name="mobile-right">
                 <ul class="nav align-items-center d-md-none">
-                    <!-- <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+                    <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
                         <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
-                            <i class="ni ni-bell-55"></i>
+                            <i class="fas fa-bell"></i>
                         </a>
-
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" to="/notifications"> <!--TODO: Link to notification-->
+                          <i class="fas fa-book-open"></i>
+                          New Article by: Mehmet Günal
+                          <small class="form-text text-muted">Yesterday</small>
+                        </a>
+                        <a class="dropdown-item" to="/notifications">
+                          <i class="fas fa-user-friends"></i>
+                          New friend: Mehmet Günal
+                          <small class="form-text text-muted">1 week ago</small>
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </base-dropdown> -->
+                        <a class="dropdown-item" to="/notifications">
+                          <i class="fas fa-clock"></i>
+                          All Notifications
+                        </a>
+                    </base-dropdown>
+                          <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+                            <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-comment"></i>
+                            </a>
+                            <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
+                              <i class="fas fa-comment"></i>
+                              Mehmet Günal: Check out my research!
+                              <small class="form-text text-muted">Yesterday</small>
+                            </a>
+                            <a class="dropdown-item" to="/messages">
+                              <i class="far fa-comment"></i>
+                              Greg Kitchen: Check out his research!
+                              <small class="form-text text-muted">1 week ago</small>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" to="/messages">
+                              <i class="fas fa-clock"></i>
+                              All Messages
+                            </a>
+                          </base-dropdown>
                     <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
                         <a slot="title-container" class="nav-link" href="#" role="button">
                             <div class="media align-items-center">
                               <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="img/theme/team-1.jpg">
+                                <img alt="Image placeholder" src="img/theme/team-4.jpg"> <!--TODO: Show profile pic-->
                               </span>
                             </div>
                         </a>
-
                         <div class=" dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome!</h6>
                         </div>
                         <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
+                            <i class="fas fa-user"></i>
                             <span>My profile</span>
                         </router-link>
-                        <router-link to="/notifications" class="dropdown-item">
-                            <i class="ni ni-bell-55"></i>
-                            <span>Notifications</span>
-                        </router-link>
-                        <router-link to="/#" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
+                        <router-link to="/activity" class="dropdown-item">
+                            <i class="far fa-calendar-alt"></i>
                             <span>Activity</span>
                         </router-link>
                         <router-link to="/settings" class="dropdown-item">
-                            <i class="ni ni-settings-gear-65"></i>
+                            <i class="fas fa-cog"></i>
                             <span>Settings</span>
                         </router-link>
                         <router-link to="/donate" class="dropdown-item">
-                            <i class="ni ni-satisfied"></i>
+                            <i class="fas fa-donate"></i>
                             <span>Donate</span>
                         </router-link>
                         <div class="dropdown-divider"></div>
                         <a to="/login" class="dropdown-item">
-                            <i class="ni ni-user-run"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </a>
                     </base-dropdown>

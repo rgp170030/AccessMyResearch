@@ -15,6 +15,7 @@ Make Access My Research functional, beautiful, and quick
 4) npm run lint  - Starts the Vue linter
 
 ## File Structure
+```
 |-- Access My Research
     |-- .gitignore
     |-- .gitattributes
@@ -108,7 +109,6 @@ Make Access My Research functional, beautiful, and quick
         |-- routes
         |   |-- router.js
         |   |-- routes.js
-        |   |-- starterRouter.js
         |-- util
         |   |-- throttle.js
         |   |-- upload.js
@@ -137,17 +137,13 @@ Make Access My Research functional, beautiful, and quick
             |   |-- Login.vue
             |   |-- Register.vue
             |   |-- UserProfile.vue
-            |-- Starter
-            |   |-- SampleFooter.vue
-            |   |-- SampleLayout.vue
-            |   |-- SampleNavbar.vue
-            |   |-- SamplePage.vue
             |-- Tables
                 |-- RegularTables
                 |   |-- DarkTable.vue
                 |   |-- LightTable.vue
                 |-- projects.js
                 |-- users.js
+```
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.

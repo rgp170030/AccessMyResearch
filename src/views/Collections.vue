@@ -1,7 +1,6 @@
 <template>
   <div>
-    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary">
-    </base-header>
+    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
     <b-container fluid class="mt--7">
       <b-row>
         <b-col>
@@ -13,9 +12,6 @@
   </div>
 </template>
 <script>
-  import { Dropdown, DropdownItem, DropdownMenu, Table, TableColumn } from 'element-ui';
-  import projects from './Tables/projects'
-  import users from './Tables/users'
   import LightTable from "./Tables/RegularTables/LightTable";
   import DarkTable from "./Tables/RegularTables/DarkTable";
 
@@ -23,17 +19,6 @@
     components: {
       LightTable,
       DarkTable,
-      [Dropdown.name]: Dropdown,
-      [DropdownItem.name]: DropdownItem,
-      [DropdownMenu.name]: DropdownMenu,
-      [Table.name]: Table,
-      [TableColumn.name]: TableColumn
-    },
-    data() {
-      return {
-        projects,
-        users
-      };
     }
   };
 </script>
