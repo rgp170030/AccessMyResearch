@@ -8,11 +8,12 @@ Make Access My Research functional, beautiful, and quick
 1) From the AccessMyResearch (root) directory, run "npm install"
 2) Next, run "npm run dev" to build and test the code
 
-## Other Commands
-1) npm run build - Builds the code
-2) npm run dev   - automatically builds all changes & runs the code locally/on network
-3) npm run serve - Serves the code (not going to be useful for a while)
-4) npm run lint  - Starts the Vue linter
+## Useful Commands
+1) npm install   - Installs all dependencies
+2) npm run build - Builds the code
+3) npm run dev   - automatically builds all changes & runs the code locally/on network
+4) npm run serve - Serves the code (not going to be useful for a while)
+5) npm run lint  - Starts the Vue linter
 
 ## File Structure
 ```
