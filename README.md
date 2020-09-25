@@ -32,7 +32,6 @@ Make Access My Research functional, beautiful, and quick
     |-- package.json
     |-- README.md
     |-- vue.config
-    |-- yarn.lock
     |-- public
     |   |-- img
     |   |   |-- brand
@@ -43,7 +42,7 @@ Make Access My Research functional, beautiful, and quick
     |   |   |   |-- linkedin.svg
     |   |   |-- theme
     |   |   |   |-- **A bunch of placeholder images**
-    |   |-- favicon.ico
+    |   |-- favicon.png
     |   |-- index.html
     |-- src
         |-- App.vue
@@ -54,8 +53,6 @@ Make Access My Research functional, beautiful, and quick
         |   |   |-- core
         |   |   |-- custom
         |   |   |-- argon.scss
-        |   |-- vendor
-        |       |-- nucleo
         |-- components
         |   |-- Badge.vue
         |   |-- BaseAlert.vue
@@ -117,7 +114,6 @@ Make Access My Research functional, beautiful, and quick
         |-- routes
         |   |-- router.js
         |   |-- routes.js
-        |   |-- starterRouter.js
         |-- util
         |   |-- throttle.js
         |   |-- upload.js
@@ -146,18 +142,21 @@ Make Access My Research functional, beautiful, and quick
             |   |-- Login.vue
             |   |-- Register.vue
             |   |-- UserProfile.vue
-            |-- Starter
-            |   |-- SampleFooter.vue
-            |   |-- SampleLayout.vue
-            |   |-- SampleNavbar.vue
-            |   |-- SamplePage.vue
             |-- Tables
+                |-- projects.js
+                |-- users.js
                 |-- RegularTables
                 |   |-- DarkTable.vue
                 |   |-- LightTable.vue
                 |-- projects.js
                 |-- users.js 
 ```
+
+
+## Important Notes
+1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
+2) Check available color variables at src\assets\custom\_variables.scss
+
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
