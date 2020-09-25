@@ -25,7 +25,6 @@ Make Access My Research functional, beautiful, and quick
     |-- package.json
     |-- README.md
     |-- vue.config
-    |-- yarn.lock
     |-- public
     |   |-- img
     |   |   |-- brand
@@ -36,7 +35,7 @@ Make Access My Research functional, beautiful, and quick
     |   |   |   |-- linkedin.svg
     |   |   |-- theme
     |   |   |   |-- **A bunch of placeholder images**
-    |   |-- favicon.ico
+    |   |-- favicon.png
     |   |-- index.html
     |-- src
         |-- App.vue
