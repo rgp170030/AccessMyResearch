@@ -47,8 +47,6 @@ Make Access My Research functional, beautiful, and quick
         |   |   |-- core
         |   |   |-- custom
         |   |   |-- argon.scss
-        |   |-- vendor
-        |       |-- nucleo
         |-- components
         |   |-- Badge.vue
         |   |-- BaseAlert.vue
@@ -139,11 +137,11 @@ Make Access My Research functional, beautiful, and quick
             |   |-- Register.vue
             |   |-- UserProfile.vue
             |-- Tables
+                |-- projects.js
+                |-- users.js
                 |-- RegularTables
                 |   |-- DarkTable.vue
                 |   |-- LightTable.vue
-                |-- projects.js
-                |-- users.js
 ```
 
 ## Original Template Information
