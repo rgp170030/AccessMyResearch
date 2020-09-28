@@ -12,10 +12,55 @@
             id="navbar-search-main">
         <b-form-group class="mb-0">
           <b-input-group class="input-group-alternative input-group-merge">
+<<<<<<< Updated upstream
             <b-form-input placeholder="Search by keyword or author" type="text"> </b-form-input>
+=======
+>>>>>>> Stashed changes
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
+            <b-form-input placeholder="Search by Keyword or Author" type="text"> </b-form-input>
+          <!-- start here  -->
+          <div class="SearchDropDown">
+            <b-dropdown variant="Primary" right text="">
+            <b-dropdown-group header="Sort By" class="small">
+              <b-dropdown-divider></b-dropdown-divider>
+                <b-form-select v-model="selectedSortBy" :options="sortBy"></b-form-select>
+              </b-dropdown-group>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-group header="Area" class="small">
+              <b-dropdown-divider></b-dropdown-divider>
+                <b-form-checkbox-group
+                  id="areaFilter"
+                  v-model="selectedAreas"
+                  :options="areas"
+                  name="area"
+                ></b-form-checkbox-group>
+                <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div>   -->
+              </b-dropdown-group>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-group header="Expertise" class="small">
+              <b-dropdown-divider></b-dropdown-divider>
+                <b-form-checkbox-group
+                  id="expertiseFilter"
+                  v-model="selectedExpertise"
+                  :options="expertise"
+                  name="expertise"
+                ></b-form-checkbox-group>
+              </b-dropdown-group>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-group header="View Count" class="small">
+              <b-dropdown-divider></b-dropdown-divider>
+                <b-form-checkbox-group
+                  id="viewCountFilter"
+                  v-model="selectedViewCount"
+                  :options="viewCount"
+                  name="viewcount"
+                ></b-form-checkbox-group>
+              </b-dropdown-group>
+            </b-dropdown>
+          </div>
+          <!-- end here -->
           </b-input-group>
         </b-form-group>
       </b-form>
@@ -132,7 +177,39 @@ export default {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: ''
+      searchQuery: '',
+      selectedSortBy: "most-recent",
+      sortBy: [
+        { text: 'Most Recent', value: 'most-recent'},
+        { text: 'Most Cited', value: 'most-cited'},
+        { text: 'Most Discussed', value: 'most-discussed'},
+        { text: 'Most Rated', value: 'most-rated'},
+        { text: 'Highest Rated', value: 'highest-rated'},
+        { text: 'Trending', value: 'trending'},
+        { text: 'Expertise', value: 'expertise'}
+      ],
+      selectedAreas: [],
+      areas: [
+        { text: 'Computer Science', value: 'cs'},
+        { text: 'Electrical Engineering', value: 'ee'},
+        { text: 'Neuroscience', value: 'ns'}
+      ],
+      selectedExpertise: [],
+      expertise: [
+        { text: 'Anyone', value: 'any'},
+        { text: '1-5 Peer Review Publications', value: '1-5'},
+        { text: '5-20 Peer Review Publications', value: '5-20'},
+        { text: '20-100 Peer Review Publications', value: '20-100'},
+        { text: '100+ Peer Review Publications', value: '100+'}
+      ],
+      selectedViewCount: [],
+      expertise: [
+        { text: 'Any view count', value: 'anyCount'},
+        { text: '1-5 Peer Review Publications', value: '1-5'},
+        { text: '5-20 Peer Review Publications', value: '5-20'},
+        { text: '20-100 Peer Review Publications', value: '20-100'},
+        { text: '100+ Peer Review Publications', value: '100+'}
+      ]
     };
   },
   methods: {
@@ -144,7 +221,7 @@ export default {
     },
     closeDropDown() {
       this.activeNotifications = false;
-    }
+    },
   }
 };
 </script>
