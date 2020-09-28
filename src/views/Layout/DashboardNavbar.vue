@@ -199,12 +199,12 @@ export default {
         { text: '100+ Peer Review Publications', value: '100+'}
       ],
       selectedViewCount: [],
-      expertise: [
+      viewCount: [
         { text: 'Any view count', value: 'anyCount'},
-        { text: '1-5 Peer Review Publications', value: '1-5'},
-        { text: '5-20 Peer Review Publications', value: '5-20'},
-        { text: '20-100 Peer Review Publications', value: '20-100'},
-        { text: '100+ Peer Review Publications', value: '100+'}
+        { text: '1-100 views', value: '1-100'},
+        { text: '100-500 views', value: '100-500'},
+        { text: '500-1000 views', value: '500-1000'},
+        { text: '1000+ views', value: '1000+'}
       ]
     };
   },
