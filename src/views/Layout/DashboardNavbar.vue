@@ -17,12 +17,13 @@
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-search"></i></span>
                     </div>
-                   <b-form-input 
-                        @input="search_text()"
-                        v-model="search.text"
-                        type="text"
-                        placeholder="Search by Keyword or Author"
-                    ></b-form-input>
+            <b-form-input
+            @keyup.enter="enterClicked"
+            @input="search_text()"
+              v-model="search.text"
+              type="text"
+              placeholder="Search by Keyword or Author"
+            ></b-form-input>
                     <!-- start here  -->
                     <div class="SearchDropDown">
                         <b-dropdown variant="Primary" right text="">
@@ -112,7 +113,7 @@
                 </b-dropdown-header>
                 <b-dropdown-item to="/profile">
                     <i class="ni ni-single-02"></i>
-                    <span>My profile</span>
+                    <span>My Profile</span>
                 </b-dropdown-item>
                 <b-dropdown-item to="/notifications">
                     <i class="ni ni-bell-55"></i>
@@ -316,6 +317,9 @@ export default {
           return results;
         }
       });
+    },
+    enterClicked(){
+        this.$router.push('Search') 
     },
     }
 
