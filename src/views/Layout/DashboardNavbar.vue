@@ -15,13 +15,19 @@
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <b-form-input placeholder="Search by Keyword or Author" type="text"> </b-form-input>
+            <!-- <b-form-input placeholder="Search by Keyword or Author" type="text"> </b-form-input>-->
+            <b-form-input
+              @input="search_text()"
+              v-model="search.text"
+              type="text"
+              placeholder="Search by Keyword or Author"
+            ></b-form-input>
           <!-- start here  -->
           <div class="SearchDropDown">
             <b-dropdown variant="Primary" right text="">
             <b-dropdown-group header="Sort By" class="small">
               <b-dropdown-divider></b-dropdown-divider>
-                <b-form-select v-model="selectedSortBy" :options="sortBy"></b-form-select>
+                <b-form-select @input="sort()" v-model="selectedSortBy" :options="sortBy"></b-form-select>
               </b-dropdown-group>
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-group header="Area" class="small">
@@ -168,12 +174,38 @@ export default {
       return this.capitalizeFirstLetter(name);
     }
   },
+  mounted() {
+    this.hover_flag = false;
+    var inside = this;
+    axios
+      .get("https://www.mocky.io/v2/5c7b98562f0000c013e59f07")
+      .then(function(response) {
+        //console.log(response);
+    inside.wonders_data_actual = response.data.data;
+    response.data.data.map(function(wonder) {
+      inside.likes.count += wonder.likes;
+    });
+    inside.wonders_data_actual = inside.wonders_data_actual.map(function(
+          wonder
+        ) {
+          wonder.active_like = false;
+          return wonder;
+        });
+        inside.wonders_data = response.data.data;
+      })
+      .catch(function(error) {
+        // console.log(error);
+      });
+  },
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
       searchQuery: '',
+      results_data_actual: [],
+      results_data: [],
+      search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       sortBy: [
         { text: 'Most Recent', value: 'most-recent'},
@@ -217,6 +249,30 @@ export default {
     },
     closeDropDown() {
       this.activeNotifications = false;
+    },
+    sort() {
+      //make a if-statement for the Sort By filter. 
+      //console.log(this.search.filter);
+      //this.search.filter == "b"
+      //  ? this.results_data.sort(function(a, b) {
+      //      return b.likes - a.likes;
+      //    })
+      //  : this.results_data.sort(function(a, b) {
+      //      return b.ratings - a.ratings;
+      //    });
+    },
+    search_text() {
+      //console.log(this.search.text);
+      var inside = this;
+      this.results_data = this.results_data_actual.filter(function(results) {
+        if (
+          results.place //https://www.freecodecamp.org/news/how-to-set-up-responsive-ui-search-in-vue-js-bf6007b7fc0f/
+            .toLowerCase()
+            .indexOf(inside.search.text.toLowerCase()) != "-1"
+        ) {
+          return AMR;
+        }
+      });
     }
   }
 };
