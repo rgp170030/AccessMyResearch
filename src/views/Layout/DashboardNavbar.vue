@@ -11,7 +11,7 @@
         </li>
     </b-navbar-nav>
     <b-navbar-nav class="align-items-center ml-auto ml-md-0">
-        <b-form class="navbar-search form-inline mr-sm-3" :class="{'navbar-search-dark': type === 'default', 'navbar-search-light': type === 'light'}" id="navbar-search-main">
+        <b-form class="navbar-search form-inline mr-sm-3" :class="{'navbar-search-dark': type === 'default', 'navbar-search-light': type === 'light'}" id="navbar-search-main" @submit="onSubmit">
             <b-form-group class="mb-0">
                 <b-input-group class="input-group-alternative input-group-merge">
                     <div class="input-group-append">
@@ -20,6 +20,7 @@
             <b-form-input
             @keyup.enter="enterClicked"
             @input="search_text()"
+              id="search"
               v-model="search.text"
               type="text"
               placeholder="Search by Keyword or Author"
@@ -151,7 +152,8 @@ import {
     BaseNav,
     Modal
 } from '@/components';
-
+import { Client } from 'elasticsearch';
+const client = new Client({ node: 'http://localhost:9200/'})
 export default {
     components: {
         CollapseTransition,
@@ -285,6 +287,26 @@ export default {
         };
     },
     methods: {
+      async runSearch() {
+      return await client.search({
+        index: 'amr',
+        body: {
+          query: {
+            query_string: {
+              fields: ["title", "author", "message"],
+              query: this.search.text
+            }
+          }
+        }
+      }).then(function(res) {
+        return res.hits.hits;
+      }, function(err) {
+        console.err(err);
+      });
+    },
+    async onSubmit(evt) {
+      alert(JSON.stringify(await this.runSearch()));
+    },
         capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         },
@@ -295,7 +317,7 @@ export default {
              this.activeNotifications = false;
      },
     sort() {
-      //make a if-statement for the Sort By filter. 
+      //make a if-statement for the Sort By filter.
       //console.log(this.search.filter);
       //this.search.filter == "b"
       //  ? this.results_data.sort(function(a, b) {
@@ -319,7 +341,7 @@ export default {
       });
     },
     enterClicked(){
-        this.$router.push('Search') 
+        this.$router.push('Search')
     },
     }
 
