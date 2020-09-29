@@ -21,11 +21,22 @@
                     <!-- start here  -->
                     <div class="SearchDropDown">
                         <b-dropdown variant="Primary" right text="">
-                            <b-dropdown-group header="Sort By" class="small">
-                                <b-dropdown-divider></b-dropdown-divider>
-                                <b-form-select v-model="selectedSortBy" :options="sortBy"></b-form-select>
-                            </b-dropdown-group>
-                            <b-dropdown-divider></b-dropdown-divider>
+
+                        <div class="accordion" role="tablist">
+                            <b-card no-body class="mb-1">
+                                <b-card-header header-tag="header" class="p-1" role="tab">
+                                    <b-button block v-b-toggle.SortByAccordion variant="primary">Sort By</b-button>
+                                        </b-card-header>
+                                        <b-collapse id="SortByAccordion" accordion="my-accordion" role="tabpanel">
+                                        <b-card-body>
+                                        <b-dropdown-group class="small">
+                                                <b-form-select id="sortByFilter" v-model="selectedSortBy" :options="sortBy"></b-form-select>
+                                        <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div> -->
+                                        </b-dropdown-group>
+                                    </b-card-body>
+                                </b-collapse>
+                            </b-card>
+                        </div>
 
                             <div class="accordion" role="tablist">
                                 <b-card no-body class="mb-1">
