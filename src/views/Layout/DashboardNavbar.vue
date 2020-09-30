@@ -227,6 +227,7 @@
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
 import { Client } from "elasticsearch";
+import axios from 'axios';
 const client = new Client({ node: "http://localhost:9200/" });
 export default {
   components: {
@@ -363,31 +364,8 @@ export default {
     };
   },
   methods: {
-    async runSearch() {
-      return await client
-        .search({
-          index: "amr",
-          body: {
-            query: {
-              query_string: {
-                fields: ["title", "author", "message"],
-                query: this.search.text,
-              },
-            },
-          },
-        })
-        .then(
-          function (res) {
-            alert("This search took: " + res.took + "ms" + ", number of results: " + res._shards.total) //Taylor and Anthony time/num results
-            return res.hits.hits;
-          },
-          function (err) {
-            console.err(err);
-          }
-        );
-    },
     async onSubmit(evt) {
-      alert(JSON.stringify(await this.runSearch()));
+      this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

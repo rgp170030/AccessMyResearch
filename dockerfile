@@ -1,7 +1,5 @@
 FROM node:lts-alpine
 
-# install simple http server for serving static content
-RUN npm install -g @vue/cli
 # make the 'app' folder the current working directory
 WORKDIR /app
 
@@ -18,4 +16,3 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "npm", "run", "serve"]
-
