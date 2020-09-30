@@ -3,6 +3,9 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
+    <b-card-header class="border-0">
+      <h3 class="mb-0" >About {{results.length}} results ({{timeTotal}} ms) </h3>
+    </b-card-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
@@ -58,6 +61,7 @@ export default {
   data() {
     return {
       results: [],
+      timeTotal: 0,
     };
   },
   computed: {
@@ -67,6 +71,7 @@ export default {
   },
   watch: {
     async text() {
+      this.timeTotal = 0;
       this.performSearch();
     },
   },
@@ -75,8 +80,10 @@ export default {
   },
   methods: {
     async performSearch() {
+      var startTime, endTime;
       this.results = [];
 
+      startTime = new Date();
       let searchResults = await client
         .search({
           index: "amr",
@@ -93,7 +100,9 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-
+      endTime = new Date();
+      var timeDiff = endTime - startTime;
+      this.timeTotal = this.timeTotal + timeDiff;
       this.results.push(...searchResults.hits.hits);
     },
   },

@@ -42,7 +42,6 @@
                 ><i class="fas fa-search"></i
               ></span>
             </div>
-            <!--@keyup.enter="onSubmit"-->
             <b-form-input
               @input="search_text()"
               id="search"
@@ -278,6 +277,7 @@ export default {
       showMenu: false,
       searchModalVisible: false,
       searchQuery: "",
+      timeTotal: 0,
       results_data_actual: [],
       results_data: [],
       search: { filter: null, text: "" },
@@ -365,6 +365,7 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
+      this.timeTotal = 0;
       this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
     },
     capitalizeFirstLetter(string) {
@@ -399,9 +400,6 @@ export default {
           return results;
         }
       });
-    },
-    enterClicked() {
-      //this.$router.push("Search");
     },
   },
 };
