@@ -42,8 +42,8 @@
                 ><i class="fas fa-search"></i
               ></span>
             </div>
+            <!--@keyup.enter="onSubmit"-->
             <b-form-input
-              @keyup.enter="enterClicked"
               @input="search_text()"
               id="search"
               v-model="search.text"
@@ -378,6 +378,7 @@ export default {
         })
         .then(
           function (res) {
+            alert("This search took: " + res.took + "ms" + ", number of results: " + res._shards.total) //Taylor and Anthony time/num results
             return res.hits.hits;
           },
           function (err) {
@@ -422,7 +423,7 @@ export default {
       });
     },
     enterClicked() {
-      this.$router.push("Search");
+      //this.$router.push("Search");
     },
   },
 };
