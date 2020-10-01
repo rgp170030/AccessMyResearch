@@ -163,6 +163,64 @@
                     </b-collapse>
                   </b-card>
                 </div>
+
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.typeAccordion
+                        variant="primary"
+                        >Type</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="typeAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-checkbox-group
+                            id="typeFilter"
+                            v-model="selectedType"
+                            :options="types"
+                            name="type"
+                          ></b-form-checkbox-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.databaseAccordion
+                        variant="primary"
+                        >Database</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="databaseAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-checkbox-group
+                            id="databaseFilter"
+                            v-model="selectedDatabase"
+                            :options="databases"
+                            name="database"
+                          ></b-form-checkbox-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
               </b-dropdown>
             </div>
             <!-- end here -->
@@ -359,6 +417,120 @@ export default {
           value: "descend",
         },
       ],
+      selectedType: [],
+      types: [
+        {
+          text: "Peer Review",
+          value: "peer-review",
+        },
+        {
+          text: "Pre Print",
+          value: "pre-print",
+        },
+        {
+          text: "Book Chapter",
+          value: "book-chapter",
+        },
+        {
+          text: "Poster",
+          value: "poster",
+        },
+        {
+          text: "Presentation",
+          value: "presentation",
+        },
+        {
+          text: "Results",
+          value: "results",
+        },
+        {
+          text: "Figures",
+          value: "figures",
+        },
+        {
+          text: "Video",
+          value: "video",
+        },
+        {
+          text: "Stream",
+          value: "stream",
+        },
+        {
+          text: "Blog",
+          value: "blog",
+        },
+        {
+          text: "Vlog",
+          value: "vlog",
+        },
+        {
+          text: "Courses",
+          value: "courses",
+        },
+      ],
+      selectedDatabase: [],
+      databases: [
+        {
+          text: "Academic Search",
+          value: "academic-search",
+        },
+        {
+          text: "arXiv",
+          value: "arxiv",
+        },
+        {
+          text: "Association for Computing Machinery Digital Library",
+          value: "association-for-computing-machinery-digital-library",
+        },
+        {
+          text: "DBLP",
+          value: "dblp",
+        },
+        {
+          text: "GENESIS",
+          value: "genesis",
+        },
+        {
+          text: "Global Health",
+          value: "global-health",
+        },
+        {
+          text: "Google Scholar",
+          value: "google-scholar",
+        },
+        {
+          text: "HubMed",
+          value: "hubmed",
+        },
+        {
+          text: "IEEE Xplore",
+          value: "ieee-xplore",
+        },
+        {
+          text: "MEDLINE",
+          value: "medline",
+        },
+        {
+          text: "MyScienceWork",
+          value: "MyScienceWork",
+        },
+        {
+          text: "PubChem",
+          value: "pubchem",
+        },
+        {
+          text: "PubMed",
+          value: "pubmed",
+        },
+        {
+          text: "PubPsych",
+          value: "pubpsych",
+        },
+        {
+          text: "ScienceOpen",
+          value: "scienceopen",
+        },
+      ]
     };
   },
   methods: {
