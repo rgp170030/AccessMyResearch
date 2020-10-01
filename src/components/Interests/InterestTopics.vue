@@ -1,22 +1,24 @@
 <template>
 <div class="topic-list">
-    <b-form-checkbox
+    <b-button
         v-for="topic in topics" :key="topic.name"
         v-model="topic.isSet"
         inline
+        pill
+        :pressed.sync="topic.isSet"
+        variant="outline-primary"
+        class="text-nowrap"
     >
-    {{ topic.name }}
-    </b-form-checkbox>
+        <b-icon v-if="topic.isSet" icon="check-circle" aria-hidden="true"></b-icon> 
+        <b-icon v-else icon="circle" aria-hidden="true"></b-icon>
+        {{ topic.name }}
+    </b-button>
 </div>
 </template>
 
 <script>
 export default {
-    props: ["topics"],
-    data: function() {
-        return {
-        };
-    }
+    props: ["topics"]
 };
 </script>
 

@@ -1,37 +1,21 @@
 <template>
 <div class="interest-tab">
-    <base-button type="primary" class="my-4" @click="$emit('category-select', model.topics)">{{ prop.topic }}</base-button>
+    <b-button 
+        variant="primary"
+        @click="$emit('category-select', index)"
+        size="lg"
+        class="my-4 text-nowrap"
+        :pressed.sync="selected"
+    >
+        <b-icon v-if="icon" :icon="icon" aria-hidden="true"></b-icon>
+        {{ name }}
+    </b-button>
 </div>
 </template>
 
 <script>
 export default {
-    props: ["prop"],
-    data: function () {
-        return {
-            model: {
-                icon: '123123123',
-                topics: [
-                    {
-                        name: 'Topic 1',
-                        isSet: false
-                    },
-                    {
-                        name: 'Topic 2',
-                        isSet: false
-                    },
-                    {
-                        name: 'Topic 3',
-                        isSet: false
-                    },
-                    {
-                        name: 'Topic 4',
-                        isSet: false
-                    }
-                ]
-            }
-        };
-    }
+    props: ["name", "index", "icon", "selected"]
 }
 </script>
 

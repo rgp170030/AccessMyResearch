@@ -3,16 +3,24 @@
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
     <div class="category-container">
         <InterestCategory 
-            v-for="(topic, index) in model.categories" :key="topic"
-            :prop="{topic: topic, index: index}"
+            v-for="(category, index) in model.categories" :key="category.id"
+            :name="category.name"
+            :index="index"
+            :icon="category.icon"
+            :selected="model.selectedCategoryIndex===index"
             v-on:category-select="selectCategory">
         </InterestCategory>
     </div>
-    
-    <InterestTopics
-        :topics="model.selectedTopics"
-    >
-    </InterestTopics>
+    <hr/>
+    <div>
+        <div class="topic-container">
+            <InterestTopics
+                :topics="model.categories[model.selectedCategoryIndex].topics"
+            >
+            </InterestTopics>
+        </div>
+    </div>
+    <hr/>
     <div class="category-container">
         <b-button type="submit" variant="danger" class="btn btn-info" inline @click="dbStuff">Save</b-button>
         <b-button type="submit" variant="danger" class="btn btn-info" to="home" inline>Skip</b-button>
@@ -28,14 +36,56 @@ export default {
     data: function() {
         return {
             model: {
-                categories: ["Category 1", "Category 2"],
-                selectedTopics: []
+                categories: [
+                    {
+                        name: "Category 1",
+                        id: 0,
+                        icon: "terminal",
+                        topics: [
+                            {
+                                name: "Topic 1-1",
+                                isSet: false
+                            },
+                            {
+                                name: "Topic 1-2",
+                                isSet: false
+                            },
+                            {
+                                name: "Topic 1-1",
+                                isSet: false
+                            }
+                        ]
+                    },
+                    {
+                        name: "Category 2",
+                        id: 1,
+                        topics: [
+                            {
+                                name: "Topic 2-1",
+                                isSet: false
+                            },
+                            {
+                                name: "Topic 2-2",
+                                isSet: false
+                            },
+                            {
+                                name: "Topic 2-3",
+                                isSet: false
+                            },
+                            {
+                                name: "Topic 2-4",
+                                isSet: false
+                            }
+                        ]
+                    }
+                ],
+                selectedCategoryIndex: 0
             }
         };
     },
     methods: {
-        selectCategory: function (topics) {
-            this.model.selectedTopics = topics;
+        selectCategory: function (index) {
+            this.model.selectedCategoryIndex = index;
         },
         dbStuff: function(event){
             alert("dbStuff");
@@ -52,6 +102,11 @@ export default {
 .category-container {
     position: relative;
     width: 100%;
+    text-align: center;
+}
+
+.topic-container{
+    position: relative;
     text-align: center;
 }
 </style>
