@@ -225,9 +225,7 @@
 <script>
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
-import { Client } from "elasticsearch";
 import axios from 'axios';
-const client = new Client({ node: "http://localhost:9200/" });
 export default {
   components: {
     CollapseTransition,
