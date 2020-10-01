@@ -19,9 +19,10 @@
           </b-input-group>
         </b-form-group>
       </b-form>
+
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false" @click="redirect">
             <i class="fas fa-bell"></i>
         </a>
         <a class="dropdown-item" to="/notifications"> <!-- TODO: Link to Notification-->
@@ -42,7 +43,7 @@
       </base-dropdown>
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false" @click="redirect">
             <i class="fas fa-comment"></i>
         </a>
         <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
@@ -75,19 +76,19 @@
         </a>
 
         <template>
-          <b-dropdown-header class="noti-title">
+          <b-dropdown-header class="noti-title" v-if="signedIn">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
-          <b-dropdown-item to="/profile">
+          <b-dropdown-item to="/profile" v-if="signedIn">
             <i class="fas fa-user"></i>
             <span>My profile</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/activity">
+          <b-dropdown-item to="/activity" v-if="signedIn">
             <i class="far fa-calendar-alt"></i>
             <span>Activity</span>
           </b-dropdown-item>
-          <div class="dropdown-divider"></div>
-          <b-dropdown-item to="/settings">
+          <div class="dropdown-divider" v-if="signedIn"></div>
+          <b-dropdown-item to="/settings" v-if="signedIn">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
           </b-dropdown-item>
@@ -95,7 +96,11 @@
             <i class="fas fa-donate"></i>
             <span>Donate</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/login">
+          <b-dropdown-item to="/login" v-if="!signedIn">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+          </b-dropdown-item>
+          <b-dropdown-item @click="signOut" v-if="signedIn">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
           </b-dropdown-item>
@@ -107,6 +112,7 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
+import { Auth } from 'aws-amplify';
 
 export default {
   components: {
@@ -127,12 +133,19 @@ export default {
       return this.capitalizeFirstLetter(name);
     }
   },
+  created() {
+      if(this.$store.state.signedIn === true)
+      {
+        this.signedIn = true;
+      }
+  },
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: ''
+      searchQuery: '',
+      signedIn: false
     };
   },
   methods: {
@@ -144,6 +157,19 @@ export default {
     },
     closeDropDown() {
       this.activeNotifications = false;
+    },
+    signOut() {
+      Auth.signOut().then(data => {
+        this.$store.state.signedIn = !!data;
+        this.$router.push('login');
+      })
+      .catch(err => console.log(err));
+    },
+    redirect() {
+      if(this.$store.state.signedIn === false)
+      {
+        this.$router.push('login');
+      }
     }
   }
 };

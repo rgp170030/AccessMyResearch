@@ -47,10 +47,10 @@
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="fas fa-user"
-                              placeholder="Name"
-                              name="Name"
+                              placeholder="Username"
+                              name="Username"
                               :rules="{required: true}"
-                              v-model="model.name">
+                              v-model="username">
                   </base-input>
 
                   <base-input alternative
@@ -59,24 +59,24 @@
                               placeholder="Email"
                               name="Email"
                               :rules="{required: true, email: true}"
-                              v-model="model.email">
+                              v-model="email">
                   </base-input>
 
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="fas fa-lock-open"
-                              placeholder="password"
+                              placeholder="Password"
                               type="password"
                               name="Password"
                               :rules="{required: true, min: 6}"
-                              v-model="model.password">
+                              v-model="password">
                   </base-input>
                   <div class="text-muted font-italic"><small>password strength: <span
                     class="text-success font-weight-700">strong</span></small></div>
                   <b-row class=" my-4">
                     <b-col cols="12">
                       <base-input :rules="{ required: { allowFalse: false } }" name=Privacy Policy>
-                        <b-form-checkbox v-model="model.agree">
+                        <b-form-checkbox v-model="agree">
                           <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
                         </b-form-checkbox>
                       </base-input>
@@ -94,26 +94,54 @@
     </b-container>
   </div>
 </template>
+
 <script>
+  import { AmplifyEventBus } from 'aws-amplify-vue';
+  import { Auth } from 'aws-amplify';
 
   export default {
-    name: 'register',
+    mounted(){
+
+      if(this.$store.state.signedIn === true)
+      {
+          this.$router.push('home');
+      }
+
+      AmplifyEventBus.$on('authState', info => {
+        if(info == 'signedIn')
+        {
+          this.$router.push('home');
+        }
+      })
+    },
     data() {
       return {
-        model: {
-          name: '',
+          username: '',
           email: '',
           password: '',
           agree: false
-        }
       }
     },
+    name: 'register',
+    components: {},
     methods: {
       onSubmit() {
         //TODO: API call to register user here
+          Auth.signUp({
+                username: this.username,
+                password: this.password,
+                attributes: {
+                    email: this.email
+                },
+                validationData: [],  // optional
+                })
+                .then(data => {
+                    this.user = data.user
+                    this.$router.push('login');
+                  })
+                .catch(err => console.log(err));
       }
     }
-
   };
 </script>
 <style></style>

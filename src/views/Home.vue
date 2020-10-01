@@ -14,11 +14,40 @@
 <script>
   import LightTable from "./Tables/RegularTables/LightTable";
   import DarkTable from "./Tables/RegularTables/DarkTable";
+  import { Auth } from 'aws-amplify';
+  import { AmplifyEventBus } from 'aws-amplify-vue';
 
   export default {
+    created() {
+      this.findUser();
+
+      AmplifyEventBus.$on('authState', info => {
+        if(info === 'signedIn') {
+          this.findUser();
+        } else {
+          this.$store.state.signedIn = false;
+          this.$store.state.user = null;
+        }
+      });
+    },
     components: {
       LightTable,
       DarkTable,
+    },
+    methods: {
+      async findUser() 
+      {
+        try {
+          const user = await Auth.currentAuthenticatedUser();
+          this.$store.state.signedIn = true;
+          this.$store.state.user = user;
+          console.log(user);
+        }
+        catch(err){
+          this.$store.state.signedIn = false;
+          this.$store.state.user = null;
+        }
+      }
     }
   };
 </script>
