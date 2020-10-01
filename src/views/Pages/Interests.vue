@@ -1,6 +1,8 @@
 <template>
 <div>
-    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
+    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary">
+        <h1 class="display-3 text-white text-center">Choose some fields you are interested in</h1>
+    </base-header>
     <div class="category-container">
         <InterestCategory 
             v-for="(category, index) in model.categories" :key="category.id"
