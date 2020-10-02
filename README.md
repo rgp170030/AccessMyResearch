@@ -147,7 +147,7 @@ Make Access My Research functional, beautiful, and quick
             |-- Tables
                 |-- projects.js
                 |-- users.js
-                |-- Table.vue
+                |-- LightTable.vue
 ```
 
 
