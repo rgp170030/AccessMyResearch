@@ -22,6 +22,11 @@
                     <p class="font-weight-400 name mb-0 text-black"> Abstract: 
                         <span style="font-family:georgia" class="font-weight-300 name mb-0 text-black">{{row.abstract}}</span>
                     </p>
+                    <button class="far fa-eye btn btn-success text-white"></button>
+                    <button class="fas fa-file-download btn btn-primary"></button>
+                    <button class="fas fa-comment btn btn-info"></button>
+                    <button class="fas fa-glasses btn btn-light"></button>
+                    <!--<button class="fas fa-expand btn btn-primary"></button>-->
                 </template>
             </el-table-column>
             <el-table-column label="Title"
