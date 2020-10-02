@@ -6,8 +6,8 @@
 
         <el-table class="table-responsive table table-dark"
                   header-row-class-name="thead-dark"
-                  :data="projects">
-            <el-table-column label="Project"
+                  :data="articles">
+            <el-table-column label="Title"
                              min-width="310px"
                              prop="name">
                 <template v-slot="{row}">
@@ -75,7 +75,7 @@
     </b-card>
 </template>
 <script>
-  import projects from './../projects'
+  import articles from './../articles'
   import { Table, TableColumn} from 'element-ui'
   export default {
     name: 'light-table',
@@ -85,7 +85,7 @@
     },
     data() {
       return {
-        projects,
+        articles,
         currentPage: 1
       };
     }

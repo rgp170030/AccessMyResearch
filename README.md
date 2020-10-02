@@ -25,10 +25,12 @@ Make Access My Research functional, beautiful, and quick
 ## File Structure
 ```
 |-- Access My Research
+    |-- .dockerignore
     |-- .gitignore
     |-- .gitattributes
     |-- .postcssrc
     |-- babel.config.js
+    |-- dockerfile
     |-- package.json
     |-- README.md
     |-- vue.config
@@ -148,8 +150,6 @@ Make Access My Research functional, beautiful, and quick
                 |-- RegularTables
                 |   |-- DarkTable.vue
                 |   |-- LightTable.vue
-                |-- projects.js
-                |-- users.js 
 ```
 
 

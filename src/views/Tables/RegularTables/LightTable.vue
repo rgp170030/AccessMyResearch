@@ -4,93 +4,51 @@
             <h3 class="mb-0">Articles</h3>
         </b-card-header>
 
-        <el-table class="table-responsive table"
+        <el-table class="table-responsive table-light"
                   header-row-class-name="thead-light"
-                  :data="projects">
-            <el-table-column label="Project"
-                             min-width="310px"
-                             prop="name">
+                  :data="articles"
+                  style="width: 100%">
+            <el-table-column type="expand">
+                <template v-slot="{row}">
+                    <p class="font-weight-400 name mb-0 text-black"> Author(s): 
+                        <span class="font-weight-700 name mb-0 text-blue">{{row.author}}</span>
+                        <span style="float:right">{{row.date}}</span>
+                    </p>
+                    <p class="font-weight-400 name mb-0 text-black"> Abstract: 
+                        <span style="font-family:georgia" class="font-weight-300 name mb-0 text-black">{{row.abstract}}</span>
+                    </p>
+                </template>
+            </el-table-column>
+            <el-table-column label="Title"
+                             prop="title">
                 <template v-slot="{row}">
                     <b-media no-body class="align-items-center">
-                        <a href="#" class="avatar rounded-circle mr-3">
-                            <img alt="Image placeholder" :src="row.img">
+                        <a href="#" class="mr-3">
+                            <b-img class="avatar" rounded="circle" alt="Image placeholder" :src="row.img" />
                         </a>
                         <b-media-body>
-                            <span class="font-weight-600 name mb-0 text-sm">{{row.title}}</span>
+                            <span style="font-family:Verdana" class="font-weight-800 name mb-0 text-sm">{{row.title}}</span>
                         </b-media-body>
                     </b-media>
                 </template>
             </el-table-column>
-            <el-table-column label="Author"
-                             prop="author"
-                             min-width="150px">
-            </el-table-column>
-
-            <el-table-column label="Status"
-                             min-width="170px"
-                             prop="status">
-                <template v-slot="{row}">
-                    <badge class="badge-dot mr-4" type="">
-                        <i :class="`bg-${row.statusType}`"></i>
-                        <span class="status" :class="`text-${row.statusType}`">{{row.status}}</span>
-                    </badge>
-                </template>
-            </el-table-column>
-
-            <!--el-table-column label="Users" min-width="190px">
-                <div class="avatar-group">
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Ryan Tompson">
-                        <img alt="Image placeholder" src="img/theme/team-1.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Romina Hadid">
-                        <img alt="Image placeholder" src="img/theme/team-2.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Alexander Smith">
-                        <img alt="Image placeholder" src="img/theme/team-3.jpg">
-                    </a>
-                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
-                       data-original-title="Jessica Doe">
-                        <img alt="Image placeholder" src="img/theme/team-4.jpg">
-                    </a>
-                </div>
-            </el-table-column-->
-
-            <el-table-column label="Rating"
-                             prop="rating"
-                             min-width="240px">
-                <template v-slot="{row}">
-                    <div class="d-flex align-items-center">
-                        <span class="rating mr-2">{{row.rating}}%</span>
-                        <div>
-                            <base-progress :type="row.statusType" :value="row.rating"/>
-                        </div>
-                    </div>
-                </template>
-            </el-table-column>
         </el-table>
-
-        <b-card-footer class="py-4 d-flex justify-content-end">
-            <base-pagination v-model="currentPage" :per-page="10" :total="50"></base-pagination>
-        </b-card-footer>
     </b-card>
 </template>
 <script>
-  import projects from './../projects'
-  import { Table, TableColumn} from 'element-ui'
-  export default {
+    import articles from './../articles'
+    import { Table, TableColumn} from 'element-ui'
+    export default {
     name: 'light-table',
     components: {
-      [Table.name]: Table,
-      [TableColumn.name]: TableColumn
+        [Table.name]: Table,
+        [TableColumn.name]: TableColumn
     },
     data() {
-      return {
-        projects,
+        return {
+        articles,
         currentPage: 1
-      };
+        };
     }
-  }
+}
 </script>
