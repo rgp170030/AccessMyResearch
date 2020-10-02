@@ -8,7 +8,6 @@
                 </p>
             </h3>
         </b-card-header>
-
         <el-table class="table-responsive table-light"
                   header-row-class-name="thead-light"
                   :data="articles"
@@ -46,9 +45,9 @@
     </b-card>
 </template>
 <script>
-    import articles from './../articles'
-    import { Table, TableColumn} from 'element-ui'
-    export default {
+import articles from './articles'
+import { Table, TableColumn} from 'element-ui'
+export default {
     name: 'light-table',
     components: {
         [Table.name]: Table,
@@ -56,8 +55,8 @@
     },
     data() {
         return {
-        articles,
-        currentPage: 1
+            articles,
+            currentPage: 1
         };
     }
 }
