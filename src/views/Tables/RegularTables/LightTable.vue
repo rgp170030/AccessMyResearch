@@ -1,7 +1,12 @@
 <template>
     <b-card no-body>
         <b-card-header class="border-0">
-            <h3 class="mb-0">Articles</h3>
+            <h3 class="mb-0">Articles
+                <i style="float:right" class="fas fa-expand-arrows-alt"></i>
+                <p>Alphabetical
+                    <i style="padding-left:4px" class="fas fa-sort"></i>
+                </p>
+            </h3>
         </b-card-header>
 
         <el-table class="table-responsive table-light"
