@@ -25,10 +25,26 @@
     }
 }
 
+.SearchDropDown .dropdown-menu {
+    min-width: 360px;
+    padding: 1rem;
+
+    .dropdown-item {
+        padding: .5rem 1rem;
+        font-size: $font-size-sm;
+        > i,
+        > svg {
+            margin-right: 1rem;
+            font-size: 1rem;
+            vertical-align: -17%;
+        }
+    }
+}
+
 .dropdown-header {
     padding-left: 1rem;
     padding-right: 1rem;
-    color: $gray-100;
+    color: $gray-700;
     font-size: .625rem;
     text-transform: uppercase;
     font-weight: 700;
@@ -61,7 +77,7 @@
 //Size variations
 .dropdown-menu-sm {
     min-width: 100px;
-    border: $border-radius-lg;
+    border-radius: $border-radius-lg;
 }
 
 .dropdown-menu-lg {

@@ -19,3 +19,4 @@ intellij.webpack.js
 *.ntvs*
 *.njsproj
 *.sln
+src/views/Layout/DashboardNavbar.vue
