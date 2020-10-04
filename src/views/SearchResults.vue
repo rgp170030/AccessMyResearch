@@ -49,7 +49,7 @@ import DarkTable from "./Tables/RegularTables/DarkTable";
 import { Client } from "elasticsearch";
 import { Table, TableColumn } from "element-ui";
 
-const client = new Client({ node: "http://localhost:9200/" });
+const client = new Client({ node: "http://localhost:9600/" });
 
 export default {
   components: {
