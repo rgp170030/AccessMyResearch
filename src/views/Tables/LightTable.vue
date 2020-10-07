@@ -3,7 +3,7 @@
         <b-card-header class="border-0">
             <h3 class="mb-0">Articles
                 <i style="float:right" class="fas fa-expand-arrows-alt"></i>
-                <p>Alphabetical
+                <p>Rating
                     <i style="padding-left:4px" class="fas fa-sort"></i>
                 </p>
             </h3>

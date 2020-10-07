@@ -65,7 +65,7 @@
                 </li>
               </ul>
               </div>
-<!-- autocomplete start -->
+            <!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
               <b-dropdown variant="Primary" right text="">
@@ -240,7 +240,7 @@
                 </div>
               </b-dropdown>
             </div>
-            <!-- end here -->
+          <!-- end here -->
           </b-input-group>
         </b-form-group>
       </b-form>
@@ -267,28 +267,24 @@
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
           <b-dropdown-item to="/profile">
-            <i class="ni ni-single-02"></i>
+            <i class="fas fa-user"></i>
             <span>My Profile</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/notifications">
-            <i class="ni ni-bell-55"></i>
-            <span>Notifications</span>
-          </b-dropdown-item>
           <b-dropdown-item to="/activity">
-            <i class="ni ni-calendar-grid-58"></i>
+            <i class="far fa-calendar-alt"></i>
             <span>Activity</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
           <b-dropdown-item to="/settings">
-            <i class="ni ni-settings-gear-65"></i>
+            <i class="fas fa-cog"></i>
             <span>Settings</span>
           </b-dropdown-item>
           <b-dropdown-item to="/donate">
-            <i class="ni ni-satisfied"></i>
+            <i class="fas fa-donate"></i>
             <span>Donate</span>
           </b-dropdown-item>
           <b-dropdown-item to="/login">
-            <i class="ni ni-user-run"></i>
+            <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
           </b-dropdown-item>
         </template>
@@ -351,11 +347,11 @@ export default {
       searchModalVisible: false,
       searchQuery: "",
       timeTotal: 0,
-      // autocomplete start
+      //autocomplete start
       modal: false, 
       recentSearches: [],
       filteredRecentSearches: [],
-      // autocomplete end
+      //autocomplete end
       /*results_data_actual: [],
       results_data: [],*/
       search: { filter: null, text: "" },
