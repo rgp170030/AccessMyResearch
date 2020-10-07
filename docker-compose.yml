@@ -1,0 +1,65 @@
+version: '2.2'
+services:
+  node-frontend:
+    container_name: amr
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    stdin_open: true
+    tty: true
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    container_name: elasticsearch
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - http.cors.allow-methods=OPTIONS, HEAD, GET, POST, PUT, DELETE
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length
+      - http.cors.allow-credentials=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9300:9300
+      - 9200:9200
+    networks:
+      - elk
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.2
+    container_name: logstash
+    configs:
+      - source: ./config/logstash.conf
+        target: /etc/logstash/conf.d/logstash.conf
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.monitoring.enabled=true     
+    ports:
+      - 9600:9600
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./config/logstash.conf:/usr/share/logstash/config/logstash-sample.conf:ro
+
+networks:
+  elk:
+    driver: bridge
+
+volumes:
+  esdata1:
+    driver: local
