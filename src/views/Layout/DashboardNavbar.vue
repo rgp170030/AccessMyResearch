@@ -43,12 +43,29 @@
               ></span>
             </div>
             <b-form-input
-              @input="search_text()"
               id="search"
               v-model="search.text"
+              @input="filterRecentSearches"
+              @focus="modal = false"
+              autocomplete="off"
               type="text"
               placeholder="Search by Keyword or Author"
             ></b-form-input>
+            <!-- autocomplete start -->
+            <div
+              v-if="filteredRecentSearches && !modal"
+              class="AutoCompleteDropDown" 
+              ><ul class="list">
+                <li
+                    v-for="filteredRecentSearch in filteredRecentSearches"
+                    :key="filteredRecentSearch.id"
+                    @click="setSearch(filteredRecentSearch)"
+                >
+                {{ filteredRecentSearch }}
+                </li>
+              </ul>
+              </div>
+<!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
               <b-dropdown variant="Primary" right text="">
@@ -334,8 +351,13 @@ export default {
       searchModalVisible: false,
       searchQuery: "",
       timeTotal: 0,
-      results_data_actual: [],
-      results_data: [],
+      // autocomplete start
+      modal: false, 
+      recentSearches: [],
+      filteredRecentSearches: [],
+      // autocomplete end
+      /*results_data_actual: [],
+      results_data: [],*/
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       sortBy: [
@@ -536,6 +558,15 @@ export default {
   methods: {
     async onSubmit(evt) {
       this.timeTotal = 0;
+      let duplication = false; 
+      for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
+        if (this.recentSearches[i] == this.search.text){
+          duplication = true; 
+        }
+      }
+      if (!duplication){ //No duplication for recent searches allowed
+        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
+      }
       this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
     },
     capitalizeFirstLetter(string) {
@@ -548,18 +579,18 @@ export default {
       this.activeNotifications = false;
     },
     sort() {
-      //make a if-statement for the Sort By filter.
-      //console.log(this.search.filter);
-      //this.search.filter == "b"
-      //  ? this.results_data.sort(function(a, b) {
-      //      return b.likes - a.likes;
-      //    })
-      //  : this.results_data.sort(function(a, b) {
-      //      return b.ratings - a.ratings;
-      //    });
+      /*make a if-statement for the Sort By filter.
+      console.log(this.search.filter);
+      this.search.filter == "b"
+        ? this.results_data.sort(function(a, b) {
+            return b.likes - a.likes;
+          })
+        : this.results_data.sort(function(a, b) {
+            return b.ratings - a.ratings;
+          });*/
     },
-    search_text() {
-      //console.log(this.search.text);
+    search_text() { //FOR DATABASE IN FUTURE
+      /*console.log(this.search.text);
       var inside = this;
       this.results_data = this.results_data_actual.filter(function (results) {
         if (
@@ -569,8 +600,19 @@ export default {
         ) {
           return results;
         }
-      });
+      });*/
     },
+    //autocomplete start
+    filterRecentSearches () {
+      this.filteredRecentSearches = this.recentSearches.filter(recentSearch => {
+        return recentSearch.toLowerCase().startsWith(this.search.text.toLowerCase())
+      })
+    },
+    setSearch (recentSearch) {
+      this.search.text = recentSearch
+      this.modal = false
+    },
+    //autocomplete end
   },
 };
 </script>

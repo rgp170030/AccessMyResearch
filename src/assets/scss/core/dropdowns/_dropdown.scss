@@ -41,6 +41,22 @@
     }
 }
 
+.AutoCompleteDropDown .dropdown-menu {
+    min-width: 360px;
+    padding: 1rem;
+
+    .dropdown-item {
+        padding: .5rem 1rem;
+        font-size: $font-size-sm;
+        > i,
+        > svg {
+            margin-right: 1rem;
+            font-size: 1rem;
+            vertical-align: -17%;
+        }
+    }
+}
+
 .dropdown-header {
     padding-left: 1rem;
     padding-right: 1rem;
