@@ -4,7 +4,7 @@ Access My Research is being significantly overhauled to be more modern, responsi
 ## Goal
 Make Access My Research functional, beautiful, and quick
 
-## Getting Started
+## Getting Started in the CLI 
 1) From the AccessMyResearch (root) directory, run "npm install"
 2) Next, run "npm run dev" to build and test the code
 
@@ -14,6 +14,11 @@ Make Access My Research functional, beautiful, and quick
 3) npm run dev   - automatically builds all changes & runs the code locally/on network
 4) npm run serve - Serves the code (not going to be useful for a while)
 5) npm run lint  - Starts the Vue linter
+
+## Using Docker
+- You'll need [to install docker](https://docs.docker.com/get-docker/)
+- Run ``docker-compose up -d --build`` from the base directory containing the dockerfile file
+- Check ``docker ps`` and see it running! You should be able to access at 127.0.0.1:8080
 
 ## File Structure
 ```
@@ -141,11 +146,15 @@ Make Access My Research functional, beautiful, and quick
                 |-- RegularTables
                 |   |-- DarkTable.vue
                 |   |-- LightTable.vue
+                |-- projects.js
+                |-- users.js 
 ```
+
 
 ## Important Notes
 1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
 2) Check available color variables at src\assets\custom\_variables.scss
+
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
