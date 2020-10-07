@@ -12,6 +12,7 @@
               <h1 class="display-2 text-white">Hello Jesse</h1>
               <p class="text-white mt-0 mb-5">This is your profile page. Here, you can edit what people see on your profile. Add some of your hobbies and interests to stand out.</p>
               <a href="#!" class="btn btn-info">Edit profile</a>
+              <b-button type="submit" variant="primary" class="btn btn-info" to="interests">Edit Fields of Interest</b-button>
             </b-col>
           </b-row>
         </b-container>
