@@ -14,7 +14,7 @@
             header-row-class-name="thead-light"
             :data="results"
           >
-            <el-table-column label="Title" min-width="310px" prop="name">
+            <el-table-column label="Title" min-width="300px" prop="name">
               <template v-slot="{ row }">
                 <b-media no-body class="align-items-center">
                   <b-media-body>
@@ -34,7 +34,13 @@
             <el-table-column
               label="Message"
               prop="_source.message"
-              min-width="450px"
+              min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="View Count"
+              prop="_source.count"
+              min-width="150px"
             >
             </el-table-column>
           </el-table>
@@ -90,7 +96,7 @@ export default {
           body: {
             query: {
               query_string: {
-                fields: ["title", "author", "message"],
+                fields: ["title", "author", "message", "count"],
                 query: this.$route.query.text,
               },
             },
