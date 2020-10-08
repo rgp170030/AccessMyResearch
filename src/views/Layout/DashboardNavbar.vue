@@ -92,7 +92,6 @@
                             v-model="selectedSortBy"
                             :options="sortBy"
                           ></b-form-select>
-                          <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div> -->
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -119,7 +118,6 @@
                             :options="areas"
                             name="area"
                           ></b-form-checkbox-group>
-                          <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div>   -->
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -149,6 +147,35 @@
                             :options="expertise"
                             name="expertise"
                           ></b-form-checkbox-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.yearAccordion
+                        variant="primary"
+                        >Year</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="yearAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <vue-slider 
+                          v-model="value" 
+                          :min="1950"
+                          :max="2020"
+                          :enable-cross="false"
+                          ></vue-slider>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -300,12 +327,15 @@
 <script>
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
 import axios from 'axios';
 export default {
   components: {
     CollapseTransition,
     BaseNav,
     Modal,
+    VueSlider,
   },
   props: {
     type: {
@@ -358,6 +388,7 @@ export default {
       // autocomplete end
       /*results_data_actual: [],
       results_data: [],*/
+      value: [1950, 2020],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       sortBy: [
