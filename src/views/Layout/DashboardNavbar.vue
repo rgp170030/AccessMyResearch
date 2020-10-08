@@ -2,13 +2,11 @@
   <base-nav
     container-classes="container-fluid"
     class="navbar-top navbar-expand"
-    :class="{ 'navbar-dark': type === 'default' }"
-  >
+    :class="{ 'navbar-dark': type === 'default' }">
     <a
       href="#"
       aria-current="page"
-      class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"
-    >
+      class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active">
       {{ $route.name }}
     </a>
     <!-- Navbar links -->
@@ -19,9 +17,7 @@
           class="nav-link"
           href="#"
           data-action="search-show"
-          data-target="#navbar-search-main"
-        >
-          <i class="ni ni-zoom-split-in"></i>
+          data-target="#navbar-search-main">
         </a>
       </li>
     </b-navbar-nav>
@@ -33,14 +29,13 @@
           'navbar-search-light': type === 'light',
         }"
         id="navbar-search-main"
-        @submit="onSubmit"
-      >
+        @submit="onSubmit">
         <b-form-group class="mb-0">
           <b-input-group class="input-group-alternative input-group-merge">
             <div class="input-group-append">
-              <span class="input-group-text"
-                ><i class="fas fa-search"></i
-              ></span>
+              <span class="input-group-text">
+                <i class="fas fa-search"></i>
+                </span>
             </div>
             <b-form-input
               id="search"
@@ -49,18 +44,17 @@
               @focus="modal = false"
               autocomplete="off"
               type="text"
-              placeholder="Search by Keyword or Author"
-            ></b-form-input>
+              placeholder="Search by Keyword or Author">
+            </b-form-input>
             <!-- autocomplete start -->
             <div
               v-if="filteredRecentSearches && !modal"
-              class="AutoCompleteDropDown" 
-              ><ul class="list">
+              class="AutoCompleteDropDown">
+              <ul class="list">
                 <li
                     v-for="filteredRecentSearch in filteredRecentSearches"
                     :key="filteredRecentSearch.id"
-                    @click="setSearch(filteredRecentSearch)"
-                >
+                    @click="setSearch(filteredRecentSearch)">
                 {{ filteredRecentSearch }}
                 </li>
               </ul>
@@ -68,30 +62,28 @@
             <!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
-              <b-dropdown variant="Primary" right text="">
+              <b-dropdown variant="Primary bg-transparent" right text=""> <!--TODO: 'Primary'->'primary' & no border-->
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button
                         block
                         v-b-toggle.SortByAccordion
-                        variant="primary"
-                        >Sort By</b-button
-                      >
+                        variant="primary">
+                        Sort By</b-button>
                     </b-card-header>
                     <b-collapse
                       id="SortByAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-select
                             id="sortByFilter"
                             @input="sort()"
                             v-model="selectedSortBy"
-                            :options="sortBy"
-                          ></b-form-select>
+                            :options="sortBy">
+                          </b-form-select>
                           <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div> -->
                         </b-dropdown-group>
                       </b-card-body>
@@ -102,23 +94,21 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.areaAccordion variant="primary"
-                        >Area</b-button
-                      >
+                      <b-button block v-b-toggle.areaAccordion variant="primary">
+                        Area</b-button>
                     </b-card-header>
                     <b-collapse
                       id="areaAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="areaFilter"
                             v-model="selectedAreas"
                             :options="areas"
-                            name="area"
-                          ></b-form-checkbox-group>
+                            name="area">
+                          </b-form-checkbox-group>
                           <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div>   -->
                         </b-dropdown-group>
                       </b-card-body>
@@ -132,23 +122,21 @@
                       <b-button
                         block
                         v-b-toggle.expertiseAccordion
-                        variant="primary"
-                        >Expertise</b-button
-                      >
+                        variant="primary">
+                        Expertise</b-button>
                     </b-card-header>
                     <b-collapse
                       id="expertiseAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="expertiseFilter"
                             v-model="selectedExpertise"
                             :options="expertise"
-                            name="expertise"
-                          ></b-form-checkbox-group>
+                            name="expertise">
+                          </b-form-checkbox-group>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -158,15 +146,13 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.viewAccordion variant="primary"
-                        >View Count</b-button
-                      >
+                      <b-button block v-b-toggle.viewAccordion variant="primary">
+                        View Count</b-button>
                     </b-card-header>
                     <b-collapse
                       id="viewAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
@@ -187,23 +173,21 @@
                       <b-button
                         block
                         v-b-toggle.typeAccordion
-                        variant="primary"
-                        >Type</b-button
-                      >
+                        variant="primary">
+                        Type</b-button>
                     </b-card-header>
                     <b-collapse
                       id="typeAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="typeFilter"
                             v-model="selectedType"
                             :options="types"
-                            name="type"
-                          ></b-form-checkbox-group>
+                            name="type">
+                          </b-form-checkbox-group>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -216,23 +200,21 @@
                       <b-button
                         block
                         v-b-toggle.databaseAccordion
-                        variant="primary"
-                        >Database</b-button
-                      >
+                        variant="primary">
+                        Database</b-button>
                     </b-card-header>
                     <b-collapse
                       id="databaseAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="databaseFilter"
                             v-model="selectedDatabase"
                             :options="databases"
-                            name="database"
-                          ></b-form-checkbox-group>
+                            name="database">
+                          </b-form-checkbox-group>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -249,8 +231,7 @@
         class="nav-item"
         tag="li"
         title-tag="a"
-        title-classes="nav-link pr-0"
-      >
+        title-classes="nav-link pr-0">
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
