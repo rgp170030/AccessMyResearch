@@ -269,6 +269,14 @@
                     </b-collapse>
                   </b-card>
                 </div>
+                <div>
+                  <!-- need to arrange correctly  -->
+                  <b-form-checkbox-group
+                      v-model="selectedDefaultFilter"
+                      :options="defaultFilter"
+                      ></b-form-checkbox-group>
+                  <b-button class="btn float-right" variant="primary">Search</b-button>
+                </div>
               </b-dropdown>
             </div>
             <!-- end here -->
@@ -393,6 +401,13 @@ export default {
       /*results_data_actual: [],
       results_data: [],*/
       value: [1950, 2020],
+      selectedDefaultFilter: [],
+      defaultFilter: [
+        {
+          text: "Save current setting as default",
+          value: "default-selected",
+        },
+      ],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       sortBy: [
