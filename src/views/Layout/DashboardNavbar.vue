@@ -2,13 +2,11 @@
   <base-nav
     container-classes="container-fluid"
     class="navbar-top navbar-expand"
-    :class="{ 'navbar-dark': type === 'default' }"
-  >
+    :class="{ 'navbar-dark': type === 'default' }">
     <a
       href="#"
       aria-current="page"
-      class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"
-    >
+      class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active">
       {{ $route.name }}
     </a>
     <!-- Navbar links -->
@@ -19,9 +17,7 @@
           class="nav-link"
           href="#"
           data-action="search-show"
-          data-target="#navbar-search-main"
-        >
-          <i class="ni ni-zoom-split-in"></i>
+          data-target="#navbar-search-main">
         </a>
       </li>
     </b-navbar-nav>
@@ -33,48 +29,61 @@
           'navbar-search-light': type === 'light',
         }"
         id="navbar-search-main"
-        @submit="onSubmit"
-      >
+        @submit="onSubmit">
         <b-form-group class="mb-0">
           <b-input-group class="input-group-alternative input-group-merge">
             <div class="input-group-append">
-              <span class="input-group-text"
-                ><i class="fas fa-search"></i
-              ></span>
+              <span class="input-group-text">
+                <i class="fas fa-search"></i>
+                </span>
             </div>
             <b-form-input
-              @input="search_text()"
               id="search"
               v-model="search.text"
+              @input="filterRecentSearches"
+              @focus="modal = false"
+              autocomplete="off"
               type="text"
-              placeholder="Search by Keyword or Author"
-            ></b-form-input>
+              placeholder="Search by Keyword or Author">
+            </b-form-input>
+            <!-- autocomplete start -->
+            <div
+              v-if="filteredRecentSearches && !modal"
+              class="AutoCompleteDropDown">
+              <ul class="list">
+                <li
+                    v-for="filteredRecentSearch in filteredRecentSearches"
+                    :key="filteredRecentSearch.id"
+                    @click="setSearch(filteredRecentSearch)">
+                {{ filteredRecentSearch }}
+                </li>
+              </ul>
+              </div>
+            <!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
-              <b-dropdown variant="Primary" right text="">
+              <b-dropdown variant="Primary bg-transparent" right text=""> <!--TODO: 'Primary'->'primary' & no border-->
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button
                         block
                         v-b-toggle.SortByAccordion
-                        variant="primary"
-                        >Sort By</b-button
-                      >
+                        variant="primary">
+                        Sort By</b-button>
                     </b-card-header>
                     <b-collapse
                       id="SortByAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-select
                             id="sortByFilter"
                             @input="sort()"
                             v-model="selectedSortBy"
-                            :options="sortBy"
-                          ></b-form-select>
+                            :options="sortBy">
+                          </b-form-select>
                           <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div> -->
                         </b-dropdown-group>
                       </b-card-body>
@@ -85,23 +94,21 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.areaAccordion variant="primary"
-                        >Area</b-button
-                      >
+                      <b-button block v-b-toggle.areaAccordion variant="primary">
+                        Area</b-button>
                     </b-card-header>
                     <b-collapse
                       id="areaAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="areaFilter"
                             v-model="selectedAreas"
                             :options="areas"
-                            name="area"
-                          ></b-form-checkbox-group>
+                            name="area">
+                          </b-form-checkbox-group>
                           <!-- <div>Selected: <strong>{{ selectedAreas }}</strong></div>   -->
                         </b-dropdown-group>
                       </b-card-body>
@@ -115,23 +122,21 @@
                       <b-button
                         block
                         v-b-toggle.expertiseAccordion
-                        variant="primary"
-                        >Expertise</b-button
-                      >
+                        variant="primary">
+                        Expertise</b-button>
                     </b-card-header>
                     <b-collapse
                       id="expertiseAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="expertiseFilter"
                             v-model="selectedExpertise"
                             :options="expertise"
-                            name="expertise"
-                          ></b-form-checkbox-group>
+                            name="expertise">
+                          </b-form-checkbox-group>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -141,15 +146,13 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.viewAccordion variant="primary"
-                        >View Count</b-button
-                      >
+                      <b-button block v-b-toggle.viewAccordion variant="primary">
+                        View Count</b-button>
                     </b-card-header>
                     <b-collapse
                       id="viewAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
@@ -170,23 +173,21 @@
                       <b-button
                         block
                         v-b-toggle.typeAccordion
-                        variant="primary"
-                        >Type</b-button
-                      >
+                        variant="primary">
+                        Type</b-button>
                     </b-card-header>
                     <b-collapse
                       id="typeAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="typeFilter"
                             v-model="selectedType"
                             :options="types"
-                            name="type"
-                          ></b-form-checkbox-group>
+                            name="type">
+                          </b-form-checkbox-group>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -199,23 +200,21 @@
                       <b-button
                         block
                         v-b-toggle.databaseAccordion
-                        variant="primary"
-                        >Database</b-button
-                      >
+                        variant="primary">
+                        Database</b-button>
                     </b-card-header>
                     <b-collapse
                       id="databaseAccordion"
                       accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                      role="tabpanel">
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="databaseFilter"
                             v-model="selectedDatabase"
                             :options="databases"
-                            name="database"
-                          ></b-form-checkbox-group>
+                            name="database">
+                          </b-form-checkbox-group>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -223,7 +222,7 @@
                 </div>
               </b-dropdown>
             </div>
-            <!-- end here -->
+          <!-- end here -->
           </b-input-group>
         </b-form-group>
       </b-form>
@@ -232,8 +231,7 @@
         class="nav-item"
         tag="li"
         title-tag="a"
-        title-classes="nav-link pr-0"
-      >
+        title-classes="nav-link pr-0">
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
@@ -250,28 +248,24 @@
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
           <b-dropdown-item to="/profile">
-            <i class="ni ni-single-02"></i>
+            <i class="fas fa-user"></i>
             <span>My Profile</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/notifications">
-            <i class="ni ni-bell-55"></i>
-            <span>Notifications</span>
-          </b-dropdown-item>
           <b-dropdown-item to="/activity">
-            <i class="ni ni-calendar-grid-58"></i>
+            <i class="far fa-calendar-alt"></i>
             <span>Activity</span>
           </b-dropdown-item>
           <div class="dropdown-divider"></div>
           <b-dropdown-item to="/settings">
-            <i class="ni ni-settings-gear-65"></i>
+            <i class="fas fa-cog"></i>
             <span>Settings</span>
           </b-dropdown-item>
           <b-dropdown-item to="/donate">
-            <i class="ni ni-satisfied"></i>
+            <i class="fas fa-donate"></i>
             <span>Donate</span>
           </b-dropdown-item>
           <b-dropdown-item to="/login">
-            <i class="ni ni-user-run"></i>
+            <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
           </b-dropdown-item>
         </template>
@@ -334,8 +328,13 @@ export default {
       searchModalVisible: false,
       searchQuery: "",
       timeTotal: 0,
-      results_data_actual: [],
-      results_data: [],
+      //autocomplete start
+      modal: false, 
+      recentSearches: [],
+      filteredRecentSearches: [],
+      //autocomplete end
+      /*results_data_actual: [],
+      results_data: [],*/
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       sortBy: [
@@ -536,6 +535,15 @@ export default {
   methods: {
     async onSubmit(evt) {
       this.timeTotal = 0;
+      let duplication = false; 
+      for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
+        if (this.recentSearches[i] == this.search.text){
+          duplication = true; 
+        }
+      }
+      if (!duplication){ //No duplication for recent searches allowed
+        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
+      }
       this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
     },
     capitalizeFirstLetter(string) {
@@ -548,18 +556,18 @@ export default {
       this.activeNotifications = false;
     },
     sort() {
-      //make a if-statement for the Sort By filter.
-      //console.log(this.search.filter);
-      //this.search.filter == "b"
-      //  ? this.results_data.sort(function(a, b) {
-      //      return b.likes - a.likes;
-      //    })
-      //  : this.results_data.sort(function(a, b) {
-      //      return b.ratings - a.ratings;
-      //    });
+      /*make a if-statement for the Sort By filter.
+      console.log(this.search.filter);
+      this.search.filter == "b"
+        ? this.results_data.sort(function(a, b) {
+            return b.likes - a.likes;
+          })
+        : this.results_data.sort(function(a, b) {
+            return b.ratings - a.ratings;
+          });*/
     },
-    search_text() {
-      //console.log(this.search.text);
+    search_text() { //FOR DATABASE IN FUTURE
+      /*console.log(this.search.text);
       var inside = this;
       this.results_data = this.results_data_actual.filter(function (results) {
         if (
@@ -569,8 +577,19 @@ export default {
         ) {
           return results;
         }
-      });
+      });*/
     },
+    //autocomplete start
+    filterRecentSearches () {
+      this.filteredRecentSearches = this.recentSearches.filter(recentSearch => {
+        return recentSearch.toLowerCase().startsWith(this.search.text.toLowerCase())
+      })
+    },
+    setSearch (recentSearch) {
+      this.search.text = recentSearch
+      this.modal = false
+    },
+    //autocomplete end
   },
 };
 </script>

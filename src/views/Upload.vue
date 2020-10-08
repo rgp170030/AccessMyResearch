@@ -22,11 +22,11 @@
                                 <p>Upload a PDF version of the article and any images that should be attached</p>
                                 <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
                                 <label class="btn btn-secondary" for="fileElem">Choose File(s)</label>
+                                <button type="submit" class="float-right btn btn-primary">Upload Article</button>
                                 <small id="fileWarning" class="form-text text-muted">PDF/PNG/JPEG</small>
                             </form>
                             <progress id="progress-bar" max=100 value=0></progress>
                             <div id="gallery" ></div>
-                            <button type="submit" class="float-right btn btn-primary">Upload Article</button>
                         </div>
                     </form>
                 </div>
