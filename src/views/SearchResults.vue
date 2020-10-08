@@ -40,7 +40,8 @@
             <el-table-column
               label="View Count"
               prop="_source.count"
-              min-width="150px"
+              min-width="200px"
+              sortable="true"
             >
             </el-table-column>
           </el-table>
@@ -96,7 +97,7 @@ export default {
           body: {
             query: {
               query_string: {
-                fields: ["title", "author", "message", "count"],
+                fields: [ "title", "author", "message", "count"],
                 query: this.$route.query.text,
               },
             },
