@@ -170,12 +170,16 @@
                     >
                       <b-card-body>
                         <b-dropdown-group class="small">
+                          <br>
                           <vue-slider 
                           v-model="value" 
                           :min="1950"
                           :max="2020"
                           :enable-cross="false"
+                          :tooltip="'always'"
                           ></vue-slider>
+                          <br>
+                          <div>Years Selected: {{ value }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
