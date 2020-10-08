@@ -16,7 +16,7 @@ const routes = [
       },
       {
         path: '/upload',
-        name: 'upload an article',
+        name: 'Add Research Material',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Upload.vue')
       },
       {
