@@ -13,7 +13,6 @@
 </template>
 <script>
   import LightTable from "./Tables/RegularTables/LightTable";
-  import DarkTable from "./Tables/RegularTables/DarkTable";
   import { Auth } from 'aws-amplify';
   import { AmplifyEventBus } from 'aws-amplify-vue';
 
@@ -32,7 +31,6 @@
     },
     components: {
       LightTable,
-      DarkTable,
     },
     methods: {
       async findUser() 

@@ -73,6 +73,10 @@
                     <img alt="Image placeholder" src="img/theme/team-4.jpg"> <!--TODO: Show profile pic-->
                   </span>
           </b-media>
+          <b-media-body class="ml-2 d-none d-lg-block">
+                <span class="mb-0 text-sm font-weight-bold">Jesse Jones</span>
+              </b-media-body>
+          </b-media>
         </a>
 
         <template>
@@ -113,6 +117,7 @@
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
 import { Auth } from 'aws-amplify';
+import axios from 'axios';
 
 export default {
   components: {
@@ -133,6 +138,29 @@ export default {
       return this.capitalizeFirstLetter(name);
     }
   },
+  mounted() {
+    this.hover_flag = false;
+    var inside = this;
+    axios
+      .get("https://www.mocky.io/v2/5c7b98562f0000c013e59f07")
+      .then(function (response) {
+        //console.log(response);
+        inside.results_data_actual = response.data.data;
+        response.data.data.map(function (results) {
+          inside.likes.count += results.likes;
+        });
+        inside.results_data_actual = inside.results_data_actual.map(function (
+          results
+        ) {
+          results.active_like = false;
+          return results;
+        });
+        inside.results_data = response.data.data;
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+  },
   created() {
       if(this.$store.state.signedIn === true)
       {
@@ -145,10 +173,226 @@ export default {
       showMenu: false,
       searchModalVisible: false,
       searchQuery: '',
-      signedIn: false
+      signedIn: false,
+      timeTotal: 0,
+      //autocomplete start
+      modal: false, 
+      recentSearches: [],
+      filteredRecentSearches: [],
+      //autocomplete end
+      /*results_data_actual: [],
+      results_data: [],*/
+      search: { filter: null, text: "" },
+      selectedSortBy: "most-recent",
+      sortBy: [
+        {
+          text: "Most Recent",
+          value: "most-recent",
+        },
+        {
+          text: "Most Cited",
+          value: "most-cited",
+        },
+        {
+          text: "Most Discussed",
+          value: "most-discussed",
+        },
+        {
+          text: "Most Rated",
+          value: "most-rated",
+        },
+        {
+          text: "Highest Rated",
+          value: "highest-rated",
+        },
+        {
+          text: "Trending",
+          value: "trending",
+        },
+        {
+          text: "Expertise",
+          value: "expertise",
+        },
+      ],
+      selectedAreas: [],
+      areas: [
+        {
+          text: "Computer Science",
+          value: "cs",
+        },
+        {
+          text: "Electrical Engineering",
+          value: "ee",
+        },
+        {
+          text: "Neuroscience",
+          value: "ns",
+        },
+      ],
+      selectedExpertise: [],
+      expertise: [
+        {
+          text: "Anyone",
+          value: "any",
+        },
+        {
+          text: "1-5 Peer Review Publications",
+          value: "1-5",
+        },
+        {
+          text: "5-20 Peer Review Publications",
+          value: "5-20",
+        },
+        {
+          text: "20-100 Peer Review Publications",
+          value: "20-100",
+        },
+        {
+          text: "100+ Peer Review Publications",
+          value: "100+",
+        },
+      ],
+      selectedViewCount: [],
+      views: [
+        {
+          text: "Ascending",
+          value: "ascend",
+        },
+        {
+          text: "Descending",
+          value: "descend",
+        },
+      ],
+      selectedType: [],
+      types: [
+        {
+          text: "Peer Review",
+          value: "peer-review",
+        },
+        {
+          text: "Pre Print",
+          value: "pre-print",
+        },
+        {
+          text: "Book Chapter",
+          value: "book-chapter",
+        },
+        {
+          text: "Poster",
+          value: "poster",
+        },
+        {
+          text: "Presentation",
+          value: "presentation",
+        },
+        {
+          text: "Results",
+          value: "results",
+        },
+        {
+          text: "Figures",
+          value: "figures",
+        },
+        {
+          text: "Video",
+          value: "video",
+        },
+        {
+          text: "Stream",
+          value: "stream",
+        },
+        {
+          text: "Blog",
+          value: "blog",
+        },
+        {
+          text: "Vlog",
+          value: "vlog",
+        },
+        {
+          text: "Courses",
+          value: "courses",
+        },
+      ],
+      selectedDatabase: [],
+      databases: [
+        {
+          text: "Academic Search",
+          value: "academic-search",
+        },
+        {
+          text: "arXiv",
+          value: "arxiv",
+        },
+        {
+          text: "Association for Computing Machinery Digital Library",
+          value: "association-for-computing-machinery-digital-library",
+        },
+        {
+          text: "DBLP",
+          value: "dblp",
+        },
+        {
+          text: "GENESIS",
+          value: "genesis",
+        },
+        {
+          text: "Global Health",
+          value: "global-health",
+        },
+        {
+          text: "Google Scholar",
+          value: "google-scholar",
+        },
+        {
+          text: "HubMed",
+          value: "hubmed",
+        },
+        {
+          text: "IEEE Xplore",
+          value: "ieee-xplore",
+        },
+        {
+          text: "MEDLINE",
+          value: "medline",
+        },
+        {
+          text: "MyScienceWork",
+          value: "MyScienceWork",
+        },
+        {
+          text: "PubChem",
+          value: "pubchem",
+        },
+        {
+          text: "PubMed",
+          value: "pubmed",
+        },
+        {
+          text: "PubPsych",
+          value: "pubpsych",
+        },
+        {
+          text: "ScienceOpen",
+          value: "scienceopen",
+        },
+      ]
     };
   },
   methods: {
+    async onSubmit(evt) {
+      this.timeTotal = 0;
+      let duplication = false; 
+      for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
+        if (this.recentSearches[i] == this.search.text){
+          duplication = true; 
+        }
+      }
+      if (!duplication){ //No duplication for recent searches allowed
+        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
+      }
+      this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
+    },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -170,7 +414,43 @@ export default {
       {
         this.$router.push('login');
       }
-    }
+    },
+    sort() {
+      /*make a if-statement for the Sort By filter.
+      console.log(this.search.filter);
+      this.search.filter == "b"
+        ? this.results_data.sort(function(a, b) {
+            return b.likes - a.likes;
+          })
+        : this.results_data.sort(function(a, b) {
+            return b.ratings - a.ratings;
+          });*/
+    },
+    search_text() { //FOR DATABASE IN FUTURE
+      /*console.log(this.search.text);
+      var inside = this;
+      this.results_data = this.results_data_actual.filter(function (results) {
+        if (
+          results.place //https://www.freecodecamp.org/news/how-to-set-up-responsive-ui-search-in-vue-js-bf6007b7fc0f/
+            .toLowerCase()
+            .indexOf(inside.search.text.toLowerCase()) != "-1"
+        ) {
+          return results;
+        }
+      });*/
+    },
+    //autocomplete start
+    filterRecentSearches () {
+      this.filteredRecentSearches = this.recentSearches.filter(recentSearch => {
+        return recentSearch.toLowerCase().startsWith(this.search.text.toLowerCase())
+      })
+    },
+    setSearch (recentSearch) {
+      this.search.text = recentSearch
+      this.modal = false
+    },
+    //autocomplete end
+  },
   }
 };
 </script>
