@@ -133,7 +133,7 @@
                 attributes: {
                     email: this.email
                 },
-                validationData: [],  // optional
+                validationData: [],  //optional
                 })
                 .then(data => {
                     this.user = data.user

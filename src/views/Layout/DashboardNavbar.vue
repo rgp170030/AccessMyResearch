@@ -123,7 +123,7 @@ export default {
   components: {
     //CollapseTransition,
     BaseNav,
-    //Modal
+    //Modal,
   },
   props: {
     type: {
