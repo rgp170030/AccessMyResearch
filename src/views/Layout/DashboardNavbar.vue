@@ -76,7 +76,7 @@
           <b-media-body class="ml-2 d-none d-lg-block">
                 <span class="mb-0 text-sm font-weight-bold">Jesse Jones</span>
               </b-media-body>
-          </b-media>
+          <!-- </b-media> -->
         </a>
 
         <template>
@@ -121,9 +121,9 @@ import axios from 'axios';
 
 export default {
   components: {
-    CollapseTransition,
+    //CollapseTransition,
     BaseNav,
-    Modal
+    //Modal
   },
   props: {
     type: {
@@ -451,6 +451,5 @@ export default {
     },
     //autocomplete end
   },
-  }
 };
 </script>

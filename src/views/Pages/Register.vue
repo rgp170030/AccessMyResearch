@@ -83,7 +83,7 @@
                     </b-col>
                   </b-row>
                   <div class="text-center">
-                    <b-button type="submit" variant="primary" class="mt-4" to="interests">Create account</b-button>
+                    <b-button type="submit" variant="primary" class="mt-4">Create account</b-button>
                   </div>
                 </b-form>
               </validation-observer>
@@ -137,7 +137,7 @@
                 })
                 .then(data => {
                     this.user = data.user
-                    this.$router.push('login');
+                    this.$router.push('interests');
                   })
                 .catch(err => console.log(err));
       }

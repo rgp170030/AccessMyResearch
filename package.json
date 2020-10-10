@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@aws-amplify/ui-vue": "^0.2.21",
+    "amplify": "0.0.11",
     "aws-amplify": "^3.3.2",
     "aws-amplify-vue": "^2.1.2",
-    "bootstrap": "4.5.2",
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.2",

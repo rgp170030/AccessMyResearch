@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-  import LightTable from "./Tables/RegularTables/LightTable";
+  import LightTable from './Tables/LightTable';
   import { Auth } from 'aws-amplify';
   import { AmplifyEventBus } from 'aws-amplify-vue';
 
