@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-  import LightTable from "./Tables/RegularTables/LightTable";
+  import LightTable from './Tables/LightTable';
   import { Auth } from 'aws-amplify';
   import { AmplifyEventBus } from 'aws-amplify-vue';
 
@@ -39,7 +39,6 @@
           const user = await Auth.currentAuthenticatedUser();
           this.$store.state.signedIn = true;
           this.$store.state.user = user;
-          console.log(user);
         }
         catch(err){
           this.$store.state.signedIn = false;
