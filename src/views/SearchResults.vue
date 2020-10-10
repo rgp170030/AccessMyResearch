@@ -41,7 +41,7 @@
               label="View Count"
               prop="_source.count"
               min-width="200px"
-              sortable="true"
+              sortable
             >
             </el-table-column>
           </el-table>
