@@ -3,6 +3,12 @@
     <notifications></notifications>
     <side-bar>
       <template slot="links">
+      <div v-if="!signedIn">
+        <b-alert show>
+        <i class="fas fa-exclamation-circle fa-lg"></i>
+        &nbsp; In order to access these features, you must login. You can login in <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
+      </div>
+      <div @click="redirect">
         <sidebar-item
                   :link="{
                     name: 'Upload Article',
@@ -10,15 +16,18 @@
                     icon: 'fas fa-arrow-up text-pink'
                   }">
         </sidebar-item>
-        <b-dropdown-divider> </b-dropdown-divider>
-        <sidebar-item
-          :link="{
-            name: 'Home',
-            path: '/home',
-            icon: 'fas fa-home text-primary',
-          }"
-        >
-        </sidebar-item>
+      </div>
+      <b-dropdown-divider> </b-dropdown-divider>
+      
+      <sidebar-item
+        :link="{
+          name: 'Home',
+          path: '/home',
+          icon: 'fas fa-home text-primary',
+        }"
+      >
+      </sidebar-item>
+      <div @click="redirect">
         <sidebar-item
             :link="{
               name: 'Ask an Expert',
@@ -26,7 +35,9 @@
               icon: 'fas fa-glasses text-purple'
               }"
             >
-        </sidebar-item>
+          </sidebar-item>
+      </div>
+      <div @click="redirect">
         <sidebar-item
               :link="{
                 name: 'My Collections',
@@ -34,6 +45,7 @@
                 icon: 'fas fa-layer-group text-orange'
                 }">
         </sidebar-item>
+      </div>
       </template>
     </side-bar>
     <div class="main-content">
@@ -81,17 +93,34 @@
       DashboardContent,
       FadeTransition
     },
+    data() {
+      return {
+        signedIn: false
+      };
+    },
+    created() {
+      if(this.$store.state.signedIn === true)
+      {
+        this.signedIn = true;
+      }
+    },
     methods: {
       initScrollbar() {
         let isWindows = navigator.platform.startsWith('Win');
         if (isWindows) {
           initScrollbar('sidenav');
         }
-      }
+      },
+      redirect() {
+        if(this.$store.state.signedIn === false)
+        {
+          this.$router.push('login');
+        }
+    },
     },
     mounted() {
       this.initScrollbar()
-    }
+    },
   };
 </script>
 <style lang="scss">

@@ -17,6 +17,14 @@
 import Vue from 'vue';
 import DashboardPlugin from './plugins/dashboard-plugin';
 import App from './App.vue';
+import store from './store';
+import Amplify, * as AmplifyModules from 'aws-amplify';
+import { AmplifyPlugin } from 'aws-amplify-vue';
+import aws_exports from './aws-exports';
+
+Amplify.configure(aws_exports);
+
+Vue.use(AmplifyPlugin, AmplifyModules);
 
 // router setup
 import router from './routes/router';
@@ -27,5 +35,6 @@ Vue.use(DashboardPlugin);
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
+  router,
+  store
 });

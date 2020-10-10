@@ -6,8 +6,8 @@
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">Sign in with your username &amp; password or use your Google or LinkedIn account</p>
+              <h1 class="text-white">Forgot Password</h1>
+              <p class="text-lead text-white">To recover your password, please enter the username associated with your account below</p>
             </b-col>
           </b-row>
         </div>
@@ -24,23 +24,9 @@
       <b-row class="justify-content-center">
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
-            <b-card-header class="bg-transparent pb-5"  >
-              <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
-              <div class="btn-wrapper text-center">
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="img/SSO/linkedin.svg"></span>
-                  <span class="btn-inner--text">LinkedIn</span>
-                </a>
-                <a href="#" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon"><img src="img/SSO/google.svg"></span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
-              </div>
-            </b-card-header>
             <b-card-body class="px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
-                <small>Or sign in with us</small>
-              </div>
+                <div class="text-center text-muted mb-4">
+                </div>
                 <validation-observer v-slot="{handleSubmit}" ref="formValidator">
                   <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
                     <base-input alternative
@@ -51,32 +37,20 @@
                             placeholder="Username"
                             v-model="username">
                     </base-input>
-
-                    <base-input alternative
-                                class="mb-3"
-                                name="Password"
-                                :rules="{required: true, min: 6}"
-                                prepend-icon="fas fa-lock-open"
-                                type="password"
-                                placeholder="Password"
-                                v-model="password">
-                    </base-input>
-
-                    <b-form-checkbox v-model="rememberMe">Remember me</b-form-checkbox>
                     <div class="text-center">
-                      <base-button type="primary" native-type="submit" class="my-4">Sign in</base-button>
+                      <base-button type="primary" native-type="submit" class="my-4">Recover Password</base-button>
                     </div>
                   </b-form>
                 </validation-observer>
             </b-card-body>
           </b-card>
           <b-row class="mt-3">
-            <b-col cols="6">
-              <router-link to="/forgotpassword" class="text-light"><small>Forgot password?</small></router-link>
+            <b-col>
+                <div class="text-center">
+                <small class="text-light">Don't have an account? Register</small>
+                <router-link to="/register" class="text-light"><small> here</small></router-link>
+                </div>
             </b-col><!--TODO: Make forgot password-->
-            <b-col cols="6" class="text-right">
-              <router-link to="/register" class="text-light"><small>Create new account</small></router-link>
-            </b-col>
           </b-row>
         </b-col>
       </b-row>
@@ -88,16 +62,13 @@
   import { AmplifyEventBus } from 'aws-amplify-vue';
 
   export default {
-    name: 'login',
+    name: 'forgotpassword',
     data() {
       return {
-        username: '',
-        password: '',
-        rememberMe: false
+        username: ''
       }
     },
     created() {
-      this.$forceUpdate();
       this.findUser();
 
       if(this.$store.state.signedIn === true)
@@ -122,12 +93,11 @@
     methods: {
       onSubmit() {
         //TODO: API call for login here
-        Auth.signIn(this.username, this.password).then(user => {
-            this.$store.state.signedIn = !!user;
-            this.$store.state.user = user;
-            this.$router.push('home');
-          })
-          .catch(err => console.log(err));
+        Auth.forgotPassword(this.username)
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+        this.$store.state.user = this.username;
+        this.$router.push('codeverification');
       },
       async findUser() 
       {
