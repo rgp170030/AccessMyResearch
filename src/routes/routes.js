@@ -101,6 +101,16 @@ const routes = [
         name: 'register',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
       },
+      {
+        path: '/forgotpassword',
+        name: 'forgotpassword',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/ForgotPassword.vue')
+      },
+      {
+        path: '/codeverification',
+        name: 'codeverification',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/CodeVerification.vue')
+      },
       { path: '*', component: NotFound }
     ]
   }
