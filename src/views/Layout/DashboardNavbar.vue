@@ -114,7 +114,7 @@
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="areaFilter"
-                            v-model="selectedAreas"
+                            v-model="selectedFilters"
                             :options="areas"
                             name="area"
                           ></b-form-checkbox-group>
@@ -143,7 +143,7 @@
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="expertiseFilter"
-                            v-model="selectedExpertise"
+                            v-model="selectedFilters"
                             :options="expertise"
                             name="expertise"
                           ></b-form-checkbox-group>
@@ -186,7 +186,7 @@
                   </b-card>
                 </div>
 
-                <div class="accordion" role="tablist">
+                <!-- <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button block v-b-toggle.viewAccordion variant="primary"
@@ -210,7 +210,7 @@
                       </b-card-body>
                     </b-collapse>
                   </b-card>
-                </div>
+                </div> -->
 
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
@@ -231,7 +231,7 @@
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="typeFilter"
-                            v-model="selectedType"
+                            v-model="selectedFilters"
                             :options="types"
                             name="type"
                           ></b-form-checkbox-group>
@@ -260,7 +260,7 @@
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="databaseFilter"
-                            v-model="selectedDatabase"
+                            v-model="selectedFilters"
                             :options="databases"
                             name="database"
                           ></b-form-checkbox-group>
@@ -272,7 +272,7 @@
                 <div>
                   <!-- need to arrange correctly  -->
                   <b-form-checkbox-group
-                      v-model="selectedDefaultFilter"
+                      v-model="selectedFilters"
                       :options="defaultFilter"
                       ></b-form-checkbox-group>
                   <b-button class="btn float-right" variant="primary">Search</b-button>
@@ -401,7 +401,7 @@ export default {
       /*results_data_actual: [],
       results_data: [],*/
       value: [1950, 2020],
-      selectedDefaultFilter: [],
+      selectedFilters: [],
       defaultFilter: [
         {
           text: "Save current setting as default",
@@ -440,7 +440,6 @@ export default {
           value: "expertise",
         },
       ],
-      selectedAreas: [],
       areas: [
         {
           text: "Computer Science",
@@ -455,7 +454,6 @@ export default {
           value: "ns",
         },
       ],
-      selectedExpertise: [],
       expertise: [
         {
           text: "Anyone",
@@ -478,18 +476,17 @@ export default {
           value: "100+",
         },
       ],
-      selectedViewCount: [],
-      views: [
-        {
-          text: "Ascending",
-          value: "ascend",
-        },
-        {
-          text: "Descending",
-          value: "descend",
-        },
-      ],
-      selectedType: [],
+      // selectedViewCount: [],
+      // views: [
+      //   {
+      //     text: "Ascending",
+      //     value: "ascend",
+      //   },
+      //   {
+      //     text: "Descending",
+      //     value: "descend",
+      //   },
+      // ],
       types: [
         {
           text: "Peer Review",
@@ -540,7 +537,6 @@ export default {
           value: "courses",
         },
       ],
-      selectedDatabase: [],
       databases: [
         {
           text: "Academic Search",
