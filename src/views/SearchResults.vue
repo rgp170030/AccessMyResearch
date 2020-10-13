@@ -75,7 +75,7 @@ export default {
   computed: {
     text() {
       this.blacklistText = " ";
-      this.rawText = this.$route.query.text;
+      //this.rawText = this.$route.query.text;
       //alert(this.rawText)
       var re = /(?:^|\s)(-[a-z0-9]\w*)/gi; // finding words starting with -
       var match;
