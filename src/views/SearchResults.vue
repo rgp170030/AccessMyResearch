@@ -69,10 +69,20 @@ export default {
     return {
       results: [],
       timeTotal: 0,
+      blacklistText:"",
     };
   },
   computed: {
     text() {
+      this.blacklistText = " ";
+      this.rawText = this.$route.query.text;
+      //alert(this.rawText)
+      var re = /(?:^|\s)(-[a-z0-9]\w*)/gi; // finding words starting with -
+      var match;
+      while ((match = re.exec(this.$route.query.text)) != null){
+        this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words 
+      }
+      //alert(this.blacklistText)
       return this.$route.query.text || 1;
     },
   },
@@ -96,9 +106,19 @@ export default {
           index: "amr",
           body: {
             query: {
-              query_string: {
-                fields: [ "title", "author", "message", "count"],
-                query: this.$route.query.text,
+              bool: {
+                must_not:{
+                  query_string: {
+                    fields: [ "title", "author", "message", "count"],
+                    query: this.blacklistText,
+                  }
+                },
+                should:{
+                  query_string: {
+                    fields: [ "title", "author", "message", "count"],
+                    query: this.$route.query.text,
+                  }
+                },
               },
             },
           },
