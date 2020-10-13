@@ -47,25 +47,28 @@
               v-model="search.text"
               @input="filterRecentSearches"
               @focus="modal = false"
+              @click="openAutoComplete"
               autocomplete="off"
               type="text"
               placeholder="Search by Keyword or Author"
             ></b-form-input>
             <!-- autocomplete start -->
-            <div
-              v-if="filteredRecentSearches && !modal"
-              class="AutoCompleteDropDown" 
-              ><ul class="list">
-                <li
+            <div class="AutoCompleteDropDown"> 
+            <b-dropdown variant="Primary" right text="" id="autoCompleteDropDownButton">
+            <div v-if="filteredRecentSearches">
+              <ul>
+                <b-dropdown-item
                     v-for="filteredRecentSearch in filteredRecentSearches"
                     :key="filteredRecentSearch.id"
                     @click="setSearch(filteredRecentSearch)"
                 >
                 {{ filteredRecentSearch }}
-                </li>
+                </b-dropdown-item>
               </ul>
               </div>
-<!-- autocomplete start -->
+              </b-dropdown>
+              </div>
+<!-- autocomplete end -->
             <!-- start here  -->
             <div class="SearchDropDown">
               <b-dropdown variant="Primary" right text="">
@@ -655,8 +658,11 @@ export default {
       })
     },
     setSearch (recentSearch) {
-      this.search.text = recentSearch
-      this.modal = false
+      this.search.text = recentSearch;
+      this.modal = false;
+    },
+    openAutoComplete () {
+      $('#autoCompleteDropDownButton').click();
     },
     //autocomplete end
   },
