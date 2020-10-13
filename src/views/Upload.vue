@@ -49,13 +49,20 @@
                         <div id="drop-area">
                             <form class="my-form">
                                 <p>Upload a PDF version of the article and any images that should be attached</p>
-                                <input type="file" id="fileElem" multiple accept="image/*" @change="handleFiles">
+                                <input type="file" id="fileElem" multiple accept=".pdf,image/*" @change="handleFiles">
                                 <label class="btn btn-secondary" for="fileElem">Choose File(s)</label>
                                 <button type="submit" class="float-right btn btn-primary">Upload Article</button>
                                 <small id="fileWarning" class="form-text text-muted">PDF/PNG/JPEG</small>
                             </form>
                             <progress id="progress-bar" max=100 value=0></progress>
                             <div id="gallery" ></div>
+                        </div>
+                        <div>
+                            <ul>
+                                <li v-for="(file, index) in files" :key="file.name">
+                                    {{ index }}. {{ file.name }}
+                                </li>
+                            </ul>
                         </div>
                     </form>
                 </div>
@@ -66,6 +73,7 @@
 
 <script>
 import Multiselect from 'vue-multiselect';
+import upload from '@/util/upload';
 
 export default {
     data: function(){
@@ -150,7 +158,8 @@ export default {
                     ],
                     years: []
                 }
-            }
+            },
+            files: []
         };
     },
     computed: {
@@ -160,7 +169,7 @@ export default {
     },
     methods:{
         handleFiles: function(event){
-            console.log(event.target.files);
+            upload.setFiles(event.target.files); 
         },
         tag: function (args){
         },
@@ -169,11 +178,16 @@ export default {
                 name: newTag,
                 code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
             }
-            this.options.push(tag)
-            this.value.push(tag)
+
+            var authors = this.authors;
+            authors.options.push(tag);
+            authors.value.push(tag);
         }
     },
     mounted: function(){
+        var uploadElement = document.getElementById('drop-area');
+        upload.init(uploadElement, this);
+
         var now = new Date();
         var selected = this.date.selected;
         selected.day = now.getDay();
