@@ -1,11 +1,9 @@
 <template>
     <b-tab title="Manage Ignored Users">
         <b-list-group
-            style="max-width: 400px;"
-        >
+            style="max-width: 400px;">
             <b-list-group-item
-                v-for="(user, index) in model.ignoredUsers" :key="user.name"
-            >
+                v-for="(user, index) in model.ignoredUsers" :key="user.name">
                 <div>
                     <div class="float-left v-center">
                         {{ user.name }}
@@ -17,8 +15,7 @@
                         class="float-right"
                         @mouseover="user.iconHover = true"
                         @mouseleave="user.iconHover = false"
-                        @click="unIgnoreUser(index)"
-                    >
+                        @click="unIgnoreUser(index)">
                         <b-icon :icon="getUnignoreIcon(user.iconHover)" font-scale="2" aria-hidden="true"><span class="sr-only">Un-ignore user</span></b-icon>
                     </b-button>
                 </div>
@@ -26,7 +23,6 @@
         </b-list-group>
     </b-tab>
 </template>
-
 <script>
 export default {
     data: function(){
@@ -55,7 +51,6 @@ export default {
     }
 }
 </script>
-
 <style scoped>
     .btn:focus {
         outline: none;
