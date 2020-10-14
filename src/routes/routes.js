@@ -75,6 +75,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/About.vue')
       },
       {
+        path: '/interests',
+        name: 'interests',
+        component: () => import('../views/Pages/Interests.vue')
+      },
+      {
         path: '/results',
         name: 'results',
         component: () => import(/* webpackChunkName: "demo" */ '../views/SearchResults.vue')
@@ -95,6 +100,16 @@ const routes = [
         path: '/register',
         name: 'register',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+      },
+      {
+        path: '/forgotpassword',
+        name: 'forgotpassword',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/ForgotPassword.vue')
+      },
+      {
+        path: '/codeverification',
+        name: 'codeverification',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/CodeVerification.vue')
       },
       { path: '*', component: NotFound }
     ]

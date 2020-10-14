@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "amrsocialnetwork",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authamrsocialnetwork671a0811",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

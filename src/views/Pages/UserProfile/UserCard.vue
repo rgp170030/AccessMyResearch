@@ -15,6 +15,7 @@
         <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
         <a href="#" class="btn btn-sm btn-default float-right">Message</a>
       </div>
+      <UserActionDropdown></UserActionDropdown>
     </b-card-header>
 
     <b-card-body class="pt-0">
@@ -58,6 +59,14 @@
   </b-card>
 </template>
 <script>
-export default {};
+import UserActionDropdown from "./UserActionsDropdown.vue";
+
+export default {
+  components:{
+    UserActionDropdown
+  }
+};
 </script>
-<style></style>
+
+<style>
+</style>

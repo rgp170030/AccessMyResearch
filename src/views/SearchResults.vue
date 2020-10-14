@@ -51,8 +51,7 @@
   </div>
 </template>
 <script>
-import LightTable from "./Tables/RegularTables/LightTable";
-import DarkTable from "./Tables/RegularTables/DarkTable";
+import LightTable from "./Tables/LightTable";
 import { Client } from "elasticsearch";
 import { Table, TableColumn } from "element-ui";
 import axios from 'axios';
@@ -62,7 +61,6 @@ const client = new Client({ node: "http://localhost:9600/" });
 export default {
   components: {
     LightTable,
-    DarkTable,
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
   },
@@ -145,19 +143,3 @@ export default {
   },
 };
 </script>
-<style>
-.el-table.table-dark {
-  background-color: #172b4d;
-  color: #f8f9fe;
-}
-
-.el-table.table-dark th,
-.el-table.table-dark tr {
-  background-color: #172b4d;
-}
-
-.el-table.table-dark td,
-.el-table.table-dark th.is-leaf {
-  border-bottom: none;
-}
-</style>

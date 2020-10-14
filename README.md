@@ -23,10 +23,15 @@ Make Access My Research functional, beautiful, and quick
 ## File Structure
 ```
 |-- Access My Research
-    |-- .gitignore
+    |-- .dockerignore
+    |-- .editorconfig
+    |-- .eslintrc.js
     |-- .gitattributes
+    |-- .gitignore
     |-- .postcssrc
     |-- babel.config.js
+    |-- docker-compose.yml
+    |-- dockerfile
     |-- package.json
     |-- README.md
     |-- vue.config
@@ -117,12 +122,18 @@ Make Access My Research functional, beautiful, and quick
         |   |-- upload.js
         |-- views
             |-- About.vue
+            |-- Activity.vue
             |-- Ask.vue
             |-- Collections.vue
             |-- Contact.vue
+            |-- Donate.vue
             |-- Help.vue
             |-- Home.vue
+            |-- Messages.vue
             |-- NotFoundPage.vue
+            |-- Notifications.vue
+            |-- SearchResults.vue
+            |-- Settings.vue
             |-- Upload.vue
             |-- Dashboard
             |   |-- PageVisitsTable.vue
@@ -141,20 +152,15 @@ Make Access My Research functional, beautiful, and quick
             |   |-- Register.vue
             |   |-- UserProfile.vue
             |-- Tables
+                |-- articles.js
                 |-- projects.js
                 |-- users.js
-                |-- RegularTables
-                |   |-- DarkTable.vue
-                |   |-- LightTable.vue
-                |-- projects.js
-                |-- users.js 
+                |-- LightTable.vue
 ```
-
 
 ## Important Notes
 1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
 2) Check available color variables at src\assets\custom\_variables.scss
-
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
