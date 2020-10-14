@@ -161,6 +161,7 @@ Make Access My Research functional, beautiful, and quick
 ## Important Notes
 1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
 2) Check available color variables at src\assets\custom\_variables.scss
+3) To test features that require an account, use the test credentials. Username: "krishnab" Password: "TestTest124"
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
