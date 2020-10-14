@@ -100,8 +100,11 @@ export default {
       this.results = [];
 
       startTime = new Date();
+      const searchQuery = {};
+      searchQuery[startTime] = this.$route.query.text;
+
       axios
-      .post('http://localhost:3000/search')
+      .post('http://localhost:3000/search', searchQuery)
       .then(function (response) {
         console.log(response);
       })

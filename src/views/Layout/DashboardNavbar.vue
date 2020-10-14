@@ -4,14 +4,20 @@
     class="navbar-top navbar-expand"
     :class="{ 'navbar-dark': type === 'default' }"
   >
-    <a href="#" aria-current="page" class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"> {{$route.name}} </a>
+    <a
+      href="#"
+      aria-current="page"
+      class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block active router-link-active"
+    >
+      {{ $route.name }}
+    </a>
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-auto">
       <b-form
         class="navbar-search form-inline mr-sm-3"
         :class="{
           'navbar-search-dark': type === 'default',
-          'navbar-search-light': type === 'light'
+          'navbar-search-light': type === 'light',
         }"
         id="navbar-search-main"
         @submit="onSubmit"
@@ -30,17 +36,21 @@
               @focus="modal = false"
               autocomplete="off"
               type="text"
-              placeholder="Search by Keyword or Author">
+              placeholder="Search by Keyword or Author"
+            >
             </b-form-input>
             <!-- autocomplete start -->
-            <div v-if="filteredRecentSearches && !modal" class="AutoCompleteDropDown">
+            <div
+              v-if="filteredRecentSearches && !modal"
+              class="AutoCompleteDropDown"
+            >
               <ul class="list">
                 <li
                   v-for="filteredRecentSearch in filteredRecentSearches"
-                  :key="filteredRecentSearch.id"
-                  @click="setSearch(filteredRecentSearch)"
+                  :key="filteredRecentSearch[0]"
+                  @click="setSearch(filteredRecentSearch[1])"
                 >
-                  {{ filteredRecentSearch }}
+                  {{ filteredRecentSearch[1] }}
                 </li>
               </ul>
             </div>
@@ -51,7 +61,12 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.SortByAccordion variant="primary">Sort By</b-button>
+                      <b-button
+                        block
+                        v-b-toggle.SortByAccordion
+                        variant="primary"
+                        >Sort By</b-button
+                      >
                     </b-card-header>
                     <b-collapse
                       id="SortByAccordion"
@@ -75,7 +90,9 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.areaAccordion variant="primary">Area</b-button>
+                      <b-button block v-b-toggle.areaAccordion variant="primary"
+                        >Area</b-button
+                      >
                     </b-card-header>
                     <b-collapse
                       id="areaAccordion"
@@ -99,7 +116,12 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.expertiseAccordion variant="primary">Expertise</b-button>
+                      <b-button
+                        block
+                        v-b-toggle.expertiseAccordion
+                        variant="primary"
+                        >Expertise</b-button
+                      >
                     </b-card-header>
                     <b-collapse
                       id="expertiseAccordion"
@@ -123,10 +145,7 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button
-                        block
-                        v-b-toggle.yearAccordion
-                        variant="primary"
+                      <b-button block v-b-toggle.yearAccordion variant="primary"
                         >Year</b-button
                       >
                     </b-card-header>
@@ -137,15 +156,15 @@
                     >
                       <b-card-body>
                         <b-dropdown-group class="small">
-                          <br>
-                          <vue-slider 
-                          v-model="value" 
-                          :min="1950"
-                          :max="2020"
-                          :enable-cross="false"
-                          :tooltip="'always'"
+                          <br />
+                          <vue-slider
+                            v-model="value"
+                            :min="1950"
+                            :max="2020"
+                            :enable-cross="false"
+                            :tooltip="'always'"
                           ></vue-slider>
-                          <br>
+                          <br />
                           <div>Years Selected: {{ value }}</div>
                         </b-dropdown-group>
                       </b-card-body>
@@ -182,7 +201,9 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.typeAccordion variant="primary">Type</b-button>
+                      <b-button block v-b-toggle.typeAccordion variant="primary"
+                        >Type</b-button
+                      >
                     </b-card-header>
                     <b-collapse
                       id="typeAccordion"
@@ -206,7 +227,12 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.databaseAccordion variant="primary">Database</b-button>
+                      <b-button
+                        block
+                        v-b-toggle.databaseAccordion
+                        variant="primary"
+                        >Database</b-button
+                      >
                     </b-card-header>
                     <b-collapse
                       id="databaseAccordion"
@@ -229,10 +255,12 @@
                 <div>
                   <!-- need to arrange correctly  -->
                   <b-form-checkbox-group
-                      v-model="selectedFilters"
-                      :options="defaultFilter"
-                      ></b-form-checkbox-group>
-                  <b-button class="btn float-right" variant="primary">Search</b-button>
+                    v-model="selectedFilters"
+                    :options="defaultFilter"
+                  ></b-form-checkbox-group>
+                  <b-button class="btn float-right" variant="primary"
+                    >Search</b-button
+                  >
                 </div>
               </b-dropdown>
             </div>
@@ -242,11 +270,19 @@
       </b-form>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-        <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false" @click="redirect">
-            <i class="fas fa-bell"></i>
+        <a
+          slot="title-container"
+          class="nav-link nav-link-icon"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          @click="redirect"
+        >
+          <i class="fas fa-bell"></i>
         </a>
-        <a class="dropdown-item" to="/notifications"> <!-- TODO: Link to Notification-->
+        <a class="dropdown-item" to="/notifications">
+          <!-- TODO: Link to Notification-->
           <i class="fas fa-book-open"></i>
           New Article by: Mehmet Günal
           <small class="form-text text-muted">Yesterday</small>
@@ -263,11 +299,19 @@
         </a>
       </base-dropdown>
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-        <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false" @click="redirect">
-            <i class="fas fa-comment"></i>
+        <a
+          slot="title-container"
+          class="nav-link nav-link-icon"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          @click="redirect"
+        >
+          <i class="fas fa-comment"></i>
         </a>
-        <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
+        <a class="dropdown-item" to="/messages">
+          <!-- TODO: Link to Messages-->
           <i class="fas fa-comment"></i>
           Mehmet Günal: Check out my research!
           <small class="form-text text-muted">Yesterday</small>
@@ -283,20 +327,23 @@
           All Messages
         </a>
       </base-dropdown>
-      <base-dropdown menu-on-right
-                     class="nav-item"
-                     tag="li"
-                     title-tag="a"
-                     title-classes="nav-link pr-0">
+      <base-dropdown
+        menu-on-right
+        class="nav-item"
+        tag="li"
+        title-tag="a"
+        title-classes="nav-link pr-0"
+      >
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="img/theme/team-4.jpg"> <!--TODO: Show profile pic-->
-                  </span>
+            <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder" src="img/theme/team-4.jpg" />
+              <!--TODO: Show profile pic-->
+            </span>
           </b-media>
           <b-media-body class="ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm font-weight-bold">Jesse Jones</span>
-              </b-media-body>
+            <span class="mb-0 text-sm font-weight-bold">Jesse Jones</span>
+          </b-media-body>
           <!-- </b-media> -->
         </a>
 
@@ -313,6 +360,12 @@
             <span>Activity</span>
           </b-dropdown-item>
           <div class="dropdown-divider" v-if="signedIn"></div>
+          <b-dropdown-item to="/search-history">
+            <i class="fas fa-user"></i>
+            <span>Search History</span>
+          </b-dropdown-item>
+          <div class="dropdown-divider" v-if="signedIn"></div>
+
           <b-dropdown-item to="/settings" v-if="signedIn">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
@@ -337,10 +390,10 @@
 <script>
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
-import { Auth } from 'aws-amplify';
-import axios from 'axios';
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/default.css";
+import { Auth } from "aws-amplify";
+import axios from "axios";
 
 export default {
   components: {
@@ -352,36 +405,37 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'default', // default|light
-      description: 'Look of the dashboard navbar. Default (Green) or light (gray)'
-    }
+      default: "default", // default|light
+      description:
+        "Look of the dashboard navbar. Default (Green) or light (gray)",
+    },
   },
   computed: {
     routeName() {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);
-    }
+    },
   },
   mounted() {
     this.hover_flag = false;
     var inside = this;
+    this.getSearchHistory();
   },
   created() {
-      if(this.$store.state.signedIn === true)
-      {
-        this.signedIn = true;
-      }
+    if (this.$store.state.signedIn === true) {
+      this.signedIn = true;
+    }
   },
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: '',
+      searchQuery: "",
       signedIn: false,
       timeTotal: 0,
       //autocomplete start
-      modal: false, 
+      modal: false,
       recentSearches: [],
       filteredRecentSearches: [],
       //autocomplete end
@@ -585,23 +639,24 @@ export default {
           text: "ScienceOpen",
           value: "scienceopen",
         },
-      ]
+      ],
     };
   },
   methods: {
     async onSubmit(evt) {
       this.timeTotal = 0;
-      let duplication = false; 
-      for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
-        if (this.recentSearches[i] == this.search.text){
-          duplication = true; 
-        }
-      }
-      if (!duplication){ //No duplication for recent searches allowed
-        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
-      }
-      this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
+
+      this.$router
+        .push({
+          path: "results",
+          query: { text: this.search.text, filter: this.search.filter },
+        })
+        .catch(() => {});
     },
+    async getSearchHistory() {
+      let history = await axios.get("http://localhost:3000/search");
+      this.recentSearches = Object.entries(history.data).slice(0,5).reverse();
+  },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -612,16 +667,16 @@ export default {
       this.activeNotifications = false;
     },
     signOut() {
-      Auth.signOut().then(data => {
-        this.$store.state.signedIn = !!data;
-        this.$router.push('login');
-      })
-      .catch(err => console.log(err));
+      Auth.signOut()
+        .then((data) => {
+          this.$store.state.signedIn = !!data;
+          this.$router.push("login");
+        })
+        .catch((err) => console.log(err));
     },
     redirect() {
-      if(this.$store.state.signedIn === false)
-      {
-        this.$router.push('login');
+      if (this.$store.state.signedIn === false) {
+        this.$router.push("login");
       }
     },
     sort() {
@@ -635,7 +690,8 @@ export default {
             return b.ratings - a.ratings;
           });*/
     },
-    search_text() { //FOR DATABASE IN FUTURE
+    search_text() {
+      //FOR DATABASE IN FUTURE
       /*console.log(this.search.text);
       var inside = this;
       this.results_data = this.results_data_actual.filter(function (results) {
@@ -649,16 +705,30 @@ export default {
       });*/
     },
     //autocomplete start
-    filterRecentSearches () {
-      this.filteredRecentSearches = this.recentSearches.filter(recentSearch => {
-        return recentSearch.toLowerCase().startsWith(this.search.text.toLowerCase())
-      })
+     filterRecentSearches() {
+      this.filteredRecentSearches = this.recentSearches.filter(
+        (s) => {
+          return s[1]
+            .toLowerCase()
+            .startsWith(this.search.text.toLowerCase());
+        }
+      );
+      console.log(this.filterRecentSearches)
     },
-    setSearch (recentSearch) {
-      this.search.text = recentSearch
-      this.modal = false
+    setSearch(recentSearch) {
+      this.search.text = recentSearch;
+      this.modal = false;
     },
     //autocomplete end
   },
 };
 </script>
+<style>
+.AutoCompleteDropDown {
+  position: absolute;
+background: white;
+border-radius: 4px;
+top: 45px;
+width: 350px;
+}
+</style>
