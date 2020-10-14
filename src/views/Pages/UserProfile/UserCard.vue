@@ -42,13 +42,13 @@
           Jesse Jones<span class="font-weight-light">, PhD</span>
         </h5>
         <div class="h5 font-weight-300">
-          <i class="ni location_pin mr-2"></i>Richardson, TX, United States
+          <i class="fas fa-map-marker-alt mr-2"></i>Richardson, TX, United States
         </div>
         <div class="h5 mt-4">
-          <i class="ni business_briefcase-24 mr-2"></i>Doctorate of Computer Science
+          <i class="fas fa-briefcase mr-2"></i>Doctorate of Computer Science
         </div>
         <div>
-          <i class="ni education_hat text-white mr-2"></i>University of Texas at Dallas
+          <i class="fas fa-user-graduate mr-2"></i>University of Texas at Dallas
         </div>
         <hr class="my-4">
         <p>I am very interested in artificial intelligence and machine learning</p>
