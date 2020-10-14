@@ -366,25 +366,6 @@ export default {
   mounted() {
     this.hover_flag = false;
     var inside = this;
-    axios
-      .get("https://www.mocky.io/v2/5c7b98562f0000c013e59f07")
-      .then(function (response) {
-        //console.log(response);
-        inside.results_data_actual = response.data.data;
-        response.data.data.map(function (results) {
-          inside.likes.count += results.likes;
-        });
-        inside.results_data_actual = inside.results_data_actual.map(function (
-          results
-        ) {
-          results.active_like = false;
-          return results;
-        });
-        inside.results_data = response.data.data;
-      })
-      .catch(function (error) {
-        // console.log(error);
-      });
   },
   data() {
     return {

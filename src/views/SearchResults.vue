@@ -55,6 +55,7 @@ import LightTable from "./Tables/RegularTables/LightTable";
 import DarkTable from "./Tables/RegularTables/DarkTable";
 import { Client } from "elasticsearch";
 import { Table, TableColumn } from "element-ui";
+import axios from 'axios';
 
 const client = new Client({ node: "http://localhost:9600/" });
 
@@ -101,6 +102,15 @@ export default {
       this.results = [];
 
       startTime = new Date();
+      axios
+      .post('http://localhost:3000/search')
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+         console.log(error);
+      });
+
       let searchResults = await client
         .search({
           index: "amr",

@@ -16,8 +16,8 @@ services:
   node-backend:
     container_name: amr-backend
     build:
-      context: .
-      dockerfile: dockerfile
+      context: ./server
+      dockerfile: dockerfile-server
     ports:
       - 3000:3000
     volumes:
@@ -25,6 +25,12 @@ services:
       - '/server/node_modules'
     stdin_open: true
     tty: true
+    networks:
+      - node_net
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
@@ -71,20 +77,16 @@ services:
   #     - ./config/logstash.conf:/usr/share/logstash/config/logstash.conf:ro
 
   redis:
+    container_name: cache
     image: "redis:alpine"
-
     command: redis-server
-
     ports:
-     - "6379:6379"
-
+     - 6379:6379
     volumes:
       - $PWD/redis-data:/var/lib/redis
       - ./config/redis.conf:/usr/local/etc/redis/redis.conf
-
     environment:
      - REDIS_REPLICATION_MODE=master
-
     networks:
       node_net:
         ipv4_address: 172.28.1.4

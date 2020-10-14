@@ -1,7 +1,4 @@
 FROM node:12.13.1-alpine
-WORKDIR /server
-COPY . /server/
-RUN npm install
 # make the 'app' folder the current working directory
 WORKDIR /app
 
@@ -17,7 +14,5 @@ EXPOSE 8080
 EXPOSE 9200
 EXPOSE 9300
 EXPOSE 9600
-EXPOSE 6379
-EXPOSE 3000
 
 CMD [ "npm", "run", "serve"]
