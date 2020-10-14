@@ -34,6 +34,7 @@
               v-model="search.text"
               @input="filterRecentSearches"
               @focus="modal = false"
+              @click="openAutoComplete"
               autocomplete="off"
               type="text"
               placeholder="Search by Keyword or Author"
@@ -156,47 +157,21 @@
                     >
                       <b-card-body>
                         <b-dropdown-group class="small">
-                          <br />
-                          <vue-slider
-                            v-model="value"
-                            :min="1950"
-                            :max="2020"
-                            :enable-cross="false"
-                            :tooltip="'always'"
+                          <br>
+                          <vue-slider 
+                          v-model="yearRange" 
+                          :min="1950"
+                          :max="2020"
+                          :enable-cross="false"
+                          :tooltip="'always'"
                           ></vue-slider>
-                          <br />
-                          <div>Years Selected: {{ value }}</div>
+                          <br>
+                          <div>Years Selected: {{ yearRange }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
                   </b-card>
                 </div>
-
-                <!-- <div class="accordion" role="tablist">
-                  <b-card no-body class="mb-1">
-                    <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.viewAccordion variant="primary"
-                        >View Count</b-button
-                      >
-                    </b-card-header>
-                    <b-collapse
-                      id="viewAccordion"
-                      accordion="my-accordion"
-                      role="tabpanel"
-                    >
-                      <b-card-body>
-                        <b-dropdown-group class="small">
-                          <b-form-checkbox-group
-                            id="viewCountFilter"
-                            v-model="selectedViewCount"
-                            :options="views"
-                            name="viewcount"
-                          ></b-form-checkbox-group>
-                        </b-dropdown-group>
-                      </b-card-body>
-                    </b-collapse>
-                  </b-card>
-                </div> -->
 
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
@@ -252,19 +227,38 @@
                     </b-collapse>
                   </b-card>
                 </div>
-                <div>
-                  <!-- need to arrange correctly  -->
-                  <b-form-checkbox-group
-                    v-model="selectedFilters"
-                    :options="defaultFilter"
-                  ></b-form-checkbox-group>
-                  <b-button class="btn float-right" variant="primary"
-                    >Search</b-button
-                  >
+
+                 <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.defaultAccordion
+                        variant="primary"
+                        >Default</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="defaultAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body v-if="defaultFilterCheckbox">
+                        <b-dropdown-group class="small">
+                          <div>{{ selectedFilters }}</div>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
                 </div>
+
+                <!-- Need to figure out why click isn't working first 3 times -->
+                <input type="checkbox" v-model="defaultFilterCheckbox" @click="defaultFilterCheckboxChecked()">
+                Save current filters as default
+                <b-button class="btn float-right" variant="primary">Search</b-button>
               </b-dropdown>
             </div>
-            <!-- end here -->
+
           </b-input-group>
         </b-form-group>
       </b-form>
@@ -417,6 +411,18 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.selectedFilters){
+      this.selectedFilters = localStorage.selectedFilters.split(",");
+    }
+
+    if (localStorage.yearRange){
+      this.yearRange = localStorage.yearRange.split(",");
+    }
+
+    if (localStorage.defaultFilterCheckbox){
+      this.defaultFilterCheckbox = localStorage.defaultFilterCheckbox;
+    }
+
     this.hover_flag = false;
     var inside = this;
     this.getSearchHistory();
@@ -438,17 +444,12 @@ export default {
       modal: false,
       recentSearches: [],
       filteredRecentSearches: [],
-      //autocomplete end
+      defaultFilterCheckbox: false,
+      // autocomplete end
       /*results_data_actual: [],
       results_data: [],*/
-      value: [1950, 2020],
+      yearRange: [1950, 2020],
       selectedFilters: [],
-      defaultFilter: [
-        {
-          text: "Save current setting as default",
-          value: "default-selected",
-        },
-      ],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       sortBy: [
@@ -517,17 +518,6 @@ export default {
           value: "100+",
         },
       ],
-      // selectedViewCount: [],
-      // views: [
-      //   {
-      //     text: "Ascending",
-      //     value: "ascend",
-      //   },
-      //   {
-      //     text: "Descending",
-      //     value: "descend",
-      //   },
-      // ],
       types: [
         {
           text: "Peer Review",
@@ -715,11 +705,28 @@ export default {
       );
       console.log(this.filterRecentSearches)
     },
-    setSearch(recentSearch) {
+    setSearch (recentSearch) {
       this.search.text = recentSearch;
       this.modal = false;
     },
+    openAutoComplete () {
+      $('#autoCompleteDropDownButton').click();
+    },
     //autocomplete end
+
+    //default filter start
+    defaultFilterCheckboxChecked () {     
+      localStorage.selectedFilters = this.selectedFilters
+      localStorage.yearRange = this.yearRange
+      localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox
+
+      if(localStorage.defaultFilterCheckbox == "true"){
+        localStorage.clear()
+        return
+      }
+       
+    },
+    //default filter end
   },
 };
 </script>
