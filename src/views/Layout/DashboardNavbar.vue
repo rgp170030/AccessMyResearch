@@ -580,64 +580,24 @@ export default {
       ],
       databases: [
         {
-          text: "Academic Search",
-          value: "academic-search",
-        },
-        {
           text: "arXiv",
           value: "arxiv",
         },
         {
-          text: "Association for Computing Machinery Digital Library",
-          value: "association-for-computing-machinery-digital-library",
+          text: "CORE",
+          value: "core",
         },
         {
           text: "DBLP",
           value: "dblp",
         },
         {
-          text: "GENESIS",
-          value: "genesis",
-        },
-        {
-          text: "Global Health",
-          value: "global-health",
-        },
-        {
-          text: "Google Scholar",
-          value: "google-scholar",
-        },
-        {
-          text: "HubMed",
-          value: "hubmed",
-        },
-        {
-          text: "IEEE Xplore",
-          value: "ieee-xplore",
-        },
-        {
-          text: "MEDLINE",
-          value: "medline",
-        },
-        {
-          text: "MyScienceWork",
-          value: "MyScienceWork",
-        },
-        {
-          text: "PubChem",
-          value: "pubchem",
-        },
-        {
           text: "PubMed",
           value: "pubmed",
         },
         {
-          text: "PubPsych",
-          value: "pubpsych",
-        },
-        {
-          text: "ScienceOpen",
-          value: "scienceopen",
+          text: "Unpaywall",
+          value: "unpaywall",
         },
       ],
     };
