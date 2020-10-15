@@ -71,10 +71,6 @@ export default {
             }
 
             self.setFiles(files);
-            //     files = [...files]
-            //initializeProgress(files.length)
-            //     files.forEach(uploadFile)
-            //     files.forEach(previewFile)
         }
 
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {

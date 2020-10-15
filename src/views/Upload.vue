@@ -10,6 +10,8 @@
                             <multiselect
                                 v-model="pubType.value"
                                 :options="pubType.options"
+                                :allowEmpty="false"
+                                :showLabels="false"
                             >
                             </multiselect>
                         </div>
@@ -18,6 +20,8 @@
                             <multiselect
                                 v-model="visibility.value"
                                 :options="visibility.options"
+                                :allowEmpty="false"
+                                :showLabels="false"
                             >
                             </multiselect>
                         </div>
@@ -116,12 +120,12 @@ export default {
     data: function(){
         return {
             pubType: {
-                value: null,
+                value: 'Article',
                 options: ["Article", "Book", "Chapter", "Code", "Conference Paper", "Cover Page", "Data", "Experiment Findings", "Method", "Negative Results", "Patent", "Poster",
                 "Preprint", "Presentation", "Raw Data", "Technical Report", "Thesis", "Research"]
             },
             visibility:{
-                value: null,
+                value: 'Accessible to Anyone',
                 options: ["Accessible to Anyone", "Accessible on Request", "Not Accessible"]
             },
             title: '',
