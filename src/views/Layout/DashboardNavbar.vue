@@ -78,7 +78,7 @@
                         <b-dropdown-group class="small">
                           <b-form-select
                             id="sortByFilter"
-                            @input="sort()"
+                            @input="sort"
                             v-model="selectedSortBy"
                             :options="sortBy"
                           ></b-form-select>
@@ -105,6 +105,7 @@
                           <b-form-checkbox-group
                             id="areaFilter"
                             v-model="selectedFilters"
+                            @input="sort" 
                             :options="areas"
                             name="area"
                           ></b-form-checkbox-group>
@@ -393,7 +394,7 @@ export default {
   components: {
     //CollapseTransition,
     BaseNav,
-    Modal,
+    //Modal,
     VueSlider,
   },
   props: {
@@ -426,6 +427,7 @@ export default {
     this.hover_flag = false;
     var inside = this;
     this.getSearchHistory();
+    
   },
   created() {
     if (this.$store.state.signedIn === true) {
@@ -668,6 +670,36 @@ export default {
       if (this.$store.state.signedIn === false) {
         this.$router.push("login");
       }
+    },
+    sort() {
+      if (this.search.text)
+      {
+        this.onSubmit();
+      }
+      
+      /*make a if-statement for the Sort By filter.
+      console.log(this.search.filter);
+      this.search.filter == "b"
+        ? this.results_data.sort(function(a, b) {
+            return b.likes - a.likes;
+          })
+        : this.results_data.sort(function(a, b) {
+            return b.ratings - a.ratings;
+          });*/
+    },
+    search_text() {
+      //FOR DATABASE IN FUTURE
+      /*console.log(this.search.text);
+      var inside = this;
+      this.results_data = this.results_data_actual.filter(function (results) {
+        if (
+          results.place //https://www.freecodecamp.org/news/how-to-set-up-responsive-ui-search-in-vue-js-bf6007b7fc0f/
+            .toLowerCase()
+            .indexOf(inside.search.text.toLowerCase()) != "-1"
+        ) {
+          return results;
+        }
+      });*/
     },
     //autocomplete start
      filterRecentSearches() {
