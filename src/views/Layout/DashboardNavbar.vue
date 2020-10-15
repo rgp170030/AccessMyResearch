@@ -42,17 +42,18 @@
             </b-form-input>
             <!-- autocomplete start -->
             <div
-              v-if="filteredRecentSearches"
+              v-if="filteredRecentSearches && modal"
               class="AutoCompleteDropDown"
             >
-              <ul class="list">
-                <li
+              <ul>
+                <b-dropdown-item
                   v-for="filteredRecentSearch in filteredRecentSearches"
                   :key="filteredRecentSearch[0]"
                   @click="setSearch(filteredRecentSearch[1])"
+
                 >
                   {{ filteredRecentSearch[1] }}
-                </li>
+                </b-dropdown-item>
               </ul>
             </div>
             <!-- autocomplete start -->
@@ -605,7 +606,7 @@ export default {
   methods: {
     async onSubmit(evt) {
       this.timeTotal = 0;
-
+      this.modal = false;
       this.$router
         .push({
           path: "results",
@@ -615,7 +616,7 @@ export default {
     },
     async getSearchHistory() {
       let history = await axios.get("http://localhost:3000/search");
-      this.recentSearches = Object.entries(history.data).slice(0,5).reverse();
+      this.recentSearches = Object.entries(history.data).reverse().slice(0,5);
   },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -671,6 +672,7 @@ export default {
     },
     //autocomplete start
      filterRecentSearches() {
+      this.getSearchHistory();
       this.filteredRecentSearches = this.recentSearches.filter(
         (s) => {
           return this.search.text && s[1]
