@@ -92,8 +92,7 @@ function uploadFile(file, i) {
 }
 
 export default {
-    pageData: {},
-    init: function(element, pageData){
+    init: function(element, opts){
         
         var self = this;
 
@@ -104,7 +103,12 @@ export default {
 
         //Handles files for upload
         function handleFiles(files) {
-            self.addFiles(...files);
+            if(files.length > 1){
+                alert("Can only add a signle file. Please only drop 1 file.");
+                return;
+            }
+
+            self.setFiles(files);
             //     files = [...files]
             //initializeProgress(files.length)
             //     files.forEach(uploadFile)
@@ -129,26 +133,49 @@ export default {
         //Handle dropped files
         element.addEventListener('drop', handleDrop, false);
 
-        this.pageData = pageData;
-    },
-    getFiles: function(){
-        return this.pageData.files;
+        this.opts = opts;
     },
     setFiles: function(files) {
-        this.pageData.files = [...files];
+        this.opts.files.length = 0;
+        this.addFiles(...files);
     },
     addFiles: function(...files){
         files.forEach(file => {
-            this.pageData.files.push(file);
+            this.opts.files.push(file);
         });
     },
     upload: function(){
-        var files = this.pageData.files;
+        var files = this.opts.files;
         if(files.length === 0){
-            console.error("NO FILES SILLY");
+            alert("Please select a publication to upload.");
+            return;
+        }
+        
+        if(files.length > 1){
+            alert("Cannot upload more than 1 publication at a time.");
             return;
         }
 
-        console.log("Well, you have files but the developer hasn't done anything with them.");
+        var file = files[0];
+
+        const xhr = new XMLHttpRequest();
+        
+        xhr.upload.addEventListener("progress", function(e) {
+            if (e.lengthComputable) {
+                const percentage = Math.round((e.loaded * 100) / e.total);
+                console.log('Upload percentage: ' + percentage);
+            }
+        }, false);
+        
+        xhr.upload.addEventListener("load", function(e){
+            console.log('Upload complete');
+        }, false);
+
+        xhr.open("POST", this.opts.urls.uploadEndpoint);
+        xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        xhr.send(formData);
     }
 };
