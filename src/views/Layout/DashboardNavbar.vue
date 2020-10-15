@@ -78,7 +78,7 @@
                         <b-dropdown-group class="small">
                           <b-form-select
                             id="sortByFilter"
-                            @input="sort()"
+                            @input="sort"
                             v-model="selectedSortBy"
                             :options="sortBy"
                           ></b-form-select>
@@ -105,6 +105,7 @@
                           <b-form-checkbox-group
                             id="areaFilter"
                             v-model="selectedFilters"
+                            @input="sort" 
                             :options="areas"
                             name="area"
                           ></b-form-checkbox-group>
@@ -393,7 +394,7 @@ export default {
   components: {
     //CollapseTransition,
     BaseNav,
-    Modal,
+    //Modal,
     VueSlider,
   },
   props: {
@@ -426,6 +427,7 @@ export default {
     this.hover_flag = false;
     var inside = this;
     this.getSearchHistory();
+    
   },
   created() {
     if (this.$store.state.signedIn === true) {
@@ -670,6 +672,11 @@ export default {
       }
     },
     sort() {
+      if (this.search.text)
+      {
+        this.onSubmit();
+      }
+      
       /*make a if-statement for the Sort By filter.
       console.log(this.search.filter);
       this.search.filter == "b"
