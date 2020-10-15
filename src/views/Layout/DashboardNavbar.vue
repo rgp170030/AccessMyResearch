@@ -42,7 +42,7 @@
             </b-form-input>
             <!-- autocomplete start -->
             <div
-              v-if="filteredRecentSearches && !modal"
+              v-if="filteredRecentSearches"
               class="AutoCompleteDropDown"
             >
               <ul class="list">
@@ -78,7 +78,7 @@
                         <b-dropdown-group class="small">
                           <b-form-select
                             id="sortByFilter"
-                            @input="sort()"
+                            @input="sort"
                             v-model="selectedSortBy"
                             :options="sortBy"
                           ></b-form-select>
@@ -105,6 +105,7 @@
                           <b-form-checkbox-group
                             id="areaFilter"
                             v-model="selectedFilters"
+                            @input="sort"
                             :options="areas"
                             name="area"
                           ></b-form-checkbox-group>
@@ -158,8 +159,8 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <br>
-                          <vue-slider 
-                          v-model="yearRange" 
+                          <vue-slider
+                          v-model="yearRange"
                           :min="1950"
                           :max="2020"
                           :enable-cross="false"
@@ -400,7 +401,7 @@ export default {
   components: {
     //CollapseTransition,
     BaseNav,
-    Modal,
+    //Modal,
     VueSlider,
   },
   props: {
@@ -679,6 +680,11 @@ export default {
       }
     },
     sort() {
+      if (this.search.text)
+      {
+        this.onSubmit();
+      }
+
       /*make a if-statement for the Sort By filter.
       console.log(this.search.filter);
       this.search.filter == "b"
@@ -707,7 +713,7 @@ export default {
      filterRecentSearches() {
       this.filteredRecentSearches = this.recentSearches.filter(
         (s) => {
-          return s[1]
+          return this.search.text && s[1]
             .toLowerCase()
             .startsWith(this.search.text.toLowerCase());
         }
@@ -719,12 +725,12 @@ export default {
       this.modal = false;
     },
     openAutoComplete () {
-      $('#autoCompleteDropDownButton').click();
-    },
+      this.modal = true;
+},
     //autocomplete end
 
     //default filter start
-    defaultFilterCheckboxChecked () {     
+    defaultFilterCheckboxChecked () {
       localStorage.selectedFilters = this.selectedFilters
       localStorage.yearRange = this.yearRange
       localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox
