@@ -4,7 +4,7 @@
         <card class="min-vh-100 main_body center">
             <div class="row card text-black">
                 <div class="col-lg mx-auto form p-4">
-                    <form>
+                    <div id="mainUpload">
                         <div class="form-group">
                             <label class="h2" for="pub-type">Publication Type</label>
                             <multiselect
@@ -84,24 +84,24 @@
                             <input type="text" class="form-control" placeholder="DOI" v-model="doi">
                         </div>
                         <div id="drop-area">
-                            <form class="my-form">
-                                <p>Upload a PDF version of the article and any images that should be attached</p>
+                            <div class="my-form">
+                                <p>Upload a PDF version of the article</p>
                                 <input type="file" id="fileElem" accept="application/pdf" @change="handleFiles">
                                 <label class="btn btn-secondary" for="fileElem">Choose File(s)</label>
-                                <button class="float-right btn btn-primary" @click="submitForm">Upload Article</button>
-                                <small id="fileWarning" class="form-text text-muted">PDF/PNG/JPEG</small>
-                            </form>
+                                <button class="float-right btn btn-primary" @click="submitForm">Upload Publication</button>
+                            </div>
+                            <small id="fileWarning" class="form-text text-muted">PDF</small>
                             <progress id="progress-bar" max=100 value=0></progress>
-                            <div id="gallery" ></div>
+                            <div id="gallery">
+                                <b-button
+                                    v-for="file in files" :key="file.name"
+                                    disabled
+                                >
+                                    {{ file.name }}
+                                </b-button>
+                            </div>
                         </div>
-                        <div>
-                            <ul>
-                                <li v-for="(file, index) in files" :key="file.name">
-                                    {{ index }}. {{ file.name }}
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </card>
@@ -122,16 +122,20 @@ export default {
             },
             visibility:{
                 value: null,
-                options: ["Public", "Private", "Personal"]
+                options: ["Accessible to Anyone", "Accessible on Request", "Not Accessible"]
             },
             title: '',
             authors: {
                 value: [],  
                 options: [
                     {
-                        name: "Javascript",
-                        code: "js"
-                    }
+                        name: "Samuel Bell",
+                        code: "sib170001"
+                    },
+                    {
+                        name: "Anon Laosirilurchakai",
+                        code: "axl164630"
+                    },
                 ]
             },
             abstract: '',
@@ -295,10 +299,13 @@ export default {
     },
     mounted: function(){
         var uploadElement = document.getElementById('drop-area');
-        upload.init(uploadElement, {
+        var progressBar = document.getElementById('progress-bar');
+        upload.init({
+            element: uploadElement,
+            progressBar: progressBar,
             files: this.files,
             urls: {
-                uploadEndpoint: 'https://localhost:5001/api/upload'
+                uploadEndpoint: 'https://localhost:5001/api/upload' //hard-coded for now... should formalize this somehow in the future.
             }
         });
 

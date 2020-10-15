@@ -32,15 +32,6 @@ function unhighlight(e) {
     this.classList.remove('highlight')
 }
 
-//Sets up progress bar
-function initializeProgress(numFiles) {
-    progressBar.value = 0
-    uploadProgress = []
-    for(let i = numFiles; i > 0; i--) {
-        uploadProgress.push(0)
-    }
-}
-
 //Updated the progress bar as files upload
 function updateProgress(fileNumber, percent) {
     uploadProgress[fileNumber] = percent
@@ -60,40 +51,11 @@ function previewFile(file) {
     }
 }
 
-//Uploads the file to the URL and completes progress bar
-function uploadFile(file, i) {
-    var xhr = new XMLHttpRequest()
-    var formData = new FormData()
-    xhr.open('POST', 'UPLOAD URL GOES HERE', true); //TODO: Put upload URL here
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    //Update progress (can be used to show progress indicator)
-    xhr.upload.addEventListener("progress", function(e) {
-        updateProgress(i, (e.loaded * 100.0 / e.total) || 100)
-    });
-    //Set progress bar to complete or there is an error
-    xhr.addEventListener('readystatechange', function(e) {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            updateProgress(i, 100) // <- Add this
-        }
-        else if (xhr.readyState == 4 && xhr.status != 200) {
-            //TODO: Make it report an error
-        }
-    });
-    formData.append('upload_preset', 'ujpu6gyk');
-    formData.append('file', file);
-    xhr.send(formData);
-
-    var url = '';
-    fetch(url, {
-
-    })
-    .then(() => {})
-    .catch(() => {});
-}
-
 export default {
-    init: function(element, opts){
+    init: function(opts){
         
+        var element = opts.element;
+
         var self = this;
 
         //Handles a file drop, calling handleFiles()
@@ -144,7 +106,11 @@ export default {
             this.opts.files.push(file);
         });
     },
+    updateProgress: function(percent){
+        this.opts.progressBar.value = percent;
+    },
     upload: function(data){
+        var self = this;
 
         var files = this.opts.files;
         if(files.length === 0){
@@ -164,12 +130,13 @@ export default {
         xhr.upload.addEventListener("progress", function(e) {
             if (e.lengthComputable) {
                 const percentage = Math.round((e.loaded * 100) / e.total);
-                console.log('Upload percentage: ' + percentage);
+                self.updateProgress(percentage);
             }
         }, false);
         
         xhr.upload.addEventListener("load", function(e){
-            console.log('Upload complete');
+            self.updateProgress(100);
+            alert("File Upload Completed!");
         }, false);
 
         xhr.open("POST", this.opts.urls.uploadEndpoint);
