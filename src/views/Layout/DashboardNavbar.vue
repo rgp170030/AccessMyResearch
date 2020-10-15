@@ -271,7 +271,7 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="redirect"
+          @click="toggleNotificationDropDown"
         >
           <i class="fas fa-bell"></i>
         </a>
@@ -286,6 +286,13 @@
           New friend: Mehmet Günal
           <small class="form-text text-muted">1 week ago</small>
         </a>
+        <span v-for="(key, val) in this.reminders" v-bind:key="val">
+          <a class="dropdown-item" to="/notifications">
+            <i class="fas fa-search"></i>
+              Search for: {{val}}
+            <small class="form-text text-muted">{{key}}</small>
+          </a>
+        </span>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" to="/notifications">
           <i class="fas fa-clock"></i>
@@ -426,6 +433,7 @@ export default {
     this.hover_flag = false;
     var inside = this;
     this.getSearchHistory();
+    this.getReminders();
   },
   created() {
     if (this.$store.state.signedIn === true) {
@@ -440,6 +448,7 @@ export default {
       searchQuery: "",
       signedIn: false,
       timeTotal: 0,
+      reminders: [],
       //autocomplete start
       modal: false,
       recentSearches: [],
@@ -724,9 +733,11 @@ export default {
         localStorage.clear()
         return
       }
-       
+
     },
-    //default filter end
+    getReminders() {
+      this.reminders = JSON.parse(localStorage.reminders);
+    }
   },
 };
 </script>
