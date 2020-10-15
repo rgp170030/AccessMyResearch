@@ -88,6 +88,11 @@ const routes = [
         path: '/suggestedpeople',
         name: 'suggestions for you',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/SuggestedPeople.vue')
+      },
+      {
+        path: '/add',
+        name: 'Add Users',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/AddRemoveUsers.vue')
       }
     ]
   },

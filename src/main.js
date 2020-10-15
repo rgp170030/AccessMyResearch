@@ -18,6 +18,8 @@ import Vue from 'vue';
 import DashboardPlugin from './plugins/dashboard-plugin';
 import App from './App.vue';
 import store from './store';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+import infiniteScroll from 'vue-infinite-scroll';
 import Amplify, * as AmplifyModules from 'aws-amplify';
 import { AmplifyPlugin } from 'aws-amplify-vue';
 import aws_exports from './aws-exports';
@@ -25,6 +27,8 @@ import aws_exports from './aws-exports';
 Amplify.configure(aws_exports);
 
 Vue.use(AmplifyPlugin, AmplifyModules);
+Vue.component('pulse-loader', require('vue-spinner/src/PulseLoader.vue').default);
+Vue.use(infiniteScroll);
 
 // router setup
 import router from './routes/router';
