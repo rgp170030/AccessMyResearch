@@ -42,7 +42,7 @@
             </b-form-input>
             <!-- autocomplete start -->
             <div
-              v-if="filteredRecentSearches && !modal"
+              v-if="filteredRecentSearches"
               class="AutoCompleteDropDown"
             >
               <ul class="list">
@@ -669,36 +669,11 @@ export default {
         this.$router.push("login");
       }
     },
-    sort() {
-      /*make a if-statement for the Sort By filter.
-      console.log(this.search.filter);
-      this.search.filter == "b"
-        ? this.results_data.sort(function(a, b) {
-            return b.likes - a.likes;
-          })
-        : this.results_data.sort(function(a, b) {
-            return b.ratings - a.ratings;
-          });*/
-    },
-    search_text() {
-      //FOR DATABASE IN FUTURE
-      /*console.log(this.search.text);
-      var inside = this;
-      this.results_data = this.results_data_actual.filter(function (results) {
-        if (
-          results.place //https://www.freecodecamp.org/news/how-to-set-up-responsive-ui-search-in-vue-js-bf6007b7fc0f/
-            .toLowerCase()
-            .indexOf(inside.search.text.toLowerCase()) != "-1"
-        ) {
-          return results;
-        }
-      });*/
-    },
     //autocomplete start
      filterRecentSearches() {
       this.filteredRecentSearches = this.recentSearches.filter(
         (s) => {
-          return s[1]
+          return this.search.text && s[1]
             .toLowerCase()
             .startsWith(this.search.text.toLowerCase());
         }
@@ -710,8 +685,8 @@ export default {
       this.modal = false;
     },
     openAutoComplete () {
-      $('#autoCompleteDropDownButton').click();
-    },
+      this.modal = true;
+},
     //autocomplete end
 
     //default filter start
