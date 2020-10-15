@@ -4,7 +4,7 @@
         <card class="min-vh-100 main_body center">
             <div class="row card text-black">
                 <div class="col-lg mx-auto form p-4">
-                    <form @submit.prevent="submitForm">
+                    <form>
                         <div class="form-group">
                             <label class="h2" for="pub-type">Publication Type</label>
                             <multiselect
@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group">
                             <label class="h2" for="title_of_publication">Title</label>
-                            <input type="text" class="form-control" placeholder="Title">
+                            <input type="text" class="form-control" placeholder="Title" v-model="title">
                         </div>
                         <div class="form-group">
                             <label class="h2" for="Authors">Author(s)</label>
@@ -77,18 +77,18 @@
 
                         <div class="form-group">
                             <label class="h2" for="Abstract">Abstract</label>
-                            <textarea type="text" class="form-control" placeholder="Abstract" rows="5"></textarea>
+                            <textarea type="text" class="form-control" placeholder="Abstract" rows="5" v-model="abstract"></textarea>
                         </div>
                         <div class="form-group" v-if="doiVisible">
                             <label class="h2" for="doi">DOI (Optional)</label>
-                            <input type="text" class="form-control" placeholder="DOI">
+                            <input type="text" class="form-control" placeholder="DOI" v-model="doi">
                         </div>
                         <div id="drop-area">
                             <form class="my-form">
                                 <p>Upload a PDF version of the article and any images that should be attached</p>
                                 <input type="file" id="fileElem" accept="application/pdf" @change="handleFiles">
                                 <label class="btn btn-secondary" for="fileElem">Choose File(s)</label>
-                                <button type="submit" class="float-right btn btn-primary">Upload Article</button>
+                                <button class="float-right btn btn-primary" @click="submitForm">Upload Article</button>
                                 <small id="fileWarning" class="form-text text-muted">PDF/PNG/JPEG</small>
                             </form>
                             <progress id="progress-bar" max=100 value=0></progress>
@@ -124,6 +124,7 @@ export default {
                 value: null,
                 options: ["Public", "Private", "Personal"]
             },
+            title: '',
             authors: {
                 value: [],  
                 options: [
@@ -133,9 +134,8 @@ export default {
                     }
                 ]
             },
-            doi: {
-                
-            },
+            abstract: '',
+            doi: '',
             date: {
                 selected: {
                     day: 1,
@@ -196,7 +196,7 @@ export default {
                         },
                         {
                             index: 9,
-                            name: "Spooktober",
+                            name: "October",
                             days: 31
                         },
                         {
@@ -236,7 +236,19 @@ export default {
             authors.value.push(tag);
         },
         submitForm: function(){
-            upload.upload();
+            upload.upload({
+                type: this.pubType.value,
+                visibility: this.visibility.value,
+                title: this.title,
+                authors: this.authors.value.map(x => x.name),
+                date: {
+                    day: this.date.selected.day,
+                    month: this.date.selected.month.index,
+                    year: this.date.selected.year
+                },
+                abstract: this.abstract,
+                doi: this.doi
+            });
         },
         isLeapYear: function(year){
             if(year % 4 === 0){

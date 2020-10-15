@@ -144,7 +144,8 @@ export default {
             this.opts.files.push(file);
         });
     },
-    upload: function(){
+    upload: function(data){
+
         var files = this.opts.files;
         if(files.length === 0){
             alert("Please select a publication to upload.");
@@ -172,10 +173,12 @@ export default {
         }, false);
 
         xhr.open("POST", this.opts.urls.uploadEndpoint);
-        xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+        xhr.overrideMimeType('multipart/form-data');
         
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('data', JSON.stringify(data));
+
         xhr.send(formData);
     }
 };
