@@ -19,49 +19,83 @@
           </b-input-group>
         </b-form-group>
       </b-form>
-
+<!-- start message and notification -->
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
             aria-haspopup="true" aria-expanded="false" @click="redirect">
             <i class="fas fa-bell"></i>
         </a>
-        <a class="dropdown-item" to="/notifications"> <!-- TODO: Link to Notification-->
-          <i class="fas fa-book-open"></i>
-          New Article by: Mehmet Günal
-          <small class="form-text text-muted">Yesterday</small>
-        </a>
-        <a class="dropdown-item" to="/notifications">
-          <i class="fas fa-user-friends"></i>
-          New friend: Mehmet Günal
-          <small class="form-text text-muted">1 week ago</small>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/notifications">
-          <i class="fas fa-clock"></i>
-          All Notifications
-        </a>
+
+        <template>
+          <div>
+            <a class="dropdown-item" to="/notifications"> <!-- TODO: Link to Notification-->
+            <i class="fas fa-book-open"></i>
+            New Article by: Mehmet Günal
+            <small class="form-text text-muted">Yesterday</small>
+            </a>
+            <a class="dropdown-item" to="/notifications">
+            <i class="fas fa-user-friends"></i>
+            New friend: Mehmet Günal
+            <small class="form-text text-muted">1 week ago</small>
+            </a>
+            <div class="dropdown-divider"></div>
+            <router-link to="/notifications" class="dropdown-item">
+              <span>All Updates</span>
+            </router-link>
+          </div>
+        </template>
       </base-dropdown>
+
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
             aria-haspopup="true" aria-expanded="false" @click="redirect">
             <i class="fas fa-comment"></i>
         </a>
-        <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
+
+        <template>
+          <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
           <i class="fas fa-comment"></i>
           Mehmet Günal: Check out my research!
           <small class="form-text text-muted">Yesterday</small>
-        </a>
-        <a class="dropdown-item" to="/messages">
+          </a>
+          <a class="dropdown-item" to="/messages">
           <i class="far fa-comment"></i>
           Greg Kitchen: Check out his research!
           <small class="form-text text-muted">1 week ago</small>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/messages">
-          <i class="fas fa-clock"></i>
-          All Messages
-        </a>
+          </a>
+          <div class="dropdown-divider"></div>
+          <router-link to="/notifications" class="dropdown-item">
+              <span>All Requests </span>
+          </router-link>
+
+        </template>
       </base-dropdown>
+
+      <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+        <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false" @click="redirect">
+            <i class="fas fa-envelope"></i>
+        </a>
+        <template>
+             <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
+          <i class="fas fa-comment"></i>
+          Mehmet Günal: Check out my research!
+          <small class="form-text text-muted">Yesterday</small>
+          </a>
+          <a class="dropdown-item" to="/messages">
+          <i class="far fa-comment"></i>
+          Greg Kitchen: Check out his research!
+          <small class="form-text text-muted">1 week ago</small>
+          </a>
+          <div class="dropdown-divider"></div>
+          <router-link to="/notifications" class="dropdown-item">
+              <span> All Messages </span>
+          </router-link>
+
+        </template>
+      </base-dropdown>
+
+      <!-- end  -->
       <base-dropdown menu-on-right
                      class="nav-item"
                      tag="li"
@@ -176,7 +210,7 @@ export default {
       signedIn: false,
       timeTotal: 0,
       //autocomplete start
-      modal: false, 
+      modal: false,
       recentSearches: [],
       filteredRecentSearches: [],
       //autocomplete end
@@ -382,10 +416,10 @@ export default {
   methods: {
     async onSubmit(evt) {
       this.timeTotal = 0;
-      let duplication = false; 
+      let duplication = false;
       for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
         if (this.recentSearches[i] == this.search.text){
-          duplication = true; 
+          duplication = true;
         }
       }
       if (!duplication){ //No duplication for recent searches allowed
