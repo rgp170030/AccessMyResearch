@@ -66,7 +66,7 @@ export default {
         //Handles files for upload
         function handleFiles(files) {
             if(files.length > 1){
-                alert("Can only add a signle file. Please only drop 1 file.");
+                alert("Only one file can be added at a time");
                 return;
             }
 
@@ -115,7 +115,7 @@ export default {
         }
         
         if(files.length > 1){
-            alert("Cannot upload more than 1 publication at a time.");
+            alert("Cannot upload more than 1 publication at a time");
             return;
         }
 
