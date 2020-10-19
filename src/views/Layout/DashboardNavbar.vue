@@ -344,9 +344,6 @@
               <!--TODO: Show profile pic-->
             </span>
           </b-media>
-          <b-media-body class="ml-2 d-none d-lg-block">
-            <span class="mb-0 text-sm font-weight-bold">Jesse Jones</span>
-          </b-media-body>
           <!-- </b-media> -->
         </a>
 
