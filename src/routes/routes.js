@@ -83,6 +83,21 @@ const routes = [
         path: '/results',
         name: 'results',
         component: () => import(/* webpackChunkName: "demo" */ '../views/SearchResults.vue')
+      },
+      {
+        path: '/suggestedpeople',
+        name: 'suggestions for you',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/SuggestedPeople.vue')
+      },
+      {
+        path: '/add',
+        name: 'Add Users',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/AddRemoveUsers.vue')
+      },
+      {
+        path: '/search-history',
+        name: 'search history',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/SearchHistory.vue')
       }
     ]
   },
