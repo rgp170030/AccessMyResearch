@@ -48,11 +48,11 @@
               <ul>
                 <b-dropdown-item
                   v-for="filteredRecentSearch in filteredRecentSearches"
-                  :key="filteredRecentSearch[0]"
-                  @click="setSearch(filteredRecentSearch[1])"
+                  :key="filteredRecentSearch"
+                  @click="setSearch(filteredRecentSearch)"
 
                 >
-                  {{ filteredRecentSearch[1] }}
+                  {{ filteredRecentSearch }}
                 </b-dropdown-item>
               </ul>
             </div>
@@ -680,8 +680,8 @@ export default {
             .startsWith(this.search.text.toLowerCase());
         }
       );
-      console.log(this.filterRecentSearches)
-    },
+      this.filteredRecentSearches = this.filteredRecentSearches.map(item => item[1]).filter((val, index, self) => self.indexOf(val) == index)
+},
     setSearch (recentSearch) {
       this.search.text = recentSearch;
       this.modal = false;

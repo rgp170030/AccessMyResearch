@@ -24,11 +24,12 @@ export default {
   data() {
     return {
       searchHistory: [],
-      reminders: JSON.parse(localStorage.reminders),
+      reminders: {},
     };
   },
   mounted() {
     this.getSearchHistory();
+    this.reminders = JSON.parse(localStorage.reminders);
   },
   methods: {
     async getSearchHistory() {
