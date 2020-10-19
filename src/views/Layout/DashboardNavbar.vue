@@ -277,13 +277,13 @@
         >
           <i class="fas fa-bell"></i>
         </a>
-        <a class="dropdown-item" to="/notifications">
+        <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <!-- TODO: Link to Notification-->
           <i class="fas fa-book-open"></i>
           New Article by: Mehmet Günal
           <small class="form-text text-muted">Yesterday</small>
         </a>
-        <a class="dropdown-item" to="/notifications">
+        <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <i class="fas fa-user-friends"></i>
           New friend: Mehmet Günal
           <small class="form-text text-muted">1 week ago</small>
@@ -296,10 +296,15 @@
           </a>
         </span>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/notifications">
+        <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <i class="fas fa-clock"></i>
           All Notifications
         </a>
+        <b-alert show variant="light" class="text-dark" v-if="!signedIn">
+          <i class="fas fa-exclamation-circle fa-lg"></i>
+            In order to access this feature, you must login.
+            You can login <router-link class="font-weight-bolder text-dark" to="/login">here.</router-link>
+         </b-alert>
       </base-dropdown>
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a
@@ -313,22 +318,27 @@
         >
           <i class="fas fa-comment"></i>
         </a>
-        <a class="dropdown-item" to="/messages">
+        <a class="dropdown-item" to="/messages" v-if="signedIn">
           <!-- TODO: Link to Messages-->
           <i class="fas fa-comment"></i>
           Mehmet Günal: Check out my research!
           <small class="form-text text-muted">Yesterday</small>
         </a>
-        <a class="dropdown-item" to="/messages">
+        <a class="dropdown-item" to="/messages" v-if="signedIn">
           <i class="far fa-comment"></i>
           Greg Kitchen: Check out his research!
           <small class="form-text text-muted">1 week ago</small>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/messages">
+        <a class="dropdown-item" to="/messages" v-if="signedIn">
           <i class="fas fa-clock"></i>
           All Messages
         </a>
+         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
+          <i class="fas fa-exclamation-circle fa-lg"></i>
+            In order to access this feature, you must login.
+            You can login <router-link class="font-weight-bolder text-black" to="/login">here.</router-link>
+         </b-alert>
       </base-dropdown>
       <base-dropdown
         menu-on-right

@@ -6,7 +6,7 @@
       <div v-if="!signedIn">
         <b-alert show>
         <i class="fas fa-exclamation-circle fa-lg"></i>
-        &nbsp; In order to access these features, you must login. You can login in <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
+        &nbsp; In order to access these features, you must login. You can login <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
       </div>
       <div @click="redirect">
         <sidebar-item
@@ -90,7 +90,7 @@
     components: {
       DashboardNavbar,
       ContentFooter,
-      DashboardContent,
+      // DashboardContent,
       FadeTransition
     },
     data() {
