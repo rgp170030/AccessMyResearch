@@ -83,6 +83,11 @@ const routes = [
         path: '/results',
         name: 'results',
         component: () => import(/* webpackChunkName: "demo" */ '../views/SearchResults.vue')
+      },
+      {
+        path: '/search-history',
+        name: 'search history',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/SearchHistory.vue')
       }
     ]
   },

@@ -41,6 +41,7 @@
     "vue-flatpickr-component": "^8.1.2",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.4.4",
+    "vue-slider-component": "^3.2.5",
     "vue2-transitions": "^0.2.3",
     "vuex": "^3.5.1"
   },
