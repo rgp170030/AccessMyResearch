@@ -31,6 +31,12 @@ import router from './routes/router';
 // plugin setup
 Vue.use(DashboardPlugin);
 
+// added for sliders in year filter
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
+Vue.component('VueSlider', VueSlider)
+// end of code added
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
