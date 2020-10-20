@@ -11,7 +11,7 @@
       <div @click="redirect">
         <sidebar-item
                   :link="{
-                    name: 'Upload Article',
+                    name: 'Add Research Material',
                     path: '/upload',
                     icon: 'fas fa-arrow-up text-pink'
                   }">
