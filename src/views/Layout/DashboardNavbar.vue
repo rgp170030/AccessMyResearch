@@ -334,7 +334,7 @@
               <span>All Requests </span>
           </router-link>
 
-        </template>
+        <!-- </template> -->
       </base-dropdown>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
