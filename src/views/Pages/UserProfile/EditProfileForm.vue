@@ -1,4 +1,4 @@
-<template>
+-<template>
 <card>
   <b-row align-v="center" slot="header" >
     <b-col cols="8">
@@ -145,10 +145,21 @@
 
 
     <hr class="my-4">
-    <!-- Description -->
-    <h6 class="heading-small text-muted mb-4">Publication</h6>
     <div>
-      <b-table 
+      <h6 class="heading-small text-muted mb-4">User Type</h6>
+      <b-form-group>
+        <b-form-radio v-model="selected" name="some-radios" value="Expert">Expert User</b-form-radio>
+        <b-form-radio v-model="selected" name="some-radios" value="Registered">Registered User</b-form-radio>
+        <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+
+      </b-form-group>
+
+    </div>
+
+    <!-- Publication -->
+    <h6 class="heading-small text-muted mb-4" >Publication</h6>
+    <div v-if="publicationVisible">
+      <b-table
         hover
         responsive
         :items="publications.data"
@@ -156,20 +167,31 @@
         sticky-header
         head-variant="light"
       >
-      <template v-slot:cell(doi)="data">
-        <a :href="`http://${data.value}`">{{ data.value }}</a>
-      </template>
+        <template v-slot:cell(doi)="data">
+          <a :href="`http://${data.value}`">{{ data.value }}</a>
+        </template>
       </b-table>
     </div>
 
+    <!-- Verification -->
+
+    <div v-else>
+      Authenticate to become an expert user and publish your works on Access My Research!
+      <hr>
+      <router-link to="/userauthentication" class="dropdown-item">
+        Authenticate Now!
+      </router-link>
+    </div>
   </b-form>
 </card>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
+      selected: '',
       user: {
         company: 'Access My Research',
         username: '',
@@ -208,6 +230,11 @@ export default {
   methods: {
     updateProfile() {
       alert('Your data: ' + JSON.stringify(this.user)); //TODO: Remove test alert
+    }
+  },
+  computed: {
+    publicationVisible: function(){
+      return this.selected === "Expert";
     }
   },
   mounted: function(){

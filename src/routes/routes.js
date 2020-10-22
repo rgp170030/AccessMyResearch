@@ -15,6 +15,12 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/Home.vue')
       },
       {
+        path: '/userauthentication',
+        name: 'User Authentication',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/UserAuthentication.vue')
+      },
+
+      {
         path: '/upload',
         name: 'Add Research Material',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Upload.vue')
