@@ -1,9 +1,39 @@
 import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
 
+import Admin from '../views/Admins/Admin.vue';
+import AdminProfile from '../views/Admins/AdminProfile.vue';
+import AdminRole from '../views/Admins/AdminRole.vue';
+import AdminDashboard from '../views/Admins/AdminDashboard.vue';
+
+
 import NotFound from '@/views/NotFoundPage.vue';
 
 const routes = [
+  {
+    path: '/adminDashboard',
+    name: 'AdminDashboard',
+    component: AdminDashboard
+    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
+     },
+  {
+    path: '/AdminProfile',
+    name: 'AdminProfile',
+    component: AdminProfile
+    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
+     },
+  {
+    path: '/Admin',
+    name: 'Admin',
+    component: Admin
+    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
+     },
+  {
+    path: '/AdminRole',
+    name: 'AdminRole',
+    component: AdminRole
+    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
+     },
   {
     path: '/',
     redirect: 'home',
@@ -13,11 +43,6 @@ const routes = [
         path: '/home',
         name: 'Home',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Home.vue')
-      },
-      {
-        path: '/userauthentication',
-        name: 'User Authentication',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/UserAuthentication.vue')
       },
 
       {
