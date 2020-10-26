@@ -264,6 +264,36 @@
                   </b-card>
                 </div>
 
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.journalAccordion
+                        variant="primary"
+                        >Journals</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="journalAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-checkbox-group
+                            id="journalFilter"
+                            v-model="selectedFilters"
+                            @input="sort"
+                            :options="journals"
+                            name="journals"
+                          ></b-form-checkbox-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
                  <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -650,6 +680,16 @@ export default {
           value: "unpaywall",
         },
       ],
+      journals: [
+        {
+          text: "PLOS ONE",
+          value: "plos one"
+        },
+        {
+          text: "Royal Society Open Science",
+          value: "royal society open science"
+        },
+      ]
     };
   },
   methods: {
