@@ -95,14 +95,9 @@ export default {
     this.performSearch();
   },
   methods: {
-    async performSearch() {
-      var startTime, endTime;
-      this.results = [];
-
-      startTime = new Date();
+    postSearchHistory(startTime){
       const searchQuery = {};
       searchQuery[startTime] = this.$route.query.text;
-
       axios
       .post('http://localhost:3000/search', searchQuery)
       .then(function (response) {
@@ -111,6 +106,13 @@ export default {
       .catch(function (error) {
          console.log(error);
       });
+    },
+
+    async performSearch() {
+      var startTime, endTime, numberResults;
+      this.results = [];
+
+      startTime = new Date();
 
       let searchResults = await client
         .search({
@@ -142,6 +144,10 @@ export default {
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
       this.results.push(...searchResults.hits.hits);
+      numberResults = this.results.length;
+      var numberResultsDate =  startTime + "; Number of Results " + numberResults;
+      this.postSearchHistory(numberResultsDate);
+
     },
   },
 };
