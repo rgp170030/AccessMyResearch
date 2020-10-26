@@ -1,26 +1,45 @@
 <template>
+<div>
+  <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar-brand href="#">Home</b-navbar-brand>
 
-  <div>
-    <h1>This will be the activity page</h1>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-  </div>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item href="#">Dashbord</b-nav-item>
+        <b-nav-item href="#" >blocked User</b-nav-item>
+      </b-navbar-nav>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+      <b-button  @click="signOut()" pill>Logout</b-button>
+
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
+</div>
 </template>
 
 <script>
 
-
+ import { Auth } from 'aws-amplify';
+  import { AmplifyEventBus } from 'aws-amplify-vue';
+  import store from '@/store';
 
 export default {
 
+methods:{
+ async   signOut() {
+      await Auth.signOut()
+        .then((data) => {
+          this.$store.state.signedIn = !!data;
+          this.$router.push("login");
+        })
+        .catch((err) => console.log(err));
+    },
 
+}
 
 }
 </script>
-
-<style>
-
-h1{
-  color: rgb(206, 18, 18);
-}
-
-</style>
