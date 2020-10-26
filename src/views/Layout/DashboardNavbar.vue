@@ -682,12 +682,20 @@ export default {
       ],
       journals: [
         {
-          text: "PLOS ONE",
+          text: "PLOS ONE", 
           value: "plos one"
         },
         {
           text: "Royal Society Open Science",
           value: "royal society open science"
+        },
+        {
+          text: "Nature",
+          value: "nature"
+        },
+        {
+          text: "Science",
+          value: "science"
         },
       ]
     };
