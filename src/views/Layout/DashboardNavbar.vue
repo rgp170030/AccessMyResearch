@@ -148,6 +148,38 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.accessibilityAccordion
+                        variant="primary"
+                        >Accessibility</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="accessibilityAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-group>
+                          <b-form-checkbox-group 
+                            style="column-count: 2;"
+                            id="accessibilityFilter"
+                            v-model="selectedFilters"
+                            :options="accessibilityOptions"
+                            name="acccessibility"
+                          ></b-form-checkbox-group>
+                          </b-form-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button block v-b-toggle.yearAccordion variant="primary"
                         >Year</b-button
                       >
@@ -190,6 +222,7 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
+                            style="column-count: 2;"
                             id="typeFilter"
                             v-model="selectedFilters"
                             :options="types"
@@ -219,6 +252,7 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
+                            style="column-count: 2;"
                             id="databaseFilter"
                             v-model="selectedFilters"
                             :options="databases"
@@ -524,6 +558,24 @@ export default {
         {
           text: "100+ Peer Review Publications",
           value: "100+",
+        },
+      ],
+      accessibilityOptions: [
+        {
+          text: "Open",
+          value: "open",
+        },
+        {
+          text: "With Permission",
+          value: "with-permission",
+        },
+        {
+          text: "Embargoed",
+          value: "embargoed",
+        },
+        {
+          text: "Restricted",
+          value: "restricted",
         },
       ],
       types: [
