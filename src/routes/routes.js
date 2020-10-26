@@ -1,39 +1,28 @@
 import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
 
-import Admin from '../views/Admins/Admin.vue';
-import AdminProfile from '../views/Admins/AdminProfile.vue';
-import AdminRole from '../views/Admins/AdminRole.vue';
-import AdminDashboard from '../views/Admins/AdminDashboard.vue';
-
+import Admin from '../views/Pages/Admin.vue';
+import { AmplifyEventBus } from 'aws-amplify-vue';
+import { Auth } from 'aws-amplify';
+import store from '@/store';
 
 import NotFound from '@/views/NotFoundPage.vue';
 
 const routes = [
   {
-    path: '/adminDashboard',
-    name: 'AdminDashboard',
-    component: AdminDashboard
-    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
-     },
-  {
-    path: '/AdminProfile',
-    name: 'AdminProfile',
-    component: AdminProfile
-    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
-     },
-  {
-    path: '/Admin',
+    path: '/admin',
     name: 'Admin',
-    component: Admin
-    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
-     },
-  {
-    path: '/AdminRole',
-    name: 'AdminRole',
-    component: AdminRole
-    //component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue')
-     },
+    //component:Admin,
+    component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Admin.vue'),
+    beforeEnter: (to, from, next) => {
+      if(store.state.authenticated == false) {
+          next({path:'/login'});
+      } else {
+          next();
+      }
+  }
+  },
+
   {
     path: '/',
     redirect: 'home',
@@ -137,6 +126,7 @@ const routes = [
     redirect: 'login',
     component: AuthLayout,
     children: [
+
       {
         path: '/login',
         name: 'login',
@@ -157,9 +147,15 @@ const routes = [
         name: 'codeverification',
         component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/CodeVerification.vue')
       },
+
       { path: '*', component: NotFound }
     ]
   }
+
 ];
+
+
+
+
 
 export default routes;

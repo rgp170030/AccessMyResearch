@@ -7,6 +7,8 @@ import 'vue-slider-component/theme/default.css'
 export default {
   components:{
     VueSlider
-  }
+  },
 }
 </script>
+
+

@@ -79,6 +79,7 @@
                               :rules="{required: true, min: 6}"
                               v-model="password">
                   </base-input>
+
                   <div class="text-muted font-italic"><small>password strength: <span
                     class="text-success font-weight-700">strong</span></small></div>
                   <b-row class=" my-4">
@@ -108,20 +109,9 @@
   import { Auth } from 'aws-amplify';
 
   export default {
-    mounted(){
+  name: 'register',
+  components: {},
 
-      if(this.$store.state.signedIn === true)
-      {
-          this.$router.push('home');
-      }
-
-      AmplifyEventBus.$on('authState', info => {
-        if(info == 'signedIn')
-        {
-          this.$router.push('home');
-        }
-      })
-    },
     data() {
       return {
           username: '',
@@ -130,8 +120,8 @@
           agree: false
       }
     },
-    name: 'register',
-    components: {},
+
+
     methods: {
       onSubmit() {
         //TODO: API call to register user here
@@ -149,7 +139,21 @@
                   })
                 .catch(err => console.log(err));
       }
-    }
+    },
+    mounted(){
+
+      if(this.$store.state.signedIn === true)
+      {
+          this.$router.push('home');
+      }
+
+      AmplifyEventBus.$on('authState', info => {
+        if(info == 'signedIn')
+        {
+          this.$router.push('home');
+        }
+      })
+    },
   };
 </script>
 <style></style>

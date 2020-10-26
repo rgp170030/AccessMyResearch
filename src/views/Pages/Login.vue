@@ -94,7 +94,7 @@
 <script>
   import { Auth } from 'aws-amplify';
   import { AmplifyEventBus } from 'aws-amplify-vue';
-
+  import store from '@/store';
   export default {
     name: 'login',
     data() {
@@ -130,6 +130,12 @@
     methods: {
       onSubmit() {
         //TODO: API call for login here
+        // line
+        if(this.username == "admin" && this.password == "passpass") {
+            this.$store.commit("setAuthentication", true);
+            this.$router.push('admin');
+        };
+
         Auth.signIn(this.username, this.password).then(user => {
             this.$store.state.signedIn = !!user;
             this.$store.state.user = user;
@@ -137,7 +143,7 @@
           })
           .catch(err => console.log(err));
       },
-      async findUser() 
+      async findUser()
       {
         try {
           const user = await Auth.currentAuthenticatedUser();
