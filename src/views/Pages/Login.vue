@@ -130,11 +130,6 @@
     methods: {
       onSubmit() {
         //TODO: API call for login here
-        // line
-        if(this.username == "admin" && this.password == "passpass") {
-            this.$store.commit("setAuthentication", true);
-            this.$router.push('admin');
-        };
 
         Auth.signIn(this.username, this.password).then(user => {
             this.$store.state.signedIn = !!user;
