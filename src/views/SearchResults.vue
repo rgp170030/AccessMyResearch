@@ -3,11 +3,18 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
+    <b-modal id="EmailModal" size="xl" title="Email" ok-title="Send"> 
+      <Email >
+      </Email>
+    </b-modal>
     <b-card-header class="border-0">
       <h3 class="mb-0">
         About {{ results.length }} results ({{ timeTotal }} ms)
       </h3>
     </b-card-header>
+    <div>
+      <b-spinner label="Loading..."></b-spinner>
+    </div>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
@@ -34,15 +41,16 @@
             >
               <template v-slot="{ row }">
                 {{row._source.author}}
-                <b-button v-if="row._source.isDoi" variant="primary" size="sm">
-                   <b-icon
-            icon="envelope"
-            font-scale="2"
-            aria-hidden="true"
-            ><span class="sr-only">Email Author</span>
-            </b-icon
-          >
-                 </b-button> 
+     
+                  <b-icon
+                      icon="envelope-fill"
+                      font-scale="2"
+                      aria-hidden="true"
+                      v-b-modal.EmailModal 
+                      v-if="row._source.isDoi"
+                      ><span class="sr-only">Email Author</span>
+                  </b-icon>
+
               </template>
             </el-table-column>
             <el-table-column
@@ -69,6 +77,8 @@ import LightTable from "./Tables/LightTable";
 import { Client } from "elasticsearch";
 import { Table, TableColumn } from "element-ui";
 import axios from "axios";
+import Email from '@/components/Email.vue';
+
 
 const client = new Client({ node: "http://localhost:9600/" });
 
@@ -77,6 +87,7 @@ export default {
     LightTable,
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
+    Email
   },
   data() {
     return {

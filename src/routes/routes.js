@@ -103,7 +103,7 @@ const routes = [
         path: '/search-history',
         name: 'search history',
         component: () => import('../views/SearchHistory.vue')
-      }
+      },
     ]
   },
   {
