@@ -4,7 +4,9 @@
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
     <b-card-header class="border-0">
-      <h3 class="mb-0" >About {{results.length}} results ({{timeTotal}} ms) </h3>
+      <h3 class="mb-0">
+        About {{ results.length }} results ({{ timeTotal }} ms)
+      </h3>
     </b-card-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
@@ -30,6 +32,18 @@
               prop="_source.author"
               min-width="150px"
             >
+              <template v-slot="{ row }">
+                {{row._source.author}}
+                <b-button v-if="row._source.isDoi" variant="primary" size="sm">
+                   <b-icon
+            icon="envelope"
+            font-scale="2"
+            aria-hidden="true"
+            ><span class="sr-only">Email Author</span>
+            </b-icon
+          >
+                 </b-button> 
+              </template>
             </el-table-column>
             <el-table-column
               label="Message"
@@ -54,7 +68,7 @@
 import LightTable from "./Tables/LightTable";
 import { Client } from "elasticsearch";
 import { Table, TableColumn } from "element-ui";
-import axios from 'axios';
+import axios from "axios";
 
 const client = new Client({ node: "http://localhost:9600/" });
 
@@ -68,7 +82,7 @@ export default {
     return {
       results: [],
       timeTotal: 0,
-      blacklistText:"",
+      blacklistText: "",
     };
   },
   computed: {
@@ -78,8 +92,8 @@ export default {
       //alert(this.rawText)
       var re = /(?:^|\s)(-[a-z0-9]\w*)/gi; // finding words starting with -
       var match;
-      while ((match = re.exec(this.$route.query.text)) != null){
-        this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words 
+      while ((match = re.exec(this.$route.query.text)) != null) {
+        this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words
       }
       //alert(this.blacklistText)
       return this.$route.query.text || 1;
@@ -104,13 +118,13 @@ export default {
       searchQuery[startTime] = this.$route.query.text;
 
       axios
-      .post('http://localhost:3000/search', searchQuery)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-         console.log(error);
-      });
+        .post("http://localhost:3000/search", searchQuery)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
       let searchResults = await client
         .search({
@@ -118,17 +132,17 @@ export default {
           body: {
             query: {
               bool: {
-                must_not:{
+                must_not: {
                   query_string: {
-                    fields: [ "title", "author", "message", "count"],
+                    fields: ["title", "author", "message", "count"],
                     query: this.blacklistText,
-                  }
+                  },
                 },
-                should:{
+                should: {
                   query_string: {
-                    fields: [ "title", "author", "message", "count"],
+                    fields: ["title", "author", "message", "count"],
                     query: this.$route.query.text,
-                  }
+                  },
                 },
               },
             },
@@ -138,10 +152,40 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+
       endTime = new Date();
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
-      this.results.push(...searchResults.hits.hits);
+      if (searchResults) this.results.push(...searchResults.hits.hits);
+      this.checkDoi();
+    },
+    checkDoi() {
+      var self = this;
+      if (this.results.length === 0) {
+        var reg = /10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i;
+        var search = reg.exec(this.$route.query.text);
+        if (search.length > 0) {
+          axios
+            .get("https://api.crossref.org/works/" + search[0])
+            .then(function (response) {
+              if (response && response.status === 200) {
+                var newRow = {
+                  _source: {
+                    title: response.data.message.title[0],
+                    author:response.data.message.author[0].family + ", " + response.data.message.author[0].given,
+                    isDoi: true
+                  },
+                };
+                self.results.push(newRow);
+              }
+
+              console.log(response);
+            })
+            .catch(function (error) {
+              alert("invalid or no doi result");
+            });
+        }
+      }
     },
   },
 };
