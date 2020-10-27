@@ -1,6 +1,6 @@
 <template>
 <div>
-    <input type="text" class="form-control" placeholder="To:" disabled>
+    <input type="text" class="form-control" :placeholder="email" disabled>
     <input v-model="message" type="text" class="form-control" placeholder="Subject">
     <textarea type="text" class="form-control" placeholder="" rows="7">
         
@@ -13,7 +13,7 @@ Sent from AMR</textarea></div>
 
 <script>    
 export default {
-    
+    props: ['email'],
     
 }
 </script>

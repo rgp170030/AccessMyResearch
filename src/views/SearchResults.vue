@@ -3,8 +3,8 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
-    <b-modal id="EmailModal" size="xl" title="Email" ok-title="Send"> 
-      <Email >
+    <b-modal id="EmailModal" size="xl" title="Email" ok-title="Send" v-model="emailModalShow"> 
+      <Email :email="targetDoiEmail">
       </Email>
     </b-modal>
     <b-card-header class="border-0">
@@ -46,7 +46,7 @@
                       icon="envelope-fill"
                       font-scale="2"
                       aria-hidden="true"
-                      v-b-modal.EmailModal 
+                      @click="emailIconClick(row._source.doi)"
                       v-if="row._source.isDoi"
                       ><span class="sr-only">Email Author</span>
                   </b-icon>
@@ -94,6 +94,8 @@ export default {
       results: [],
       timeTotal: 0,
       blacklistText: "",
+      emailModalShow: false,
+      targetDoiEmail: "",
     };
   },
   computed: {
@@ -128,15 +130,14 @@ export default {
       const searchQuery = {};
       searchQuery[startTime] = this.$route.query.text;
 
-      axios
-        .post("http://localhost:3000/search", searchQuery)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
+      // axios
+      //   .post("http://localhost:3000/search", searchQuery)
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
       let searchResults = await client
         .search({
           index: "amr",
@@ -176,15 +177,17 @@ export default {
         var reg = /10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i;
         var search = reg.exec(this.$route.query.text);
         if (search.length > 0) {
+          var doi = search[0];
           axios
-            .get("https://api.crossref.org/works/" + search[0])
+            .get("https://api.crossref.org/works/" + doi)
             .then(function (response) {
               if (response && response.status === 200) {
                 var newRow = {
                   _source: {
                     title: response.data.message.title[0],
                     author:response.data.message.author[0].family + ", " + response.data.message.author[0].given,
-                    isDoi: true
+                    isDoi: true,
+                    doi: doi
                   },
                 };
                 self.results.push(newRow);
@@ -197,6 +200,23 @@ export default {
             });
         }
       }
+    },
+    emailIconClick(doi){
+      axios.post("https://localhost:5001/api/doi", {doi: doi})
+        .then(function (response) {
+
+          console.log("Response from LOCALHOST");
+          console.log(response);
+
+          if (response && response.status === 200) {
+            this.targetDoiEmail = "SOMETHING OR ANOTHER SUCCESS";
+            this.emailModalShow = true;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Response from localhost FAILED");
+        });
     },
   },
 };
