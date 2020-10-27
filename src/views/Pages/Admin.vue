@@ -23,23 +23,10 @@
 
 <script>
 
- import { Auth } from 'aws-amplify';
-  import { AmplifyEventBus } from 'aws-amplify-vue';
-  import store from '@/store';
 
 export default {
 
-methods:{
- async   signOut() {
-      await Auth.signOut()
-        .then((data) => {
-          this.$store.state.signedIn = !!data;
-          this.$router.push("login");
-        })
-        .catch((err) => console.log(err));
-    },
 
 }
 
-}
 </script>
