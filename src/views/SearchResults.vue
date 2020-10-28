@@ -46,7 +46,7 @@
                       icon="envelope-fill"
                       font-scale="2"
                       aria-hidden="true"
-                      @click="emailIconClick(row._source.doi)"
+                      @click="doiEmailIconClick(row._source.doi)"
                       v-if="row._source.isDoi"
                       ><span class="sr-only">Email Author</span>
                   </b-icon>
@@ -111,6 +111,9 @@ export default {
       //alert(this.blacklistText)
       return this.$route.query.text || 1;
     },
+    doiEndpoint(){
+      return this.$endpoints.aspnet + "api/doi";
+    },
   },
   watch: {
     async text() {
@@ -130,14 +133,15 @@ export default {
       const searchQuery = {};
       searchQuery[startTime] = this.$route.query.text;
 
-      // axios
-      //   .post("http://localhost:3000/search", searchQuery)
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+      axios
+        .post("http://localhost:3000/search", searchQuery)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       let searchResults = await client
         .search({
           index: "amr",
@@ -179,7 +183,7 @@ export default {
         if (search.length > 0) {
           var doi = search[0];
           axios
-            .get("https://api.crossref.org/works/" + doi)
+            .get(this.$endpoints.crossref + 'works/' + doi)
             .then(function (response) {
               if (response && response.status === 200) {
                 var newRow = {
@@ -201,12 +205,11 @@ export default {
         }
       }
     },
-    emailIconClick(doi){
-      axios.post("https://localhost:5001/api/doi", {doi: doi})
-        .then(function (response) {
+    doiEmailIconClick(doi){
+      const getParams = {doi: doi};
 
-          console.log("Response from LOCALHOST");
-          console.log(response);
+      axios.get(this.doiEndpoint, { params: getParams })
+        .then(function (response) {
 
           if (response && response.status === 200) {
             this.targetDoiEmail = "SOMETHING OR ANOTHER SUCCESS";
@@ -215,7 +218,6 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-          alert("Response from localhost FAILED");
         });
     },
   },
