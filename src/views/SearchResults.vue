@@ -11,10 +11,8 @@
       <h3 class="mb-0">
         About {{ results.length }} results ({{ timeTotal }} ms)
       </h3>
+      <h4>{{ searchStatus }}</h4>
     </b-card-header>
-    <div>
-      <b-spinner label="Loading..."></b-spinner>
-    </div>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
@@ -42,14 +40,18 @@
               <template v-slot="{ row }">
                 {{row._source.author}}
      
-                  <b-icon
-                      icon="envelope-fill"
-                      font-scale="2"
-                      aria-hidden="true"
-                      @click="doiEmailIconClick(row._source.doi)"
-                      v-if="row._source.isDoi"
-                      ><span class="sr-only">Email Author</span>
-                  </b-icon>
+                  <div 
+                    class="emailIcon"
+                    @click="doiEmailIconClick(row._source.doi)"
+                    v-if="row._source.isDoi"
+                  >
+                    <b-icon
+                        icon="envelope-fill"
+                        font-scale="2"
+                        aria-hidden="true"
+                        ><span class="sr-only">Email Author</span>
+                    </b-icon>
+                  </div>
 
               </template>
             </el-table-column>
@@ -92,6 +94,7 @@ export default {
   data() {
     return {
       results: [],
+      searchStatus: '',
       timeTotal: 0,
       blacklistText: "",
       emailModal: {
@@ -135,15 +138,16 @@ export default {
       const searchQuery = {};
       searchQuery[startTime] = this.$route.query.text;
 
-      axios
-        .post("http://localhost:3000/search", searchQuery)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      // axios
+      //   .post("http://localhost:3000/search", searchQuery)
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
 
+      this.searchStatus = 'Searching AMR Database...';
       let searchResults = await client
         .search({
           index: "amr",
@@ -171,6 +175,8 @@ export default {
           console.log(e);
         });
 
+      this.searchStatus = '';
+
       endTime = new Date();
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
@@ -183,6 +189,8 @@ export default {
         var reg = /10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i;
         var search = reg.exec(this.$route.query.text);
         if (search.length > 0) {
+          this.searchStatus = 'Recognized DOI. Checking Crossref.org for info...';
+
           var doi = search[0];
           axios
             .get(this.$endpoints.crossref + 'works/' + doi)
@@ -198,35 +206,45 @@ export default {
                 };
                 self.results.push(newRow);
               }
-
-              console.log(response);
             })
             .catch(function (error) {
               alert("invalid or no doi result");
+            })
+            .then(function(){
+              self.searchStatus = '';
             });
         }
       }
     },
     doiEmailIconClick(doi){
       const self = this;
-      const getParams = {doi: doi};
 
-      //axios.get(this.doiEndpoint, { params: getParams })
+      this.searchStatus = 'Getting email from publisher...'
       axios.get(this.doiEndpoint + '/' + doi)
         .then(function (response) {
-
-          console.log('DOIAPIResponse');
-          console.log(response);
-
-          if (response && response.status === 200) {
-            self.emailModal.emailOpts = response.data;
-            self.emailModal.show = true;
+          if (response) {
+            if(response.status === 200){
+              self.emailModal.emailOpts = response.data;
+              self.emailModal.show = true;
+            }
           }
         })
         .catch(function (error) {
-          console.log(error);
+          if(error.response && error.response.data && error.response.data.detail){
+            alert(error.response.data.detail);
+          }
+        })
+        .then(function(){
+          self.searchStatus = '';
         });
     },
   },
 };
 </script>
+
+<style>
+div.emailIcon {
+  display: inline-block;
+  cursor: pointer;
+}
+</style>
