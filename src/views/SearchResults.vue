@@ -154,7 +154,17 @@ export default {
       endTime = new Date();
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
+      for(var hit of searchResults.hits.hits) {
+        hit._source.authors = this.fixArray(hit._source.authors);
+        hit._source.url = this.fixArray(hit._source.url);
+      }
       this.results.push(...searchResults.hits.hits);
+    },
+    fixArray(data) {
+      if(Array.isArray(data)){
+        return data.join(", ");
+      }
+      return data;
     },
   },
 };
