@@ -3,8 +3,8 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
-    <b-modal id="EmailModal" size="xl" title="Email" ok-title="Send" v-model="emailModalShow"> 
-      <Email :email="targetDoiEmail">
+    <b-modal id="EmailModal" size="xl" title="Email" ok-title="Send" v-model="emailModal.show"> 
+      <Email :emails="emailModal.emailOpts">
       </Email>
     </b-modal>
     <b-card-header class="border-0">
@@ -94,8 +94,10 @@ export default {
       results: [],
       timeTotal: 0,
       blacklistText: "",
-      emailModalShow: false,
-      targetDoiEmail: "",
+      emailModal: {
+        show: false,
+        emailOpts: []
+      }
     };
   },
   computed: {
@@ -206,14 +208,19 @@ export default {
       }
     },
     doiEmailIconClick(doi){
+      const self = this;
       const getParams = {doi: doi};
 
-      axios.get(this.doiEndpoint, { params: getParams })
+      //axios.get(this.doiEndpoint, { params: getParams })
+      axios.get(this.doiEndpoint + '/' + doi)
         .then(function (response) {
 
+          console.log('DOIAPIResponse');
+          console.log(response);
+
           if (response && response.status === 200) {
-            this.targetDoiEmail = "SOMETHING OR ANOTHER SUCCESS";
-            this.emailModalShow = true;
+            self.emailModal.emailOpts = response.data;
+            self.emailModal.show = true;
           }
         })
         .catch(function (error) {
