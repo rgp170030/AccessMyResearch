@@ -26,14 +26,26 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="Author"
-              prop="_source.author"
+              label="Author(s)"
+              prop="_source.authors"
               min-width="150px"
             >
             </el-table-column>
             <el-table-column
-              label="Message"
-              prop="_source.message"
+              label="Description"
+              prop="_source.description"
+              min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="Date Published"
+              prop="_source.datePublished"
+              min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="URL"
+              prop="_source.url"
               min-width="350px"
             >
             </el-table-column>
@@ -114,19 +126,20 @@ export default {
 
       let searchResults = await client
         .search({
-          index: "amr",
+          index: "core",
           body: {
+            size: 100,
             query: {
               bool: {
                 must_not:{
                   query_string: {
-                    fields: [ "title", "author", "message", "count"],
+                    fields: [ "title", "authors", "description", "datePublished", "url"],
                     query: this.blacklistText,
                   }
                 },
                 should:{
                   query_string: {
-                    fields: [ "title", "author", "message", "count"],
+                    fields: [ "title", "authors", "description", "datePublished", "url"],
                     query: this.$route.query.text,
                   }
                 },
