@@ -772,12 +772,12 @@ export default {
       this.getSearchHistory();
       this.filteredRecentSearches = this.recentSearches.filter(
         (s) => {
-          return this.search.text && s[1]
+          return this.search.text && JSON.parse(s[1]).query
             .toLowerCase()
             .startsWith(this.search.text.toLowerCase());
         }
       );
-      this.filteredRecentSearches = this.filteredRecentSearches.map(item => item[1]).filter((val, index, self) => self.indexOf(val) == index)
+      this.filteredRecentSearches = this.filteredRecentSearches.map(item => JSON.parse(item[1]).query).filter((val, index, self) => self.indexOf(val) == index)
 },
     setSearch (recentSearch) {
       this.search.text = recentSearch;

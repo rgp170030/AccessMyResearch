@@ -9,7 +9,10 @@
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
-          <el-table
+
+
+          <!--  <b-table striped hover :items="results" :fields="fields"></b-table>  -->
+                    <el-table
             class="table-responsive table"
             header-row-class-name="thead-light"
             :data="results"
@@ -19,7 +22,7 @@
                 <b-media no-body class="align-items-center">
                   <b-media-body>
                     <span class="font-weight-600 name mb-0 text-sm">{{
-                      row._source.title
+                      row._source.snippet
                     }}</span>
                   </b-media-body>
                 </b-media>
@@ -44,7 +47,60 @@
               sortable
             >
             </el-table-column>
-          </el-table>
+          </el-table> 
+          
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button block v-b-toggle.doajAccordion variant="primary"
+                        >DOAJ: About {{results_doaj.length}} results ({{timeTotal}} ms)</b-button>
+                    </b-card-header>
+                    <b-collapse
+                      id="doajAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                          <div v-for="(result, i) in results_doaj" :key="i + result.bibjson.title">
+                            <p v-html="result.bibjson.title"></p>
+                                <p>Published Date: {{result.created_date}}</p>
+                                <p>Author: </p>
+                                <p v-for="(author, ii) in result.bibjson.author" :key="ii + author.name">
+                                  {{author.name}}
+                                </p>
+                                <p v-for="(link, iii) in result.bibjson.link" :key="iii + link.url"> 
+                                  Link/URL: <a :href="link.url">{{ link.url}}</a>
+                                </p>
+                                <p>Description/Abstract: {{result.bibjson.abstract}}</p>
+                                <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
+                          </div>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+              
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button block v-b-toggle.unpaywallAccordion variant="primary"
+                        >DOI: About {{results_doi.length}} results ({{elapsed_time}} ms)</b-button>
+                    </b-card-header>
+                    <b-collapse
+                      id="unpaywallAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                          <div v-for="(result, i) in results_doi" :key="i + result"><p v-html="result.snippet">
+                            </p><a :href="result.response.doi_url">{{ result.response.doi_url}}</a>
+                                <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
+                          </div>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
         </div>
       </div>
     </card>
@@ -66,9 +122,14 @@ export default {
   },
   data() {
     return {
-      results: [],
+      results:[],
+      results_doaj: [],
+      results_doi: [],
+      fields: ['snippet', 'response.doi_url'],
+      elapsed_time: 0,
       timeTotal: 0,
       blacklistText:"",
+      lengthResults: 0,
     };
   },
   computed: {
@@ -95,59 +156,78 @@ export default {
     this.performSearch();
   },
   methods: {
-    postSearchHistory(startTime){
+    postSearchHistory(startTime, totalResults, queryText){
       const searchQuery = {};
-      searchQuery[startTime] = this.$route.query.text;
+      var queryTime = startTime.toDateString();
+      searchQuery[startTime] =  JSON.stringify({ time: queryTime, total: totalResults, query: queryText });
+      //searchQuery[queryTime] =  queryText;
       axios
       .post('http://localhost:3000/search', searchQuery)
       .then(function (response) {
-        console.log(response);
+         console.log(response);
       })
-      .catch(function (error) {
-         console.log(error);
-      });
+       .catch(function (error) {
+          console.log(error);
+       });
     },
 
     async performSearch() {
-      var startTime, endTime, numberResults;
-      this.results = [];
-
-      startTime = new Date();
-
-      let searchResults = await client
-        .search({
-          index: "amr",
-          body: {
-            query: {
-              bool: {
-                must_not:{
-                  query_string: {
-                    fields: [ "title", "author", "message", "count"],
-                    query: this.blacklistText,
-                  }
-                },
-                should:{
-                  query_string: {
-                    fields: [ "title", "author", "message", "count"],
-                    query: this.$route.query.text,
-                  }
-                },
-              },
-            },
-          },
-        })
-        .then((res) => res)
-        .catch((e) => {
-          console.log(e);
-        });
-      endTime = new Date();
-      var timeDiff = endTime - startTime;
-      this.timeTotal = this.timeTotal + timeDiff;
-      this.results.push(...searchResults.hits.hits);
-      numberResults = this.results.length;
-      var numberResultsDate =  startTime + "; Number of Results " + numberResults;
-      this.postSearchHistory(numberResultsDate);
-
+       var startTime, endTime;
+       this.results_doaj = [];
+       this.lengthResults = 0; 
+       startTime = new Date();
+      
+      axios
+      .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
+      .then((response) => {
+          //this.elapsed_time = response.data.elapsed_seconds
+          this.results_doaj = response.data.results;
+          this.lengthResults = response.data.total;
+          console.log(this.lengthResults);
+          //var numberResultsDate =  startTime + "; Number of Results " + this.lengthResults; 
+          this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
+       });
+    
+      axios
+      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
+      .then((response) => {
+          this.elapsed_time = response.data.elapsed_seconds;
+          this.results_doi = response.data.results;
+       });
+    
+    
+       let searchResults = await this.client
+         .search({
+           index: "amr",
+           body: {
+             query: {
+               bool: {
+                 must_not:{
+                   query_string: {
+                     fields: [ "title", "author", "message", "count"],
+                     query: this.blacklistText,
+                   }
+                 },
+                 should:{
+                   query_string: {
+                     fields: [ "title", "author", "message", "count"],
+                     query: this.$route.query.text,
+                   }
+                 },
+               },
+             },
+           },
+         })
+         .then((res) => res)
+         .catch((e) => {
+           console.log(e);
+         });
+         
+       endTime = new Date();
+       var timeDiff = endTime - startTime;
+       this.timeTotal = timeDiff;
+       this.results.push(...searchResults.hits.hits);
+      
     },
   },
 };
