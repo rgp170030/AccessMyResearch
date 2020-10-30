@@ -22,7 +22,7 @@
                 <b-media no-body class="align-items-center">
                   <b-media-body>
                     <span class="font-weight-600 name mb-0 text-sm">{{
-                      row._source.snippet
+                      row._source.title
                     }}</span>
                   </b-media-body>
                 </b-media>
@@ -173,30 +173,11 @@ export default {
 
     async performSearch() {
        var startTime, endTime;
-       this.results_doaj = [];
+       this.results = [];
        this.lengthResults = 0; 
        startTime = new Date();
-      
-      axios
-      .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
-      .then((response) => {
-          //this.elapsed_time = response.data.elapsed_seconds
-          this.results_doaj = response.data.results;
-          this.lengthResults = response.data.total;
-          console.log(this.lengthResults);
-          //var numberResultsDate =  startTime + "; Number of Results " + this.lengthResults; 
-          this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
-       });
-    
-      axios
-      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
-      .then((response) => {
-          this.elapsed_time = response.data.elapsed_seconds;
-          this.results_doi = response.data.results;
-       });
-    
-    
-       let searchResults = await this.client
+
+       let searchResults = await client
          .search({
            index: "amr",
            body: {
@@ -224,6 +205,25 @@ export default {
          });
          
        endTime = new Date();
+
+      axios
+      .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
+      .then((response) => {
+          //this.elapsed_time = response.data.elapsed_seconds
+          this.results_doaj = response.data.results;
+          this.lengthResults = response.data.total;
+          console.log(this.lengthResults);
+          //var numberResultsDate =  startTime + "; Number of Results " + this.lengthResults; 
+          this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
+       });
+    
+      axios
+      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
+      .then((response) => {
+          this.elapsed_time = response.data.elapsed_seconds;
+          this.results_doi = response.data.results;
+       });
+
        var timeDiff = endTime - startTime;
        this.timeTotal = timeDiff;
        this.results.push(...searchResults.hits.hits);
