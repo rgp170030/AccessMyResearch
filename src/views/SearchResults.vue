@@ -40,13 +40,19 @@
             <el-table-column
               label="Date Published"
               prop="_source.datePublished"
-              min-width="350px"
+              min-width="200px"
             >
             </el-table-column>
             <el-table-column
               label="URL"
               prop="_source.url"
               min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="DOI"
+              prop="_source.doi"
+              min-width="200px"
             >
             </el-table-column>
             <el-table-column
