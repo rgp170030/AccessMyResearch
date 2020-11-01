@@ -132,20 +132,19 @@ export default {
 
       let searchResults = await client
         .search({
-          index: "core",
           body: {
             size: 100,
             query: {
               bool: {
                 must_not:{
                   query_string: {
-                    fields: [ "title", "authors", "description", "datePublished", "url"],
+                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
                     query: this.blacklistText,
                   }
                 },
                 should:{
                   query_string: {
-                    fields: [ "title", "authors", "description", "datePublished", "url"],
+                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
                     query: this.$route.query.text,
                   }
                 },
@@ -161,17 +160,23 @@ export default {
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
       for(var hit of searchResults.hits.hits) {
-        hit._source.authors = this.fixArray(hit._source.authors);
-        hit._source.url = this.fixArray(hit._source.url);
+        hit._source.authors = this.arrayToString(hit._source.authors);
+        hit._source.url = this.arrayToString(hit._source.url);
+        hit._source.description = this.shortenDescription(hit._source.description);
       }
       this.results.push(...searchResults.hits.hits);
     },
-    fixArray(data) {
+    arrayToString(data) {
       if(Array.isArray(data)){
         return data.join(", ");
       }
       return data;
     },
+    shortenDescription(data) {
+      if(data.length > 250) {
+        return data.slice(0, 250) + "...";
+      }
+    }
   },
 };
 </script>
