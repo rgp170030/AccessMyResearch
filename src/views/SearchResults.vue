@@ -12,7 +12,7 @@
 
 
           <!--  <b-table striped hover :items="results" :fields="fields"></b-table>  -->
-                    <el-table
+          <el-table
             class="table-responsive table"
             header-row-class-name="thead-light"
             :data="results"
