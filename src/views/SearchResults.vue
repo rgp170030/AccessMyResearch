@@ -29,15 +29,33 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="Author"
-              prop="_source.author"
+              label="Author(s)"
+              prop="_source.authors"
               min-width="150px"
             >
             </el-table-column>
             <el-table-column
-              label="Message"
-              prop="_source.message"
+              label="Description"
+              prop="_source.description"
               min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="Date Published"
+              prop="_source.datePublished"
+              min-width="200px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="URL"
+              prop="_source.url"
+              min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="DOI"
+              prop="_source.doi"
+              min-width="200px"
             >
             </el-table-column>
             <el-table-column
@@ -177,35 +195,6 @@ export default {
        this.lengthResults = 0; 
        startTime = new Date();
 
-       let searchResults = await client
-         .search({
-           index: "amr",
-           body: {
-             query: {
-               bool: {
-                 must_not:{
-                   query_string: {
-                     fields: [ "title", "author", "message", "count"],
-                     query: this.blacklistText,
-                   }
-                 },
-                 should:{
-                   query_string: {
-                     fields: [ "title", "author", "message", "count"],
-                     query: this.$route.query.text,
-                   }
-                 },
-               },
-             },
-           },
-         })
-         .then((res) => res)
-         .catch((e) => {
-           console.log(e);
-         });
-         
-       endTime = new Date();
-
       axios
       .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
       .then((response) => {
@@ -224,11 +213,53 @@ export default {
           this.results_doi = response.data.results;
        });
 
-       var timeDiff = endTime - startTime;
-       this.timeTotal = timeDiff;
-       this.results.push(...searchResults.hits.hits);
-      
+      let searchResults = await client
+        .search({
+          body: {
+            size: 100,
+            query: {
+              bool: {
+                must_not:{
+                  query_string: {
+                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
+                    query: this.blacklistText,
+                  }
+                },
+                should:{
+                  query_string: {
+                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
+                    query: this.$route.query.text,
+                  }
+                },
+              },
+            },
+          },
+        })
+        .then((res) => res)
+        .catch((e) => {
+          console.log(e);
+        });
+      endTime = new Date();
+      var timeDiff = endTime - startTime;
+      this.timeTotal = this.timeTotal + timeDiff;
+      for(var hit of searchResults.hits.hits) {
+        hit._source.authors = this.arrayToString(hit._source.authors);
+        hit._source.url = this.arrayToString(hit._source.url);
+        hit._source.description = this.shortenDescription(hit._source.description);
+      }
+      this.results.push(...searchResults.hits.hits);
     },
+    arrayToString(data) {
+      if(Array.isArray(data)){
+        return data.join(", ");
+      }
+      return data;
+    },
+    shortenDescription(data) {
+      if(data.length > 250) {
+        return data.slice(0, 250) + "...";
+      }
+    }
   },
 };
 </script>

@@ -1,4 +1,4 @@
-export default [
+export default [ //This schema is currently unused
   {
     id: 1,
     name: 'John Michael',

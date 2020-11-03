@@ -328,7 +328,7 @@
           </b-input-group>
         </b-form-group>
       </b-form>
-
+<!-- start message and notification -->
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a
           slot="title-container"
@@ -341,13 +341,13 @@
         >
           <i class="fas fa-bell"></i>
         </a>
-        <a class="dropdown-item" to="/notifications">
+        <a class="dropdown-item" to="/notifications" v-if="signedIn"> <!-- TODO: Link to Notification-->
           <!-- TODO: Link to Notification-->
           <i class="fas fa-book-open"></i>
           New Article by: Mehmet Günal
           <small class="form-text text-muted">Yesterday</small>
         </a>
-        <a class="dropdown-item" to="/notifications">
+        <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <i class="fas fa-user-friends"></i>
           New friend: Mehmet Günal
           <small class="form-text text-muted">1 week ago</small>
@@ -360,11 +360,17 @@
           </a>
         </span>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/notifications">
+        <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <i class="fas fa-clock"></i>
           All Notifications
         </a>
+        <b-alert show variant="light" class="text-dark" v-if="!signedIn">
+          <i class="fas fa-exclamation-circle fa-lg"></i>
+            In order to access this feature, you must login.
+            You can login <router-link class="font-weight-bolder text-dark" to="/login">here.</router-link>
+         </b-alert>
       </base-dropdown>
+
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a
           slot="title-container"
@@ -373,34 +379,50 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="redirect"
-        >
+          @click="redirect">
           <i class="fas fa-comment"></i>
         </a>
-        <a class="dropdown-item" to="/messages">
+        <a class="dropdown-item" to="/messages" v-if="signedIn"> <!-- TODO: Link to Messages-->
           <!-- TODO: Link to Messages-->
           <i class="fas fa-comment"></i>
           Mehmet Günal: Check out my research!
           <small class="form-text text-muted">Yesterday</small>
         </a>
-        <a class="dropdown-item" to="/messages">
+        <a class="dropdown-item" to="/messages" v-if="signedIn">
           <i class="far fa-comment"></i>
           Greg Kitchen: Check out his research!
           <small class="form-text text-muted">1 week ago</small>
+          </a>
+          <div class="dropdown-divider"></div>
+          <router-link to="/notifications" class="dropdown-item">
+              <span>All Requests </span>
+          </router-link>
+
+        <!-- </template> -->
+      </base-dropdown>
+
+      <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+        <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false" @click="redirect">
+            <i class="fas fa-envelope"></i>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/messages">
+        <a class="dropdown-item" to="/messages" v-if="signedIn"> <!-- TODO: Link to Messages-->
           <i class="fas fa-clock"></i>
           All Messages
         </a>
+         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
+          <i class="fas fa-exclamation-circle fa-lg"></i>
+            In order to access this feature, you must login.
+            You can login <router-link class="font-weight-bolder text-black" to="/login">here.</router-link>
+         </b-alert>
       </base-dropdown>
       <base-dropdown
         menu-on-right
         class="nav-item"
         tag="li"
         title-tag="a"
-        title-classes="nav-link pr-0"
-      >
+        title-classes="nav-link pr-0">
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
@@ -703,13 +725,16 @@ export default {
   methods: {
     async onSubmit(evt) {
       this.timeTotal = 0;
-      this.modal = false;
-      this.$router
-        .push({
-          path: "results",
-          query: { text: this.search.text, filter: this.search.filter },
-        })
-        .catch(() => {});
+      let duplication = false;
+      for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
+        if (this.recentSearches[i] == this.search.text){
+          duplication = true;
+        }
+      }
+      if (!duplication){ //No duplication for recent searches allowed
+        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
+      }
+      this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
     },
     async getSearchHistory() {
       let history = await axios.get("http://localhost:3000/search");
