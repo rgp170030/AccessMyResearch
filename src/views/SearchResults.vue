@@ -3,10 +3,7 @@
     <base-header
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
-    <b-modal id="EmailModal" size="xl" title="Email" ok-title="Send" v-model="emailModal.show"> 
-      <Email :emails="emailModal.emailOpts">
-      </Email>
-    </b-modal>
+    <Email ref="doiEmailModal" :emails="emailModal.emailOpts"></Email>
     <b-card-header class="border-0">
       <h3 class="mb-0">
         About {{ results.length }} results ({{ timeTotal }} ms)
@@ -81,7 +78,6 @@ import { Table, TableColumn } from "element-ui";
 import axios from "axios";
 import Email from '@/components/Email.vue';
 
-
 const client = new Client({ node: "http://localhost:9600/" });
 
 export default {
@@ -98,7 +94,6 @@ export default {
       timeTotal: 0,
       blacklistText: "",
       emailModal: {
-        show: false,
         emailOpts: []
       }
     };
@@ -180,52 +175,59 @@ export default {
       endTime = new Date();
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
-      if (searchResults) this.results.push(...searchResults.hits.hits);
-      this.checkDoi();
+      if (searchResults)
+        this.results.push(...searchResults.hits.hits);
+
+      //Subject to change - if Elasticsearch doesn't get any results from this search (i.e., we don't have anything about DOI in our data),
+      // then check to see if there is a valid in the query string (e.g. 10.1510/12616/asghja/125)
+      // If there is a valid DOI, check Crossref.org for some basic details (author name & article title).
+      if (this.results.length === 0) {
+        this.checkDoi();
+      }
     },
     checkDoi() {
       var self = this;
-      if (this.results.length === 0) {
-        var reg = /10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i;
-        var search = reg.exec(this.$route.query.text);
-        if (search.length > 0) {
-          this.searchStatus = 'Recognized DOI. Checking Crossref.org for info...';
+      //Regex for matching DOIs.
+      var reg = /10\.\d{4,9}\/[-._;()/:A-Z0-9]+/i;
+      var search = reg.exec(this.$route.query.text);
+      if (search.length > 0) {
+        //matched a doi in the string.
+        this.searchStatus = 'Recognized DOI. Checking Crossref.org for info...';
 
-          var doi = search[0];
-          axios
-            .get(this.$endpoints.crossref + 'works/' + doi)
-            .then(function (response) {
-              if (response && response.status === 200) {
-                var newRow = {
-                  _source: {
-                    title: response.data.message.title[0],
-                    author:response.data.message.author[0].family + ", " + response.data.message.author[0].given,
-                    isDoi: true,
-                    doi: doi
-                  },
-                };
-                self.results.push(newRow);
-              }
-            })
-            .catch(function (error) {
-              alert("invalid or no doi result");
-            })
-            .then(function(){
-              self.searchStatus = '';
-            });
-        }
+        var doi = search[0]; //This is the first match for the regex. This currently only searches the first under the assumption that only one would be searched at a time...
+        axios.get(this.$endpoints.crossref + 'works/' + doi) //sends a query to Crossref.org for basic article details like title and author.
+          .then(function (response) {
+            if (response && response.status === 200) {
+              var newRow = {
+                _source: {
+                  title: response.data.message.title[0],
+                  author: response.data.message.author[0].family + ", " + response.data.message.author[0].given,
+                  isDoi: true,
+                  doi: doi
+                },
+              };
+
+              self.results.push(newRow);
+            }
+          })
+          .catch(function (error) {
+            alert("invalid or no doi result");
+          })
+          .then(function(){
+            self.searchStatus = '';
+          });
       }
     },
     doiEmailIconClick(doi){
       const self = this;
 
-      this.searchStatus = 'Getting email from publisher...'
+      this.searchStatus = 'Getting email from publisher...';
       axios.get(this.doiEndpoint + '/' + doi)
         .then(function (response) {
           if (response) {
             if(response.status === 200){
               self.emailModal.emailOpts = response.data;
-              self.emailModal.show = true;
+              self.$refs.doiEmailModal.showModal();
             }
           }
         })
@@ -234,7 +236,7 @@ export default {
             alert(error.response.data.detail);
           }
         })
-        .then(function(){
+        .then(function() {
           self.searchStatus = '';
         });
     },

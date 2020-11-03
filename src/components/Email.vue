@@ -1,48 +1,80 @@
 <template>
-  <div>
-    <multiselect
-      v-model="selectedEmails"
-      :options="emails"
-      :multiple="true"
-      :close-on-select="false"
-      :preserve-search="true"
-      placeholder="Choose Emails"
-      :preselect-first="true"
-      class="form-pad"
-    >
-    </multiselect>
+  <b-modal
+    id="EmailModal" 
+    size="xl" 
+    title="Email" 
+    ok-title="Send" 
+    v-model="show"
+    @ok="submitEmailForm"
+  > 
+    <div>
+      <multiselect
+        v-model="to"
+        :options="emails"
+        :multiple="true"
+        :close-on-select="false"
+        :preserve-search="true"
+        placeholder="Choose Emails"
+        :preselect-first="true"
+        class="form-pad"
+      >
+      </multiselect>
 
-    <input
-      type="text"
-      v-model="subject"
-      class="form-control form-pad"
-      placeholder="Subject"
-    />
-    <textarea
-      type="text"
-      v-model="message"
-      class="form-control form-pad"
-      placeholder=""
-      rows="7"
-    ></textarea>
-  </div>
+      <input
+        type="text"
+        v-model="subject"
+        class="form-control form-pad"
+        placeholder="Subject"
+      />
+      <textarea
+        type="text"
+        v-model="body"
+        class="form-control form-pad"
+        placeholder=""
+        rows="7"
+      ></textarea>
+    </div>
+  </b-modal>
 </template>
 
 <script>
 import Multiselect from 'vue-multiselect';
+import axios from "axios";
 
 export default {
   props: ["emails"],
-  data() {
-    return {
-      selectedEmails: [],
-      subject: "",
-      message: "\n\n\n\n\nSent from AccessMyResearch (AMR)",
-    };
-  },
   components: {
     Multiselect
-  }
+  },
+  data() {
+    return {
+      show: false,
+      to: [],
+      subject: "",
+      body: "\n\n\n\n\nSent from AccessMyResearch (AMR)",
+    };
+  },
+  methods: {
+    showModal: function(){
+      this.show = true;
+    },
+    submitEmailForm: function(){
+      const formData = new FormData();
+      formData.append('to', this.to);
+      formData.append('subject', this.subject);
+      formData.append('body', this.body);
+
+      axios.post(this.$endpoints.aspnet + "api/doi/email", formData)
+        .then(function (response){
+          console.log("ASPNET API EMAIL RESPONSE:")
+          console.log(response);
+        })
+        .catch(function (error){
+          console.log("ASPNET API EMAIL ERROR:")
+          console.log(error);
+        });
+    }
+  },
 };
 </script>
 
