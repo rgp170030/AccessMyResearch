@@ -29,6 +29,7 @@ Make Access My Research functional, beautiful, and quick
     |-- .eslintrc.js
     |-- .gitattributes
     |-- .gitignore
+    |-- .graphqlconfig.yml
     |-- .postcssrc
     |-- babel.config.js
     |-- docker-compose.yml
@@ -36,7 +37,13 @@ Make Access My Research functional, beautiful, and quick
     |-- package.json
     |-- README.md
     |-- vue.config
+    |-- config
+    |   |-- elastic.js
+    |   |-- logstash.conf
+    |   |-- redis.conf
     |-- public
+    |   |-- favicon.png
+    |   |-- index.html
     |   |-- img
     |   |   |-- brand
     |   |   |   |-- orange.png
@@ -45,18 +52,25 @@ Make Access My Research functional, beautiful, and quick
     |   |   |   |-- google.svg
     |   |   |   |-- linkedin.svg
     |   |   |-- theme
-    |   |   |   |-- **A bunch of placeholder images**
-    |   |-- favicon.png
-    |   |-- index.html
+    |   |   |   |-- **Placeholder images**
+    |-- server
+    |   |-- app.js
+    |   |-- dockerfile-server
+    |   |-- package.json
     |-- src
         |-- App.vue
+        |-- aws-exports.js
+        |-- config.js
         |-- main.js
         |-- polyfills.js
+        |-- store.js
         |-- assets
         |   |-- scss
-        |   |   |-- core
-        |   |   |-- custom
         |   |   |-- argon.scss
+        |   |   |-- core
+        |   |   |   |-- **Scss assets**
+        |   |   |-- custom
+        |   |   |   |-- **Scss assets**
         |-- components
         |   |-- Badge.vue
         |   |-- BaseAlert.vue
@@ -95,6 +109,9 @@ Make Access My Research functional, beautiful, and quick
         |   |   |-- BaseCheckbox.vue
         |   |   |-- BaseInput.vue
         |   |   |-- BaseRadio.vue
+        |   |-- Interests
+        |   |   |-- InterestCategory.vue
+        |   |   |-- InterestTopics.vue
         |   |-- Navbar
         |   |   |-- BaseNav.vue
         |   |   |-- NavbarToggleButton.vue
@@ -102,6 +119,8 @@ Make Access My Research functional, beautiful, and quick
         |   |   |-- index.js
         |   |   |-- Notification.vue
         |   |   |-- Notifications.vue
+        |   |-- Settings
+        |   |   |-- ManageIgnoredUsersTab.vue
         |   |-- SidebarPlugin
         |   |   |-- index.js
         |   |   |-- SideBar.vue
@@ -111,6 +130,11 @@ Make Access My Research functional, beautiful, and quick
         |   |   |-- Tabs.vue
         |-- directives
         |   |-- click-outside.js
+        |-- graphql
+        |   |-- mutations.js
+        |   |-- queries.js
+        |   |-- schema.json
+        |   |-- subscriptions.js
         |-- plugins
         |   |-- dashboard-plugin.js
         |   |-- globalComponents.js
@@ -133,8 +157,12 @@ Make Access My Research functional, beautiful, and quick
             |-- Messages.vue
             |-- NotFoundPage.vue
             |-- Notifications.vue
+            |-- Projects.vue
+            |-- Requests.vue
+            |-- SearchHistory.vue
             |-- SearchResults.vue
             |-- Settings.vue
+            |-- Updates.vue
             |-- Upload.vue
             |-- Dashboard
             |   |-- PageVisitsTable.vue
@@ -144,24 +172,40 @@ Make Access My Research functional, beautiful, and quick
             |   |-- ContentFooter.vue
             |   |-- DashboardLayout.vue
             |   |-- DashboardNavbar.vue
+            |   |-- PopupCard.vue
             |-- Pages
-            |   |-- UserProfile
-            |   |   |-- EditProfileForm.vue
-            |   |   |-- UserCard.vue
+            |   |-- AddRemoveUsers.vue
             |   |-- AuthLayout.vue
+            |   |-- CodeVerification.vue
+            |   |-- ForgotPassword.vue
+            |   |-- Interests.vue
             |   |-- Login.vue
             |   |-- Register.vue
+            |   |-- SuggestedPeople.vue
             |   |-- UserProfile.vue
+            |   |-- UserProfile
+            |   |   |-- EditProfileForm.vue
+            |   |   |-- UserActionsDropdown.vue
+            |   |   |-- UserCard.vue
+            |-- SettingsTabs
+            |   |-- Account.vue
+            |   |-- Display.vue
+            |   |-- Localization.vue
+            |   |-- Payment.vue
+            |   |-- Privacy.vue
+            |   |-- Security.vue
             |-- Tables
                 |-- articles.js
+                |-- collections.js
+                |-- LightTable.vue
                 |-- projects.js
                 |-- users.js
-                |-- LightTable.vue
 ```
 
 ## Important Notes
 1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
 2) Check available color variables at src\assets\custom\_variables.scss
+3) Comments indicating what needs to be done should begin with "TODO" so these comments can be quickly searched for
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.

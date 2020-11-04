@@ -309,7 +309,7 @@ export default {
             progressBar: progressBar,
             files: this.files,
             urls: {
-                uploadEndpoint: 'https://localhost:5001/api/upload' //hard-coded for now... should formalize this somehow in the future.
+                uploadEndpoint: 'https://localhost:5001/api/upload' //TODO: Add upload endpoint
             }
         });
 
@@ -332,7 +332,6 @@ export default {
     }
 }
 </script>
-
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
 #drop-area {
