@@ -12,9 +12,10 @@ Make Access My Research functional, beautiful, and quick
 1) npm install   - Installs all dependencies
 2) npm ci        - Removes all dependencies and installs them all cleanly
 3) npm run build - Builds the code
-4) npm run dev   - automatically builds all changes & runs the code locally/on network
-5) npm run serve - Serves the code (not going to be useful for a while)
-6) npm run lint  - Starts the Vue linter
+4) npm run dev   - Automatically builds all changes & runs the code locally/on network
+5) npm test      - Runs the code unit tests (with Jest)
+6) npm run serve - Serves the code (not going to be useful for a while)
+7) npm run lint  - Starts the Vue linter
 
 ## Using Docker
 - You'll need [to install docker](https://docs.docker.com/get-docker/)
