@@ -4,13 +4,13 @@
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
     <b-card-header class="border-0">
-      <h3 class="mb-0" >About {{results.length}} results ({{timeTotal}} ms) </h3>
+      <h3 class="mb-0" >About {{results.length}} results ({{elapsed_time}} ms) </h3>
     </b-card-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
 
-
+          
           <!--  <b-table striped hover :items="results" :fields="fields"></b-table>  -->
           <el-table
             class="table-responsive table"
@@ -22,7 +22,7 @@
                 <b-media no-body class="align-items-center">
                   <b-media-body>
                     <span class="font-weight-600 name mb-0 text-sm">{{
-                      row._source.title
+                      row._source.snippet
                     }}</span>
                   </b-media-body>
                 </b-media>
@@ -112,6 +112,12 @@
                       <b-card-body>
                           <div v-for="(result, i) in results_doi" :key="i + result"><p v-html="result.snippet">
                             </p><a :href="result.response.doi_url">{{ result.response.doi_url}}</a>
+                                <p> Published Date: 
+                                  {{ publishedDate(result.response.published_date) }}
+                                </p>
+                                <p> Authors: 
+                                  {{ commaSeparatedAuthors(result.response.z_authors) }}
+                                </p>
                                 <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
                           </div>
                       </b-card-body>
@@ -143,7 +149,7 @@ export default {
       results:[],
       results_doaj: [],
       results_doi: [],
-      fields: ['snippet', 'response.doi_url'],
+      //fields: ['snippet', 'response.doi_url'],
       elapsed_time: 0,
       timeTotal: 0,
       blacklistText:"",
@@ -187,6 +193,78 @@ export default {
        .catch(function (error) {
           console.log(error);
        });
+    },
+    commaSeparatedAuthors(authorsList){
+      if(authorsList == null){
+        return "N/A"
+      }
+      else {
+        let authorString = ""
+        for (let index = 0; index < authorsList.length; index++) {
+          authorString = `${authorString} ${authorsList[index].family} ${authorsList[index].given}, `;
+        }
+        return authorString.slice(0, -2);
+      }
+    },
+    publishedDate(publishedDateList){
+      if(publishedDateList == null){
+        return "N/A"
+      }
+      else {
+        return publishedDateList;
+      }
+    },
+    performSearch() {
+    //   var startTime, endTime;
+    //   this.results = [];
+    //   startTime = new Date();
+    //   const searchQuery = {};
+    //   searchQuery[startTime] = this.$route.query.text;
+
+      axios
+      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
+      .then((response) => {
+          this.elapsed_time = response.data.elapsed_seconds
+          this.results = response.data.results
+       });
+      // .post('http://localhost:3000/search', searchQuery)
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //    console.log(error);
+      // });
+
+    //   let searchResults = await client
+    //     .search({
+    //       index: "amr",
+    //       body: {
+    //         query: {
+    //           bool: {
+    //             must_not:{
+    //               query_string: {
+    //                 fields: [ "title", "author", "message", "count"],
+    //                 query: this.blacklistText,
+    //               }
+    //             },
+    //             should:{
+    //               query_string: {
+    //                 fields: [ "title", "author", "message", "count"],
+    //                 query: this.$route.query.text,
+    //               }
+    //             },
+    //           },
+    //         },
+    //       },
+    //     })
+    //     .then((res) => res)
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    //   endTime = new Date();
+    //   var timeDiff = endTime - startTime;
+    //   this.timeTotal = this.timeTotal + timeDiff;
+    //   this.results.push(...searchResults.hits.hits);
     },
 
     async performSearch() {
