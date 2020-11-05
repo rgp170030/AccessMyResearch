@@ -64,6 +64,7 @@
 <script>
 /* eslint-disable no-new */
 import PerfectScrollbar from 'perfect-scrollbar';
+  import { Auth } from 'aws-amplify';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 function hasElement(className) {
@@ -104,22 +105,24 @@ export default {
       this.signedIn = true;
     }
   },
-  methods: {
-    initScrollbar() {
-      let isWindows = navigator.platform.startsWith('Win');
-      if (isWindows) {
-        initScrollbar('sidenav');
-      }
+    methods: {
+      initScrollbar() {
+        let isWindows = navigator.platform.startsWith('Win');
+        if (isWindows) {
+          initScrollbar('sidenav');
+        }
+      },
+      redirect() {
+        if(this.$store.state.signedIn === false)
+        {
+          this.$router.push('login');
+        }
+      },
     },
-    redirect() {
-      if(!this.$store.state.signedIn)
-      {
-        this.$router.push('login');
-      }
+    mounted() {
+      this.initScrollbar();
     },
-  },
-  mounted() {
-    this.initScrollbar()
-  },
-};
+  };
 </script>
+<style lang="scss">
+</style>
