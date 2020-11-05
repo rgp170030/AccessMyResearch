@@ -333,8 +333,6 @@
           <router-link to="/notifications" class="dropdown-item">
               <span>All Requests </span>
           </router-link>
-
-        <!-- </template> -->
       </base-dropdown>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
