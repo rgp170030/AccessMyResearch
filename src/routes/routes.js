@@ -108,7 +108,7 @@ const routes = [
         path: '/profile-information',
         name: 'profile information',
         component: () => import('../views/Pages/ProfileInformation.vue')
-      },
+      }
     ]
   },
   {
