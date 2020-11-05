@@ -31,7 +31,7 @@ import router from './routes/router';
 Vue.use(DashboardPlugin);
 
 // start firebase
-import  firebase from 'firebase'
+import firebase from 'firebase'
 
 // connection  to the firebase  start here
 require("firebase/firestore");
@@ -45,11 +45,11 @@ var config = {
   messagingSenderId: "1071441139587",
   appId: "1:1071441139587:web:9d2cfb4b4409fc58c108b6",
   measurementId: "G-DTXHZ2CSJR"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
-  var db = firebase.firestore();
-  window.db=db;
+var db = firebase.firestore();
+window.db = db;
 // end firebase
 
 // added for sliders in year filter
@@ -57,6 +57,11 @@ import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 Vue.component('VueSlider', VueSlider)
 // end of code added
+
+Vue.prototype.$endpoints = {
+  aspnet: 'https://localhost:5001/',
+  crossref: 'https://api.crossref.org/',
+};
 
 /* eslint-disable no-new */
 new Vue({

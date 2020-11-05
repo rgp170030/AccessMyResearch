@@ -50,7 +50,6 @@
                   v-for="filteredRecentSearch in filteredRecentSearches"
                   :key="filteredRecentSearch"
                   @click="setSearch(filteredRecentSearch)"
-
                 >
                   {{ filteredRecentSearch }}
                 </b-dropdown-item>
@@ -59,7 +58,7 @@
             <!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
-              <b-dropdown variant="Primary" right text="">
+              <b-dropdown variant="" right text="">
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -191,15 +190,15 @@
                     >
                       <b-card-body>
                         <b-dropdown-group class="small">
-                          <br>
+                          <br />
                           <vue-slider
-                          v-model="yearRange"
-                          :min="1950"
-                          :max="2020"
-                          :enable-cross="false"
-                          :tooltip="'always'"
+                            v-model="yearRange"
+                            :min="1950"
+                            :max="2020"
+                            :enable-cross="false"
+                            :tooltip="'always'"
                           ></vue-slider>
-                          <br>
+                          <br />
                           <div>Years Selected: {{ yearRange }}</div>
                         </b-dropdown-group>
                       </b-card-body>
@@ -265,6 +264,7 @@
                 </div>
 
                 <div class="accordion" role="tablist">
+
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button
@@ -319,16 +319,21 @@
                 </div>
 
                 <!-- Need to figure out why click isn't working first 3 times -->
-                <input type="checkbox" v-model="defaultFilterCheckbox" @click="defaultFilterCheckboxChecked()">
+                <input
+                  type="checkbox"
+                  v-model="defaultFilterCheckbox"
+                  @click="defaultFilterCheckboxChecked()"
+                />
                 Save current filters as default
-                <b-button class="btn float-right" variant="primary">Search</b-button>
+                <b-button class="btn float-right" variant="primary"
+                  >Search</b-button
+                >
               </b-dropdown>
             </div>
-
           </b-input-group>
         </b-form-group>
       </b-form>
-<!-- start message and notification -->
+      <!-- start message and notification -->
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a
           slot="title-container"
@@ -341,7 +346,8 @@
         >
           <i class="fas fa-bell"></i>
         </a>
-        <a class="dropdown-item" to="/notifications" v-if="signedIn"> <!-- TODO: Link to Notification-->
+        <a class="dropdown-item" to="/notifications" v-if="signedIn">
+          <!-- TODO: Link to Notification-->
           <!-- TODO: Link to Notification-->
           <i class="fas fa-book-open"></i>
           New Article by: Mehmet Günal
@@ -355,8 +361,8 @@
         <span v-for="(key, val) in this.reminders" v-bind:key="val">
           <a class="dropdown-item" to="/notifications">
             <i class="fas fa-search"></i>
-              Search for: {{val}}
-            <small class="form-text text-muted">{{key}}</small>
+            Search for: {{ val }}
+            <small class="form-text text-muted">{{ key }}</small>
           </a>
         </span>
         <div class="dropdown-divider"></div>
@@ -366,9 +372,11 @@
         </a>
         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
           <i class="fas fa-exclamation-circle fa-lg"></i>
-            In order to access this feature, you must login.
-            You can login <router-link class="font-weight-bolder text-dark" to="/login">here.</router-link>
-         </b-alert>
+          In order to access this feature, you must login. You can login
+          <router-link class="font-weight-bolder text-dark" to="/login"
+            >here.</router-link
+          >
+        </b-alert>
       </base-dropdown>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
@@ -379,10 +387,12 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="redirect">
+          @click="redirect"
+        >
           <i class="fas fa-comment"></i>
         </a>
-        <a class="dropdown-item" to="/messages" v-if="signedIn"> <!-- TODO: Link to Messages-->
+        <a class="dropdown-item" to="/messages" v-if="signedIn">
+          <!-- TODO: Link to Messages-->
           <!-- TODO: Link to Messages-->
           <i class="fas fa-comment"></i>
           Mehmet Günal: Check out my research!
@@ -392,37 +402,48 @@
           <i class="far fa-comment"></i>
           Greg Kitchen: Check out his research!
           <small class="form-text text-muted">1 week ago</small>
-          </a>
-          <div class="dropdown-divider"></div>
-          <router-link to="/notifications" class="dropdown-item">
-              <span>All Requests </span>
-          </router-link>
+        </a>
+        <div class="dropdown-divider"></div>
+        <router-link to="/notifications" class="dropdown-item">
+          <span>All Requests </span>
+        </router-link>
 
         <!-- </template> -->
       </base-dropdown>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-        <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false" @click="redirect">
-            <i class="fas fa-envelope"></i>
+        <a
+          slot="title-container"
+          class="nav-link nav-link-icon"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          @click="redirect"
+        >
+          <i class="fas fa-envelope"></i>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/messages" v-if="signedIn"> <!-- TODO: Link to Messages-->
+        <a class="dropdown-item" to="/messages" v-if="signedIn">
+          <!-- TODO: Link to Messages-->
           <i class="fas fa-clock"></i>
           All Messages
         </a>
-         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
+        <b-alert show variant="light" class="text-dark" v-if="!signedIn">
           <i class="fas fa-exclamation-circle fa-lg"></i>
-            In order to access this feature, you must login.
-            You can login <router-link class="font-weight-bolder text-black" to="/login">here.</router-link>
-         </b-alert>
+          In order to access this feature, you must login. You can login
+          <router-link class="font-weight-bolder text-black" to="/login"
+            >here.</router-link
+          >
+        </b-alert>
       </base-dropdown>
       <base-dropdown
         menu-on-right
         class="nav-item"
         tag="li"
         title-tag="a"
-        title-classes="nav-link pr-0">
+        title-classes="nav-link pr-0"
+      >
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
@@ -503,15 +524,15 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.selectedFilters){
+    if (localStorage.selectedFilters) {
       this.selectedFilters = localStorage.selectedFilters.split(",");
     }
 
-    if (localStorage.yearRange){
+    if (localStorage.yearRange) {
       this.yearRange = localStorage.yearRange.split(",");
     }
 
-    if (localStorage.defaultFilterCheckbox){
+    if (localStorage.defaultFilterCheckbox) {
       this.defaultFilterCheckbox = localStorage.defaultFilterCheckbox;
     }
 
@@ -726,20 +747,27 @@ export default {
     async onSubmit(evt) {
       this.timeTotal = 0;
       let duplication = false;
-      for (let i = 0; i < this.recentSearches.length; i++){ //check for recent searches
-        if (this.recentSearches[i] == this.search.text){
+      for (let i = 0; i < this.recentSearches.length; i++) {
+        //check for recent searches
+        if (this.recentSearches[i] == this.search.text) {
           duplication = true;
         }
       }
-      if (!duplication){ //No duplication for recent searches allowed
+      if (!duplication) {
+        //No duplication for recent searches allowed
         this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
       }
-      this.$router.push({ path: 'results', query: {text: this.search.text, filter: this.search.filter} }).catch(()=>{});
+      this.$router
+        .push({
+          path: "results",
+          query: { text: this.search.text, filter: this.search.filter },
+        })
+        .catch(() => {});
     },
     async getSearchHistory() {
       let history = await axios.get("http://localhost:3000/search");
-      this.recentSearches = Object.entries(history.data).reverse().slice(0,5);
-  },
+      this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
+    },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -763,8 +791,7 @@ export default {
       }
     },
     sort() {
-      if (this.search.text)
-      {
+      if (this.search.text) {
         this.onSubmit();
       }
 
@@ -793,8 +820,9 @@ export default {
       });*/
     },
     //autocomplete start
-     filterRecentSearches() {
+    filterRecentSearches() {
       this.getSearchHistory();
+
       this.filteredRecentSearches = this.recentSearches.filter(
         (s) => {
           return this.search.text && JSON.parse(s[1]).query
@@ -808,35 +836,34 @@ export default {
       this.search.text = recentSearch;
       this.modal = false;
     },
-    openAutoComplete () {
+    openAutoComplete() {
       this.modal = true;
-},
+    },
     //autocomplete end
 
     //default filter start
-    defaultFilterCheckboxChecked () {
-      localStorage.selectedFilters = this.selectedFilters
-      localStorage.yearRange = this.yearRange
-      localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox
+    defaultFilterCheckboxChecked() {
+      localStorage.selectedFilters = this.selectedFilters;
+      localStorage.yearRange = this.yearRange;
+      localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;
 
-      if(localStorage.defaultFilterCheckbox == "true"){
-        localStorage.clear()
-        return
+      if (localStorage.defaultFilterCheckbox == "true") {
+        localStorage.clear();
+        return;
       }
-
     },
     getReminders() {
       this.reminders = JSON.parse(localStorage.reminders);
-    }
+    },
   },
 };
 </script>
 <style>
 .AutoCompleteDropDown {
   position: absolute;
-background: white;
-border-radius: 4px;
-top: 45px;
-width: 350px;
+  background: white;
+  border-radius: 4px;
+  top: 45px;
+  width: 350px;
 }
 </style>
