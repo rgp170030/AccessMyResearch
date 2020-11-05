@@ -28,15 +28,15 @@
             <b-card-header class="bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
               <div class="text-center">
-                <a href="#" class="btn btn-neutral btn-icon mr-4">
+                <a href="#" class="btn btn-neutral btn-icon mr-4" @click="linkedInSignIn">
                   <span class="btn-inner--icon"><img src="img/SSO/linkedin.svg"></span>
                   <span class="btn-inner--text">LinkedIn</span>
                 </a>
-                <a href="#" class="btn btn-neutral btn-icon mr-4">
+                <a href="#" class="btn btn-neutral btn-icon mr-4" @click="googleSignIn">
                   <span class="btn-inner--icon"><img src="img/SSO/google.svg"></span>
                   <span class="btn-inner--text">Google</span>
                 </a>
-                <a href="#" class="btn btn-neutral btn-icon">
+                <a href="#" class="btn btn-neutral btn-icon" @click="facebookSignIn">
                   <span class="btn-inner--icon"><img src="img/SSO/facebook.svg"></span>
                   <span class="btn-inner--text">Facebook</span>
                 </a>
@@ -148,7 +148,16 @@
                     this.$router.push('interests');
                   })
                 .catch(err => console.log(err));
-      }
+      },
+      googleSignIn() {
+        Auth.federatedSignIn({ provider: 'Google' });
+      },
+      facebookSignIn() {
+        Auth.federatedSignIn({ provider: 'Facebook' });
+      },
+      linkedInSignIn() {
+        Auth.federatedSignIn({ provider: 'LinkedIn' });
+      },
     }
   };
 </script>

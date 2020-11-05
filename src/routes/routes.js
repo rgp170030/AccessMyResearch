@@ -104,6 +104,11 @@ const routes = [
         name: 'search history',
         component: () => import('../views/SearchHistory.vue')
       },
+      {
+        path: '/profile-information',
+        name: 'profile information',
+        component: () => import('../views/Pages/ProfileInformation.vue')
+      }
     ]
   },
   {

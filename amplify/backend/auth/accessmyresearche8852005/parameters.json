@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "amrsocialnetwork671a0811_identitypool_671a0811",
+    "identityPoolName": "accessmyresearche8852005_identitypool_e8852005",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "amrsoc671a0811",
-    "userPoolName": "amrsocialnetwork671a0811_userpool_671a0811",
+    "resourceNameTruncated": "accesse8852005",
+    "userPoolName": "accessmyresearche8852005_userpool_e8852005",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "amrsoc671a0811_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "accesse8852005_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "671a0811",
-    "resourceName": "amrsocialnetwork671a0811",
+    "sharedId": "e8852005",
+    "resourceName": "accessmyresearche8852005",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -50,7 +50,7 @@
     "serviceName": "Cognito",
     "dependsOn": [],
     "hostedUI": true,
-    "hostedUIDomainName": "amrsocialnetwork-facebook",
+    "hostedUIDomainName": "amrsocialnetwork",
     "authProvidersUserPool": [
         "Facebook",
         "Google"
