@@ -217,7 +217,7 @@ export default {
     let xhr = new XMLHttpRequest();
 
     // 2. Configure it: GET-request for the URL /article/.../load
-    xhr.open('GET', 'https://localhost:5001/api/publications');
+    xhr.open('GET', this.$endpoints.aspnet + 'api/publications');
 
     // 3. Send the request over the network
     xhr.send();

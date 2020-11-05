@@ -25,7 +25,7 @@
     <hr/>
     <div class="category-container">
         <b-button type="submit" variant="danger" class="btn btn-info" inline @click="dbStuff">Save</b-button>
-        <b-button type="submit" variant="danger" class="btn btn-info" to="home" inline>Skip</b-button>
+        <b-button type="submit" variant="danger" class="btn btn-info" to="profile-information" inline>Skip</b-button>
     </div>
 </div>
 </template>
