@@ -152,15 +152,6 @@ export default {
   },
   computed: {
     text() {
-      this.blacklistText = " ";
-      //this.rawText = this.$route.query.text;
-      //alert(this.rawText)
-      var re = /(?:^|\s)(-[a-z0-9]\w*)/gi; // finding words starting with -
-      var match;
-      while ((match = re.exec(this.$route.query.text)) != null){
-        this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words 
-      }
-      //alert(this.blacklistText)
       return this.$route.query.text || 1;
     },
   },
@@ -194,6 +185,15 @@ export default {
        this.results = [];
        this.lengthResults = 0; 
        startTime = new Date();
+
+      this.blacklistText = " ";
+      //this.rawText = this.$route.query.text;
+      //alert(this.rawText)
+      var re = /(?:^|\s)(-[a-z0-9]\w*)/gi; // finding words starting with -
+      var match;
+      while ((match = re.exec(this.$route.query.text)) != null){
+        this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words 
+      }
 
       axios
       .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
