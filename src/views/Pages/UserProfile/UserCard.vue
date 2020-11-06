@@ -71,7 +71,7 @@ export default {
     return {
       signedIn: false,
       data: '',
-      dataloaded: false,
+      dataloaded: true,
       user: {
         company: 'Access My Research',
         username: '',
@@ -101,7 +101,7 @@ export default {
   methods: {
     getUserData() {
       console.log("User Data");
-      
+
       Auth.currentAuthenticatedUser().then((value) => {
         var values = value.storage;
 
@@ -118,25 +118,25 @@ export default {
         for(const [key, value] of Object.entries(obj.UserAttributes))
         {
           if(value.Name == "custom:articles")
-          { 
+          {
             this.$store.state.user.articles = value.Value;
             this.user.articles = value.Value;
           }
 
           if(value.Name == "custom:comments")
-          { 
+          {
             this.$store.state.user.comments = value.Value;
             this.user.comments = value.Value;
           }
 
           if(value.Name == "custom:friends")
-          { 
+          {
             this.$store.state.user.friends = value.Value;
             this.user.friends = value.Value;
           }
 
           if(value.Name == "custom:last_name")
-          { 
+          {
             this.$store.state.user.lastName = value.Value;
             this.user.lastName = value.Value;
           }
@@ -148,43 +148,43 @@ export default {
           }
 
           if(value.Name == "custom:education")
-          { 
+          {
             this.$store.state.user.education = value.Value;
             this.user.education = value.Value;
           }
 
           if(value.Name == "custom:city")
-          { 
+          {
             this.$store.state.user.city = value.Value;
             this.user.city = value.Value;
           }
 
           if(value.Name == "custom:state")
-          { 
+          {
             this.$store.state.user.state = value.Value;
             this.user.state = value.Value;
           }
 
           if(value.Name == "custom:country")
-          { 
+          {
             this.$store.state.user.country = value.Value;
             this.user.country = value.Value;
           }
 
           if(value.Name == "custom:expertise")
-          { 
+          {
             this.$store.state.user.expertise = value.Value;
             this.user.expertise = value.Value;
           }
 
           if(value.Name == "custom:university")
-          { 
+          {
             this.$store.state.user.university = value.Value;
             this.user.university = value.Value;
           }
 
           if(value.Name == "custom:bio")
-          { 
+          {
             this.$store.state.user.aboutMe = value.Value;
             this.user.aboutMe = value.Value;
             this.dataloaded = true;

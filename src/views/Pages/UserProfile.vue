@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataloaded">
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
-        style="min-height: 600px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+         style="min-height: 600px; background-image: url(img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
       <b-container fluid>
         <!-- Mask -->
         <span class="mask bg-gradient-primary opacity-8"></span>
@@ -22,56 +22,91 @@
     <b-container fluid class="mt--6">
       <b-row>
         <b-col xl="4" class="order-xl-2 mb-5">
-          <user-card></user-card>
+          <UserCard></UserCard>
         </b-col>
-        <b-col xl="8" class="order-xl-1">
-          <edit-profile-form></edit-profile-form>
+        <b-col>
+
+          <card class="min-vh-100 main_body center">
+            <div class="row card text-black">
+              <div class="col-lg mx-auto form p-4">
+                <button
+                  type="button"
+                  class="btn"
+                  @click="currentTabComponent = 'Showcase'"
+                >
+                  Showcase
+                </button>
+                <button
+                  type="button"
+                  class="btn"
+                  @click="currentTabComponent = 'EditProfileForm'"
+                >
+                  Profile Info
+                </button>
+                <button
+                  type=" button"
+                  class="btn"
+                  @click="currentTabComponent = 'ResearchResources'"
+                >
+                  Research Resources
+                </button>
+                <!--  <p> {{currentTabComponent}} </p> -->
+                <component v-bind:is="currentTabComponent"></component>
+                <!-- <p> This will be the settings page</p> -->
+              </div>
+            </div>
+          </card>
         </b-col>
       </b-row>
     </b-container>
+
   </div>
 </template>
 <script>
-  import EditProfileForm from './UserProfile/EditProfileForm.vue';
-  import UserCard from './UserProfile/UserCard.vue';
-  import { Auth } from 'aws-amplify';
-
-  export default {
-    components: {
-      EditProfileForm,
-      UserCard
-    },
-    data() {
-      return {
-        dataloaded: false,
-        signedIn: false,
-        data: '',
-        user: {
-          company: 'Access My Research',
-          username: '',
-          email: '',
-          firstName: '',
-          lastName: '',
-          education: '',
-          city: '',
-          country: '',
-          state: '',
-          aboutMe: '',
-          expertise: '',
-          university: ''
+import EditProfileForm from "@/views/Pages/UserProfile/EditProfileForm";
+import UserCard from "@/views/Pages/UserProfile/UserCard";
+import { Auth } from 'aws-amplify';
+import Showcase from "@/views/Pages/UserProfile/Showcase";
+import ResearchResources from "@/views/Pages/UserProfile/ResearchResources";
+export default {
+  components: {
+    EditProfileForm,
+    UserCard,
+    Showcase,
+    ResearchResources,
+  },
+  data() {
+    return {
+      currentTabComponent: "Showcase",
+      dataloaded: true,
+      signedIn: false,
+      data: '',
+      user: {
+        company: 'Access My Research',
+        username: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        education: '',
+        city: '',
+        country: '',
+        state: '',
+        aboutMe: '',
+        expertise: '',
+        university: ''
       },
-      };
-    },
-    async created() {
-      await this.getUserData();
-      if(this.$store.state.signedIn)
-      {
-        this.signedIn = true;
-      }
-    },
-    methods: {
-      getUserData() {
-        Auth.currentAuthenticatedUser().then((value) => {
+    };
+  },
+  async created() {
+    await this.getUserData();
+    if(this.$store.state.signedIn)
+    {
+      this.signedIn = true;
+    }
+  },
+  methods: {
+    getUserData() {
+      Auth.currentAuthenticatedUser().then((value) => {
         var values = value.storage;
 
         for (const [key, value] of Object.entries(values)) {
@@ -93,7 +128,7 @@
           }
         }
       });
-      }
     }
-  };
+  }
+};
 </script>
