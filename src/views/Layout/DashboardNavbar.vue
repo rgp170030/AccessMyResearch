@@ -759,7 +759,7 @@ export default {
       }
       this.$router
         .push({
-          path: "results",
+          name: "results",
           query: { text: this.search.text, filter: this.search.filter },
         })
         .catch(() => {});
