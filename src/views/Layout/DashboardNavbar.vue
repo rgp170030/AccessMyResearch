@@ -20,7 +20,7 @@
           'navbar-search-light': type === 'light',
         }"
         id="navbar-search-main"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <b-form-group class="mb-0">
           <b-input-group class="input-group-alternative input-group-merge">
