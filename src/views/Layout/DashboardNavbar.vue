@@ -447,7 +447,7 @@
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" src="img/theme/team-4.jpg" />
+              <img alt="Image placeholder" src="/img/theme/team-4.jpg" />
               <!--TODO: Show profile pic-->
             </span>
           </b-media>

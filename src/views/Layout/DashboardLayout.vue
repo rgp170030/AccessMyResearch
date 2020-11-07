@@ -64,7 +64,7 @@
 <script>
 /* eslint-disable no-new */
 import PerfectScrollbar from 'perfect-scrollbar';
-  import { Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 function hasElement(className) {
