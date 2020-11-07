@@ -10,6 +10,8 @@ export default {
                     return true;
             }
         }
+
+        return false;
     },
     getUserRoles: function (user) {
         // the array of groups that the user belongs to

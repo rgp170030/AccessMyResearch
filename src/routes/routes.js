@@ -1,13 +1,17 @@
 import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
-
 import NotFound from '@/views/NotFoundPage.vue';
+
+import RolesUtil from "@/util/userroles.js"
+import { Auth } from "aws-amplify";
+
 
 const routes = [
   {
     path: '/',
     redirect: 'home',
     component: DashboardLayout,
+
     children: [
       {
         path: '/home',
@@ -112,6 +116,33 @@ const routes = [
     ]
   },
   {
+    path: '/admin',
+    redirect: {name: 'AdminHome'},
+    component: DashboardLayout,
+
+    beforeEnter(to, from, next){
+      Auth.currentAuthenticatedUser()
+        .then(function(user){
+          if(RolesUtil.isAdmin(user)){
+            next();
+          }else{
+            next({name: 'Home'});
+          }
+        })
+        .catch(function(error){
+          next({ name: 'login' });
+        })
+    },
+
+    children: [
+      {
+        path: 'home',
+        name: 'AdminHome',
+        component: () => import('../views/Pages/Admin.vue')
+      }
+    ]
+  },
+  {
     path: '/',
     redirect: 'login',
     component: AuthLayout,
@@ -135,9 +166,12 @@ const routes = [
         path: '/codeverification',
         name: 'codeverification',
         component: () => import('../views/Pages/CodeVerification.vue')
-      },
-      { path: '*', component: NotFound }
+      }
     ]
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ];
 
