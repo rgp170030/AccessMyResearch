@@ -108,7 +108,7 @@
       this.$forceUpdate();
       this.findUser();
 
-      if(this.$store.state.signedIn === true)
+      if(this.$store.state.signedIn)
       {
           this.$router.push('home');
       }
