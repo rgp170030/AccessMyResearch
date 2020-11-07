@@ -147,19 +147,32 @@
     <hr class="my-4">
     <!-- Description -->
     <h6 class="heading-small text-muted mb-4">Publication</h6>
-    <div>
-      <b-table 
-        hover
-        responsive
-        :items="publications.data"
-        :fields="publications.fields"
-        sticky-header
-        head-variant="light"
-      >
-      <template v-slot:cell(doi)="data">
-        <a :href="`http://${data.value}`">{{ data.value }}</a>
-      </template>
-      </b-table>
+    <div >
+      <div class="text-uppercase text-bold">id selected: {{selected}}</div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>DOI</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="i in publications.data" :key="i.title">
+          <td>
+            <label class="form-checkbox">
+              <input type="checkbox" :value="i.title" v-model="selected">
+              <i class="form-icon"></i>
+            </label>
+          </td>
+          <td>{{i.title}}</td>
+          <td>{{i.author}}</td>
+          <td>
+            <a href="http://${i.doi}`">{{i.doi}}</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
   </b-form>
@@ -170,6 +183,8 @@
 export default {
   data() {
     return {
+      selected: [],
+      selectAll: false,
       user: {
         company: 'Access My Research',
         username: '',
@@ -208,6 +223,14 @@ export default {
   methods: {
     updateProfile() {
       alert('Your data: ' + JSON.stringify(this.user)); //TODO: Remove test alert
+    },
+    select() {
+      this.selected = [];
+      if (!this.selectAll) {
+        for (let i in this.items) {
+          this.selected.push(this.items[i].id);
+        }
+      }
     }
   },
   mounted: function(){
