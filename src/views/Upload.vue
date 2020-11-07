@@ -306,7 +306,7 @@ export default {
             progressBar: progressBar,
             files: this.files,
             urls: {
-                uploadEndpoint: 'https://localhost:5001/api/upload' //TODO: Add upload endpoint
+                uploadEndpoint: this.$endpoints.aspnet + 'api/upload'
             }
         });
 
