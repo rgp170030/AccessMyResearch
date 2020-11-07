@@ -148,12 +148,11 @@
     <!-- Description -->
     <h6 class="heading-small text-muted mb-4">Publication</h6>
     <div >
-      <div class="text-uppercase text-bold">id selected: {{selected}}</div>
       <table class="table table-striped table-hover">
         <thead>
         <tr>
+          <th>Selection</th>
           <th>Title</th>
-          <th>Author</th>
           <th>DOI</th>
         </tr>
         </thead>
@@ -166,7 +165,6 @@
             </label>
           </td>
           <td>{{i.title}}</td>
-          <td>{{i.author}}</td>
           <td>
             <a href="http://${i.doi}`">{{i.doi}}</a>
           </td>
