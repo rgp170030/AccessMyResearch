@@ -147,12 +147,13 @@
     <hr class="my-4">
     <!-- Description -->
     <h6 class="heading-small text-muted mb-4">Publication</h6>
-    <div >
+     <div >
       <table class="table table-striped table-hover">
         <thead>
         <tr>
-          <th>Selection</th>
+
           <th>Title</th>
+          <th>Publication Date</th>
           <th>DOI</th>
         </tr>
         </thead>
@@ -172,7 +173,7 @@
         </tbody>
       </table>
 
-      <a href="#!" class="btn btn-sm btn-primary">Save publications to showcase</a>
+      <a href="#!" class="btn btn-sm btn-primary" @click="saveUpload">Save publications to showcase</a>
 
 
     </div>
@@ -180,13 +181,14 @@
   </b-form>
 </card>
 </template>
+ <script>
 
-<script>
 export default {
   data() {
     return {
       selected: [],
       selectAll: false,
+
       user: {
         company: 'Access My Research',
         username: '',
@@ -222,6 +224,9 @@ export default {
       }
     };
   },
+  created () {
+
+  },
   methods: {
     updateProfile() {
       alert('Your data: ' + JSON.stringify(this.user)); //TODO: Remove test alert
@@ -233,7 +238,14 @@ export default {
           this.selected.push(this.items[i].id);
         }
       }
-    }
+    },
+    saveUpload(){
+        // save in firebase
+          db.collection('chat').add({
+            selected: this.selected,
+          })
+
+        }
   },
   mounted: function(){
     var self = this;
@@ -261,4 +273,5 @@ export default {
     };
   }
 };
+
 </script>
