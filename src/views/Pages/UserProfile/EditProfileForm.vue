@@ -152,16 +152,17 @@
         <thead>
         <tr>
 
+          <th>Selection</th>
           <th>Title</th>
-          <th>Publication Date</th>
           <th>DOI</th>
         </tr>
         </thead>
+
         <tbody>
         <tr v-for="i in publications.data" :key="i.title">
           <td>
             <label class="form-checkbox">
-              <input type="checkbox" :value="i.title" v-model="selected">
+              <input type="checkbox" :value="i" v-model="selected">
               <i class="form-icon"></i>
             </label>
           </td>
@@ -171,6 +172,7 @@
           </td>
         </tr>
         </tbody>
+
       </table>
 
       <a href="#!" class="btn btn-sm btn-primary" @click="saveUpload">Save publications to showcase</a>
@@ -186,6 +188,7 @@
 export default {
   data() {
     return {
+      messages:[],
       selected: [],
       selectAll: false,
 

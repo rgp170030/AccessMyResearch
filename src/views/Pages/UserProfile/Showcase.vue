@@ -1,86 +1,51 @@
 <template>
   <div>
-    <!-- Description -->
-    <h6 class="heading-small text-muted mb-4">Publication</h6>
-    <div>
-      <ul id="example-1">
-        <li v-for="item in publications.data" :key="item.type">
-          {{ item.type }}
-        </li>
-      </ul>
-    </div>
-
-
+    <b-table striped
+             hover
+             :items="messages[0].selected"
+             :fields="['title', 'author','type']">
+            <template v-slot:cell(doi)="abc">
+            <a :href="`http://${abc.value}`">{{ abc.value }}</a>
+            </template>
+    </b-table>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
-name: "Showcase",
+  name: "Showcase",
   data(){
-  return {
-    selected: [],
-    selectAll: false,
-    publications: {
-      fields: [
-        {
-          key: 'title',
-          sortable: true,
-          label: 'Title'
-        },
-        {
-          key: 'date',
-          sortable: true,
-          label: 'Date Published',
-          formatter: (dateObj) => `${(dateObj.month + 1)}/${dateObj.day}/${dateObj.year}`
-        },
-        {
-          key: 'doi',
-          sortable: false,
-          label: 'DOI Link'
-        }
-      ],
-      data: []
+    return {
+      messages: [],
     }
-  }
   },
   methods: {
-    select() {
-      this.selected = [];
-      if (!this.selectAll) {
-        for (let i in this.items) {
-          this.selected.push(this.items[i].id);
-        }
-      }
-    }
+    fetchMessages(){
+      db.collection('chat').onSnapshot((querySnapshot)=>{
+        let allMessages= [];
+        querySnapshot.forEach(doc=>{
+          allMessages.push(doc.data())
+        })
+        this.messages= allMessages
+      });
+
+    },
   },
+
   mounted: function(){
-    var self = this;
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.fetchMessages();
 
-    // 1. Create a new XMLHttpRequest object
-    let xhr = new XMLHttpRequest();
-
-    // 2. Configure it: GET-request for the URL /article/.../load
-    xhr.open('GET', this.$endpoints.aspnet + 'api/publications');
-
-    // 3. Send the request over the network
-    xhr.send();
-
-    // 4. This will be called after the response is received
-    xhr.onload = function() {
-      if (xhr.status === 200) { // analyze HTTP status of the response
-        const response = xhr.response;
-        console.log(response)
-
-        self.publications.data = JSON.parse(response);
-        console.log(JSON.parse(response))
-
+    firebase.auth().onAuthStateChanged(user=>{
+      if(user){
+        this.authUser=user;
+      }else{
+        this.authUser={}
       }
-    };
-
-    xhr.onerror = function() {
-      console.error("Request failed.");
-    };
+    });
   }
 
 }
