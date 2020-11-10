@@ -2,7 +2,7 @@ import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
 import NotFound from '@/views/NotFoundPage.vue';
 
-import RolesUtil from "@/util/userroles.js"
+import { AuthHelperRoles } from "@/util/auth-helper.js";
 import { Auth } from "aws-amplify";
 
 
@@ -149,7 +149,7 @@ const routes = [
     ]
   },
 
-  //Expert user routes - Strict navigating guarding (must pass RolesUtil.isExpert())
+  //Expert user routes - Strict navigating guarding (must pass AuthHelperRoles.isExpert())
   {
     path: '/',
     component: DashboardLayout,
@@ -168,7 +168,7 @@ const routes = [
     ]
   },
 
-  //Admin user routes - Strict navigation guarding (must pass RolesUtil.isAdmin())
+  //Admin user routes - Strict navigation guarding (must pass AuthHelperRoles.isAdmin())
   {
     path: '/admin',
     redirect: {name: 'AdminHome'},

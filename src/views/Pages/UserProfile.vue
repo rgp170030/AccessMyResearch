@@ -64,10 +64,9 @@
   </div>
 </template>
 <script>
-import RolesUtil from "@/util/userroles.js"
+import { Auth, AuthHelperRoles } from "@/util/auth-helper.js";
 import EditProfileForm from "./UserProfile/EditProfileForm.vue";
 import UserCard from "./UserProfile/UserCard.vue";
-import { Auth } from "aws-amplify";
 
 export default {
   components: {
@@ -109,7 +108,7 @@ export default {
       const { attributes } = user;
       this.user.firstName = attributes["custom:first_name"];
 
-      this.user.roles = RolesUtil.getUserRoles(user);
+      this.user.roles = AuthHelperRoles.getUserRoles(user);
     },
   },
 };

@@ -3,17 +3,20 @@
     <b-card
       bg-variant="primary"
       body-text-variant="white "
-      style="text-align: left; height: 73px "
+      style="text-align: left; "
       sizes
-      block>
-      (username here)
-      <div style="width: 300px; display: inline-block; padding-left: 100px">
+      block
+    >
+      {{ username }}
+      <div style="max-width: 600px; display: inline-block; padding-left: 100px">
         <multiselect
-          v-model="value"
+          :value="value"
+          @input="$emit('input', $event)"
           :options="options"
           :close-on-select="false"
           :show-labels="false"
-          placeholder="User role here"
+          placeholder="User roles here"
+          :multiple="true"
         >
         </multiselect>
       </div>
@@ -35,10 +38,22 @@ export default {
   components: {
     Multiselect,
   },
+  props: {
+    value:{
+      type: Array,
+      required: true
+    },
+    username:{
+      type: String,
+      required: true
+    },
+    options: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      value: "",
-      options: ["admin", "expert", "user"],
     };
   },
   methods: {
