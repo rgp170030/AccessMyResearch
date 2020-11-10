@@ -292,7 +292,7 @@ export default {
                 must_not: {
                   query_string: {
 
-                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
+                    fields: [ "title", "authors", "description", "datePublished", "url", "journal", "doi"],
 
                     query: this.blacklistText,
                   },
@@ -300,7 +300,7 @@ export default {
                 should: {
                   query_string: {
 
-                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
+                    fields: [ "title", "authors", "description", "datePublished", "url", "journal", "doi"],
 
                     query: this.$route.query.text,
                   },
