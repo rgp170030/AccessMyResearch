@@ -171,7 +171,7 @@ const routes = [
   //Admin user routes - Strict navigation guarding (must pass AuthHelperRoles.isAdmin())
   {
     path: '/admin',
-    redirect: {name: 'AdminHome'},
+    redirect: {name: 'Admin'},
     component: DashboardLayout,
 
     beforeEnter: async (to, from, next) => {
@@ -193,7 +193,7 @@ const routes = [
     children: [
       {
         path: 'home',
-        name: 'AdminHome',
+        name: 'Admin',
         component: () => import('../views/Pages/Admin.vue')
         
       }
