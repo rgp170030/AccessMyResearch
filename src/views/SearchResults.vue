@@ -400,7 +400,7 @@ export default {
       return data;
     },
     shortenDescription(data) {
-      if(data.length > 250) {
+      if(data && data.length > 250) {
         return data.slice(0, 250) + "...";
       }
     }
