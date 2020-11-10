@@ -115,7 +115,7 @@ export default {
       redirect() {
         if(this.$store.state.signedIn === false)
         {
-          this.$router.push('login');
+          this.$router.push('/login');
         }
       },
     },

@@ -781,13 +781,13 @@ export default {
       Auth.signOut()
         .then((data) => {
           this.$store.state.signedIn = !!data;
-          this.$router.push("login");
+          this.$router.push("/login");
         })
         .catch((err) => console.log(err));
     },
     redirect() {
       if (this.$store.state.signedIn === false) {
-        this.$router.push("login");
+        this.$router.push("/login");
       }
     },
     sort() {
