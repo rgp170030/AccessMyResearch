@@ -17,18 +17,6 @@ def core(keywords):
             self.pagesize = 100
             self.page = 1
 
-        def parse_response(self, decoded):
-            res = []
-            for item in decoded['data']:
-                doi = None
-                if 'identifiers' in item:
-                    for identifier in item['identifiers']:
-                        if identifier and identifier.startswith('doi:'):
-                            doi = identifier
-                            break
-                res.append([item['title'], doi])
-            return res
-
         def request_url(self, url):
             with urllib.request.urlopen(url) as response:
                 html = response.read()
