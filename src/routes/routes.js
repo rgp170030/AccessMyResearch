@@ -174,18 +174,20 @@ const routes = [
     redirect: {name: 'AdminHome'},
     component: DashboardLayout,
 
-    beforeEnter(to, from, next){
-      Auth.currentAuthenticatedUser()
-        .then(function(user){
-          if(RolesUtil.isAdmin(user)){
-            next();
-          }else{
-            next({name: 'Home'});
-          }
-        })
-        .catch(function(error){
-          next({ name: 'login' });
-        })
+    beforeEnter: async (to, from, next) => {
+      try{
+        var user = await Auth.currentAuthenticatedUser();
+        
+        console.log(user);
+        if(RolesUtil.isAdmin(user)){
+          next();
+        }else{
+          next({name: 'Home'});
+        }
+      }catch(e){
+        console.log(e);
+        next({ name: 'login' });
+      }
     },
 
     children: [
