@@ -246,59 +246,6 @@ export default {
         return publishedDateList;
       }
     },
-    performSearch() {
-    //   var startTime, endTime;
-    //   this.results = [];
-    //   startTime = new Date();
-    //   const searchQuery = {};
-    //   searchQuery[startTime] = this.$route.query.text;
-
-      axios
-      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
-      .then((response) => {
-          this.elapsed_time = response.data.elapsed_seconds
-          this.results = response.data.results
-       });
-      // .post('http://localhost:3000/search', searchQuery)
-      // .then(function (response) {
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //    console.log(error);
-      // });
-
-    //   let searchResults = await client
-    //     .search({
-    //       index: "amr",
-    //       body: {
-    //         query: {
-    //           bool: {
-    //             must_not:{
-    //               query_string: {
-    //                 fields: [ "title", "author", "message", "count"],
-    //                 query: this.blacklistText,
-    //               }
-    //             },
-    //             should:{
-    //               query_string: {
-    //                 fields: [ "title", "author", "message", "count"],
-    //                 query: this.$route.query.text,
-    //               }
-    //             },
-    //           },
-    //         },
-    //       },
-    //     })
-    //     .then((res) => res)
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    //   endTime = new Date();
-    //   var timeDiff = endTime - startTime;
-    //   this.timeTotal = this.timeTotal + timeDiff;
-    //   this.results.push(...searchResults.hits.hits);
-    },
-
     async performSearch() {
        var startTime, endTime;
        this.results = [];
