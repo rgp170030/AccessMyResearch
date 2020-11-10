@@ -47,6 +47,20 @@ export default {
       required: true
     }
   },
+  props: {
+    value:{
+      type: Array,
+      required: true
+    },
+    username:{
+      type: String,
+      required: true
+    },
+    options: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
     };
