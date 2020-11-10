@@ -3,6 +3,10 @@ import urllib.parse
 import json
 from elasticsearch import Elasticsearch
 
+with open('search.json') as f:
+    search_terms = json.load(f)['search']
+    for i in range(len(search_terms)):
+        search_terms[i] = '"' + search_terms[i].replace(' ', ' AND ') + '"'
 
 class CoreApiRequestor:
     def __init__(self, endpoint, api_key):
@@ -43,7 +47,7 @@ class CoreApiRequestor:
         }
         return self.endpoint + method + '/' + urllib.parse.quote(query) + '?' + urllib.parse.urlencode(params)
 
-    def get_up_to_20_pages_of_query(self, method, query, fulltext):
+    def get_up_to_x_pages_of_query(self, method, query, fulltext, x = 20):
         url = self.get_method_query_request_url(method, query, fulltext, 1)
         all_articles = []
         resp = self.request_url(url)
@@ -51,8 +55,8 @@ class CoreApiRequestor:
         all_articles.append(result)
         if (result['totalHits'] > 100):
             numOfPages = int(result['totalHits']/self.pagesize)  # rounds down
-            if (numOfPages > 20):
-                numOfPages = 20
+            if (numOfPages > x + 1):
+                numOfPages = x + 1
             for i in range(2, numOfPages):
                 url = self.get_method_query_request_url(
                     method, query, False, i)
@@ -68,7 +72,9 @@ method = '/articles/search'
 topic = '*'
 
 api = CoreApiRequestor(endpoint, api_key)
-result = api.get_up_to_20_pages_of_query(method, topic, False)
+result = []
+for term in search_terms:
+    result += api.get_up_to_x_pages_of_query(method, term, False, x = 2)
 
 
 def clean(result):
@@ -95,9 +101,8 @@ cleaned_data = clean(result)
 es = Elasticsearch()
 
 for doc in range(len(cleaned_data)):
-    if doc == 100:
-        break
     res = es.index(index="core", id=doc, body=cleaned_data[doc])
-    # print(doc)
+    if doc%100 == 0:
+        print(doc)
 
 es.indices.refresh(index="core")
