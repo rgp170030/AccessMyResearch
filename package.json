@@ -83,7 +83,11 @@
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
-    ]
+    ],
+    "displayName": {
+      "name": "TEST",
+      "color": "blue"
+    }
   },
   "postcss": {
     "plugins": {
