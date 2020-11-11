@@ -2,7 +2,7 @@
     <div>
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary" ></base-header>
     <AdminUser 
-      v-for="(user) in users" 
+      v-for="user in users" 
       :key="user.username" 
       v-model="user.roles"
       :username="user.username"
@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import { Auth, AuthHelperRoles } from "@/util/auth-helper.js";
+import { Auth, AuthHelperAxios, AuthHelperRoles } from "@/util/auth-helper.js";
+import axios from "axios";
 import AdminUser from '@/components/AdminUser.vue';
 
 export default {
@@ -36,6 +37,31 @@ export default {
             roles: AuthHelperRoles.userRoles
         };
     },
+    mounted: function(){
+        this.loadUsers();
+    },
+    methods: {
+        loadUsers: async function(){
+            let options = {};
+            await AuthHelperAxios.attachAuthenticationHeader(options);
+
+            axios.get(this.$endpoints.aspnet + "api/admin/users", options)
+              .then(res => {
+                    let data = res.data;
+                    let users = [];
+
+                    for(let i=0;i<data.users.length;i++){
+                        users.push({
+                            username: data.users[i].username,
+                            roles: []
+                        })
+                    }
+
+                    this.users = users;
+              })
+              .catch(console.log);
+        }
+    }
 }
 </script>
 

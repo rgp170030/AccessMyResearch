@@ -49,7 +49,7 @@ let AuthHelperAxios = {
             options.headers = {};
         }
 
-        options.headers["Authentication"] = `Bearer ${user.signInUserSession.accessToken.jwtToken}`;
+        options.headers["Authorization"] = `Bearer ${user.signInUserSession.accessToken.jwtToken}`;
     }
 }
 

@@ -8,7 +8,7 @@
           <i class="fas fa-exclamation-circle fa-lg"></i>
           &nbsp; In order to access these features, you must login. You can login <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
         </div>
-        <div @click="redirect">
+        <div>
           <sidebar-item
           :link="{
             name: 'Add Research Material',
@@ -94,35 +94,42 @@ export default {
     // DashboardContent,
     FadeTransition
   },
-  data() {
-    return {
-      signedIn: false
-    };
-  },
-  created() {
-    if(this.$store.state.signedIn)
-    {
-      this.signedIn = true;
+  computed:{
+    signedIn(){
+      return this.$store.state.signedIn;
     }
   },
-    methods: {
-      initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          initScrollbar('sidenav');
-        }
-      },
-      redirect() {
-        if(this.$store.state.signedIn === false)
-        {
-          this.$router.push('/login');
-        }
-      },
+  async created() {
+    if(!this.signedIn){
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        this.$store.state.signedIn = true;
+        this.$store.state.user = user;
+      }
+      catch(err){
+        this.$store.state.signedIn = false;
+        this.$store.state.user = null;
+      }
+    }
+  },
+  methods: {
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith('Win');
+      if (isWindows) {
+        initScrollbar('sidenav');
+      }
     },
-    mounted() {
-      this.initScrollbar();
+    redirect() {
+      if(!this.signedIn)
+      {
+        this.$router.push('/login');
+      }
     },
-  };
+  },
+  mounted() {
+    this.initScrollbar();
+  },
+};
 </script>
 <style lang="scss">
 </style>

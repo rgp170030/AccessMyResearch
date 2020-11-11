@@ -522,6 +522,9 @@ export default {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);
     },
+    signedIn(){
+      return this.$store.state.signedIn;
+    }
   },
   mounted() {
     if (localStorage.selectedFilters) {
@@ -541,18 +544,12 @@ export default {
     this.getSearchHistory();
     this.getReminders();
   },
-  created() {
-    if (this.$store.state.signedIn === true) {
-      this.signedIn = true;
-    }
-  },
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
       searchQuery: "",
-      signedIn: false,
       timeTotal: 0,
       reminders: [],
       //autocomplete start
