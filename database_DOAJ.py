@@ -3,7 +3,7 @@ import urllib.parse
 import json
 from elasticsearch import Elasticsearch
 
-def core(keywords):
+def doaj(keywords):
     with open(keywords) as f:
         search_terms = json.load(f)['search']
         for i in range(len(search_terms)):
@@ -64,11 +64,12 @@ def core(keywords):
                 for a in aa['bibjson']:
                     try:
                         obj = {}
-                        k = ['author', 'title', 'abstract', 'link']
+                        k = ['abstract']
                         for i in k:
                             if i in a:
+                                print(a[i])
                                 obj[i] = a[i]
-                        mega_json.append(obj)
+                        #mega_json.append(obj)
                     except:
                         print('Error occured while cleaning')
         return mega_json
