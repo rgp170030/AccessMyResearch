@@ -43,6 +43,8 @@ let AuthHelperRoles = {
         let roles = [];
         let nativeGroups = [];
 
+        if(!groups) groups = [];
+
         for (var i = 0; i < groups.length; i++) {
             let role = GroupToRoles[groups[i]];
             if(role != null)
@@ -54,6 +56,8 @@ let AuthHelperRoles = {
     },
     translateRolesToGroups: function(roles, nativeGroups){
         let groups = [];
+
+        if(!roles) roles = [];
 
         for(var i=0;i<roles.length;i++){
             let group = RolesToGroups[roles[i]];
