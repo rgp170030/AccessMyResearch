@@ -20,16 +20,11 @@
             header-row-class-name="thead-light"
             :data="results"
           >
-            <el-table-column label="Title" min-width="300px" prop="name">
-              <template v-slot="{ row }">
-                <b-media no-body class="align-items-center">
-                  <b-media-body>
-                    <span class="font-weight-600 name mb-0 text-sm">{{
-                      row._source.snippet
-                    }}</span>
-                  </b-media-body>
-                </b-media>
-              </template>
+            <el-table-column
+              label="Title"
+              prop="_source.title"
+              min-width="350px"
+            >
             </el-table-column>
             <el-table-column
               label="Author(s)"
