@@ -36,23 +36,6 @@
               prop="_source.authors"
               min-width="150px"
             >
-              <template v-slot="{ row }">
-                {{row._source.author}}
-     
-                  <div 
-                    class="emailIcon"
-                    @click="doiEmailIconClick(row._source.doi)"
-                    v-if="row._source.isDoi"
-                  >
-                    <b-icon
-                        icon="envelope-fill"
-                        font-scale="2"
-                        aria-hidden="true"
-                        ><span class="sr-only">Email Author</span>
-                    </b-icon>
-                  </div>
-
-              </template>
             </el-table-column>
             <el-table-column
               label="Description"
