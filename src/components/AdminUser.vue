@@ -1,15 +1,13 @@
 <template>
-  <div style="padding-top: 10px">
-    <b-card
-      bg-variant="primary"
-      body-text-variant="white "
+  <div style="padding-top: 10px; padding-left: 10px;  display: inline-block; font-size: 24px;">
+    <b-badge
+      variant="primary"
       style="text-align: left; "
-      sizes
-      block
+      sizes= "lg"
     >
       {{ username }}
-      <div style="max-width: 600px; display: inline-block; padding-left: 100px">
-        <multiselect
+     <!--  <div style="max-width: 600px; display: inline-block; padding-left: 100px">
+       <multiselect
           :value="value"
           @input="$emit('input', $event)"
           :options="options"
@@ -19,16 +17,16 @@
           :multiple="true"
         >
         </multiselect>
-      </div>
-      <div style="display: inline-block; padding-left: 100px">
+      </div> -->
+      <div style="display: inline-block; padding-left: 125px">
         <b-icon
-          icon="x-circle"
+          icon="three-dots-vertical"
           animation="fade"
           @click="say('something')"
           font-scale="2"
         ></b-icon>
       </div>
-    </b-card>
+    </b-badge>
   </div>
 </template>
 
