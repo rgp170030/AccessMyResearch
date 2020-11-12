@@ -1,7 +1,13 @@
 import { Auth } from "aws-amplify"
 
 const GroupToRoles = {
-    "AMR_Admin": "Administrator"
+    "AMR_Admin": "Administrator",
+    "AMR_Expert": "Expert"
+}
+
+const RolesToGroups = {
+    "Administrator": "AMR_Admin",
+    "Expert": "AMR_Expert"
 }
 
 async function getCurrentUser(){
@@ -16,27 +22,46 @@ let AuthHelperRoles = {
     userRoles: ["Administrator", "Expert"],
     getUserRoles: async function (user) {
         // the array of groups that the user belongs to
-        let roles = [];
-
         if(user == null){
             user = await getCurrentUser();
             if(user == null)
-                return roles;
+                return [];
         }
 
         const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+        return AuthHelperRoles.translateGroupsToRoles(groups);
+    },
+    isAdmin: async function (user) {
+        let roles = (await AuthHelperRoles.getUserRoles(user)).roles;
+        return roles.includes("Administrator");
+    },
+    translateGroupsToRoles: function(groups){
+        let roles = [];
+        let nativeGroups = [];
+
         for (var i = 0; i < groups.length; i++) {
             let role = GroupToRoles[groups[i]];
             if(role != null)
                 roles.push(role);
+            else nativeGroups.push(groups[i]);
         }
 
-        return roles;
+        return { roles, nativeGroups };
     },
-    isAdmin: async function (user) {
-        let roles = await AuthHelperRoles.getUserRoles(user);
-        return roles.includes("Administrator");
-    },
+    translateRolesToGroups: function(roles, nativeGroups){
+        let groups = [];
+
+        for(var i=0;i<roles.length;i++){
+            let group = RolesToGroups[roles[i]];
+            if(group != null)
+                groups.push(group);
+        }
+
+        if(nativeGroups == null)
+            nativeGroups = [];
+
+        return groups.concat(nativeGroups);
+    }
 }
 
 let AuthHelperAxios = {

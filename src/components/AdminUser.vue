@@ -33,9 +33,6 @@
 <script>
 import Multiselect from "vue-multiselect";
 export default {
-  components: {
-    Multiselect,
-  },
   props: {
     value:{
       type: Array,

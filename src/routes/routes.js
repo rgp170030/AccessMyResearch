@@ -174,18 +174,16 @@ const routes = [
     redirect: {name: 'Admin'},
     component: DashboardLayout,
 
-    beforeEnter: async (to, from, next) => {
+    async beforeEnter(to, from, next){
       try{
-        var user = await Auth.currentAuthenticatedUser();
-        
-        console.log(user);
-        if(RolesUtil.isAdmin(user)){
+        let user = await Auth.currentAuthenticatedUser()
+        let isAdmin = await AuthHelperRoles.isAdmin(user);
+        if(isAdmin){
           next();
         }else{
           next({name: 'Home'});
         }
       }catch(e){
-        console.log(e);
         next({ name: 'login' });
       }
     },
@@ -195,9 +193,7 @@ const routes = [
         path: 'home',
         name: 'Admin',
         component: () => import('../views/Pages/Admin.vue')
-        
       }
-
     ]
   },
 
