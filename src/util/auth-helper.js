@@ -29,11 +29,15 @@ let AuthHelperRoles = {
         }
 
         const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-        return AuthHelperRoles.translateGroupsToRoles(groups);
+        return AuthHelperRoles.translateGroupsToRoles(groups).roles;
     },
     isAdmin: async function (user) {
-        let roles = (await AuthHelperRoles.getUserRoles(user)).roles;
+        let roles = await AuthHelperRoles.getUserRoles(user);
         return roles.includes("Administrator");
+    },
+    isExpert: async function (user) {
+        let roles = await AuthHelperRoles.getUserRoles(user);
+        return roles.includes("Expert");
     },
     translateGroupsToRoles: function(groups){
         let roles = [];

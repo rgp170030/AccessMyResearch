@@ -154,9 +154,18 @@ const routes = [
     path: '/',
     component: DashboardLayout,
 
-    beforeEnter: function(to, from, next){
-      //TODO expert roles story - add navigation guarding for expert pages.
-      next();
+    beforeEnter: async function(to, from, next){
+      try{
+        let user = await Auth.currentAuthenticatedUser()
+        let isExpert = await AuthHelperRoles.isExpert(user);
+        if(isExpert){
+          next();
+        }else{
+          next({name: 'Home'});
+        }
+      }catch(e){
+        next({ name: 'login' });
+      }
     },
 
     children: [

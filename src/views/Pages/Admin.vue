@@ -130,7 +130,6 @@ export default {
 
       axios
         .post(this.$endpoints.aspnet + "api/admin/user-groups-save", request, options)
-        .then(console.log)
         .catch(console.log);
     },
   },
