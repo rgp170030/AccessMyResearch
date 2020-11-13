@@ -1,5 +1,5 @@
 <template>
-<div>
-    <P>This will be the Localization page</P>
-</div>
+    <div>
+        <P>This will be the Localization page</P>
+    </div>
 </template>
