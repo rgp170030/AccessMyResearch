@@ -113,7 +113,7 @@ export default {
         }
       },
       redirect() {
-        if(this.$store.state.signedIn === false)
+        if(!this.$store.state.signedIn)
         {
           this.$router.push('login');
         }
