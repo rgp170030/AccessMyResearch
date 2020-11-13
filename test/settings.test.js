@@ -7,7 +7,7 @@ describe('Testing Ignored Users Tab', () => {
     const wrapper = shallowMount(ManageIgnoredUsersTab);
 
     it('Eye icon switches on hover', () => {
-        expect(wrapper.vm.getUnignoreIcon(false)).toBe('eye-slash'); //initial title Hello
-        expect(wrapper.vm.getUnignoreIcon(true)).toBe('eye'); // title updates to Hi
+        expect(wrapper.vm.getUnignoreIcon(false)).toBe('eye-slash'); //user is ignored
+        expect(wrapper.vm.getUnignoreIcon(true)).toBe('eye'); //user is not ignored
     })
 })

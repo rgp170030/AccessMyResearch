@@ -75,10 +75,11 @@
       "vue"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "\\.(css|less)$": "<rootDir>/test/__mocks__/style.mock.js"
     },
     "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "\\.[jt]sx?$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
     "snapshotSerializers": [

@@ -7,8 +7,4 @@ describe('Checking Math', () => {
         expect(1 + 4).toBe(5);
     });
 
-    test('Simple Subtraction', () => {
-        expect(6 - 2).toBe(4);
-    });
-
 });
