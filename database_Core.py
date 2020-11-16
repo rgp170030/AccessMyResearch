@@ -41,6 +41,7 @@ def core(keywords):
             all_articles = []
             resp = self.request_url(url)
             result = json.loads(resp.decode('utf-8'))
+            print(url)
             all_articles.append(result)
             if (result['totalHits'] > 100):
                 numOfPages = int(result['totalHits']/self.pagesize)  # rounds down

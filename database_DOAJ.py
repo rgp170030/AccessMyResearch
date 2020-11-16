@@ -33,6 +33,7 @@ def doaj(keywords):
             all_articles = []
             resp = self.request_url(url)
             result = json.loads(resp.decode('utf-8'))
+            print(url)
             all_articles.append(result)
             if (result['total'] > 100):
                 numOfPages = int(result['total']/self.pagesize)  # rounds down
@@ -57,21 +58,27 @@ def doaj(keywords):
         result += api.get_up_to_x_pages_of_query(method, term, x = 2)
 
 
-    def clean(result): #need to edit this below
+    def clean(result):
         mega_json = []
         for p in result:
-            for aa in p['results']: #.created_date is outside bibjson
-                for a in aa['bibjson']:
-                    try:
-                        obj = {}
-                        k = ['abstract']
-                        for i in k:
-                            if i in a:
-                                print(a[i])
-                                obj[i] = a[i]
-                        #mega_json.append(obj)
-                    except:
-                        print('Error occured while cleaning')
+            for a in p['results']:
+                try:
+                    obj = {}
+                    k = ['author','title', 'abstract','year','link']
+                    for i in k:
+                        if i in a['bibjson']:
+                            obj[i] = a['bibjson'][i]     
+                    if 'author' in obj:
+                        obj['authors'] = obj['author'] #figure out how to convert fields to string and restore it in obj['authors']   
+                    if 'abstract' in obj:
+                        obj['description'] = obj['abstract']            
+                    if 'year' in obj:
+                        obj['datePublished'] = obj['year']      
+                    if 'link' in obj:
+                        obj['url'] = obj['link']  #figure out how to extract the link/url     obj['url'] = obj['link'][0]['url']       
+                    mega_json.append(obj)
+                except:
+                    print('Error occured while cleaning')
         return mega_json
 
 #need to edit this above

@@ -263,8 +263,8 @@ export default {
       this.searchStatus = 'Searching AMR Database...';
       let searchResults = await client
         .search({
+          size: 200, 
           body: {
-            size: 100,
             query: {
               bool: {
                 must_not: {
