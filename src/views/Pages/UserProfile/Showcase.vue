@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     fetchMessages(){
-      db.collection('chat').onSnapshot((querySnapshot)=>{
+      db.collection('showcase').onSnapshot((querySnapshot)=>{
         let allMessages= [];
         querySnapshot.forEach(doc=>{
           allMessages.push(doc.data())
@@ -33,19 +33,14 @@ export default {
 
     },
   },
+created() {
+  this.fetchMessages();
 
+},
   mounted: function(){
     // fetch the data when the view is created and the data is
     // already being observed
-    this.fetchMessages();
 
-    firebase.auth().onAuthStateChanged(user=>{
-      if(user){
-        this.authUser=user;
-      }else{
-        this.authUser={}
-      }
-    });
   }
 
 }

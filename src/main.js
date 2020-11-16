@@ -37,14 +37,13 @@ import firebase from 'firebase'
 require("firebase/firestore");
 
 var config = {
-  apiKey: "AIzaSyBGxWWqFYjRu21BOjj91og_cxf08icUVXc",
-  authDomain: "chatv-8e71f.firebaseapp.com",
-  databaseURL: "https://chatv-8e71f.firebaseio.com",
-  projectId: "chatv-8e71f",
-  storageBucket: "chatv-8e71f.appspot.com",
-  messagingSenderId: "106853411080",
-  appId: "1:106853411080:web:3366c1332654d18a3064bd",
-  measurementId: "G-H4S1P2530C"
+  apiKey: "AIzaSyCQrK71U_ZBeJSrfsG1IPMzwcmpcJZvjjg",
+  authDomain: "amr2020-2118a.firebaseapp.com",
+  databaseURL: "https://amr2020-2118a.firebaseio.com",
+  projectId: "amr2020-2118a",
+  storageBucket: "amr2020-2118a.appspot.com",
+  messagingSenderId: "737694980121",
+  appId: "1:737694980121:web:fa3dad7dc3507a999e3288"
 };
 firebase.initializeApp(config);
 

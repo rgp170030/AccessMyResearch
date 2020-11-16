@@ -242,11 +242,13 @@ export default {
         }
       }
     },
+
     saveUpload(){
         // save in firebase
-          db.collection('chat').add({
-            selected: this.selected,
-          })
+      db.collection('showcase').doc('showcase').set({
+        selected: this.selected,
+      })
+
 
         }
   },

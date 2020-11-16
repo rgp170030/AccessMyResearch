@@ -24,12 +24,6 @@
               >
               </multiselect>
             </div>
-            <div>
-              <label class="h2">Date</label>
-              <div>
-                <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
-              </div>
-            </div>
 
             <div class="form-group">
               <label class="h2" for="Abstract">Add Note</label>
