@@ -3,16 +3,13 @@ import urllib.parse
 import json
 from elasticsearch import Elasticsearch
 
-def core(keywords):
+def unpaywall(keywords):
     with open(keywords) as f:
         search_terms = json.load(f)['search']
         for i in range(len(search_terms)):
             search_terms[i] = '"' + search_terms[i].replace(' ', ' AND ') + '"'
 
     class UnpaywallApiRequestor:
-        # Unpaywall only allows 100000 calls per day
-        api_limit: int = 100000
-
         # took api_key out of __init__
         # took page and pageSize out of __init__ since unpaywall doesn't have either
         def __init__(self, endpoint):
@@ -34,6 +31,7 @@ def core(keywords):
             all_articles = []
             resp = self.request_url(url)
             result = json.loads(resp.decode('utf-8'))
+            print(url)
             all_articles.append(result)
         # deleted for loop and anything with numOfPages since it's irrelevant to unpaywall. 
         # just need to return all articles
@@ -55,16 +53,23 @@ def core(keywords):
     def clean(result):
         mega_json = []
         for p in result:
-            for a in p['data']:
+            for a in p['results']:
                 try:
                     obj = {}
                     # set k as parameters from unpaywall
                     k = ['z_authors', 'title', 'published_date', 'doi_url', 'doi']
                     for i in k:
-                        if i in a:
-                            obj[i] = a[i]
+			        # added response to get articles
+                        if i in a['response']:
+                            obj[i] = a['response'][i]
+                    if 'z_authors' in obj:
+                        obj['authors'] = obj['z_authors']    
+                    if 'published_date' in obj:
+                        obj['datePublished'] = obj['published_date']      
                     if 'doi_url' in obj:
-                        obj['url'] = obj.pop('doi_url')
+                        obj['url'] = obj['doi_url']
+                    if 'doi' in obj:
+                        obj['doi'] = obj['doi']
                     mega_json.append(obj)
                 except:
                     print('Error occurred while cleaning')
@@ -73,13 +78,35 @@ def core(keywords):
 
     cleaned_data = clean(result)
 
+    # add method similar to clean method to set keys as array k 
+    # and values from results into a dict
+    '''def duplicates(result):
+        mega_json = []
+        for p in result:
+            for a in p['results']:
+                try:
+                    obj = {}
+                    # set k as parameters from unpaywall
+                    k = ['z_authors', 'title', 'published_date', 'doi_url', 'doi']
+                    for i in k:
+                        if i in a:
+                            obj[i] = a[i]
+		    
+		    for i in k:
+			if 
+
+                    	    mega_json.append(obj)
+                except:
+                    print('Error occurred while looking for duplicates')
+     return mega_json '''
+
+
     es = Elasticsearch()
 
-    # i don't think we should need to change this part?
+    # get documents
     for doc in range(len(cleaned_data)):
-        if doc == 100:
-            break
         res = es.index(index="unpaywall", id=doc, body=cleaned_data[doc])
-        # print(doc)
+        if doc%100 == 0:
+            print(doc)
 
     es.indices.refresh(index="unpaywall")
