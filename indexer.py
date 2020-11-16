@@ -15,12 +15,12 @@ if __name__ == '__main__':
     #punpaywall = multiprocessing.Process(target=unpaywall, args=(keywords,))
     p2 = multiprocessing.Process(target=pp)
 
-    #p.start()
+    p.start()
     pdoaj.start()
     #punpaywall.start()
     p2.start()
 
-    #p.join()
+    p.join()
     pdoaj.join()
     #punpaywall.start()
     p2.join()

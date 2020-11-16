@@ -104,7 +104,7 @@
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="areaFilter"
-                            v-model="selectedFilters"
+                            v-model="selectedAreaFilters" 
                             @input="sort"
                             :options="areas"
                             name="area"
@@ -311,7 +311,7 @@
                     >
                       <b-card-body v-if="defaultFilterCheckbox">
                         <b-dropdown-group class="small">
-                          <div>{{ selectedFilters }}</div>
+                          <div>{{ selectedFilters }}{{ selectedAreaFilters }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -528,6 +528,10 @@ export default {
       this.selectedFilters = localStorage.selectedFilters.split(",");
     }
 
+    if (localStorage.selectedAreaFilters) {
+      this.selectedAreaFilters = localStorage.selectedAreaFilters.split(" ");
+    }
+
     if (localStorage.yearRange) {
       this.yearRange = localStorage.yearRange.split(",");
     }
@@ -565,8 +569,10 @@ export default {
       results_data: [],*/
       yearRange: [1950, 2020],
       selectedFilters: [],
+      selectedAreaFilters: [],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
+      areasStringify: "", 
       sortBy: [
         {
           text: "Most Recent",
@@ -600,15 +606,15 @@ export default {
       areas: [
         {
           text: "Computer Science",
-          value: "cs",
+          value: "computer science",
         },
         {
           text: "Electrical Engineering",
-          value: "ee",
+          value: "electrical engineering",
         },
         {
           text: "Neuroscience",
-          value: "ns",
+          value: "neuroscience",
         },
       ],
       expertise: [
@@ -704,23 +710,23 @@ export default {
       databases: [
         {
           text: "arXiv",
-          value: "arxiv",
+          value: "database:arxiv",
         },
         {
           text: "CORE",
-          value: "core",
+          value: "database:core",
         },
         {
           text: "DBLP",
-          value: "dblp",
+          value: "database:dblp",
         },
         {
           text: "PubMed",
-          value: "pubmed",
+          value: "database:pubmed",
         },
         {
           text: "Unpaywall",
-          value: "unpaywall",
+          value: "database:unpaywall",
         },
       ],
       journals: [
@@ -760,7 +766,7 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: this.search.text, filter: this.search.filter },
+          query: { text: this.search.text + this.areasStringify, filter: this.search.filter },
         })
         .catch(() => {});
     },
@@ -792,6 +798,13 @@ export default {
     },
     sort() {
       if (this.search.text) {
+        this.areasStringify = " ";
+        for (let i = 0; i < this.selectedAreaFilters.length; i++) {
+          this.areasStringify += this.selectedAreaFilters[i] + " ";
+        }
+        if (this.selectedAreaFilters.length < 0){
+          this.areasStringify = "";
+        }
         this.onSubmit();
       }
 
@@ -843,6 +856,7 @@ export default {
 
     //default filter start
     defaultFilterCheckboxChecked() {
+      localStorage.selectedAreaFilters = this.selectedAreaFilters;
       localStorage.selectedFilters = this.selectedFilters;
       localStorage.yearRange = this.yearRange;
       localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;
