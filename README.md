@@ -39,7 +39,6 @@ Make Access My Research functional, beautiful, and quick
     |-- .gitattributes
     |-- .gitignore
     |-- .graphqlconfig.yml
-    |-- .postcssrc
     |-- babel.config.js
     |-- docker-compose.yml
     |-- dockerfile
