@@ -6,7 +6,7 @@ import { mount } from "@vue/test-utils"
 describe('Testing User Sign ins', () => {
     
     //TODO: Adjust the regeneratorRuntime config to fix this
-    // it('User starts out not signed in', () => {
+    // test('User starts out not signed in', () => {
     //     const localThis = {};
     //     expect(NumberRenderer.computed.signedIn.call(localThis)).not.toBeTruthy();
     // })

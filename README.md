@@ -1,32 +1,34 @@
-## **Access My Research**
+# **Access My Research**
 Access My Research is being significantly overhauled to be more modern, responsive, & better documented.
 
 ## Goal
 Make Access My Research functional, beautiful, and quick
 
 ## Getting Started in the CLI 
-1) From the AccessMyResearch (root) directory, run "npm install"
-2) Next, run "npm run dev" to build and test the code
+1. Clone the code from the github repo (https://github.com/AccessMyResearch/AccessMyResearch.git)
+1. From the AccessMyResearch (root) directory, run "`npm install`"
+1. Run "`npm install @vue/cli -g`" to install the Vue CLI
+1. Next, run "`npm run dev`" to build and test the code
 
 ## Useful Commands
-1) npm install   - Installs all dependencies
-2) npm ci        - Removes all dependencies and installs them all cleanly
-3) npm run build - Builds the code
-4) npm run dev   - Automatically builds all changes & runs the code locally/on network
-5) npm test      - Runs the code unit tests (with Jest)
-6) npm run serve - Serves the code (not going to be useful for a while)
-7) npm run lint  - Starts the Vue linter
+1. `npm install` - Installs all dependencies
+1. `npm ci` - Removes all dependencies and installs them all cleanly
+1. `npm run build` - Builds the code
+1. `npm run dev` - Automatically builds all changes & runs the code locally/on network
+1. `npm test` - Runs the code test suites (with Jest)
+1. `npm run serve` - Serves the code (not going to be useful for a while)
+1. `npm run lint` - Starts the Vue linter
 
 ## Using Docker
-- You'll need [to install docker](https://docs.docker.com/get-docker/)
-- Run ``docker-compose up -d --build`` from the base directory containing the dockerfile file
-- Check ``docker ps`` and see it running! You should be able to access at 127.0.0.1:8080
+1. You'll need to [install docker](https://docs.docker.com/get-docker)
+1. Run `docker-compose up -d --build` from the base directory containing the dockerfile file
+1. Check `docker ps` and see it running! You should be able to access at 127.0.0.1:8080
 
 ## Important Notes
-1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
-2) Check available color variables at src\assets\custom\_variables.scss
-3) Comments indicating what needs to be done should begin with "TODO" so these comments can be quickly searched for
-4) Unit testing is done through Jest. Documentation here: https://jestjs.io/
+1. When building the app, you may get a warning that says: `Building for production...WARNING: 'text-emphasis-variant()' has been deprecated as of v4.4.0. It will be removed entirely in v5.` This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet. 
+1. Check available color variables at src\assets\custom\_variables.scss
+1. Comments indicating what needs to be done should begin with "TODO" so these comments can be quickly searched for
+1. Unit testing is done through Jest. Documentation here: https://jestjs.io/
 
 ## File Structure
 ```
