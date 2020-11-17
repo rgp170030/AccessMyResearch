@@ -299,8 +299,8 @@ export default {
       this.timeTotal = this.timeTotal + timeDiff;
 
       for(var hit of searchResults.hits.hits) {
-        hit._source.authors = this.arrayToString(hit._source.authors);
-        hit._source.url = this.arrayToString(hit._source.url);
+        //hit._source.authors = this.arrayToString(hit._source.authors);
+        //hit._source.url = this.arrayToString(hit._source.url);
         hit._source.description = this.shortenDescription(hit._source.description);
       }
       this.results.push(...searchResults.hits.hits);

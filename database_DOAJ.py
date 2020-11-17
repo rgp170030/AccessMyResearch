@@ -69,13 +69,23 @@ def doaj(keywords):
                         if i in a['bibjson']:
                             obj[i] = a['bibjson'][i]     
                     if 'author' in obj:
-                        obj['authors'] = obj['author'] #figure out how to convert fields to string and restore it in obj['authors']   
+                        authorz = []
+                        for auth in obj['author']: #DOAJ has multiple authors
+                            if 'name' in auth:
+                                authorz.append(auth['name'])
+                        #print(authorz) 
+                        obj['authors'] = authorz
+                        #print(obj.pop('author')[0]['name'])
                     if 'abstract' in obj:
                         obj['description'] = obj['abstract']            
                     if 'year' in obj:
                         obj['datePublished'] = obj['year']      
                     if 'link' in obj:
-                        obj['url'] = obj['link']  #figure out how to extract the link/url     obj['url'] = obj['link'][0]['url']       
+                        linkz = []
+                        for lin in obj['link']: #DOAJ has multiple links 
+                            if 'url' in lin:
+                                linkz.append(lin['url'])
+                        obj['url'] = linkz #   obj['url'] = obj['link'][0]['url']       
                     mega_json.append(obj)
                 except:
                     print('Error occured while cleaning')
