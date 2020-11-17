@@ -7,7 +7,7 @@ def unpaywall(keywords):
     with open(keywords) as f:
         search_terms = json.load(f)['search']
         for i in range(len(search_terms)):
-            search_terms[i] = '"' + search_terms[i].replace(' ', ' AND ') + '"'
+            search_terms[i] = '"' + search_terms[i].replace(' ', ' ') + '"'
 
     class UnpaywallApiRequestor:
         # took api_key out of __init__
@@ -62,21 +62,37 @@ def unpaywall(keywords):
 			        # added response to get articles
                         if i in a['response']:
                             obj[i] = a['response'][i]
-                    if 'z_authors' in obj:
-                        obj['authors'] = obj['z_authors']    
+                    if 'title' in obj:
+                        obj['description'] = obj['title']
+                        obj['title'] = obj['title']
+                        #print(obj['description'])  
+                    if 'z_authors' in obj: 
+                        try:
+                            authorz = []
+                            for auth in obj['z_authors']: 
+                                if 'family' in auth:
+                                    if 'given' in auth:
+                                        name = auth['given'] + " " + auth['family'] + " "
+                                        authorz.append(name)
+                                    else:
+                                        authorz.append(auth['family'])
+                                else: 
+                                    authorz.append("")
+                            #authJson = json.dumps(authorz)
+                            obj['authors'] = authorz  
+                        except:
+                            obj['authors'] = obj['z_authors']
+                        #print(authorz) 
                     if 'published_date' in obj:
-                        obj['datePublished'] = obj['published_date']      
+                        obj['datePublished'] = obj['published_date']        
                     if 'doi_url' in obj:
                         obj['url'] = obj['doi_url']
-                    if 'doi' in obj:
-                        obj['doi'] = obj['doi']
                     mega_json.append(obj)
                 except:
                     print('Error occurred while cleaning')
         return mega_json
 
 
-    cleaned_data = clean(result)
 
     # add method similar to clean method to set keys as array k 
     # and values from results into a dict
@@ -100,6 +116,7 @@ def unpaywall(keywords):
                     print('Error occurred while looking for duplicates')
      return mega_json '''
 
+    cleaned_data = clean(result)
 
     es = Elasticsearch()
 

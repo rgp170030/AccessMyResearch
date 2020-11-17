@@ -64,7 +64,7 @@
             >
             </el-table-column>
           </el-table> 
-          
+          <!--
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -122,7 +122,7 @@
                     </b-collapse>
                   </b-card>
                 </div>
-
+-->
         </div>
       </div>
     </card>
@@ -148,8 +148,8 @@ export default {
     return {
 
       results:[],
-      results_doaj: [],
-      results_doi: [],
+      //results_doaj: [],
+      //results_doi: [],
       //fields: ['snippet', 'response.doi_url'],
       elapsed_time: 0,
       timeTotal: 0,
@@ -230,16 +230,16 @@ export default {
        this.lengthResults = 0; 
        startTime = new Date();
 
+/*
       axios
       .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
       .then((response) => {
           //this.elapsed_time = response.data.elapsed_seconds
           this.results_doaj = response.data.results;
           //this.lengthResults = response.data.total;
-          this.lengthResults = this.results.length;
+          //this.lengthResults = this.results.length;
           //console.log(this.lengthResults);
           //var numberResultsDate =  startTime + "; Number of Results " + this.lengthResults; 
-          this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
        });
     
       axios
@@ -260,7 +260,7 @@ export default {
       //     console.log(error);
       //   });
 
-
+*/
       this.searchStatus = 'Searching AMR Database...';
       let searchResults = await client
         .search({
@@ -300,8 +300,8 @@ export default {
       this.timeTotal = this.timeTotal + timeDiff;
 
       for(var hit of searchResults.hits.hits) {
-        //hit._source.authors = this.arrayToString(hit._source.authors);
-        //hit._source.url = this.arrayToString(hit._source.url);
+        hit._source.authors = this.arrayToString(hit._source.authors);
+        hit._source.url = this.arrayToString(hit._source.url);
         hit._source.description = this.shortenDescription(hit._source.description);
       }
       this.results.push(...searchResults.hits.hits);
@@ -315,6 +315,9 @@ export default {
       if (this.results.length === 0) {
         this.checkDoi();
       }
+      this.lengthResults = this.results.length;
+      this.elapsed_time = this.timeTotal
+      this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
     },
     checkDoi() {
       var self = this;
@@ -381,6 +384,9 @@ export default {
     shortenDescription(data) {
       if(data && data.length > 250) {
         return data.slice(0, 250) + "...";
+      }
+      else{
+        return data;
       }
     }
   },

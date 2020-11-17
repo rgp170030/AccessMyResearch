@@ -74,6 +74,7 @@ def doaj(keywords):
                             if 'name' in auth:
                                 authorz.append(auth['name'])
                         #print(authorz) 
+                        #authJson = json.dumps(authorz)
                         obj['authors'] = authorz
                         #print(obj.pop('author')[0]['name'])
                     if 'abstract' in obj:
