@@ -9,7 +9,7 @@
           <p style="display: inline">Searched for 
             <a href="#" @click='reSearch(JSON.parse(item[1]).query)'>{{ JSON.parse(item[1]).query}}</a> 
             <br>{{JSON.parse(item[1]).time}} 
-            <br>{{'Number of Results (DOAJ): ' + JSON.parse(item[1]).total}}
+            <br>{{'Number of Results (in AMR): ' + JSON.parse(item[1]).total}}
           </p>
           <base-dropdown style="display: inline; margin: 10px">
             <a @click='createNotification(item[1], "daily")' class="dropdown-item" href="#">Repeat Daily</a>

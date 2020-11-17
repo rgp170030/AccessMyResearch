@@ -235,8 +235,9 @@ export default {
       .then((response) => {
           //this.elapsed_time = response.data.elapsed_seconds
           this.results_doaj = response.data.results;
-          this.lengthResults = response.data.total;
-          console.log(this.lengthResults);
+          //this.lengthResults = response.data.total;
+          this.lengthResults = this.results.length;
+          //console.log(this.lengthResults);
           //var numberResultsDate =  startTime + "; Number of Results " + this.lengthResults; 
           this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
        });
