@@ -107,8 +107,7 @@ export default {
   },
     methods: {
       initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
+        if (navigator.platform.startsWith('Win')) { //Checks if platform is Windows
           initScrollbar('sidenav');
         }
       },
@@ -124,5 +123,3 @@ export default {
     },
   };
 </script>
-<style lang="scss">
-</style>

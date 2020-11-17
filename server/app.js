@@ -5,8 +5,7 @@ const port = 3000;
 const redis = require("redis");
 const client = redis.createClient(process.env.REDIS_URL);
 
-// Remove fake user id
-const USER_ID = 1;
+const USER_ID = 1; //TODO: Remove fake user id
 
 app.use(bodyParser.json());
 
