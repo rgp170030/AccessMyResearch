@@ -74,7 +74,7 @@ def core(keywords):
                 try:
                     obj = {}
                     k = ['authors', 'title', 'description',
-                        'fulltextUrls', 'journal', 'doi'] #datePublished removed because CORE's dates are inconsistent. It won't be included in searches. 
+                        'datePublished','fulltextUrls', 'journal', 'doi']  
                     for i in k:
                         if i in a:
                             obj[i] = a[i]
