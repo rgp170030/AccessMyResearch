@@ -74,8 +74,9 @@
         Auth.currentAuthenticatedUser().then((value) => {
         var values = value.storage;
 
+
         for (const [key, value] of Object.entries(values)) {
-          if(value[0] == "{")
+          if(value.substring(0, 15) == "{\"UserAttribute")
           {
             this.data = value;
             break ;

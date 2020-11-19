@@ -1,5 +1,23 @@
-type Todo @model {
-  id: ID!
-  name: String!
-  description: String
+type User @model {
+  username: String!
+  name: String
+  friends: [UserFriend] @connection(name: "FriendsConnection")
+  requests: [Requests] @connection(name: "RequestsConnection")
+}
+
+type Friend @model {
+  username: String
+  name: String
+  user: [UserFriend] @connection(name: "UserConnection")
+  requests: [Requests] @connection(name: "FriendRequestConnection")
+}
+
+type UserFriend @model {
+  user: User @connection(name: "FriendsConnection")
+  friend: Friend @connection(name: "UserConnection")
+}
+
+type Requests @model {
+  user: User @connection(name: "RequestsConnection")
+  friend: Friend @connection(name: "FriendRequestConnection")
 }

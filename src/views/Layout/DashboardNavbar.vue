@@ -269,6 +269,18 @@
         </b-form-group>
       </b-form>
       <!-- start message and notification -->
+      <a
+          slot="title-container"
+          class="nav-link nav-link-icon nav-item"
+          href="#"
+          role="button"
+          @click="toNetwork"
+          aria-expanded="false"
+          v-if="signedIn"
+        >
+          <i class="fas fa-user-friends"></i>
+      </a>
+
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a
           slot="title-container"
@@ -754,6 +766,9 @@ export default {
     getReminders() {
       this.reminders = JSON.parse(localStorage.reminders);
     },
+    toNetwork() {
+          this.$router.push('network-list');
+    }
   },
 };
 </script>
