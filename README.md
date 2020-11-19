@@ -26,7 +26,7 @@ AccessMyResearch aims to increase the accessibility of research to all people by
 
 # [AccessMyResearch Wiki](https://github.com/AccessMyResearch/AccessMyResearch/wiki)
 Contributing | Codebase
-------------- | -------------
+-- | --
 **[Using Git](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Using-Git)** | **[Core Technologies & Dependencies](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Core-Technologies-&-Dependencies)**
 **[Getting Started](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Getting-Started)** | **[Containerized Virtualization with Docker](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Containerized-virtualization-with-Docker)**
 **[How to Contribute](https://github.com/AccessMyResearch/AccessMyResearch/wiki/How-to-Contribute)** | **[Server Hosting by AWS](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Server-Hosting-by-AWS)**
