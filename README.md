@@ -1,16 +1,21 @@
-# **Access My Research**
-Access My Research is being significantly overhauled to be more modern, responsive, & better documented.
+# Access My Research
+AccessMyResearch is a BootstrapVue + Vue.js web application designed to connect users with researchers, increase access to publications, & act as a space for teams to work on research-related projects.
 
-## Goal
-Make Access My Research functional, beautiful, and quick
+# Project Goals
+AccessMyResearch aims to increase the accessibility of research to all people by allowing users to:
+1. Create an account for free
+1. Gain access to publications and research from academics from all over the world
+1. Ask questions & discuss with experts from top universities
+1. Organize inspiring publications into shareable, named collections
+1. Develop projects with other users where the group's research can be uploaded
 
-## Getting Started in the CLI 
-1. Clone the code from the github repo (https://github.com/AccessMyResearch/AccessMyResearch.git)
-1. From the AccessMyResearch (root) directory, run "`npm install`"
-1. Run "`npm install @vue/cli -g`" to install the Vue CLI
-1. Next, run "`npm run dev`" to build and test the code
+# Getting Started
+1. [Set up a Development Environment](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Getting-Started#setting-up-a-development-environment)
+1. [Set up Git](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Using-Git#setting-up-git)
+1. [Clone the Repo & Install Project Dependencies](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Getting-Started#getting-started-in-the-cli)
+1. [Set up Docker](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Containerized-virtualization-with-Docker#getting-started-with-docker)
 
-## Useful Commands
+# Useful Commands
 1. `npm install` - Installs all dependencies
 1. `npm ci` - Removes all dependencies and installs them all cleanly
 1. `npm run build` - Builds the code
@@ -19,200 +24,24 @@ Make Access My Research functional, beautiful, and quick
 1. `npm run serve` - Serves the code (not going to be useful for a while)
 1. `npm run lint` - Starts the Vue linter
 
-## Using Docker
-1. You'll need to [install docker](https://docs.docker.com/get-docker)
-1. Run `docker-compose up -d --build` from the base directory containing the dockerfile file
-1. Check `docker ps` and see it running! You should be able to access at 127.0.0.1:8080
+# [AccessMyResearch Wiki](https://github.com/AccessMyResearch/AccessMyResearch/wiki)
+Contributing | Codebase
+-- | --
+**[Using Git](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Using-Git)** | **[Core Technologies & Dependencies](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Core-Technologies-&-Dependencies)**
+**[Getting Started](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Getting-Started)** | **[Containerized Virtualization with Docker](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Containerized-virtualization-with-Docker)**
+**[How to Contribute](https://github.com/AccessMyResearch/AccessMyResearch/wiki/How-to-Contribute)** | **[Server Hosting by AWS](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Server-Hosting-by-AWS)**
+**[Project Files](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Project-Files)** | **[Elasticsearch](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Elasticsearch)**
+**[Solving Common Issues](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Solving-Common-Issues)** | **[Testing with Jest](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Testing-with-Jest)**
 
-## Important Notes
-1. When building the app, you may get a warning that says: `Building for production...WARNING: 'text-emphasis-variant()' has been deprecated as of v4.4.0. It will be removed entirely in v5.` This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet. 
-1. Check available color variables at src\assets\custom\_variables.scss
-1. Comments indicating what needs to be done should begin with "TODO" so these comments can be quickly searched for
-1. Unit testing is done through Jest. Documentation here: https://jestjs.io/
+# Important Notes
+1. Comments indicating what needs to be done should begin with `TODO:`, so these comments can be easily searched for instead of getting buried and forgotten about.
+   * In JavaScript: `//TODO: Replace dummy data with entries from database`
+   * In HTML/Vue.js: `<!--TODO: Replace dummy data -->`
+1. In Vue.js, don't specify the location of the src folder when importing, instead use the `@` symbol. It dynamically points to the src folder of the Vue.js project.
+1. Avoid creating new colors, fonts, or sizes. Check what theme colors you can use and other project styling globals at `src/assets/custom/_variables.scss`
+1. Looking to implement a new component? First, check the `src/components/` folder. It is always best to use the components that have already been properly implemented.
 
-## File Structure
-```
-|-- Access My Research
-    |-- .dockerignore
-    |-- .editorconfig
-    |-- .eslintrc.js
-    |-- .gitattributes
-    |-- .gitignore
-    |-- .graphqlconfig.yml
-    |-- babel.config.js
-    |-- docker-compose.yml
-    |-- dockerfile
-    |-- package.json
-    |-- README.md
-    |-- vue.config
-    |-- config
-    |   |-- elastic.js
-    |   |-- logstash.conf
-    |   |-- redis.conf
-    |-- public
-    |   |-- favicon.png
-    |   |-- index.html
-    |   |-- img
-    |   |   |-- brand
-    |   |   |   |-- orange.png
-    |   |   |   |-- white.png
-    |   |   |-- SSO
-    |   |   |   |-- google.svg
-    |   |   |   |-- linkedin.svg
-    |   |   |-- theme
-    |   |   |   |-- **Placeholder images**
-    |-- server
-    |   |-- app.js
-    |   |-- dockerfile-server
-    |   |-- package.json
-    |-- src
-        |-- App.vue
-        |-- aws-exports.js
-        |-- config.js
-        |-- main.js
-        |-- polyfills.js
-        |-- store.js
-        |-- assets
-        |   |-- scss
-        |   |   |-- argon.scss
-        |   |   |-- core
-        |   |   |   |-- **Scss assets**
-        |   |   |-- custom
-        |   |   |   |-- **Scss assets**
-        |-- components
-        |   |-- Badge.vue
-        |   |-- BaseAlert.vue
-        |   |-- BaseButton.vue
-        |   |-- BaseDropdown.vue
-        |   |-- BaseHeader.vue
-        |   |-- BasePagination.vue
-        |   |-- BaseProgress.vue
-        |   |-- BaseSlider.vue
-        |   |-- BaseTable.vue
-        |   |-- ButtonCheckbox.vue
-        |   |-- ButtonRadioGroup.vue
-        |   |-- CloseButton.vue
-        |   |-- index.js
-        |   |-- LoadingPanel.vue
-        |   |-- Modal.vue
-        |   |-- NavbarToggleButton.vue
-        |   |-- Breadcrumb
-        |   |   |-- Breadcrumb.vue
-        |   |   |-- BreadcrumbItem.vue
-        |   |   |-- RouteBreadcrumb.vue
-        |   |-- Cards
-        |   |   |-- Card.vue
-        |   |   |-- StatsCard.vue
-        |   |-- Charts
-        |   |   |-- BarChart.js
-        |   |   |-- config.js
-        |   |   |-- globalOptionsMixin.js
-        |   |   |-- LineChart.js
-        |   |   |-- optionHelpers.js
-        |   |   |-- roundedCornersExtension.js
-        |   |-- Collapse
-        |   |   |-- Collapse.vue
-        |   |   |-- CollapseItem.vue
-        |   |-- Inputs
-        |   |   |-- BaseCheckbox.vue
-        |   |   |-- BaseInput.vue
-        |   |   |-- BaseRadio.vue
-        |   |-- Interests
-        |   |   |-- InterestCategory.vue
-        |   |   |-- InterestTopics.vue
-        |   |-- Navbar
-        |   |   |-- BaseNav.vue
-        |   |   |-- NavbarToggleButton.vue
-        |   |-- NotificationPlugin
-        |   |   |-- index.js
-        |   |   |-- Notification.vue
-        |   |   |-- Notifications.vue
-        |   |-- Settings
-        |   |   |-- ManageIgnoredUsersTab.vue
-        |   |-- SidebarPlugin
-        |   |   |-- index.js
-        |   |   |-- SideBar.vue
-        |   |   |-- SidebarItem.vue
-        |   |-- Tabs
-        |   |   |-- Tab.vue
-        |   |   |-- Tabs.vue
-        |-- directives
-        |   |-- click-outside.js
-        |-- graphql
-        |   |-- mutations.js
-        |   |-- queries.js
-        |   |-- schema.json
-        |   |-- subscriptions.js
-        |-- plugins
-        |   |-- dashboard-plugin.js
-        |   |-- globalComponents.js
-        |   |-- globalDirectives.js
-        |-- routes
-        |   |-- router.js
-        |   |-- routes.js
-        |-- util
-        |   |-- throttle.js
-        |   |-- upload.js
-        |-- views
-            |-- About.vue
-            |-- Activity.vue
-            |-- Ask.vue
-            |-- Collections.vue
-            |-- Contact.vue
-            |-- Donate.vue
-            |-- Help.vue
-            |-- Home.vue
-            |-- Messages.vue
-            |-- NotFoundPage.vue
-            |-- Notifications.vue
-            |-- Projects.vue
-            |-- Requests.vue
-            |-- SearchHistory.vue
-            |-- SearchResults.vue
-            |-- Settings.vue
-            |-- Updates.vue
-            |-- Upload.vue
-            |-- Dashboard
-            |   |-- PageVisitsTable.vue
-            |   |-- SocialTrafficTable.vue
-            |-- Layout
-            |   |-- Content.vue
-            |   |-- ContentFooter.vue
-            |   |-- DashboardLayout.vue
-            |   |-- DashboardNavbar.vue
-            |   |-- PopupCard.vue
-            |-- Pages
-            |   |-- AddRemoveUsers.vue
-            |   |-- AuthLayout.vue
-            |   |-- CodeVerification.vue
-            |   |-- ForgotPassword.vue
-            |   |-- Interests.vue
-            |   |-- Login.vue
-            |   |-- Register.vue
-            |   |-- SuggestedPeople.vue
-            |   |-- UserProfile.vue
-            |   |-- UserProfile
-            |   |   |-- EditProfileForm.vue
-            |   |   |-- UserActionsDropdown.vue
-            |   |   |-- UserCard.vue
-            |-- SettingsTabs
-            |   |-- Account.vue
-            |   |-- Display.vue
-            |   |-- Localization.vue
-            |   |-- Payment.vue
-            |   |-- Privacy.vue
-            |   |-- Security.vue
-            |-- Tables
-                |-- articles.js
-                |-- collections.js
-                |-- LightTable.vue
-                |-- projects.js
-                |-- users.js
-```
-
-## Original Template Information
-BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.
-You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Dashboard is coming with pre-built examples, so the development process is seamless, switching from our pages to the real website is very easy to be done.
-Every element has multiple states for colors, styles, hover, focus, that you can easily access and use.
-- Copyright 2020 Creative Tim (https://www.creative-tim.com/?ref=bvad-github-readme)
-- Licensed under MIT (https://github.com/creativetimofficial/vue-argon-dashboard/blob/master/LICENSE.md)
+   > Still need a new component? Check out [BootstrapVue Components](https://bootstrap-vue.org/docs/components) or [Element Components](https://element.eleme.io/#/en-US/component/layout).
+1. Avoid adding redundant dependencies. See [what each dependency does](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Core-Technologies-&-Dependencies#web-app-dependencies) before you add a new one.
+1. If you encounter an issue, [check to see if there is a solution](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Solving-Common-Issues#solutions-to-common-issues)
+   > Be sure to [document the solution to your problem](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Solving-Common-Issues#solutions-to-common-issues) if you think others might encounter it too.
