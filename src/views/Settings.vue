@@ -30,23 +30,9 @@
           <button
             type=" button"
             class="btn"
-            @click="currentTabComponent = 'Payment'"
-          >
-            Payment
-          </button>
-          <button
-            type=" button"
-            class="btn"
             @click="currentTabComponent = 'Security'"
           >
             Security
-          </button>
-          <button
-            type=" button"
-            class="btn"
-            @click="currentTabComponent = 'Localization'"
-          >
-            Localization
           </button>
           <button
             type=" button"

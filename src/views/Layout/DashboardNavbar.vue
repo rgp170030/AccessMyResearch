@@ -411,32 +411,10 @@
         <!-- </template> -->
       </base-dropdown>
 
-      <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-        <a
-          slot="title-container"
-          class="nav-link nav-link-icon"
-          href="#"
-          role="button"
-          aria-haspopup="true"
-          aria-expanded="false"
-          @click="redirect"
-        >
-          <i class="fas fa-envelope"></i>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/messages" v-if="signedIn">
-          <!-- TODO: Link to Messages-->
-          <i class="fas fa-clock"></i>
-          All Messages
-        </a>
-        <b-alert show variant="light" class="text-dark" v-if="!signedIn">
-          <i class="fas fa-exclamation-circle fa-lg"></i>
-          In order to access this feature, you must login. You can login
-          <router-link class="font-weight-bolder text-black" to="/login"
-            >here.</router-link
-          >
-        </b-alert>
-      </base-dropdown>
+      <router-link to="/donate">
+        <i class="fas fa-donate"></i>
+      </router-link>
+
       <base-dropdown
         menu-on-right
         class="nav-item"
@@ -552,7 +530,7 @@ export default {
       showMenu: false,
       searchModalVisible: false,
       searchQuery: "",
-      signedIn: false,
+      signedIn: true,
       timeTotal: 0,
       reminders: [],
       //autocomplete start
