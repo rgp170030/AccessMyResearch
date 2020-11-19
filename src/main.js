@@ -20,6 +20,7 @@ import { Auth } from 'aws-amplify';
 import { AmplifyPlugin } from 'aws-amplify-vue';
 import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
 import aws_exports from './aws-exports';
+import VueAnalytics from 'vue-analytics'
 
 Amplify.configure({
   ...aws_exports,
@@ -45,6 +46,13 @@ Vue.use(infiniteScroll);
 
 // router setup
 import router from './routes/router';
+
+// analytics setup
+Vue.use(VueAnalytics, {
+  id: 'UA-183504735-1',
+  router
+});
+
 // plugin setup
 Vue.use(DashboardPlugin);
 
