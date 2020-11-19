@@ -1,4 +1,4 @@
-# **Access My Research**
+# Access My Research
 AccessMyResearch is a BootstrapVue + Vue.js web application designed to connect users with researchers, increase access to publications, & act as a space for teams to work on research-related projects.
 
 # Project Goals
@@ -24,7 +24,7 @@ AccessMyResearch aims to increase the accessibility of research to all people by
 1. `npm run serve` - Serves the code (not going to be useful for a while)
 1. `npm run lint` - Starts the Vue linter
 
-# **[AccessMyResearch Wiki](https://github.com/AccessMyResearch/AccessMyResearch/wiki)**
+# [AccessMyResearch Wiki](https://github.com/AccessMyResearch/AccessMyResearch/wiki)
 Contributing | Codebase
 ------------- | -------------
 **[Using Git](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Using-Git)** | **[Core Technologies & Dependencies](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Core-Technologies-&-Dependencies)**
