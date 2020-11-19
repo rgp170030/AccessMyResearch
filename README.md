@@ -3,7 +3,7 @@ AccessMyResearch is a BootstrapVue + Vue.js web application designed to connect 
 
 # Project Goals
 AccessMyResearch aims to increase the accessibility of research to all people by allowing users to:
-1. Create an account and access publications for free
+1. Create an account for free
 1. Gain access to publications and research from academics from all over the world
 1. Ask questions & discuss with experts from top universities
 1. Organize inspiring publications into shareable, named collections
