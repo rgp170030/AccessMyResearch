@@ -59,8 +59,6 @@
 </template>
 <script>
 import UserActionDropdown from "./UserActionsDropdown.vue";
-import { CognitoUserPool } from 'amazon-cognito-identity-js';
-import CognitoAuth from 'amazon-cognito-auth-js';
 import { Auth } from 'aws-amplify';
 
 export default {
