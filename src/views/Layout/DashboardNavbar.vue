@@ -766,7 +766,7 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: this.search.text + this.areasStringify, filter: this.search.filter },
+          query: { text: this.search.text + this.areasStringify, filter: this.search.filter, yearRange: this.yearRange },
         })
         .catch(() => {});
     },

@@ -284,6 +284,7 @@ export default {
                     query: this.$route.query.text,
                   },
                 },
+                must: [{"range":{"datePublished":{"gte":this.$route.query.yearRange[0], "lte":this.$route.query.yearRange[1]}}}]
               },
             },
           },
