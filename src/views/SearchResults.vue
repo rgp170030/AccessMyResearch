@@ -5,14 +5,16 @@
     ></base-header>
     <Email ref="doiEmailModal" :emails="emailModal.emailOpts"></Email>
     <b-card-header class="border-0">
-      <h3 class="mb-0">
-        About {{ results.length }} results ({{ timeTotal }} ms)
-      </h3>
-      <h4>{{ searchStatus }}</h4>
+
+      <h3 class="mb-0" >About {{results.length}} results ({{elapsed_time}} ms) </h3>
+
     </b-card-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
+
+          
+          <!--  <b-table striped hover :items="results" :fields="fields"></b-table>  -->
           <el-table
             class="table-responsive table"
             header-row-class-name="thead-light"
@@ -23,15 +25,15 @@
                 <b-media no-body class="align-items-center">
                   <b-media-body>
                     <span class="font-weight-600 name mb-0 text-sm">{{
-                      row._source.title
+                      row._source.snippet
                     }}</span>
                   </b-media-body>
                 </b-media>
               </template>
             </el-table-column>
             <el-table-column
-              label="Author"
-              prop="_source.author"
+              label="Author(s)"
+              prop="_source.authors"
               min-width="150px"
             >
               <template v-slot="{ row }">
@@ -53,9 +55,27 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="Message"
-              prop="_source.message"
+              label="Description"
+              prop="_source.description"
               min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="Date Published"
+              prop="_source.datePublished"
+              min-width="200px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="URL"
+              prop="_source.url"
+              min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="DOI"
+              prop="_source.doi"
+              min-width="200px"
             >
             </el-table-column>
             <el-table-column
@@ -65,7 +85,66 @@
               sortable
             >
             </el-table-column>
-          </el-table>
+          </el-table> 
+          
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button block v-b-toggle.doajAccordion variant="primary"
+                        >DOAJ: About {{results_doaj.length}} results ({{timeTotal}} ms)</b-button>
+                    </b-card-header>
+                    <b-collapse
+                      id="doajAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                          <div v-for="(result, i) in results_doaj" :key="i + result.bibjson.title">
+                            <p v-html="result.bibjson.title"></p>
+                                <p>Published Date: {{result.created_date}}</p>
+                                <p>Author: </p>
+                                <p v-for="(author, ii) in result.bibjson.author" :key="ii + author.name">
+                                  {{author.name}}
+                                </p>
+                                <p v-for="(link, iii) in result.bibjson.link" :key="iii + link.url"> 
+                                  Link/URL: <a :href="link.url">{{ link.url}}</a>
+                                </p>
+                                <p>Description/Abstract: {{result.bibjson.abstract}}</p>
+                                <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
+                          </div>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+              
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button block v-b-toggle.unpaywallAccordion variant="primary"
+                        >DOI: About {{results_doi.length}} results ({{elapsed_time}} ms)</b-button>
+                    </b-card-header>
+                    <b-collapse
+                      id="unpaywallAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                          <div v-for="(result, i) in results_doi" :key="i + result"><p v-html="result.snippet">
+                            </p><a :href="result.response.doi_url">{{ result.response.doi_url}}</a>
+                                <p> Published Date: 
+                                  {{ publishedDate(result.response.published_date) }}
+                                </p>
+                                <p> Authors: 
+                                  {{ commaSeparatedAuthors(result.response.z_authors) }}
+                                </p>
+                                <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
+                          </div>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
         </div>
       </div>
     </card>
@@ -89,13 +168,20 @@ export default {
   },
   data() {
     return {
-      results: [],
-      searchStatus: '',
+
+      results:[],
+      results_doaj: [],
+      results_doi: [],
+      //fields: ['snippet', 'response.doi_url'],
+      elapsed_time: 0,
       timeTotal: 0,
-      blacklistText: "",
+      blacklistText:"",
+      lengthResults: 0,
+
       emailModal: {
         emailOpts: []
       }
+
     };
   },
   computed: {
@@ -125,13 +211,119 @@ export default {
     this.performSearch();
   },
   methods: {
-    async performSearch() {
-      var startTime, endTime;
-      this.results = [];
-
-      startTime = new Date();
+    postSearchHistory(startTime, totalResults, queryText){
       const searchQuery = {};
-      searchQuery[startTime] = this.$route.query.text;
+
+      var queryTime = startTime.toDateString();
+      searchQuery[startTime] =  JSON.stringify({ time: queryTime, total: totalResults, query: queryText });
+      //searchQuery[queryTime] =  queryText;
+      axios
+      .post('http://localhost:3000/search', searchQuery)
+      .then(function (response) {
+         console.log(response);
+      })
+       .catch(function (error) {
+          console.log(error);
+       });
+    },
+    commaSeparatedAuthors(authorsList){
+      if(authorsList == null){
+        return "N/A"
+      }
+      else {
+        let authorString = ""
+        for (let index = 0; index < authorsList.length; index++) {
+          authorString = `${authorString} ${authorsList[index].family} ${authorsList[index].given}, `;
+        }
+        return authorString.slice(0, -2);
+      }
+    },
+    publishedDate(publishedDateList){
+      if(publishedDateList == null){
+        return "N/A"
+      }
+      else {
+        return publishedDateList;
+      }
+    },
+    performSearch() {
+    //   var startTime, endTime;
+    //   this.results = [];
+    //   startTime = new Date();
+    //   const searchQuery = {};
+    //   searchQuery[startTime] = this.$route.query.text;
+
+      axios
+      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
+      .then((response) => {
+          this.elapsed_time = response.data.elapsed_seconds
+          this.results = response.data.results
+       });
+      // .post('http://localhost:3000/search', searchQuery)
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //    console.log(error);
+      // });
+
+    //   let searchResults = await client
+    //     .search({
+    //       index: "amr",
+    //       body: {
+    //         query: {
+    //           bool: {
+    //             must_not:{
+    //               query_string: {
+    //                 fields: [ "title", "author", "message", "count"],
+    //                 query: this.blacklistText,
+    //               }
+    //             },
+    //             should:{
+    //               query_string: {
+    //                 fields: [ "title", "author", "message", "count"],
+    //                 query: this.$route.query.text,
+    //               }
+    //             },
+    //           },
+    //         },
+    //       },
+    //     })
+    //     .then((res) => res)
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    //   endTime = new Date();
+    //   var timeDiff = endTime - startTime;
+    //   this.timeTotal = this.timeTotal + timeDiff;
+    //   this.results.push(...searchResults.hits.hits);
+    },
+
+    async performSearch() {
+       var startTime, endTime;
+       this.results = [];
+       this.lengthResults = 0; 
+       startTime = new Date();
+
+      axios
+      .get(`https://doaj.org/api/v1/search/articles/${this.$route.query.text}?page=1&pageSize=100`)
+      .then((response) => {
+          //this.elapsed_time = response.data.elapsed_seconds
+          this.results_doaj = response.data.results;
+          this.lengthResults = response.data.total;
+          console.log(this.lengthResults);
+          //var numberResultsDate =  startTime + "; Number of Results " + this.lengthResults; 
+          this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
+       });
+    
+      axios
+      .get(`https://api.unpaywall.org/v2/search/?query=${this.$route.query.text}&email=your_email&is_oa=true`)
+      .then((response) => {
+          this.elapsed_time = response.data.elapsed_seconds;
+          this.results_doi = response.data.results;
+       });
+
+      // searchQuery[startTime] = this.$route.query.text;
 
       // axios
       //   .post("http://localhost:3000/search", searchQuery)
@@ -142,22 +334,27 @@ export default {
       //     console.log(error);
       //   });
 
+
       this.searchStatus = 'Searching AMR Database...';
       let searchResults = await client
         .search({
-          index: "amr",
           body: {
+            size: 100,
             query: {
               bool: {
                 must_not: {
                   query_string: {
-                    fields: ["title", "author", "message", "count"],
+
+                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
+
                     query: this.blacklistText,
                   },
                 },
                 should: {
                   query_string: {
-                    fields: ["title", "author", "message", "count"],
+
+                    fields: [ "title", "authors", "description", "datePublished", "url", "doi"],
+
                     query: this.$route.query.text,
                   },
                 },
@@ -175,8 +372,16 @@ export default {
       endTime = new Date();
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
-      if (searchResults)
-        this.results.push(...searchResults.hits.hits);
+
+      for(var hit of searchResults.hits.hits) {
+        hit._source.authors = this.arrayToString(hit._source.authors);
+        hit._source.url = this.arrayToString(hit._source.url);
+        hit._source.description = this.shortenDescription(hit._source.description);
+      }
+      this.results.push(...searchResults.hits.hits);
+
+      //if (searchResults)
+        //this.results.push(...searchResults.hits.hits);
 
       //Subject to change - if Elasticsearch doesn't get any results from this search (i.e., we don't have anything about DOI in our data),
       // then check to see if there is a valid in the query string (e.g. 10.1510/12616/asghja/125)
@@ -239,7 +444,19 @@ export default {
         .then(function() {
           self.searchStatus = '';
         });
+
     },
+    arrayToString(data) {
+      if(Array.isArray(data)){
+        return data.join(", ");
+      }
+      return data;
+    },
+    shortenDescription(data) {
+      if(data.length > 250) {
+        return data.slice(0, 250) + "...";
+      }
+    }
   },
 };
 </script>

@@ -147,6 +147,38 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.accessibilityAccordion
+                        variant="primary"
+                        >Accessibility</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="accessibilityAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-group>
+                          <b-form-checkbox-group 
+                            style="column-count: 2;"
+                            id="accessibilityFilter"
+                            v-model="selectedFilters"
+                            :options="accessibilityOptions"
+                            name="acccessibility"
+                          ></b-form-checkbox-group>
+                          </b-form-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button block v-b-toggle.yearAccordion variant="primary"
                         >Year</b-button
                       >
@@ -189,6 +221,7 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
+                            style="column-count: 2;"
                             id="typeFilter"
                             v-model="selectedFilters"
                             :options="types"
@@ -218,6 +251,7 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
+                            style="column-count: 2;"
                             id="databaseFilter"
                             v-model="selectedFilters"
                             :options="databases"
@@ -230,6 +264,37 @@
                 </div>
 
                 <div class="accordion" role="tablist">
+
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.journalAccordion
+                        variant="primary"
+                        >Journals</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="journalAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-checkbox-group
+                            id="journalFilter"
+                            v-model="selectedFilters"
+                            @input="sort"
+                            :options="journals"
+                            name="journals"
+                          ></b-form-checkbox-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button
@@ -568,6 +633,24 @@ export default {
           value: "100+",
         },
       ],
+      accessibilityOptions: [
+        {
+          text: "Open",
+          value: "open",
+        },
+        {
+          text: "With Permission",
+          value: "with-permission",
+        },
+        {
+          text: "Embargoed",
+          value: "embargoed",
+        },
+        {
+          text: "Restricted",
+          value: "restricted",
+        },
+      ],
       types: [
         {
           text: "Peer Review",
@@ -640,6 +723,24 @@ export default {
           value: "unpaywall",
         },
       ],
+      journals: [
+        {
+          text: "PLOS ONE", 
+          value: "plos one"
+        },
+        {
+          text: "Royal Society Open Science",
+          value: "royal society open science"
+        },
+        {
+          text: "Nature",
+          value: "nature"
+        },
+        {
+          text: "Science",
+          value: "science"
+        },
+      ]
     };
   },
   methods: {
@@ -721,17 +822,17 @@ export default {
     //autocomplete start
     filterRecentSearches() {
       this.getSearchHistory();
-      this.filteredRecentSearches = this.recentSearches.filter((s) => {
-        return (
-          this.search.text &&
-          s[1].toLowerCase().startsWith(this.search.text.toLowerCase())
-        );
-      });
-      this.filteredRecentSearches = this.filteredRecentSearches
-        .map((item) => item[1])
-        .filter((val, index, self) => self.indexOf(val) == index);
-    },
-    setSearch(recentSearch) {
+
+      this.filteredRecentSearches = this.recentSearches.filter(
+        (s) => {
+          return this.search.text && JSON.parse(s[1]).query
+            .toLowerCase()
+            .startsWith(this.search.text.toLowerCase());
+        }
+      );
+      this.filteredRecentSearches = this.filteredRecentSearches.map(item => JSON.parse(item[1]).query).filter((val, index, self) => self.indexOf(val) == index)
+},
+    setSearch (recentSearch) {
       this.search.text = recentSearch;
       this.modal = false;
     },
