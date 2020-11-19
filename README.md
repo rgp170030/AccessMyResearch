@@ -13,6 +13,7 @@ AccessMyResearch aims to increase the accessibility of research to all people by
 1. [Set up a Development Environment](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Getting-Started#setting-up-a-development-environment)
 1. [Set up Git](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Using-Git#setting-up-git)
 1. [Clone the Repo & Install Project Dependencies](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Getting-Started#getting-started-in-the-cli)
+1. [Set up Docker](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Containerized-virtualization-with-Docker#getting-started-with-docker)
 
 # Useful Commands
 1. `npm install` - Installs all dependencies
@@ -33,7 +34,14 @@ Contributing | Codebase
 **[Solving Common Issues](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Solving-Common-Issues)** | **[Testing with Jest](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Testing-with-Jest)**
 
 # Important Notes
-1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
-2) Check available color variables at src\assets\custom\_variables.scss
-3) Comments indicating what needs to be done should begin with "TODO" so these comments can be quickly searched for
-4) Unit testing is done through Jest. Documentation here: https://jestjs.io/
+1. Comments indicating what needs to be done should begin with `TODO:`, so these comments can be easily searched for instead of getting buried and forgotten about.
+   * In JavaScript: `//TODO: Replace dummy data with entries from database`
+   * In HTML/Vue.js: `<!--TODO: Replace dummy data -->`
+1. In Vue.js, don't specify the location of the src folder when importing, instead use the `@` symbol. It dynamically points to the src folder of the Vue.js project.
+1. Avoid creating new colors, fonts, or sizes. Check what theme colors you can use and other project styling globals at `src/assets/custom/_variables.scss`
+1. Looking to implement a new component? First, check the `src/components/` folder. It is always best to use the components that have already been properly implemented.
+
+   > Still need a new component? Check out [BootstrapVue Components](https://bootstrap-vue.org/docs/components) or [Element Components](https://element.eleme.io/#/en-US/component/layout).
+1. Avoid adding redundant dependencies. See [what each dependency does](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Core-Technologies-&-Dependencies#web-app-dependencies) before you add a new one.
+1. If you encounter an issue, [check to see if there is a solution](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Solving-Common-Issues#solutions-to-common-issues)
+   > Be sure to [document the solution to your problem](https://github.com/AccessMyResearch/AccessMyResearch/wiki/Solving-Common-Issues#solutions-to-common-issues) if you think others might encounter it too.
