@@ -223,10 +223,11 @@
                           <b-form-checkbox-group
                             style="column-count: 2;"
                             id="typeFilter"
-                            v-model="selectedFilters"
+                            v-model="selectedTypeFilters"
                             :options="types"
                             name="type"
                           ></b-form-checkbox-group>
+                          <div>{{ this.selectedTypeFilters }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -570,6 +571,7 @@ export default {
       yearRange: [1950, 2020],
       selectedFilters: [],
       selectedAreaFilters: [],
+      selectedTypeFilters: [],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       areasStringify: "", 
@@ -659,52 +661,76 @@ export default {
       ],
       types: [
         {
+          text: "Title",
+          value: "title",
+        },
+        {
+          text: "Author",
+          value: "authors",
+        },
+        {
+          text: "DOI",
+          value: "doi",
+        },
+        {
           text: "Peer Review",
           value: "peer-review",
+          disabled: true
         },
         {
           text: "Pre Print",
           value: "pre-print",
+          disabled: true
         },
         {
           text: "Book Chapter",
           value: "book-chapter",
+          disabled: true
         },
         {
           text: "Poster",
           value: "poster",
+          disabled: true
         },
         {
           text: "Presentation",
           value: "presentation",
+          disabled: true
         },
         {
           text: "Results",
           value: "results",
+          disabled: true
         },
         {
           text: "Figures",
           value: "figures",
+          disabled: true
         },
         {
           text: "Video",
           value: "video",
+          disabled: true
         },
         {
           text: "Stream",
           value: "stream",
+          disabled: true
         },
         {
           text: "Blog",
           value: "blog",
+          disabled: true
         },
         {
           text: "Vlog",
           value: "vlog",
+          disabled: true
         },
         {
           text: "Courses",
           value: "courses",
+          disabled: true
         },
       ],
       databases: [
@@ -766,7 +792,7 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: this.search.text + this.areasStringify, filter: this.search.filter, yearRange: this.yearRange },
+          query: { text: this.search.text + this.areasStringify, filter: this.search.filter, yearRange: this.yearRange, types: this.selectedTypeFilters },
         })
         .catch(() => {});
     },
