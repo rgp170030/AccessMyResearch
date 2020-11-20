@@ -226,9 +226,11 @@ export default {
     },
     async performSearch() {
        var startTime, endTime;
+       var searchFields = [ "title", "authors", "description", "datePublished", "url", "journal", "doi"];
        this.results = [];
        this.lengthResults = 0; 
        startTime = new Date();
+      var betterQuery = this.queryBuilder(this.$route.query.types, this.$route.query.text);
 
 /*
       axios
@@ -271,20 +273,24 @@ export default {
                 must_not: {
                   query_string: {
 
-                    fields: [ "title", "authors", "description", "datePublished", "url", "journal", "doi"],
+                    fields: searchFields,
 
                     query: this.blacklistText,
                   },
                 },
-                should: {
-                  query_string: {
-
-                    fields: [ "title", "authors", "description", "datePublished", "url", "journal", "doi"],
-
-                    query: this.$route.query.text,
-                  },
+                must: [{
+                  "range":{
+                    "datePublished":{
+                      "gte":this.$route.query.yearRange[0],
+                      "lte":this.$route.query.yearRange[1]
+                    }
+                  }
                 },
-                must: [{"range":{"datePublished":{"gte":this.$route.query.yearRange[0], "lte":this.$route.query.yearRange[1]}}}]
+                {
+                  "bool": {
+                    "should": betterQuery,
+                  }
+                }]
               },
             },
           },
@@ -319,6 +325,21 @@ export default {
       this.lengthResults = this.results.length;
       this.elapsed_time = this.timeTotal
       this.postSearchHistory(startTime,this.lengthResults, this.$route.query.text);
+    },
+    queryBuilder(fields, text) {
+      var searchFields = [ "title", "authors", "description", "datePublished", "url", "journal", "doi"];
+      if(typeof(fields) == "string") {
+         searchFields = [fields];
+       } else if(Array.isArray(fields) && fields.length > 0){
+         searchFields = fields;
+       }
+      var arr = [];
+      searchFields.forEach(function (item, index) {
+        var obj = {};
+        obj['match'] = {[item]: text};
+        arr.push(obj);
+      });
+      return arr;
     },
     checkDoi() {
       var self = this;
