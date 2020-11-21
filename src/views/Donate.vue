@@ -12,7 +12,7 @@
                   <h2 class="mb-3 text-white font-weight-medium">Consider a Donation</h2>
                   <p class="font-weight-light text-white op-8">To help Access My Research continues its mission
                   of providing free resources and publications, consider a donation!</p>
-                  <b-button squared variant="primary" @click="donation=true">DONATE NOW</b-button>
+                  <b-button squared variant="primary" @click="donation=true" href="https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS"> DONATE NOW</b-button>
                 </div>
               </div>
               <!-- Row -->
