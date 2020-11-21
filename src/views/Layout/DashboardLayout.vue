@@ -47,6 +47,14 @@
             icon: 'fas fa-layer-group text-orange'
           }"/>
         </div>
+        <div>
+          <sidebar-item
+          :link="{
+            name: 'Donate',
+            path: '/donate',
+            icon: 'fas fa-donate'
+          }"/>
+        </div>
       </template>
     </side-bar>
     <div class="main-content">
