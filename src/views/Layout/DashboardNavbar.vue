@@ -407,11 +407,17 @@
         <router-link to="/notifications" class="dropdown-item">
           <span>All Requests </span>
         </router-link>
-
-        <!-- </template> -->
       </base-dropdown>
 
-      <router-link to="/donate">
+      <!-- link to Donate -->
+     <router-link to="/donate"
+      slot="title-container"
+          class="nav-link nav-link-icon"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          @click="redirect">
         <i class="fas fa-donate"></i>
       </router-link>
 
