@@ -23,6 +23,21 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      articles
+      friendsCount
+      comments
+      education
+      city
+      state
+      country
+      university
+      expertise
+      bio
+      first_name
+      middle_name
+      last_name
+      zipcode
+      address
       createdAt
       updatedAt
     }
@@ -45,6 +60,21 @@ export const listUsers = /* GraphQL */ `
         requests {
           nextToken
         }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
         createdAt
         updatedAt
       }
@@ -74,6 +104,21 @@ export const getFriend = /* GraphQL */ `
         }
         nextToken
       }
+      articles
+      friendsCount
+      comments
+      education
+      city
+      state
+      country
+      university
+      expertise
+      bio
+      first_name
+      middle_name
+      last_name
+      zipcode
+      address
       createdAt
       updatedAt
     }
@@ -96,6 +141,21 @@ export const listFriends = /* GraphQL */ `
         requests {
           nextToken
         }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
         createdAt
         updatedAt
       }
@@ -117,6 +177,21 @@ export const getUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
         createdAt
         updatedAt
       }
@@ -130,6 +205,21 @@ export const getUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
         createdAt
         updatedAt
       }
@@ -151,6 +241,21 @@ export const listUserFriends = /* GraphQL */ `
           id
           username
           name
+          articles
+          friendsCount
+          comments
+          education
+          city
+          state
+          country
+          university
+          expertise
+          bio
+          first_name
+          middle_name
+          last_name
+          zipcode
+          address
           createdAt
           updatedAt
         }
@@ -158,6 +263,21 @@ export const listUserFriends = /* GraphQL */ `
           id
           username
           name
+          articles
+          friendsCount
+          comments
+          education
+          city
+          state
+          country
+          university
+          expertise
+          bio
+          first_name
+          middle_name
+          last_name
+          zipcode
+          address
           createdAt
           updatedAt
         }
@@ -182,6 +302,21 @@ export const getRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
         createdAt
         updatedAt
       }
@@ -195,6 +330,21 @@ export const getRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
         createdAt
         updatedAt
       }
@@ -216,6 +366,21 @@ export const listRequestss = /* GraphQL */ `
           id
           username
           name
+          articles
+          friendsCount
+          comments
+          education
+          city
+          state
+          country
+          university
+          expertise
+          bio
+          first_name
+          middle_name
+          last_name
+          zipcode
+          address
           createdAt
           updatedAt
         }
@@ -223,6 +388,21 @@ export const listRequestss = /* GraphQL */ `
           id
           username
           name
+          articles
+          friendsCount
+          comments
+          education
+          city
+          state
+          country
+          university
+          expertise
+          bio
+          first_name
+          middle_name
+          last_name
+          zipcode
+          address
           createdAt
           updatedAt
         }

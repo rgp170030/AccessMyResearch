@@ -3,6 +3,21 @@ type User @model {
   name: String
   friends: [UserFriend] @connection(name: "FriendsConnection")
   requests: [Requests] @connection(name: "RequestsConnection")
+  articles: Int
+  friendsCount: Int
+  comments: Int
+  education: String
+  city: String
+  state: String
+  country: String
+  university: String
+  expertise: String
+  bio: String
+  first_name: String
+  middle_name: String
+  last_name: String
+  zipcode: String
+  address: String
 }
 
 type Friend @model {
@@ -10,6 +25,21 @@ type Friend @model {
   name: String
   user: [UserFriend] @connection(name: "UserConnection")
   requests: [Requests] @connection(name: "FriendRequestConnection")
+  articles: Int
+  friendsCount: Int
+  comments: Int
+  education: String
+  city: String
+  state: String
+  country: String
+  university: String
+  expertise: String
+  bio: String
+  first_name: String
+  middle_name: String
+  last_name: String
+  zipcode: String
+  address: String
 }
 
 type UserFriend @model {

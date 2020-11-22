@@ -81,14 +81,15 @@ export default {
   {
     handleClick(user) 
     {
-
+      this.$router.push({
+        name: 'User',
+        params: { id: user.username }
+      });
     },
     async listUsers()
     {
         const myUser = await API.graphql({ query: queries.getUser, variables: { id: this.$store.state.user.username }});
         
-        console.log(this.$store.state.user.username);
-
         for(const [key, value] of Object.entries(myUser.data.getUser.friends.items))
         {
             const friend = await API.graphql({query: queries.getUserFriend, variables: {id: value.id}});

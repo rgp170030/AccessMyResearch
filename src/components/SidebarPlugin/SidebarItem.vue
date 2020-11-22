@@ -111,12 +111,12 @@ export default {
     baseComponent() {
       return this.isMenu || this.link.isRoute ? 'li' : 'router-link';
     },
-    linkPrefix() {
-      if (this.link.name) {
-        let words = this.link.name.split(' ');
-        return words.map(word => word.substring(0, 1)).join('');
-      }
-    },
+    // linkPrefix() {
+    //   if (this.link.name) {
+    //     let words = this.link.name.split(' ');
+    //     return words.map(word => word.substring(0, 1)).join('');
+    //   }
+    // },
     isMenu() {
       return this.children.length > 0 || this.menu === true;
     },
