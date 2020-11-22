@@ -108,6 +108,16 @@ const routes = [
         path: '/profile-information',
         name: 'profile information',
         component: () => import('../views/Pages/ProfileInformation.vue')
+      },
+      {
+        path: '/network-list',
+        name: 'network list',
+        component: () => import('../views/Pages/NetworkList.vue')
+      },
+      {
+        path: '/requests',
+        name: 'Requests',
+        component: () => import('../views/Pages/UserRequests.vue')
       }
     ]
   },

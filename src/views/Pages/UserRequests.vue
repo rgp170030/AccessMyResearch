@@ -4,8 +4,6 @@
       class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
 
-    <h1 class="pl-5 pt-4">Add Users</h1>
-
     <b-container fluid class="pb-4" id="suggested-people-container">
       <b-row no-gutters>
         <b-col cols="4" v-for="user in users" :key="user.username">
@@ -40,35 +38,17 @@
                 class=""
                 href="#"
                 variant="primary"
-                v-if="user.addStatus == 'Add User'"
+                v-if="user.addStatus == 'Accept Invite'"
                 @click="handleAddClick(user)"
-                >Add User</b-button
+                >Accept Invite</b-button
               >
               <b-button
                 class=""
                 href="#"
                 variant="light"
-                v-if="user.addStatus == 'Pending'"
+                v-if="user.addStatus == 'Accepted'"
                 @click="handleAddClick(user)"
-                >Pending</b-button
-              >
-              <b-button
-                class="mt-2 mr-2"
-                href="#"
-                v-if="user.following == 'Follow'"
-                variant="warning"
-                id="button"
-                @click="handleClick(user)"
-                >Follow</b-button
-              >
-              <b-button
-                class="mt-2 mr-2"
-                href="#"
-                v-if="user.following == 'Unfollow'"
-                variant="youtube"
-                id="button"
-                @click="handleClick(user)"
-                >Unfollow</b-button
+                >Accepted</b-button
               >
             </div>
           </b-card>
@@ -85,8 +65,8 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
 import * as mutations from '../../graphql/mutations.js';
-import { getUser, listUsers, listFriends, getUserFriend } from '../../graphql/queries';
-import { deleteRequests } from '../../graphql/mutations';
+import { getUser, listUsers, listRequestss, getRequests, listFriends } from '../../graphql/queries.js';
+import { deleteRequests, createUserFriend } from '../../graphql/mutations.js';
 
 export default {
   name: "suggestedpeople",
@@ -115,20 +95,33 @@ export default {
     },
     async handleAddClick(user) 
     {
+      user.addStatus = 'Accepted';
+      
       const addUser = {
         id: this.$store.state.user.username + "" + user.username, 
-        requestsUserId: this.$store.state.user.username,
-        requestsFriendId: user.username
+        userFriendUserId: this.$store.state.user.username,
+        userFriendFriendId: user.username
       };
 
       const addUserT = {
         id: user.username + "" + this.$store.state.user.username, 
-        requestsUserId: user.username,
-        requestsFriendId: this.$store.state.user.username
+        userFriendUserId: user.username,
+        userFriendFriendId: this.$store.state.user.username
       };
 
-      const addingUser = await API.graphql({ query: mutations.createRequests, variables: {input: addUser}});
-      const addingUser2 = await API.graphql({ query: mutations.createRequests, variables: {input: addUserT}});
+      const idOfDeletion = {
+        id: user.username + "" + this.$store.state.user.username
+      };
+
+      const idOfDeletionT = {
+        id: this.$store.state.user.username + "" + user.username
+      };
+
+      const deleteRequest = await API.graphql({ query: mutations.deleteRequests, variables: {input: idOfDeletion}});
+      const deleteRequest2 = await API.graphql({ query: mutations.deleteRequests, variables: {input: idOfDeletionT}});
+      
+      const addingUserFriend = await API.graphql({ query: mutations.createUserFriend, variables: {input: addUser}});
+      const addingUserFriend2 = await API.graphql({ query: mutations.createUserFriend, variables: {input: addUserT}});
     },
     async listUsers()
     {
@@ -136,23 +129,27 @@ export default {
 
         for (const [key, value] of Object.entries(listAllUsers.data.listFriends.items))
         {
-            const friend = await API.graphql({query: queries.getUserFriend, variables: {id: this.$store.state.user.username + "" + value.username}});
-
-            if(this.$store.state.user.username != value.username)
+            if(this.$store.state.user.username == value.username)
             {
-              if(friend.data.getUserFriend == null)
-              {
-                  this.users.push({
-                  id: value.id,
-                  name: value.name,
-                  username: value.username,
-                  following: "Follow",
-                  addStatus: "Add User"
-                });
-              }
+                this.userid = value.id;
             }
         }
 
+        const listRequests = await API.graphql(graphqlOperation(listRequestss));
+
+        for(const [key, value] of Object.entries(listRequests.data.listRequestss.items))
+        {
+          if(value.friend.id == this.userid)
+          {
+              this.users.push({
+                id: value.user.id,
+                name: value.user.name,
+                username: value.user.username,
+                addStatus: "Accept Invite",
+                requestId: value.id
+              });
+          }
+        }
     },
   }
 };
