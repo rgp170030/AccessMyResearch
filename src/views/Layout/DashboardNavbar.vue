@@ -256,7 +256,7 @@
                           <b-form-checkbox-group
                             style="column-count: 2;"
                             id="databaseFilter"
-                            v-model="selectedFilters"
+                            v-model="selectedDataFilters"
                             :options="databases"
                             name="database"
                           ></b-form-checkbox-group>
@@ -314,7 +314,7 @@
                     >
                       <b-card-body v-if="defaultFilterCheckbox">
                         <b-dropdown-group class="small">
-                          <div>{{ selectedFilters }}{{ selectedAreaFilters }}</div>
+                          <div>{{ selectedFilters }}{{ selectedAreaFilters }}{{ selectedDataFilters }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -535,6 +535,10 @@ export default {
       this.selectedAreaFilters = localStorage.selectedAreaFilters.split(" ");
     }
 
+    if (localStorage.selectedDataFilters) {
+      this.selectedDataFilters = localStorage.selectedDataFilters.split(" ");
+    }
+
     if (localStorage.yearRange) {
       this.yearRange = localStorage.yearRange.split(",");
     }
@@ -574,6 +578,7 @@ export default {
       selectedFilters: [],
       selectedAreaFilters: [],
       selectedTypeFilters: [],
+      selectedDataFilters: [],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
       areasStringify: "", 
@@ -739,22 +744,29 @@ export default {
         {
           text: "arXiv",
           value: "database:arxiv",
+          disabled: true
         },
         {
           text: "CORE",
-          value: "database:core",
+          value: "CORE",
         },
         {
           text: "DBLP",
           value: "database:dblp",
+          disabled: true
         },
         {
           text: "PubMed",
           value: "database:pubmed",
+          disabled: true
         },
         {
           text: "Unpaywall",
-          value: "database:unpaywall",
+          value: "Unpaywall",
+        },
+        {
+          text: "DOAJ",
+          value: "DOAJ",
         },
       ],
       journals: [
@@ -794,7 +806,11 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: this.search.text, filter: this.search.filter, yearRange: this.yearRange, types: this.selectedTypeFilters, areas:this.selectedAreaFilters },
+          query: { text: this.search.text, filter: this.search.filter, 
+          yearRange: this.yearRange, 
+          types: this.selectedTypeFilters, 
+          areas:this.selectedAreaFilters,
+          databases: this.selectedDataFilters },
         })
         .catch(() => {});
     },
@@ -866,6 +882,7 @@ export default {
     //default filter start
     defaultFilterCheckboxChecked() {
       localStorage.selectedAreaFilters = this.selectedAreaFilters; //AREA FILTER DATABASE; NEED TO FIX
+      localStorage.selectedDataFilters = selectedDataFilters
       localStorage.selectedFilters = this.selectedFilters;
       localStorage.yearRange = this.yearRange;
       localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;

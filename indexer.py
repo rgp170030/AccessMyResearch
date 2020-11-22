@@ -29,15 +29,23 @@ def runThreads():
         pdoaj.start()
         punpaywall.start()
         #p2.start()
-
-        pcore.join()
-        pdoaj.join()
-        punpaywall.join()
+        try: 
+            pcore.join()
+        except:
+            print("Error occured when indexing CORE")
+        try: 
+            pdoaj.join()
+        except:
+            print("Error occured when indexing DOAJ")
+        try: 
+            punpaywall.join()
+        except: 
+            print("Error occured when indexing Unpaywall")
         #p2.join()
         es = Elasticsearch()
-        es.indices.refresh("core,doaj,unpaywall")
-        elasticSearchTotal = es.cat.count("core,doaj,unpaywall")
-        print("Total Results(epoch|timestamp|count): ", elasticSearchTotal)
+        es.indices.refresh("amr")
+        elasticSearchTotal = es.cat.count("amr")
+        print("Total documents indexed (epoch|timestamp|count): ", elasticSearchTotal)
         e = int(time.time() - start_time) 
         print('All processes done')  
         print('Total indexing time: {:02d}:{:02d}:{:02d}'.format(e // 3600, (e % 3600 // 60), e % 60))

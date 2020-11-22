@@ -46,6 +46,8 @@
             </el-table-column>
             <el-table-column label="DOI" prop="_source.doi" min-width="200px">
             </el-table-column>
+            <el-table-column label="Database" prop="_source.database" min-width="200px">
+            </el-table-column>
             <el-table-column
               label="View Count"
               prop="_source.count"
@@ -165,20 +167,21 @@ export default {
         "url",
         "journal",
         "doi",
+        "database"
       ];
       this.results = [];
       this.lengthResults = 0;
       startTime = new Date();
       var betterQuery = this.queryBuilder(
         this.$route.query.types,
-        this.$route.query.text,
-        this.$route.query.areas
+        this.$route.query.text
       );
+      console.log(this.$route.query.areas)
 
       this.searchStatus = "Searching AMR Database...";
       let searchResults = await client
         .search({
-          size: 200,
+          size: 500,
           body: {
             query: {
               bool: {
@@ -203,6 +206,25 @@ export default {
                       should: betterQuery,
                     },
                   },
+                  /* AREA FILTER HERE
+                  {
+                    should: {
+                      query_string: {
+                        fields: ["title","authors","description"],
+                        query: this.$route.query.areas,
+                      },
+                    }
+                  },
+                  */
+                  /* DATABASE FILTER HERE
+                  {
+                    must: {
+                      database: {
+                        query: this.$route.query.databases,
+                      },
+                    }
+                  },
+                */ 
                 ],
               },
             },

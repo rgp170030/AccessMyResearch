@@ -1,6 +1,7 @@
 import urllib.request
 import urllib.parse
 import json
+import uuid
 from elasticsearch import Elasticsearch
 
 def doaj(keywords):
@@ -87,20 +88,35 @@ def doaj(keywords):
                             if 'url' in lin:
                                 linkz.append(lin['url'])
                         obj['url'] = linkz #   obj['url'] = obj['link'][0]['url']       
+                    obj['database'] = "DOAJ"
                     mega_json.append(obj)
                 except:
                     print('Error occured while cleaning')
         return mega_json
 
-#need to edit this above
+    # added id generator method
+    # uuid3 creates a unique id from a namespace and a string(the title, in our example)
+    # these id's are reproducible, so if 2 id's are made with the same namespace 
+    # and the same name(article_name) they should be equal
+    # i messed with uuid in pycharm for a while and this method seemed to work
+
+    def id_generator(article_name):
+        unique_id = uuid.uuid3(uuid.NAMESPACE_DNS, article_name)
+        return unique_id
+
+
     cleaned_data = clean(result)
 
     es = Elasticsearch()
 
     for doc in range(len(cleaned_data)):
-        res = es.index(index="doaj", id=doc, body=cleaned_data[doc])
+        #res = es.index(index="core", id=doc, body=cleaned_data[doc])
+
+        # changed index and id
+        # i assume we need to replace article_name, but not sure with what
+        res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
         #if doc%100 == 0:
         #    print(doc)
 
-    es.indices.refresh(index="doaj")
+    es.indices.refresh(index="amr")
     print('Total documents in DOAJ: ' , len(cleaned_data))

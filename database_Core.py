@@ -1,6 +1,7 @@
 import urllib.request
 import urllib.parse
 import json
+import uuid
 from elasticsearch import Elasticsearch
 
 def core(keywords):
@@ -73,11 +74,16 @@ def core(keywords):
             for a in p['data']:
                 try:
                     obj = {}
+                    # added database in parameters
                     k = ['authors', 'title', 'description',
-                        'datePublished','fulltextUrls', 'journal', 'doi']  
+                        'datePublished','fulltextUrls', 'journal', 'doi', 'database']  
                     for i in k:
                         if i in a:
                             obj[i] = a[i]
+
+                    # added database name
+                    obj['database'] = "CORE"
+                    
                     if 'fulltextUrls' in obj:
                         obj['url'] = obj.pop('fulltextUrls')
                     mega_json.append(obj)
@@ -90,10 +96,29 @@ def core(keywords):
 
     es = Elasticsearch()
 
+    # added id generator method
+    # uuid3 creates a unique id from a namespace and a string(the title, in our example)
+    # these id's are reproducible, so if 2 id's are made with the same namespace 
+    # and the same name(article_name) they should be equal
+    # i messed with uuid in pycharm for a while and this method seemed to work
+
+    def id_generator(article_name):
+        unique_id = uuid.uuid3(uuid.NAMESPACE_DNS, article_name)
+        return unique_id
+
+
+    cleaned_data = clean(result)
+
+    es = Elasticsearch()
+
     for doc in range(len(cleaned_data)):
-        res = es.index(index="core", id=doc, body=cleaned_data[doc])
+        #res = es.index(index="core", id=doc, body=cleaned_data[doc])
+
+        # changed index and id
+        # i assume we need to replace article_name, but not sure with what
+        res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
         #if doc%100 == 0:
         #    print(doc)
 
-    es.indices.refresh(index="core")
+    es.indices.refresh(index="amr")
     print('Total documents in CORE: ' , len(cleaned_data))
