@@ -142,7 +142,6 @@ import firebase from 'firebase'
         // save in firebase
           db.collection('chat').add({
             message: this.message,
-            author: this.authUser.displayName,
             time:Date()
 
 

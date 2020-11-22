@@ -41,50 +41,13 @@
                   <br>
                   <form action="https://www.paypal.com/donate" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_donations" />
-                    <input type="hidden" name="business" value="HTomCooper@gmail.com" />
+                    <input type="hidden" name="business" value="donations@AccessMyResearch.org" />
                     <input type="hidden" name="currency_code" value="USD" />
                     <input type="hidden" name="amount" :value=picked v-if="picked>0"/>
                     <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
                     <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
                   </form>
 
-                  <p> Or considering a monthly donation:</p>
-                  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_xclick-subscriptions">
-                    <input type="hidden" name="business" value="HTomCooper@gmail.com">
-                    <input type="hidden" name="lc" value="US">
-                    <input type="hidden" name="no_note" value="1">
-                    <input type="hidden" name="src" value="1">
-                    <input type="hidden" name="currency_code" value="USD">
-                    <input type="hidden" name="bn" value="PP-SubscriptionsBF:btn_subscribe_LG.gif:NonHostedGuest">
-                    <table>
-                      <tr><td><input type="hidden" name="on0" value=""></td></tr><tr><td><select name="os0">
-                      <option value="Option 1">Option 1 : $1.00 USD - monthly</option>
-                      <option value="Option 2">Option 2 : $5.00 USD - monthly</option>
-                      <option value="Option 3">Option 3 : $10.00 USD - monthly</option>
-                      <option value="Option 4">Option 4 : $20.00 USD - monthly</option>
-                    </select> </td></tr>
-                    </table>
-                    <input type="hidden" name="option_select0" value="Option 1">
-                    <input type="hidden" name="option_amount0" value="1.00">
-                    <input type="hidden" name="option_period0" value="M">
-                    <input type="hidden" name="option_frequency0" value="1">
-                    <input type="hidden" name="option_select1" value="Option 2">
-                    <input type="hidden" name="option_amount1" value="5.00">
-                    <input type="hidden" name="option_period1" value="M">
-                    <input type="hidden" name="option_frequency1" value="1">
-                    <input type="hidden" name="option_select2" value="Option 3">
-                    <input type="hidden" name="option_amount2" value="10.00">
-                    <input type="hidden" name="option_period2" value="M">
-                    <input type="hidden" name="option_frequency2" value="1">
-                    <input type="hidden" name="option_select3" value="Option 4">
-                    <input type="hidden" name="option_amount3" value="20.00">
-                    <input type="hidden" name="option_period3" value="M">
-                    <input type="hidden" name="option_frequency3" value="1">
-                    <input type="hidden" name="option_index" value="0">
-                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                  </form>
                 </div>
             </div>
 
