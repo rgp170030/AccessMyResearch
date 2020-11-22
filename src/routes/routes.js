@@ -118,6 +118,11 @@ const routes = [
         path: '/requests',
         name: 'Requests',
         component: () => import('../views/Pages/UserRequests.vue')
+      },
+      {
+        path: '/user/:id',
+        name: 'User',
+        component: (id) => import('../views/Pages/UserInformation.vue')
       }
     ]
   },
