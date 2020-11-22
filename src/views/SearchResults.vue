@@ -171,7 +171,8 @@ export default {
       startTime = new Date();
       var betterQuery = this.queryBuilder(
         this.$route.query.types,
-        this.$route.query.text
+        this.$route.query.text,
+        this.$route.query.areas
       );
 
       this.searchStatus = "Searching AMR Database...";

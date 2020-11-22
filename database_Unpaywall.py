@@ -31,7 +31,7 @@ def unpaywall(keywords):
             all_articles = []
             resp = self.request_url(url)
             result = json.loads(resp.decode('utf-8'))
-            print(url)
+            #print(url)
             all_articles.append(result)
         # deleted for loop and anything with numOfPages since it's irrelevant to unpaywall. 
         # just need to return all articles
@@ -123,7 +123,8 @@ def unpaywall(keywords):
     # get documents
     for doc in range(len(cleaned_data)):
         res = es.index(index="unpaywall", id=doc, body=cleaned_data[doc])
-        if doc%100 == 0:
-            print(doc)
+        #if doc%100 == 0:
+        #    print(doc)
 
     es.indices.refresh(index="unpaywall")
+    print('Total documents in Unpaywall: ' , len(cleaned_data))

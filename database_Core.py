@@ -41,7 +41,7 @@ def core(keywords):
             all_articles = []
             resp = self.request_url(url)
             result = json.loads(resp.decode('utf-8'))
-            print(url)
+            #print(url)
             all_articles.append(result)
             if (result['totalHits'] > 100):
                 numOfPages = int(result['totalHits']/self.pagesize)  # rounds down
@@ -50,7 +50,7 @@ def core(keywords):
                 for i in range(2, numOfPages):
                     url = self.get_method_query_request_url(
                         method, query, False, i)
-                    print(url)
+                    #print(url)
                     resp = self.request_url(url)
                     all_articles.append(json.loads(resp.decode('utf-8')))
             return all_articles
@@ -59,7 +59,7 @@ def core(keywords):
     endpoint = 'https://core.ac.uk/api-v2'
     api_key = '5TphODMbCjoQUkWitNZSBVqsEeYlHfnI'
     method = '/articles/search'
-    topic = '*'
+    #topic = '*'
 
     api = CoreApiRequestor(endpoint, api_key)
     result = []
@@ -92,7 +92,8 @@ def core(keywords):
 
     for doc in range(len(cleaned_data)):
         res = es.index(index="core", id=doc, body=cleaned_data[doc])
-        if doc%100 == 0:
-            print(doc)
+        #if doc%100 == 0:
+        #    print(doc)
 
     es.indices.refresh(index="core")
+    print('Total documents in CORE: ' , len(cleaned_data))

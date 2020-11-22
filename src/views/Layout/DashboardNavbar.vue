@@ -197,6 +197,7 @@
                             :max="2020"
                             :enable-cross="false"
                             :tooltip="'always'"
+                            @input="sort()"
                           ></vue-slider>
                           <br />
                           <div>Years Selected: {{ yearRange }}</div>
@@ -226,6 +227,7 @@
                             v-model="selectedTypeFilters"
                             :options="types"
                             name="type"
+                            @input="sort()"
                           ></b-form-checkbox-group>
                           <div>{{ this.selectedTypeFilters }}</div>
                         </b-dropdown-group>
@@ -285,7 +287,7 @@
                           <b-form-checkbox-group
                             id="journalFilter"
                             v-model="selectedFilters"
-                            @input="sort"
+                            @input="sort()"
                             :options="journals"
                             name="journals"
                           ></b-form-checkbox-group>
@@ -326,7 +328,7 @@
                   @click="defaultFilterCheckboxChecked()"
                 />
                 Save current filters as default
-                <b-button class="btn float-right" variant="primary"
+                <b-button class="btn float-right" variant="primary" @click="sort()"
                   >Search</b-button
                 >
               </b-dropdown>
@@ -792,7 +794,7 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: this.search.text + this.areasStringify, filter: this.search.filter, yearRange: this.yearRange, types: this.selectedTypeFilters },
+          query: { text: this.search.text, filter: this.search.filter, yearRange: this.yearRange, types: this.selectedTypeFilters, areas:this.selectedAreaFilters },
         })
         .catch(() => {});
     },
@@ -823,26 +825,7 @@ export default {
       }
     },
     sort() {
-      if (this.search.text) {
-        this.areasStringify = " ";
-        for (let i = 0; i < this.selectedAreaFilters.length; i++) {
-          this.areasStringify += this.selectedAreaFilters[i] + " ";
-        }
-        if (this.selectedAreaFilters.length < 0){
-          this.areasStringify = "";
-        }
-        this.onSubmit();
-      }
-
-      /*make a if-statement for the Sort By filter.
-      console.log(this.search.filter);
-      this.search.filter == "b"
-        ? this.results_data.sort(function(a, b) {
-            return b.likes - a.likes;
-          })
-        : this.results_data.sort(function(a, b) {
-            return b.ratings - a.ratings;
-          });*/
+      this.onSubmit();
     },
     search_text() {
       //FOR DATABASE IN FUTURE
@@ -882,7 +865,7 @@ export default {
 
     //default filter start
     defaultFilterCheckboxChecked() {
-      localStorage.selectedAreaFilters = this.selectedAreaFilters;
+      localStorage.selectedAreaFilters = this.selectedAreaFilters; //AREA FILTER DATABASE; NEED TO FIX
       localStorage.selectedFilters = this.selectedFilters;
       localStorage.yearRange = this.yearRange;
       localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;

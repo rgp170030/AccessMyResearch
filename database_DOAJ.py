@@ -33,7 +33,7 @@ def doaj(keywords):
             all_articles = []
             resp = self.request_url(url)
             result = json.loads(resp.decode('utf-8'))
-            print(url)
+            #print(url)
             all_articles.append(result)
             if (result['total'] > 100):
                 numOfPages = int(result['total']/self.pagesize)  # rounds down
@@ -42,7 +42,7 @@ def doaj(keywords):
                 for i in range(2, numOfPages):
                     url = self.get_method_query_request_url(
                         method, query, i)
-                    print(url)
+                    #print(url)
                     resp = self.request_url(url)
                     all_articles.append(json.loads(resp.decode('utf-8')))
             return all_articles
@@ -99,7 +99,8 @@ def doaj(keywords):
 
     for doc in range(len(cleaned_data)):
         res = es.index(index="doaj", id=doc, body=cleaned_data[doc])
-        if doc%100 == 0:
-            print(doc)
+        #if doc%100 == 0:
+        #    print(doc)
 
     es.indices.refresh(index="doaj")
+    print('Total documents in DOAJ: ' , len(cleaned_data))
