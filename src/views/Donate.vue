@@ -12,7 +12,7 @@
                   <h2 class="mb-3 text-white font-weight-medium">Consider a Donation</h2>
                   <p class="font-weight-light text-white op-8">To help Access My Research continues its mission
                   of providing free resources and publications, consider a donation!</p>
-                  <b-button squared variant="primary" @click="donation=true" href="https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS"> DONATE NOW</b-button>
+                  <b-button squared variant="primary" @click="donation=true"> DONATE NOW</b-button>
                 </div>
               </div>
               <!-- Row -->
@@ -39,9 +39,11 @@
                   <p>Choose a different amount after clicking on the Donate button</p>
                   <p>Accepting PayPal and all major credit card companies</p>
                   <br>
+
                   <form action="https://www.paypal.com/donate" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_donations" />
-                    <input type="hidden" name="business" value="donations@AccessMyResearch.org" />
+                    <input type="hidden" name="business" value="donations@accessmyresearch.org" />
+                    <input type="hidden" name="item_name" value="Your donations will be used to improve our web services and to make academic research more accessible globally." />
                     <input type="hidden" name="currency_code" value="USD" />
                     <input type="hidden" name="amount" :value=picked v-if="picked>0"/>
                     <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
