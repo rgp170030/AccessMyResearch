@@ -58,7 +58,7 @@
             <!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
-              <b-dropdown variant="" right text="">
+              <b-dropdown variant="primary" right text="">
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -843,20 +843,7 @@ export default {
     sort() {
       this.onSubmit();
     },
-    search_text() {
-      //FOR DATABASE IN FUTURE
-      /*console.log(this.search.text);
-      var inside = this;
-      this.results_data = this.results_data_actual.filter(function (results) {
-        if (
-          results.place //https://www.freecodecamp.org/news/how-to-set-up-responsive-ui-search-in-vue-js-bf6007b7fc0f/
-            .toLowerCase()
-            .indexOf(inside.search.text.toLowerCase()) != "-1"
-        ) {
-          return results;
-        }
-      });*/
-    },
+    
     //autocomplete start
     filterRecentSearches() {
       this.getSearchHistory();

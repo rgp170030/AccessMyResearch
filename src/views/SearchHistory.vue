@@ -41,7 +41,11 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: evt, filter: null },
+          query: { text: evt, filter: null, 
+          yearRange: localStorage.yearRange, 
+          types: null, 
+          areas: null,
+          databases: null },
         })
         .catch(() => {});
     }, 
