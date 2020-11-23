@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     user: null,
     signedIn: false,
+    isAdmin: false,
+    isExpert: false,
     username: "",
     user: {
       company: 'Access My Research',

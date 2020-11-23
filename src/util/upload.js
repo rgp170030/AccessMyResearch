@@ -16,6 +16,9 @@
 // //Handle dropped files
 //dropArea.addEventListener('drop', handleDrop, false)
 
+import axios from "axios";
+import { AuthHelperAxios }  from "./auth-helper.js";
+
 //Prevents default drag behaviors as event
 function preventDefaults (e) {
     e.preventDefault();
@@ -105,7 +108,7 @@ export default {
     updateProgress: function(percent){
         this.opts.progressBar.value = percent;
     },
-    upload: function(data){
+    upload: async function(data){
         var self = this;
 
         var files = this.opts.files;
@@ -121,27 +124,29 @@ export default {
 
         var file = files[0];
 
-        const xhr = new XMLHttpRequest();
-        
-        xhr.upload.addEventListener("progress", function(e) {
-            if (e.lengthComputable) {
-                const percentage = Math.round((e.loaded * 100) / e.total);
-                self.updateProgress(percentage);
+        let options = {
+            onUploadProgress: e => {
+                if (e.lengthComputable) {
+                    const percentage = Math.round((e.loaded * 100) / e.total);
+                    self.updateProgress(percentage);
+                }
             }
-        }, false);
-        
-        xhr.upload.addEventListener("load", function(e){
-            self.updateProgress(100);
-            alert("File Upload Completed!");
-        }, false);
+        };
 
-        xhr.open("POST", this.opts.urls.uploadEndpoint);
-        xhr.overrideMimeType('multipart/form-data');
-        
+        await AuthHelperAxios.attachAuthenticationHeader(options);
+
         const formData = new FormData();
-        formData.append('file', file);
         formData.append('data', JSON.stringify(data));
+        formData.append('file', file);
 
-        xhr.send(formData);
+        axios.post(this.opts.urls.uploadEndpoint, formData, options)
+            .then(res => {
+                self.updateProgress(100);
+                alert("File Upload Completed!");
+            })
+            .catch(err => {
+                self.updateProgress(0);
+                alert(err.message);
+            });
     }
 };

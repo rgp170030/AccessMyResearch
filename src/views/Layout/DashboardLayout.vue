@@ -8,15 +8,16 @@
           <i class="fas fa-exclamation-circle fa-lg"></i>
           &nbsp; In order to access these features, you must login. You can login <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
         </div>
-        <div @click="redirect">
+        <b-dropdown-divider/>
+        <div v-if="isExpert">
           <sidebar-item
           :link="{
             name: 'Add Research Material',
             path: '/upload',
             icon: 'fas fa-arrow-up text-pink'
           }"/>
+          <b-dropdown-divider/>
         </div>
-        <b-dropdown-divider/>
         <sidebar-item
         :link="{
           name: 'Home',
@@ -47,6 +48,15 @@
             icon: 'fas fa-layer-group text-orange'
           }"/>
         </div>
+        <div v-if="isAdmin">
+          <b-dropdown-divider/>
+          <sidebar-item
+          :link="{
+            name: 'Administration',
+            path: '/admin/home',
+            icon: 'fas fa-users-cog text-grey'
+          }"/>
+        </div>
       </template>
     </side-bar>
     <div class="main-content">
@@ -64,7 +74,6 @@
 <script>
 /* eslint-disable no-new */
 import PerfectScrollbar from 'perfect-scrollbar';
-  import { Auth } from 'aws-amplify';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 function hasElement(className) {
@@ -82,6 +91,7 @@ function initScrollbar(className) {
   }
 }
 
+import { Auth, AuthHelperRoles } from "@/util/auth-helper.js"
 import DashboardNavbar from './DashboardNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import DashboardContent from './Content.vue';
@@ -94,35 +104,51 @@ export default {
     // DashboardContent,
     FadeTransition
   },
-  data() {
-    return {
-      signedIn: false
-    };
-  },
-  created() {
-    if(this.$store.state.signedIn)
-    {
-      this.signedIn = true;
-    }
-  },
-    methods: {
-      initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          initScrollbar('sidenav');
-        }
-      },
-      redirect() {
-        if(this.$store.state.signedIn === false)
-        {
-          this.$router.push('login');
-        }
-      },
+  computed:{
+    signedIn(){
+      return this.$store.state.signedIn;
     },
-    mounted() {
-      this.initScrollbar();
+    isAdmin(){
+      return this.$store.state.isAdmin;
     },
-  };
+    isExpert(){
+      return this.$store.state.isExpert;
+    },
+  },
+  methods: {
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith('Win');
+      if (isWindows) {
+        initScrollbar('sidenav');
+      }
+    },
+    updateUserStatus: async function(){
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        this.$store.state.signedIn = true;
+        this.$store.state.user = user;
+        this.$store.state.isAdmin = await AuthHelperRoles.isAdmin(user);
+        this.$store.state.isExpert = await AuthHelperRoles.isExpert(user);
+      }
+      catch(err){
+        this.$store.state.signedIn = false;
+        this.$store.state.user = null;
+        this.$store.state.isAdmin = false;
+        this.$store.state.isExpert = false;
+      }
+    },
+    redirect() {
+      if(!this.signedIn)
+      {
+        this.$router.push('/login');
+      }
+    },
+  },
+  mounted() {
+    this.updateUserStatus();
+    this.initScrollbar();
+  },
+};
 </script>
 <style lang="scss">
 </style>
