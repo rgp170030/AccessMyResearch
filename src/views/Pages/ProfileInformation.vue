@@ -147,6 +147,9 @@
 
 <script>
 import { Auth } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
+import * as mutations from '../../graphql/mutations.js';
+import { createUser, createFriend } from '../../graphql/mutations';
 
 export default {
   data() {
@@ -216,7 +219,30 @@ export default {
             'custom:comments': "0",
         });
 
-          this.$router.push('home');
+        const userInformation = {
+          id: this.$store.state.user.username, 
+          username: this.$store.state.user.username, 
+          name: this.user.firstName + " " + this.user.lastName,
+          articles: 0,
+          friendsCount: 0,
+          comments: 0,
+          education: this.user.education,
+          city: this.user.city,
+          state: this.user.state,
+          country: this.user.country,
+          university: this.user.university,
+          expertise: this.user.expertise,
+          bio: this.user.aboutMe,
+          first_name: this.user.firstName,
+          last_name: this.user.lastName,
+        }
+
+        console.log(userInformation);
+        
+        const addingUsers = await API.graphql({ query: mutations.createUser, variables: {input: userInformation}});
+        const addingFriend = await API.graphql({ query: mutations.createFriend, variables: {input: userInformation}});
+
+        this.$router.push('home');
     }
   },
 };

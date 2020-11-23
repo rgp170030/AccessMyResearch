@@ -161,7 +161,7 @@ const client = new Client({ node: "http://localhost:9600/" });
 
 export default {
   components: {
-    LightTable,
+    // LightTable,
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
     Email
@@ -186,13 +186,13 @@ export default {
   },
   computed: {
     text() {
-      this.blacklistText = " ";
+      // this.blacklistText = " ";
       //this.rawText = this.$route.query.text;
       //alert(this.rawText)
       var re = /(?:^|\s)(-[a-z0-9]\w*)/gi; // finding words starting with -
       var match;
       while ((match = re.exec(this.$route.query.text)) != null) {
-        this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words
+        // this.blacklistText = this.blacklistText + " " + match[0].substring(2); //extracting filtered words
       }
       //alert(this.blacklistText)
       return this.$route.query.text || 1;
@@ -299,7 +299,7 @@ export default {
     //   this.results.push(...searchResults.hits.hits);
     },
 
-    async performSearch() {
+    async performSearcht() {
        var startTime, endTime;
        this.results = [];
        this.lengthResults = 0; 

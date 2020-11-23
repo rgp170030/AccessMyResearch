@@ -100,10 +100,22 @@ export default {
   },
   async mounted() {
     await this.getUserData();
+    if(this.$store.state.signedIn)
+    {
+      this.signedIn = true;
+    }
   },
   methods: {
     async getUserData() {
-      var user = await Auth.currentAuthenticatedUser()
+      var user = await Auth.currentAuthenticatedUser();
+
+      for (const [key, value] of Object.entries(user)) {
+        if(value.substring(0, 15) == "{\"UserAttribute")
+        {
+          this.data = value;
+          break ;
+        }
+      }
 
       const { attributes } = user;
       this.user.firstName = attributes["custom:first_name"];
