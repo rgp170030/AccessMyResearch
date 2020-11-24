@@ -245,7 +245,7 @@ export default {
       }
     },
 
-    async performSearcht() {
+    async performSearch() {
        var startTime, endTime;
        this.results = [];
        this.lengthResults = 0; 
