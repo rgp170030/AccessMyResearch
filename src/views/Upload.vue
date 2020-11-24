@@ -244,6 +244,7 @@ export default {
             authors.value.push(tag);
         },
         submitForm: function(){
+            this.$ga.event('expert', 'upload', this.title);
             upload.upload({
                 type: this.pubType.value,
                 visibility: this.visibility.value,
