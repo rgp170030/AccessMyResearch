@@ -59,6 +59,7 @@ export default {
       this.show = true;
     },
     submitEmailForm: function(){
+      this.$ga.event('registered', 'email-author');
       const formData = new FormData();
       formData.append('to', this.to);
       formData.append('subject', this.subject);
