@@ -47,12 +47,19 @@
             icon: 'fas fa-layer-group text-orange'
           }"/>
         </div>
-        <div>
+        <div @click="toPaypal">
           <sidebar-item
           :link="{
             name: 'Donate',
-            path: '/donate',
-            icon: 'fas fa-donate'
+            path: '/',
+            icon: 'fas fa-donate',
+          }"/>
+        </div>
+        <div>
+          <sidebar-item :link="{
+            name: 'Download',
+            path: '/download',
+            icon: 'fas fa-file-download',
           }"/>
         </div>
       </template>
@@ -125,6 +132,9 @@ export default {
         {
           this.$router.push('login');
         }
+      },
+      toPaypal() {
+        location.href = 'https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS'
       },
     },
     mounted() {
