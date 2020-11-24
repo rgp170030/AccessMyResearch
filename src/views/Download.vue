@@ -4,7 +4,21 @@
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
-          <p> This will be the download page</p>
+          <div>
+            <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Disabled</b-button>
+          </div>
+          <div>
+            <p>
+              To download, check this box here
+            </p>
+            <b-form-group>
+              <b-form-checkbox-group
+                  v-model="selected"
+                  :options="options"
+                  plain
+              ></b-form-checkbox-group>
+            </b-form-group>
+          </div>
         </div>
       </div>
     </card>
@@ -16,6 +30,15 @@
     name: 'Download',
     data() {
       return {
+        selected: '', // Must be an array reference!
+        options: [
+          { text: 'Agree', value: 'agree' },
+        ]
+      }
+    },
+    methods: {
+      popUp() {
+
       }
     }
   }
