@@ -20,7 +20,7 @@
           'navbar-search-light': type === 'light',
         }"
         id="navbar-search-main"
-        @submit="onSubmit"
+        @submit.prevent="onSubmit"
       >
         <b-form-group class="mb-0">
           <b-input-group class="input-group-alternative input-group-merge">
@@ -334,6 +334,18 @@
         </b-form-group>
       </b-form>
       <!-- start message and notification -->
+      <a
+          slot="title-container"
+          class="nav-link nav-link-icon nav-item"
+          href="#"
+          role="button"
+          @click="toNetwork"
+          aria-expanded="false"
+          v-if="signedIn"
+        >
+          <i class="fas fa-user-friends"></i>
+      </a>
+
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
         <a
           slot="title-container"
@@ -447,7 +459,7 @@
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <b-media no-body class="align-items-center">
             <span class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" src="img/theme/team-4.jpg" />
+              <img alt="Image placeholder" src="/img/theme/team-4.jpg" />
               <!--TODO: Show profile pic-->
             </span>
           </b-media>
@@ -522,6 +534,9 @@ export default {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);
     },
+    signedIn(){
+      return this.$store.state.signedIn;
+    }
   },
   mounted() {
     if (localStorage.selectedFilters) {
@@ -541,18 +556,12 @@ export default {
     this.getSearchHistory();
     this.getReminders();
   },
-  created() {
-    if (this.$store.state.signedIn === true) {
-      this.signedIn = true;
-    }
-  },
   data() {
     return {
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
       searchQuery: "",
-      signedIn: false,
       timeTotal: 0,
       reminders: [],
       //autocomplete start
@@ -759,7 +768,7 @@ export default {
       }
       this.$router
         .push({
-          path: "results",
+          name: "results",
           query: { text: this.search.text, filter: this.search.filter },
         })
         .catch(() => {});
@@ -781,13 +790,13 @@ export default {
       Auth.signOut()
         .then((data) => {
           this.$store.state.signedIn = !!data;
-          this.$router.push("login");
+          this.$router.push("/login");
         })
         .catch((err) => console.log(err));
     },
     redirect() {
       if (this.$store.state.signedIn === false) {
-        this.$router.push("login");
+        this.$router.push("/login");
       }
     },
     sort() {
@@ -855,6 +864,9 @@ export default {
     getReminders() {
       this.reminders = JSON.parse(localStorage.reminders);
     },
+    toNetwork() {
+          this.$router.push('network-list');
+    }
   },
 };
 </script>

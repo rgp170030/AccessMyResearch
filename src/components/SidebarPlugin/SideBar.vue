@@ -120,7 +120,7 @@
     props: {
       logo: {
         type: String,
-        default: 'img/brand/orange.png',
+        default: '/img/brand/orange.png',
         description: 'Access My Research Logo'
       },
       autoClose: {
