@@ -21,7 +21,6 @@
     </BreadCrumbItem>
   </bread-crumb>
 </template>
-
 <script>
   import BreadCrumb from './Breadcrumb';
   import BreadCrumbItem from './BreadcrumbItem';
@@ -39,5 +38,3 @@
     }
   };
 </script>
-
-<style scoped></style>

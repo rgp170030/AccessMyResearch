@@ -115,11 +115,11 @@ export default {
       return this.$store.state.isExpert;
     },
   },
-  methods: {
-    initScrollbar() {
-      let isWindows = navigator.platform.startsWith('Win');
-      if (isWindows) {
-        initScrollbar('sidenav');
+    methods: {
+      initScrollbar() {
+        if (navigator.platform.startsWith('Win')) { //Checks if platform is Windows
+          initScrollbar('sidenav');
+        }
       }
     },
     updateUserStatus: async function(){
@@ -150,5 +150,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-</style>

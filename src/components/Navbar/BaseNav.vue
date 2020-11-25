@@ -112,7 +112,7 @@ export default {
   },
   methods: {
     toggleMenu() {
-      this.$emit('change', !this.show);
+      //this.$emit('change', !this.show); //Removed because causes navbar to hide on mobile view
     },
     closeMenu() {
       this.$emit('change', false);
@@ -120,4 +120,3 @@ export default {
   }
 };
 </script>
-<style></style>

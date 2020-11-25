@@ -18,4 +18,3 @@ export default {
   name: 'navbar-toggle-button'
 };
 </script>
-<style></style>

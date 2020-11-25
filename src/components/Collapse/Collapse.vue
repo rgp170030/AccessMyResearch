@@ -8,7 +8,6 @@
     <slot></slot>
   </div>
 </template>
-
 <script>
 export default {
   name: 'collapse',
@@ -80,5 +79,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>
