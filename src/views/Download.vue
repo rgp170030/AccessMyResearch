@@ -4,19 +4,16 @@
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
-          <div>
+          <!-- <div>
             <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Disabled</b-button>
-          </div>
+          </div> -->
           <div>
-            <p>
+            <!-- <p>
               To download, check this box here
-            </p>
+            </p> -->
             <b-form-group>
-              <b-form-checkbox-group
-                  v-model="selected"
-                  :options="options"
-                  plain
-              ></b-form-checkbox-group>
+            <b-form-checkbox-group v-model="selected" :options="options" plain='flase'>  </b-form-checkbox-group>
+            <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Download</b-button>
             </b-form-group>
           </div>
         </div>
@@ -32,7 +29,7 @@
       return {
         selected: '', // Must be an array reference!
         options: [
-          { text: 'Agree', value: 'agree' },
+          { text: 'Accept the terms and conditons Agreement for AMR', value: 'agree' },
         ]
       }
     },
