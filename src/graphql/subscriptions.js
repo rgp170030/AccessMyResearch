@@ -23,6 +23,14 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -58,6 +66,14 @@ export const onUpdateUser = /* GraphQL */ `
         nextToken
       }
       requests {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      follows {
         items {
           id
           createdAt
@@ -107,6 +123,14 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -142,6 +166,14 @@ export const onCreateFriend = /* GraphQL */ `
         nextToken
       }
       requests {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      follows {
         items {
           id
           createdAt
@@ -191,6 +223,14 @@ export const onUpdateFriend = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -233,6 +273,14 @@ export const onDeleteFriend = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -267,6 +315,9 @@ export const onCreateUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -293,6 +344,9 @@ export const onCreateUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -332,6 +386,9 @@ export const onUpdateUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -358,6 +415,9 @@ export const onUpdateUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -397,6 +457,9 @@ export const onDeleteUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -423,6 +486,9 @@ export const onDeleteUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -462,6 +528,9 @@ export const onCreateRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -488,6 +557,9 @@ export const onCreateRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -527,6 +599,9 @@ export const onUpdateRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -553,6 +628,9 @@ export const onUpdateRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -592,6 +670,9 @@ export const onDeleteRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -618,6 +699,222 @@ export const onDeleteRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFollow = /* GraphQL */ `
+  subscription OnCreateFollow {
+    onCreateFollow {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFollow = /* GraphQL */ `
+  subscription OnUpdateFollow {
+    onUpdateFollow {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFollow = /* GraphQL */ `
+  subscription OnDeleteFollow {
+    onDeleteFollow {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles

@@ -5,7 +5,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
     signedIn: false,
     isAdmin: false,
     isExpert: false,
@@ -22,8 +21,10 @@ export default new Vuex.Store({
       state: '',
       aboutMe: '',
       expertise: '',
-      university: ''
+      university: '',
     },
+    requests: [],
+    follows: []
   },
   mutations: {
 

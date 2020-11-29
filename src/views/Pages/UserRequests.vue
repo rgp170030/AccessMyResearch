@@ -69,7 +69,7 @@ import { getUser, listUsers, listRequestss, getRequests, listFriends } from '../
 import { deleteRequests, createUserFriend } from '../../graphql/mutations.js';
 
 export default {
-  name: "suggestedpeople",
+  name: "requests",
   props: {},
   data() {
     return {
@@ -97,50 +97,75 @@ export default {
     {
       user.addStatus = 'Accepted';
       
+      //create a user object with the current user's username and the adding user's username
+      //userFriendUserId is the current user's username
+      //userFriendFriendId is the adding user's username  
       const addUser = {
         id: this.$store.state.user.username + "" + user.username, 
         userFriendUserId: this.$store.state.user.username,
         userFriendFriendId: user.username
       };
 
+      //create a user object with the adding user's username and current user's username (many-to-many relationship)
+      //userFriendUserId is the current user's username
+      //userFriendFriendId is the adding user's username 
       const addUserT = {
         id: user.username + "" + this.$store.state.user.username, 
         userFriendUserId: user.username,
         userFriendFriendId: this.$store.state.user.username
       };
 
+      //id to delete from the requests table once the user confirms add
       const idOfDeletion = {
         id: user.username + "" + this.$store.state.user.username
       };
 
+      //id to delete from the requests table once the user confirms add
       const idOfDeletionT = {
         id: this.$store.state.user.username + "" + user.username
       };
 
+
+      for(var i = 0; i < this.$store.state.user.requests.length; i++)
+      {
+        if(this.$store.state.user.requests[i] == user.username)
+        {
+          this.$store.state.requests.slice(i); //deletes request from the store's requests array
+        }
+      }
+
+
+      /*
+        deletes the rows from the Requests table in DynamoDB 
+      */
       const deleteRequest = await API.graphql({ query: mutations.deleteRequests, variables: {input: idOfDeletion}});
       const deleteRequest2 = await API.graphql({ query: mutations.deleteRequests, variables: {input: idOfDeletionT}});
       
+      /*
+        adds the rows in the UserFriend table in DynamoDB 
+      */
       const addingUserFriend = await API.graphql({ query: mutations.createUserFriend, variables: {input: addUser}});
       const addingUserFriend2 = await API.graphql({ query: mutations.createUserFriend, variables: {input: addUserT}});
     },
     async listUsers()
     {
-        const listAllUsers = await API.graphql(graphqlOperation(listFriends));
+        const listAllUsers = await API.graphql(graphqlOperation(listFriends)); //lists all friends from the Friend table in DynamoDB 
 
         for (const [key, value] of Object.entries(listAllUsers.data.listFriends.items))
         {
             if(this.$store.state.user.username == value.username)
             {
-                this.userid = value.id;
+                this.userid = value.id; //gets the user id of the current user
             }
         }
 
-        const listRequests = await API.graphql(graphqlOperation(listRequestss));
+        const listRequests = await API.graphql(graphqlOperation(listRequestss)); //lists all requests from the Request table in DynamoDB 
 
         for(const [key, value] of Object.entries(listRequests.data.listRequestss.items))
         {
           if(value.friend.id == this.userid)
           {
+              //if friend id is equal to the current user's id, then push the friend that requested to the requests page
               this.users.push({
                 id: value.user.id,
                 name: value.user.name,

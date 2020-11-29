@@ -109,7 +109,7 @@ export default {
     async getUserData() {
       var user = await Auth.currentAuthenticatedUser();
 
-      for (const [key, value] of Object.entries(user)) {
+      for (const [key, value] of Object.entries(user.storage)) { //gets the profile information of the current User stored in Cognito
         if(value.substring(0, 15) == "{\"UserAttribute")
         {
           this.data = value;

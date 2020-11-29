@@ -114,6 +114,7 @@
       }
 
       AmplifyEventBus.$on('authState', info => {
+          //check if there is a logged in user. if yes, change store signedIn property to true.
         if(info === 'signedIn') {
           this.findUser();
         } else {
@@ -129,26 +130,30 @@
     },
     methods: {
       onSubmit() {
-        //TODO: API call for login here
+        //if username, password provided exists in Cognito User Pool, then log the user in -- set store property signedIn to true and user to current user
         Auth.signIn(this.username, this.password).then(user => {
             this.$store.state.signedIn = !!user;
             this.$store.state.user = user;
-            this.$router.push('home');
+            this.$router.push('home'); //render homepage
           })
           .catch(err => console.log(err));
       },
       googleSignIn() {
+        //redirects to the Google sign in to login to the webpage thru Google
         Auth.federatedSignIn({ provider: 'Google' });
       },
       facebookSignIn() {
+        //redirects to the Facebook sign in to login to the webpage thru Facebook
         Auth.federatedSignIn({ provider: 'Facebook' });
       },
       linkedInSignIn() {
+        //redirects to the LinkedIn sign in to login to the webpage thru LinkedIn
         Auth.federatedSignIn({ provider: 'LinkedIn' });
       },
       async findUser() 
       {
         try {
+          //check if there is a logged in user. if yes, change store signedIn property to true.
           const user = await Auth.currentAuthenticatedUser();
           this.$store.state.signedIn = true;
           this.$store.state.user = user;

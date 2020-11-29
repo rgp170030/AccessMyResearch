@@ -22,7 +22,7 @@
             <b-img
               left
               class="avatar avatar-lg rounded-circle"
-              src="https://thumbs.dreamstime.com/b/creative-illustration-default-avatar-profile-placeholder-isolated-background-art-design-grey-photo-blank-template-mockup-144849704.jpg"
+              :src="user.imageurl"
               style="width: 80px; height: 80px;"
             ></b-img>
             <b-card-text class="text-right font-weight-bolder mr-2">
@@ -35,11 +35,10 @@
 
             <div class="text-right">
               <b-button
-                class="mt-2 mr-2"
+                class=""
                 href="#"
                 variant="primary"
-                id="button"
-                @click="handleClick(user)"
+                @click="handleProfile(user)"
                 >View Profile</b-button
               >
             </div>
@@ -56,20 +55,19 @@
 <script>
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
-import { getUser, listUsers, getUserFriend } from '../../graphql/queries';
+import { listFollows } from '../../graphql/queries.js';
 
 export default {
-  name: "suggestedpeople",
+  name: "follows",
   props: {},
   data() {
     return {
-      suggestions: [],
-      storageUsers: '',
-      signedIn: false,
-      users: []
+      users: [],
+      userid: ''
     };
   },
-  created() {
+  created() 
+  {
     if(this.$store.state.signedIn)
     {
         this.signedIn = true;
@@ -79,34 +77,30 @@ export default {
   },
   methods: 
   {
-    handleClick(user) 
-    {
-      this.$router.push({
-        name: 'User',
-        params: { id: user.username }
-      });
-    },
     async listUsers()
     {
-        //gets the current user information on DynamoDB based on the username 
-        const myUser = await API.graphql({ query: queries.getUser, variables: { id: this.$store.state.user.username }});
-        
-        for(const [key, value] of Object.entries(myUser.data.getUser.friends.items)) //returns all the friend rows of the current user
+      //gets the list of Follow rows found in the Follow table of DynamoDB
+        const listFollowers = await API.graphql(graphqlOperation(listFollows));
+        for(const [key, value] of Object.entries(listFollowers.data.listFollows.items)) //for all the rows in the Follow table
         {
-            const friend = await API.graphql({query: queries.getUserFriend, variables: {id: value.id}}); //gets current user's friends
-            
-            /*
-              pushes the username and name of the friend to the current user array to render on webpage (HTML doesn't allow for rendering from store)
-            */
-            this.users.push({
-                name: friend.data.getUserFriend.friend.name,
-                username: friend.data.getUserFriend.friend.username
-            });
+          if(value.friend.id == this.$store.state.user.username) //if the current user is the one being followed
+          {
+              //push the friend user inforamation to the users array
+              this.users.push({
+                id: value.user.id,
+                name: value.user.name,
+                username: value.user.username,
+              });
+          }
         }
     },
-    handleAddClick(user) 
+    handleProfile(user) 
     {
-        
+      //redirect to the user profile page clicked
+        this.$router.push({
+            name: 'User',
+            params: { id: user.username }
+        });
     }
   }
 };

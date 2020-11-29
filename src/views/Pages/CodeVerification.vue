@@ -101,6 +101,7 @@
 
         if(this.newpassword == this.verifypassword)
         {
+          //once the user gets a verification email for forgetting their password, they can use the code to create a new password
             Auth.forgotPasswordSubmit(this.$store.state.user, this.code, this.newpassword)
               .then(data => console.log(data))
               .catch(err => console.log(err));

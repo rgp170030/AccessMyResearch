@@ -196,6 +196,7 @@ export default {
     },
     mounted() 
     {
+      //sets localStorage to the users array
         if(!localStorage.getItem('user-data') || JSON.parse(localStorage.getItem('user-data')).length === 0)
         {
             localStorage.setItem('user-data', JSON.stringify(this.users));
@@ -206,6 +207,7 @@ export default {
     },
     methods: {
         getUserSuggestions() {
+          //current user array (hard-coded)
             const userArray = {
                 imageurl: 'https://cdn0.iconfinder.com/data/icons/social-media-network-4/48/male_avatar-512.png',
                 name: 'User',
@@ -215,15 +217,15 @@ export default {
                 interests: ['cloud computing']
             };
 
-            for(var i = 0; i < this.storageUsers.length; i++)
+            for(var i = 0; i < this.storageUsers.length; i++) //for all the users that exist in storage
             {
-                var result = this.interestSimilarities(userArray, this.storageUsers[i]);
+                var result = this.interestSimilarities(userArray, this.storageUsers[i]); //if the interests match, push to results
                 if(result.length != 0)
                 {
                     result.forEach(element => {
                         if(this.suggestions.length < 15)
                         {
-                            this.suggestions.push(element);
+                            this.suggestions.push(element); //suggest the users that match the interests the user has
                         }
                     });
                 }
@@ -235,7 +237,7 @@ export default {
                 {
                     if((this.suggestions.indexOf(this.storageUsers[i]) === -1) && this.suggestions.length < 15)
                     {
-                        this.suggestions.push(this.storageUsers[i]);
+                        this.suggestions.push(this.storageUsers[i]); //if department matches the user department, also push to suggested (expertise and interests are of more precendence than department)
                     }
                 }
             }
@@ -247,13 +249,14 @@ export default {
 
             for (var i = 0; i < la; i++) 
             {         
-                if (b.interests.indexOf(a.interests[i]) != -1)
+                if (b.interests.indexOf(a.interests[i]) != -1) //if any one of current user's interests match other user's interests, then push 
                     res.push(b);
             }
             return res;
         },
         handleClick(user) 
         {
+          //if Follow clicked, change text to Unfollow and store information in Storage
             for(var i = 0; i < this.storageUsers.length; i++)
             {
                 if(user.username == this.storageUsers[i].username)
@@ -273,6 +276,7 @@ export default {
         },
         handleAddClick(user) 
         {
+          //if Add User clicked, change text to Pending and store information in Storage
             for(var i = 0; i < this.storageUsers.length; i++)
             {
                 if(user.username == this.storageUsers[i].username)
@@ -287,7 +291,6 @@ export default {
                     }
                     
                     localStorage.setItem('user-data', JSON.stringify(this.storageUsers));
-                    console.log(user.username + " is invited to join your network");
                 }
             }
         }

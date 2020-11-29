@@ -137,6 +137,11 @@ const routes = [
         component: () => import('../views/Pages/SuggestedPeople.vue')
       },
       {
+        path: 'add',
+        name: 'add users',
+        component: () => import('../views/Pages/AddRemoveUsers.vue')
+      },
+      {
         path: 'search-history',
         name: 'search history',
         component: () => import('../views/SearchHistory.vue')
@@ -152,9 +157,19 @@ const routes = [
         component: () => import('../views/Pages/NetworkList.vue')
       },
       {
+        path: '/notifications',
+        name: 'notifications',
+        component: () => import('../views/Updates.vue')
+      },
+      {
         path: '/requests',
         name: 'Requests',
         component: () => import('../views/Pages/UserRequests.vue')
+      },
+      {
+        path: '/follows',
+        name: 'Follows',
+        component: () => import('../views/Pages/UserFollows.vue')
       },
       {
         path: '/user/:id',

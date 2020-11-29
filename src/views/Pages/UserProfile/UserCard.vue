@@ -100,11 +100,12 @@ export default {
   methods: {
     getUserData() {
       
+      //gets the profile information stored in Cognito
       Auth.currentAuthenticatedUser().then((value) => {
         var values = value.storage;
 
         for (const [key, value] of Object.entries(values)) {
-          if(value.substring(0, 15) == "{\"UserAttribute")
+          if(value.substring(0, 15) == "{\"UserAttribute") //the user attribute field contains all the user attributes of the current signed in user
           {
             this.data = value;
             break ;
@@ -113,7 +114,7 @@ export default {
 
         var obj = JSON.parse(this.data);
 
-        for(const [key, value] of Object.entries(obj.UserAttributes))
+        for(const [key, value] of Object.entries(obj.UserAttributes)) //push the user information in Cognito to the store's user array and the page's user array (to access it locally, store array cannot be accessed from the HTML)
         {
           if(value.Name == "custom:articles")
           { 
@@ -185,7 +186,7 @@ export default {
           { 
             this.$store.state.user.aboutMe = value.Value;
             this.user.aboutMe = value.Value;
-            this.dataloaded = true;
+            this.dataloaded = true; //sets the data loaded property to true which renders the page (ensures all the data is loaded before rendering user card fully)
           }
         }
       });
