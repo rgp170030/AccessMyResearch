@@ -105,24 +105,23 @@ export default {
     FadeTransition
   },
   computed:{
-    signedIn(){
+    signedIn() {
       return this.$store.state.signedIn;
     },
-    isAdmin(){
+    isAdmin() {
       return this.$store.state.isAdmin;
     },
-    isExpert(){
+    isExpert() {
       return this.$store.state.isExpert;
     },
   },
-    methods: {
-      initScrollbar() {
-        if (navigator.platform.startsWith('Win')) { //Checks if platform is Windows
-          initScrollbar('sidenav');
-        }
+  methods: {
+    initScrollbar() {
+      if (navigator.platform.startsWith('Win')) { //Checks if platform is Windows
+        initScrollbar('sidenav');
       }
     },
-    updateUserStatus: async function(){
+    updateUserStatus: async function() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         this.$store.state.signedIn = true;
