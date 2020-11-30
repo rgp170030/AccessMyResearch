@@ -13,6 +13,7 @@
             </p> -->
             <b-form-group>
             <b-form-checkbox-group v-model="selected" :options="options" plain='flase'>  </b-form-checkbox-group>
+              <br>
             <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Download</b-button>
             </b-form-group>
           </div>
@@ -29,13 +30,13 @@
       return {
         selected: '', // Must be an array reference!
         options: [
-          { text: 'Accept the terms and conditons Agreement for AMR', value: 'agree' },
+          { text: 'Accept the terms and condition agreement for AMR', value: 'agree' },
         ]
       }
     },
     methods: {
       popUp() {
-
+        window.alert("Download will begin now")
       }
     }
   }

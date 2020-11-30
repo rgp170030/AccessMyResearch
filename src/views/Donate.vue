@@ -7,11 +7,13 @@
                     <!-- <p> This will be the donate page</p> -->
     
                     <b-button variant="primary" style="aling:center" href= 'https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS'>Donate to
-AccessMyResearch</b-button>
+AccessMyResearch
+                    </b-button>
 
                 </div>
             </div>
         </card>
     </div>
 </template>
+
 

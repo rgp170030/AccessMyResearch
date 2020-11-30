@@ -409,18 +409,6 @@
         </router-link>
       </base-dropdown>
 
-      <!-- link to Donate -->
-     <router-link to="/donate"
-      slot="title-container"
-          class="nav-link nav-link-icon"
-          href="#"
-          role="button"
-          aria-haspopup="true"
-          aria-expanded="false"
-          @click="redirect">
-        <i class="fas fa-donate"></i>
-      </router-link>
-
       <base-dropdown
         menu-on-right
         class="nav-item"
@@ -460,10 +448,6 @@
           <b-dropdown-item to="/settings" v-if="signedIn">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/donate">
-            <i class="fas fa-donate"></i>
-            <span>Donate</span>
           </b-dropdown-item>
           <b-dropdown-item to="/login" v-if="!signedIn">
             <i class="fas fa-sign-in-alt"></i>
