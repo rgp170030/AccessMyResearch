@@ -60,6 +60,11 @@ const routes = [
         component: () => import('../views/Settings.vue')
       },
       {
+        path: '/donate',
+        name: 'donate',
+        component: () => import('../views/Donate.vue')
+      },
+      {
         path: '/download',
         name: 'download',
         component: () => import('../views/Download.vue')

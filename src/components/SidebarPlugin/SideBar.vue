@@ -74,7 +74,7 @@
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
                         </router-link>
-                        <router-link to="/donate" class="dropdown-item">
+                        <router-link to="toPaypal" class="dropdown-item">
                             <i class="fas fa-donate"></i>
                             <span>Donate</span>
                         </router-link>
@@ -140,7 +140,11 @@
       },
       showSidebar() {
         this.$sidebar.displaySidebar(true)
-      }
+      },
+      // for payment
+      toPaypal() {
+        location.href = 'https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS'
+      },
     },
     beforeDestroy() {
       if (this.$sidebar.showSidebar) {
