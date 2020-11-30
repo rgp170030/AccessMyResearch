@@ -318,7 +318,7 @@
                   </b-card>
                 </div>
 
-                <!-- Need to figure out why click isn't working first 3 times -->
+                <!--TODO: figure out why click isn't working first 3 times -->
                 <input
                   type="checkbox"
                   v-model="defaultFilterCheckbox"
@@ -333,7 +333,42 @@
           </b-input-group>
         </b-form-group>
       </b-form>
-      <!-- start message and notification -->
+      <a
+          slot="title-container"
+          class="nav-link nav-link-icon nav-item"
+          href="#"
+          role="button"
+          @click="toUpload"
+          aria-expanded="false"
+          v-if="signedIn"
+        >
+          <i class="fas fa-plus"></i>
+      </a>
+
+      <a
+          slot="title-container"
+          class="nav-link nav-link-icon nav-item"
+          href="#"
+          role="button"
+          @click="toDonate"
+          aria-expanded="false"
+          v-if="signedIn"
+        >
+          <i class="fas fa-donate"></i>
+      </a>
+
+      <a
+          slot="title-container"
+          class="nav-link nav-link-icon nav-item"
+          href="#"
+          role="button"
+          @click="toCollections"
+          aria-expanded="false"
+          v-if="signedIn"
+        >
+          <i class="fas fa-layer-group"></i>
+      </a>
+
       <a
           slot="title-container"
           class="nav-link nav-link-icon nav-item"
@@ -359,8 +394,7 @@
           <i class="fas fa-bell"></i>
         </a>
         <a class="dropdown-item" to="/notifications" v-if="signedIn">
-          <!-- TODO: Link to Notification-->
-          <!-- TODO: Link to Notification-->
+          <!-- TODO: Link to Notifications-->
           <i class="fas fa-book-open"></i>
           New Article by: Mehmet Günal
           <small class="form-text text-muted">Yesterday</small>
@@ -378,16 +412,18 @@
           </a>
         </span>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/notifications" v-if="signedIn">
+        <router-link to="/notifications" class="dropdown-item">
           <i class="fas fa-clock"></i>
-          All Notifications
-        </a>
+          <span>All Requests </span>
+        </router-link>
+        <router-link to="/notifications" class="dropdown-item">
+          <i class="fas fa-clock"></i>
+          <span>All Notifications </span>
+        </router-link>
         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
           <i class="fas fa-exclamation-circle fa-lg"></i>
           In order to access this feature, you must login. You can login
-          <router-link class="font-weight-bolder text-dark" to="/login"
-            >here.</router-link
-          >
+          <router-link class="font-weight-bolder text-dark" to="/login">here.</router-link>
         </b-alert>
       </base-dropdown>
 
@@ -404,7 +440,6 @@
           <i class="fas fa-comment"></i>
         </a>
         <a class="dropdown-item" to="/messages" v-if="signedIn">
-          <!-- TODO: Link to Messages-->
           <!-- TODO: Link to Messages-->
           <i class="fas fa-comment"></i>
           Mehmet Günal: Check out my research!
@@ -417,38 +452,16 @@
         </a>
         <div class="dropdown-divider"></div>
         <router-link to="/notifications" class="dropdown-item">
-          <span>All Requests </span>
-        </router-link>
-
-        <!-- </template> -->
-      </base-dropdown>
-
-      <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-        <a
-          slot="title-container"
-          class="nav-link nav-link-icon"
-          href="#"
-          role="button"
-          aria-haspopup="true"
-          aria-expanded="false"
-          @click="redirect"
-        >
-          <i class="fas fa-envelope"></i>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" to="/messages" v-if="signedIn">
-          <!-- TODO: Link to Messages-->
           <i class="fas fa-clock"></i>
-          All Messages
-        </a>
+          <span>All Messages </span>
+        </router-link>
         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
           <i class="fas fa-exclamation-circle fa-lg"></i>
           In order to access this feature, you must login. You can login
-          <router-link class="font-weight-bolder text-black" to="/login"
-            >here.</router-link
-          >
+          <router-link class="font-weight-bolder text-black" to="/login">here.</router-link>
         </b-alert>
       </base-dropdown>
+
       <base-dropdown
         menu-on-right
         class="nav-item"
@@ -478,20 +491,14 @@
             <i class="far fa-calendar-alt"></i>
             <span>Activity</span>
           </b-dropdown-item>
-          <div class="dropdown-divider" v-if="signedIn"></div>
           <b-dropdown-item to="/search-history">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-history"></i>
             <span>Search History</span>
           </b-dropdown-item>
           <div class="dropdown-divider" v-if="signedIn"></div>
-
           <b-dropdown-item to="/settings" v-if="signedIn">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/donate">
-            <i class="fas fa-donate"></i>
-            <span>Donate</span>
           </b-dropdown-item>
           <b-dropdown-item to="/login" v-if="!signedIn">
             <i class="fas fa-sign-in-alt"></i>
@@ -864,8 +871,17 @@ export default {
     getReminders() {
       this.reminders = JSON.parse(localStorage.reminders);
     },
+    toUpload() {
+      this.$router.push('upload');
+    },
+    toDonate() {
+      this.$router.push('donate');
+    },
+    toCollections() {
+      this.$router.push('collections');
+    },
     toNetwork() {
-          this.$router.push('network-list');
+      this.$router.push('network-list');
     }
   },
 };
