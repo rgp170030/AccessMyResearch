@@ -92,16 +92,18 @@
     },
     methods: {
       onSubmit() {
-        //TODO: API call for login here
+        //the user can provide their username and the forgotPassword sends a notification to the email associated with the username with a verification code  
         Auth.forgotPassword(this.username)
             .then(data => console.log(data))
             .catch(err => console.log(err));
         this.$store.state.user = this.username;
+        //once email sent, render codeverification page
         this.$router.push('codeverification');
       },
       async findUser() 
       {
         try {
+          //check if there is a logged in user. if yes, change store signedIn property to true.
           const user = await Auth.currentAuthenticatedUser();
           this.$store.state.signedIn = true;
           this.$store.state.user = user;

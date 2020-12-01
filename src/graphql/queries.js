@@ -23,6 +23,14 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -58,6 +66,9 @@ export const listUsers = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -104,6 +115,14 @@ export const getFriend = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -139,6 +158,9 @@ export const listFriends = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -177,6 +199,9 @@ export const getUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -203,6 +228,9 @@ export const getUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -302,6 +330,9 @@ export const getRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -328,6 +359,9 @@ export const getRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -360,6 +394,137 @@ export const listRequestss = /* GraphQL */ `
     $nextToken: String
   ) {
     listRequestss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        user {
+          id
+          username
+          name
+          articles
+          friendsCount
+          comments
+          education
+          city
+          state
+          country
+          university
+          expertise
+          bio
+          first_name
+          middle_name
+          last_name
+          zipcode
+          address
+          createdAt
+          updatedAt
+        }
+        friend {
+          id
+          username
+          name
+          articles
+          friendsCount
+          comments
+          education
+          city
+          state
+          country
+          university
+          expertise
+          bio
+          first_name
+          middle_name
+          last_name
+          zipcode
+          address
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFollow = /* GraphQL */ `
+  query GetFollow($id: ID!) {
+    getFollow(id: $id) {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFollows = /* GraphQL */ `
+  query ListFollows(
+    $filter: ModelFollowFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFollows(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         user {

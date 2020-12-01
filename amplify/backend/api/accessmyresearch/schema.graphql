@@ -3,6 +3,7 @@ type User @model {
   name: String
   friends: [UserFriend] @connection(name: "FriendsConnection")
   requests: [Requests] @connection(name: "RequestsConnection")
+  follows: [Follow] @connection(name: "FollowConnection")
   articles: Int
   friendsCount: Int
   comments: Int
@@ -25,6 +26,7 @@ type Friend @model {
   name: String
   user: [UserFriend] @connection(name: "UserConnection")
   requests: [Requests] @connection(name: "FriendRequestConnection")
+  follows: [Follow] @connection(name: "FriendFollowConnection")
   articles: Int
   friendsCount: Int
   comments: Int
@@ -50,4 +52,9 @@ type UserFriend @model {
 type Requests @model {
   user: User @connection(name: "RequestsConnection")
   friend: Friend @connection(name: "FriendRequestConnection")
+}
+
+type Follow @model {
+  user: User @connection(name: "FollowConnection")
+  friend: Friend @connection(name: "FriendFollowConnection")
 }

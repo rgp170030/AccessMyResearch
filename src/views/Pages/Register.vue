@@ -134,7 +134,7 @@
     components: {},
     methods: {
       onSubmit() {
-        //TODO: API call to register user here
+        //if username provided does not exist in Cognito User Pool, then register the user
           Auth.signUp({
                 username: this.username,
                 password: this.password,
@@ -145,17 +145,20 @@
                 })
                 .then(data => {
                     this.user = data.user
-                    this.$router.push('interests');
+                    this.$router.push('interests'); //once registered, push to interests page
                   })
                 .catch(err => console.log(err));
       },
       googleSignIn() {
+        //can also be registered through Google
         Auth.federatedSignIn({ provider: 'Google' });
       },
       facebookSignIn() {
+        //can also be registered through Facebook
         Auth.federatedSignIn({ provider: 'Facebook' });
       },
       linkedInSignIn() {
+        //can also be registered through LinkedIn
         Auth.federatedSignIn({ provider: 'LinkedIn' });
       },
     }

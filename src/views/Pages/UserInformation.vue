@@ -25,7 +25,7 @@
                 <b-col lg="3" class="order-lg-2">
                     <div class="card-profile-image">
                     <a href="#">
-                        <b-img src="img/theme/team-4.jpg" rounded="circle" />
+                        <b-img src="https://thumbs.dreamstime.com/b/creative-illustration-default-avatar-profile-placeholder-isolated-background-art-design-grey-photo-blank-template-mockup-144849704.jpg" rounded="circle" />
                     </a>
                     </div>
                 </b-col>
@@ -116,7 +116,7 @@
     },
     async created() {
       
-      const friend = await API.graphql({query: queries.getFriend, variables: {id: this.$route.params.id}});
+      const friend = await API.graphql({query: queries.getFriend, variables: {id: this.$route.params.id}}); //get the profile information of the colleague user clicked on by current user 
 
         this.user.username = friend.data.getFriend.username;
         this.user.firstName = friend.data.getFriend.first_name;
