@@ -1,20 +1,20 @@
 <template>
     <b-card no-body>
         <b-card-header class="border-0">
-            <span style="text-align:center"> <!--TODO: real publication count & put on same line-->
-                <small class="form-text text-muted">1-10 of 6604 publications</small>
-            </span>
-            <h3 class="mb-0">Publications</h3>
+            <div style="padding-left:40%">
+                <small class="text-muted">1-10 of 6604 publications</small>
                 <span style="float:right">
                     <small class="form-text text-muted">in 0.56 seconds</small> <!--TODO: Show real time-->
                     <span class="form-text text-muted fas">
-                        <small>compact view &nbsp;</small>
-                        <i style="float:right" class="fas fa-expand-arrows-alt"/>
+                        <small>compact view</small>
+                        <i style="padding-left:6px" class="fas fa-expand-arrows-alt"/>
                     </span>
                 </span>
-                <p>Most Recent
-                    <i style="padding-left:4px" class="fas fa-sort"/>
-                </p> 
+            </div>
+            <h3 class="mb-0">Publications</h3>
+            <p>Most Recent
+                <i style="padding-left:4px" class="fas fa-sort"/>
+            </p>
         </b-card-header>
         <el-table class="table-responsive table-light"
                   :data="articles"
