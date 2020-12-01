@@ -1,75 +1,52 @@
-
 export default [
   {
-    img: 'img/theme/bootstrap.jpg',
-    title: 'Artificial Intelligence',
-    author: 'Caleb Hoff',
-    status: 'Coming Soon',
-    statusType: 'warning',
-    rating: 60
+    id: 1,
+    name: 'My AI Project',
+    img: 'img/theme/team-1.jpg',
+    createdAt: '10/09/2018',
+    description: 'the description of the AI project',
+    owners: [5],
+    members: [1, 3],
+    collections: [2, 5, 1]
   },
   {
-    img: 'img/theme/angular.jpg',
-    title: 'Angular Now UI Kit PRO',
-    author: 'Caleb Hoff',
-    status: 'Available',
-    statusType: 'success',
-    rating: 100
+    id: 2,
+    name: 'Water is not real',
+    img: 'img/theme/team-2.jpg',
+    createdAt: '08/09/2018',
+    description: 'this project is about how water is not real',
+    owners: [4],
+    members: [2, 1],
+    collections: [4]
   },
   {
-    img: 'img/theme/sketch.jpg',
-    title: 'Black Dashboard',
-    author: 'Mehmet Gunal',
-    status: 'Email Author',
-    statusType: 'danger',
-    rating: 72
+    id: 3,
+    name: 'Mehmet\'s Project',
+    img: 'img/theme/team-3.jpg',
+    createdAt: '30/08/2018',
+    description: 'Mehmet\'s description',
+    owners: [4, 5],
+    members: [1],
+    collections: [3, 1]
   },
   {
-    img: 'img/theme/react.jpg',
-    title: 'React Material Dashboard',
-    author: 'Spencer Balog',
-    status: 'Email Author',
-    statusType: 'danger',
-    rating: 90
+    id: 4,
+    name: 'Electricity Project',
+    img: 'img/theme/team-1.jpg',
+    createdAt: '10/09/2018',
+    description: 'Electricity is so cool and heres a project to show why',
+    owners: [1],
+    members: [2],
+    collections: [2, 1, 5]
   },
   {
-    img: 'img/theme/vue.jpg',
-    title: 'Vue Paper UI Kit PRO',
-    author: 'Caleb Hoff',
-    status: 'Available',
-    statusType: 'success',
-    rating: 100
+    id: 5,
+    name: 'GMO Research',
+    img: 'img/theme/team-2.jpg',
+    createdAt: '30/09/2018',
+    description: 'the description of my GMO project',
+    owners: [3],
+    members: [4, 1],
+    collections: [1, 2, 4]
   },
-  {
-    img: 'img/theme/bootstrap.jpg',
-    title: 'Argon Design System',
-    author: 'Greg Kitchen',
-    status: 'Email Author',
-    statusType: 'warning',
-    rating: 60
-  },
-  {
-    img: 'img/theme/angular.jpg',
-    title: 'Angular Now UI Kit PRO',
-    author: 'Mehmet Gunal',
-    status: 'Available',
-    statusType: 'success',
-    rating: 100
-  },
-  {
-    img: 'img/theme/sketch.jpg',
-    title: 'Black Dashboard',
-    author: 'Daksh Kapur',
-    status: 'Coming Soon',
-    statusType: 'danger',
-    rating: 72
-  },
-  {
-    img: 'img/theme/vue.jpg',
-    title: 'Vue Paper UI Kit PRO',
-    author: 'Caleb Hoff',
-    status: 'Available',
-    statusType: 'success',
-    rating: 100
-  }
-]
+];

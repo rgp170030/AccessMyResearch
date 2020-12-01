@@ -10,25 +10,29 @@ Make Access My Research functional, beautiful, and quick
 
 ## Useful Commands
 1) npm install   - Installs all dependencies
-2) npm run build - Builds the code
-3) npm run dev   - automatically builds all changes & runs the code locally/on network
-4) npm run serve - Serves the code (not going to be useful for a while)
-5) npm run lint  - Starts the Vue linter
+2) npm ci        - Removes all dependencies and installs them all cleanly
+3) npm run build - Builds the code
+4) npm run dev   - automatically builds all changes & runs the code locally/on network
+5) npm run serve - Serves the code (not going to be useful for a while)
+6) npm run lint  - Starts the Vue linter
 
 ## Using Docker
 - You'll need [to install docker](https://docs.docker.com/get-docker/)
-- Run ``docker build .`` from the base directory containing the docker file
-- If the build is successful, you will see an image name as the final console output
-- Run ``docker run -it -d -p 8080:8080 --rm --name AMR <the first 3 characters of the image name>``
+- Run ``docker-compose up -d --build`` from the base directory containing the dockerfile file
 - Check ``docker ps`` and see it running! You should be able to access at 127.0.0.1:8080
 
 ## File Structure
 ```
 |-- Access My Research
-    |-- .gitignore
+    |-- .dockerignore
+    |-- .editorconfig
+    |-- .eslintrc.js
     |-- .gitattributes
+    |-- .gitignore
     |-- .postcssrc
     |-- babel.config.js
+    |-- docker-compose.yml
+    |-- dockerfile
     |-- package.json
     |-- README.md
     |-- vue.config
@@ -119,12 +123,18 @@ Make Access My Research functional, beautiful, and quick
         |   |-- upload.js
         |-- views
             |-- About.vue
+            |-- Activity.vue
             |-- Ask.vue
             |-- Collections.vue
             |-- Contact.vue
+            |-- Donate.vue
             |-- Help.vue
             |-- Home.vue
+            |-- Messages.vue
             |-- NotFoundPage.vue
+            |-- Notifications.vue
+            |-- SearchResults.vue
+            |-- Settings.vue
             |-- Upload.vue
             |-- Dashboard
             |   |-- PageVisitsTable.vue
@@ -143,20 +153,15 @@ Make Access My Research functional, beautiful, and quick
             |   |-- Register.vue
             |   |-- UserProfile.vue
             |-- Tables
+                |-- articles.js
                 |-- projects.js
                 |-- users.js
-                |-- RegularTables
-                |   |-- DarkTable.vue
-                |   |-- LightTable.vue
-                |-- projects.js
-                |-- users.js 
+                |-- LightTable.vue
 ```
-
 
 ## Important Notes
 1) You may get a warning that says: "Building for production...WARNING: `text-emphasis-variant()` has been deprecated as of v4.4.0. It will be removed entirely in v5." This is okay, we will not be upgrading Bootstrap v5 any time soon. It is not even released yet.
 2) Check available color variables at src\assets\custom\_variables.scss
-
 
 ## Original Template Information
 BootstrapVue Argon Dashboard is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in color, that you can easily modify using SASS files.

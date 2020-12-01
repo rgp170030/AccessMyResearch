@@ -28,13 +28,21 @@
             <b-card-header class="bg-transparent pb-5">
               <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
               <div class="text-center">
-                <a href="#" class="btn btn-neutral btn-icon mr-4">
+                <a href="#" class="btn btn-neutral btn-icon mr-4" @click="linkedInSignIn">
                   <span class="btn-inner--icon"><img src="img/SSO/linkedin.svg"></span>
                   <span class="btn-inner--text">LinkedIn</span>
                 </a>
-                <a href="#" class="btn btn-neutral btn-icon">
+                <a href="#" class="btn btn-neutral btn-icon mr-4" @click="googleSignIn">
                   <span class="btn-inner--icon"><img src="img/SSO/google.svg"></span>
                   <span class="btn-inner--text">Google</span>
+                </a>
+                <a href="#" class="btn btn-neutral btn-icon" @click="facebookSignIn">
+                  <span class="btn-inner--icon"><img src="img/SSO/facebook.svg"></span>
+                  <span class="btn-inner--text">Facebook</span>
+                </a>
+                <a href="#" class="btn btn-neutral btn-icon">
+                  <span class="btn-inner--icon"><img src="img/SSO/orcid.svg"></span>
+                  <span class="btn-inner--text">ORCID</span>
                 </a>
               </div>
             </b-card-header>
@@ -47,10 +55,10 @@
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="fas fa-user"
-                              placeholder="Name"
-                              name="Name"
+                              placeholder="Username"
+                              name="Username"
                               :rules="{required: true}"
-                              v-model="model.name">
+                              v-model="username">
                   </base-input>
 
                   <base-input alternative
@@ -59,24 +67,24 @@
                               placeholder="Email"
                               name="Email"
                               :rules="{required: true, email: true}"
-                              v-model="model.email">
+                              v-model="email">
                   </base-input>
 
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="fas fa-lock-open"
-                              placeholder="password"
+                              placeholder="Password"
                               type="password"
                               name="Password"
                               :rules="{required: true, min: 6}"
-                              v-model="model.password">
+                              v-model="password">
                   </base-input>
                   <div class="text-muted font-italic"><small>password strength: <span
                     class="text-success font-weight-700">strong</span></small></div>
                   <b-row class=" my-4">
                     <b-col cols="12">
                       <base-input :rules="{ required: { allowFalse: false } }" name=Privacy Policy>
-                        <b-form-checkbox v-model="model.agree">
+                        <b-form-checkbox v-model="agree">
                           <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
                         </b-form-checkbox>
                       </base-input>
@@ -94,26 +102,63 @@
     </b-container>
   </div>
 </template>
+
 <script>
+  import { AmplifyEventBus } from 'aws-amplify-vue';
+  import { Auth } from 'aws-amplify';
 
   export default {
-    name: 'register',
+    mounted(){
+
+      if(this.$store.state.signedIn === true)
+      {
+          this.$router.push('home');
+      }
+
+      AmplifyEventBus.$on('authState', info => {
+        if(info == 'signedIn')
+        {
+          this.$router.push('home');
+        }
+      })
+    },
     data() {
       return {
-        model: {
-          name: '',
+          username: '',
           email: '',
           password: '',
           agree: false
-        }
       }
     },
+    name: 'register',
+    components: {},
     methods: {
       onSubmit() {
         //TODO: API call to register user here
-      }
+          Auth.signUp({
+                username: this.username,
+                password: this.password,
+                attributes: {
+                    email: this.email
+                },
+                validationData: [],  //optional
+                })
+                .then(data => {
+                    this.user = data.user
+                    this.$router.push('interests');
+                  })
+                .catch(err => console.log(err));
+      },
+      googleSignIn() {
+        Auth.federatedSignIn({ provider: 'Google' });
+      },
+      facebookSignIn() {
+        Auth.federatedSignIn({ provider: 'Facebook' });
+      },
+      linkedInSignIn() {
+        Auth.federatedSignIn({ provider: 'LinkedIn' });
+      },
     }
-
   };
 </script>
 <style></style>
