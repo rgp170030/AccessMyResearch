@@ -26,7 +26,7 @@
           <b-input-group class="input-group-alternative input-group-merge">
             <div class="input-group-append">
               <span class="input-group-text">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search"/>
               </span>
             </div>
             <b-form-input
@@ -342,7 +342,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-plus"></i>
+          <i class="fas fa-plus"/>
       </a>
 
       <a
@@ -354,7 +354,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-donate"></i>
+          <i class="fas fa-donate"/>
       </a>
 
       <a
@@ -366,7 +366,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-layer-group"></i>
+          <i class="fas fa-layer-group"/>
       </a>
 
       <a
@@ -378,7 +378,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-user-friends"></i>
+          <i class="fas fa-user-friends"/>
       </a>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
@@ -391,37 +391,37 @@
           aria-expanded="false"
           @click="toggleNotificationDropDown"
         >
-          <i class="fas fa-bell"></i>
+          <i class="fas fa-bell"/>
         </a>
         <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <!-- TODO: Link to Notifications-->
-          <i class="fas fa-book-open"></i>
+          <i class="fas fa-book-open"/>
           New Article by: Mehmet Günal
           <small class="form-text text-muted">Yesterday</small>
         </a>
         <a class="dropdown-item" to="/notifications" v-if="signedIn">
-          <i class="fas fa-user-friends"></i>
+          <i class="fas fa-user-friends"/>
           New friend: Mehmet Günal
           <small class="form-text text-muted">1 week ago</small>
         </a>
         <span v-for="(key, val) in this.reminders" v-bind:key="val">
           <a class="dropdown-item" to="/notifications">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search"/>
             Search for: {{ val }}
             <small class="form-text text-muted">{{ key }}</small>
           </a>
         </span>
         <div class="dropdown-divider"></div>
         <router-link to="/notifications" class="dropdown-item">
-          <i class="fas fa-clock"></i>
+          <i class="fas fa-clock"/>
           <span>All Requests </span>
         </router-link>
         <router-link to="/notifications" class="dropdown-item">
-          <i class="fas fa-clock"></i>
+          <i class="fas fa-clock"/>
           <span>All Notifications </span>
         </router-link>
         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
-          <i class="fas fa-exclamation-circle fa-lg"></i>
+          <i class="fas fa-exclamation-circle fa-lg"/>
           In order to access this feature, you must login. You can login
           <router-link class="font-weight-bolder text-dark" to="/login">here.</router-link>
         </b-alert>
@@ -437,26 +437,26 @@
           aria-expanded="false"
           @click="redirect"
         >
-          <i class="fas fa-comment"></i>
+          <i class="fas fa-comment"/>
         </a>
         <a class="dropdown-item" to="/messages" v-if="signedIn">
           <!-- TODO: Link to Messages-->
-          <i class="fas fa-comment"></i>
+          <i class="fas fa-comment"/>
           Mehmet Günal: Check out my research!
           <small class="form-text text-muted">Yesterday</small>
         </a>
         <a class="dropdown-item" to="/messages" v-if="signedIn">
-          <i class="far fa-comment"></i>
+          <i class="far fa-comment"/>
           Greg Kitchen: Check out his research!
           <small class="form-text text-muted">1 week ago</small>
         </a>
         <div class="dropdown-divider"></div>
         <router-link to="/notifications" class="dropdown-item">
-          <i class="fas fa-clock"></i>
+          <i class="fas fa-clock"/>
           <span>All Messages </span>
         </router-link>
         <b-alert show variant="light" class="text-dark" v-if="!signedIn">
-          <i class="fas fa-exclamation-circle fa-lg"></i>
+          <i class="fas fa-exclamation-circle fa-lg"/>
           In order to access this feature, you must login. You can login
           <router-link class="font-weight-bolder text-black" to="/login">here.</router-link>
         </b-alert>
@@ -484,28 +484,28 @@
             <h6 class="text-overflow m-0">Welcome!</h6>
           </b-dropdown-header>
           <b-dropdown-item to="/profile" v-if="signedIn">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-user"/>
             <span>My profile</span>
           </b-dropdown-item>
           <b-dropdown-item to="/activity" v-if="signedIn">
-            <i class="far fa-calendar-alt"></i>
+            <i class="far fa-calendar-alt"/>
             <span>Activity</span>
           </b-dropdown-item>
           <b-dropdown-item to="/search-history">
-            <i class="fas fa-history"></i>
+            <i class="fas fa-history"/>
             <span>Search History</span>
           </b-dropdown-item>
           <div class="dropdown-divider" v-if="signedIn"></div>
           <b-dropdown-item to="/settings" v-if="signedIn">
-            <i class="fas fa-cog"></i>
+            <i class="fas fa-cog"/>
             <span>Settings</span>
           </b-dropdown-item>
           <b-dropdown-item to="/login" v-if="!signedIn">
-            <i class="fas fa-sign-in-alt"></i>
+            <i class="fas fa-sign-in-alt"/>
             <span>Login</span>
           </b-dropdown-item>
           <b-dropdown-item @click="signOut" v-if="signedIn">
-            <i class="fas fa-sign-out-alt"></i>
+            <i class="fas fa-sign-out-alt"/>
             <span>Logout</span>
           </b-dropdown-item>
         </template>

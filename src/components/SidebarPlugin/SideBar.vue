@@ -12,42 +12,42 @@
               <base-dropdown class="nav-item" mens-on-right tag="li" title-tag="a">
                 <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-bell"/>
                 </a>
                 <a class="dropdown-item" to="/notifications"> <!--TODO: Link to notification-->
-                  <i class="fas fa-book-open"></i>
+                  <i class="fas fa-book-open"/>
                   New Article by: Mehmet Günal
                   <small class="form-text text-muted">Yesterday</small>
                 </a>
                 <a class="dropdown-item" to="/notifications">
-                  <i class="fas fa-user-friends"></i>
+                  <i class="fas fa-user-friends"/>
                   New friend: Mehmet Günal
                   <small class="form-text text-muted">1 week ago</small>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" to="/notifications">
-                  <i class="fas fa-clock"></i>
+                  <i class="fas fa-clock"/>
                   All Notifications
                 </a>
               </base-dropdown>
               <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
                 <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-comment"></i>
+                    <i class="fas fa-comment"/>
                 </a>
                 <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
-                  <i class="fas fa-comment"></i>
+                  <i class="fas fa-comment"/>
                   Mehmet Günal: Check out my research!
                   <small class="form-text text-muted">Yesterday</small>
                 </a>
                 <a class="dropdown-item" to="/messages">
-                  <i class="far fa-comment"></i>
+                  <i class="far fa-comment"/>
                   Greg Kitchen: Check out his research!
                   <small class="form-text text-muted">1 week ago</small>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" to="/messages">
-                  <i class="fas fa-clock"></i>
+                  <i class="fas fa-clock"/>
                   All Messages
                 </a>
               </base-dropdown>
@@ -63,40 +63,40 @@
                     <h6 class="text-overflow m-0">Welcome!</h6>
                 </div>
                 <router-link to="/profile" class="dropdown-item">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-user"/>
                     <span>My profile</span>
                 </router-link>
                 <router-link to="/network-list" class="dropdown-item">
-                    <i class="fas fa-user-friends"></i>
+                    <i class="fas fa-user-friends"/>
                     <span>Network List</span>
                 </router-link>
                 <!--TODO: Add Activity Page Link <router-link to="/activity" class="dropdown-item">
-                    <i class="far fa-calendar-alt"></i>
+                    <i class="far fa-calendar-alt"/>
                     <span>Activity</span>
                 </router-link> -->
                 <router-link to="/collections" class="dropdown-item">
-                    <i class="fas fa-layer-group"></i>
+                    <i class="fas fa-layer-group"/>
                     <span>Collections</span>
                 </router-link>
                 <router-link to="/upload" class="dropdown-item">
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus"/>
                     <span>Upload</span>
                 </router-link>
                 <b-dropdown-item to="/search-history">
-                  <i class="fas fa-history"></i>
+                  <i class="fas fa-history"/>
                   <span>Search History</span>
                 </b-dropdown-item>
                 <div class="dropdown-divider"></div>
                 <router-link to="/settings" class="dropdown-item">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-cog"/>
                     <span>Settings</span>
                 </router-link>
                 <router-link to="/donate" class="dropdown-item">
-                    <i class="fas fa-donate"></i>
+                    <i class="fas fa-donate"/>
                     <span>Donate</span>
                 </router-link>
                 <a to="/login" class="dropdown-item">
-                    <i class="fas fa-sign-out-alt"></i>
+                    <i class="fas fa-sign-out-alt"/>
                     <span>Logout</span>
                 </a>
               </base-dropdown>

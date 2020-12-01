@@ -5,7 +5,7 @@
       <template slot="links">
         <div v-if="!signedIn">
           <b-alert show>
-          <i class="fas fa-exclamation-circle fa-lg"></i>
+          <i class="fas fa-exclamation-circle fa-lg"/>
           &nbsp; In order to access these features, you must login. You can login <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
         </div>
         <b-dropdown-divider/>

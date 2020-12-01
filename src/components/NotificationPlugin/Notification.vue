@@ -16,7 +16,7 @@
     <template v-if="icon || $slots.icon">
       <slot name="icon">
             <span class="alert-icon" data-notify="icon">
-              <i :class="icon"></i>
+              <i :class="icon"/>
             </span>
       </slot>
     </template>

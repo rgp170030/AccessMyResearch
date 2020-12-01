@@ -5,7 +5,7 @@
     :size="size"
     :class="{'badge-circle': circle }">
     <slot>
-      <i v-if="icon" :class="icon"></i>
+      <i v-if="icon" :class="icon"/>
     </slot>
   </b-badge>
 </template>

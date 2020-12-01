@@ -9,7 +9,7 @@
         :aria-controls="`content-${itemId}`"
       >
         <slot name="title"> {{ title }} </slot>
-        <i class="tim-icons icon-minimal-down"></i>
+        <i class="tim-icons icon-minimal-down"/>
       </a>
     </b-card-header>
     <collapse-transition :duration="animationDuration">

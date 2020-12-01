@@ -19,7 +19,7 @@
         </span>
       </template>
       <template v-else>
-        <i :class="link.icon"></i>
+        <i :class="link.icon"/>
         <span class="nav-link-text">{{ link.name }} <b class="caret"></b></span>
       </template>
     </a>
@@ -53,7 +53,7 @@
           <span class="nav-link-text">{{ link.name }}</span>
         </template>
         <template v-else>
-          <i :class="link.icon"></i>
+          <i :class="link.icon"/>
           <span class="nav-link-text">{{ link.name }}</span>
         </template>
       </component>

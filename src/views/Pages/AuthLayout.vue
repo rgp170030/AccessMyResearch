@@ -31,15 +31,15 @@
        </div>
          <b-navbar-nav  class="align-items-lg-center ml-lg-auto">
            <b-nav-item to="/home">
-               <i class="fas fa-home"></i>
+               <i class="fas fa-home"/>
                <span class="nav-link-inner--text">Home</span>
            </b-nav-item>
            <b-nav-item to="/register">
-               <i class="far fa-user"></i>
+               <i class="far fa-user"/>
                <span class="nav-link-inner--text">Register</span>
            </b-nav-item>
            <b-nav-item to="/login">
-               <i class="fas fa-user circle"></i>
+               <i class="fas fa-user circle"/>
                <span class="nav-link-inner--text">Login</span>
            </b-nav-item>
        </b-navbar-nav>

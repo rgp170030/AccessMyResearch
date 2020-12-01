@@ -13,7 +13,7 @@
         <slot name="icon">
           <div class="icon icon-shape text-white rounded-circle shadow"
                :class="[`bg-${type}`, iconClasses]">
-            <i :class="icon"></i>
+            <i :class="icon"/>
           </div>
         </slot>
       </b-col>
