@@ -139,24 +139,6 @@ export default {
           console.log(error);
         });
     },
-    commaSeparatedAuthors(authorsList) {
-      if (authorsList == null) {
-        return "N/A";
-      } else {
-        let authorString = "";
-        for (let index = 0; index < authorsList.length; index++) {
-          authorString = `${authorString} ${authorsList[index].family} ${authorsList[index].given}, `;
-        }
-        return authorString.slice(0, -2);
-      }
-    },
-    publishedDate(publishedDateList) {
-      if (publishedDateList == null) {
-        return "N/A";
-      } else {
-        return publishedDateList;
-      }
-    },
     async performSearch() {
       var startTime, endTime;
       var searchFields = [
