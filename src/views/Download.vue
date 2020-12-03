@@ -4,17 +4,11 @@
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
-          <!-- <div>
-            <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Disabled</b-button>
-          </div> -->
           <div>
-            <!-- <p>
-              To download, check this box here
-            </p> -->
             <b-form-group>
-            <b-form-checkbox-group v-model="selected" :options="options" plain='flase'>  </b-form-checkbox-group>
+            <b-form-checkbox-group v-model="selected" :options="options" plain='false'>  </b-form-checkbox-group>
               <br>
-            <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Download</b-button>
+              <button type="button" class="a" :disabled="selected[0]!=='agree'" @click="popUp">Download</button>
             </b-form-group>
           </div>
         </div>
@@ -24,20 +18,57 @@
 </template>
 
 <script>
+  import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
   export default {
     name: 'Download',
+    components: { VueHcaptcha },
+
     data() {
       return {
         selected: '', // Must be an array reference!
         options: [
           { text: 'Accept the terms and condition agreement for AMR', value: 'agree' },
-        ]
+        ],
+        showModal: false,
+        modalText: '',
       }
     },
     methods: {
       popUp() {
         window.alert("Download will begin now")
-      }
+      },
+      popupCenter(url, title, w, h) {
+        const left = (screen.width / 2) - (w / 2);
+        const top = (screen.height / 2) - (h / 2);
+        return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+  }
     }
   }
+
+
 </script>
+
+<style>
+.a {
+  background-color: #4566b8;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.a:disabled {
+  background-color: #4566b8;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+</style>
