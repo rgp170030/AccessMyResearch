@@ -134,7 +134,7 @@ export default {
         }
       },
       toPaypal() {
-        location.href = 'https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS'
+        window.open("https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS", "_blank");
       },
     },
     mounted() {

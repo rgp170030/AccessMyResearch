@@ -134,10 +134,12 @@ import firebase from 'firebase'
      },
 
     methods:{
+       // scroll to bottom of the chat windows
          scrollToButtom(){
             let box = document.querySelector('.msg_history');
             box.scrollTop=box.scrollHeight;
          },
+
          saveMessage(){
         // save in firebase
           db.collection('chat').add({
