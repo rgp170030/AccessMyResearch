@@ -409,7 +409,6 @@
         </router-link>
       </base-dropdown>
 
-<<<<<<< HEAD
       <!-- link to Donate button next the research bar -->
      <a 
       slot="title-container"
@@ -422,8 +421,6 @@
         <i class="fas fa-donate"></i>
       </a>
 
-=======
->>>>>>> 63646c7d58b6cc3681abd4cc3ede79be5ff4e912
       <base-dropdown
         menu-on-right
         class="nav-item"
@@ -464,13 +461,10 @@
             <i class="fas fa-cog"></i>
             <span>Settings</span>
           </b-dropdown-item>
-<<<<<<< HEAD
           <b-dropdown-item  @click="toPaypal">
             <i class="fas fa-donate"></i>
             <span>Donate</span>
           </b-dropdown-item>
-=======
->>>>>>> 63646c7d58b6cc3681abd4cc3ede79be5ff4e912
           <b-dropdown-item to="/login" v-if="!signedIn">
             <i class="fas fa-sign-in-alt"></i>
             <span>Login</span>
