@@ -3,25 +3,12 @@
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
-<<<<<<< HEAD
-        <div >
-          <!-- <div>
-            <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Disabled</b-button>
-          </div> -->
-=======
         <div class="col-lg mx-auto form p-4">
->>>>>>> 63646c7d58b6cc3681abd4cc3ede79be5ff4e912
           <div>
             <b-form-group>
-<<<<<<< HEAD
-            <b-form-checkbox-group v-model="selected" :options="options" plain='flase'>  </b-form-checkbox-group>
-            <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Download</b-button>
-             
-=======
             <b-form-checkbox-group v-model="selected" :options="options" plain='false'>  </b-form-checkbox-group>
               <br>
               <button type="button" class="a" :disabled="selected[0]!=='agree'" @click="popUp">Download</button>
->>>>>>> 63646c7d58b6cc3681abd4cc3ede79be5ff4e912
             </b-form-group>
           </div>
         </div>
