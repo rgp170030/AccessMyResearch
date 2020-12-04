@@ -409,17 +409,17 @@
         </router-link>
       </base-dropdown>
 
-      <!-- link to Donate -->
-     <router-link to="/donate"
+      <!-- link to Donate button next the research bar -->
+     <a 
       slot="title-container"
           class="nav-link nav-link-icon"
-          href="#"
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="redirect">
+          @click="toPaypal"
+         >
         <i class="fas fa-donate"></i>
-      </router-link>
+      </a>
 
       <base-dropdown
         menu-on-right
@@ -461,7 +461,7 @@
             <i class="fas fa-cog"></i>
             <span>Settings</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/donate">
+          <b-dropdown-item  @click="toPaypal">
             <i class="fas fa-donate"></i>
             <span>Donate</span>
           </b-dropdown-item>
@@ -728,6 +728,10 @@ export default {
     };
   },
   methods: {
+
+    toPaypal() {
+            location.href = 'https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS'
+          },
     async onSubmit(evt) {
       this.timeTotal = 0;
       let duplication = false;

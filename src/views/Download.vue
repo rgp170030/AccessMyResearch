@@ -3,7 +3,7 @@
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
-        <div class="col-lg mx-auto form p-4">
+        <div >
           <!-- <div>
             <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Disabled</b-button>
           </div> -->
@@ -14,6 +14,7 @@
             <b-form-group>
             <b-form-checkbox-group v-model="selected" :options="options" plain='flase'>  </b-form-checkbox-group>
             <b-button :disabled="selected[0]!=='agree'" size="lg" variant="primary" @click="popUp">Download</b-button>
+             
             </b-form-group>
           </div>
         </div>
