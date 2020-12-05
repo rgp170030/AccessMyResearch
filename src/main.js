@@ -49,7 +49,7 @@ import router from './routes/router';
 
 // analytics setup
 Vue.use(VueAnalytics, {
-  id: 'UA-183671144-1',
+  id: 'UA-183671144-1', //google analytics tracking id
   router
 });
 
