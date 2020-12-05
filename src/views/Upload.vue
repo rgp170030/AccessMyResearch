@@ -115,8 +115,10 @@
 <script>
 import Multiselect from 'vue-multiselect';
 import upload from '@/util/upload';
+import calendar from '@/util/calendar';
 
 export default {
+    components: { Multiselect },
     data: function(){
         return {
             pubType: {
@@ -147,77 +149,12 @@ export default {
             date: {
                 selected: {
                     day: 1,
-                    month: {
-                        index: 0,
-                        name: "January",
-                        days: 31
-                    },
+                    month: calendar.months[0],
                     year: 1970,
                 },
                 options: {
                     days: [],
-                    months: [
-                        {
-                            index: 0,
-                            name: "January",
-                            days: 31
-                        },
-                        {
-                            index: 1,
-                            name: "February",
-                            days: 28
-                        },
-                        {
-                            index: 2,
-                            name: "March",
-                            days: 31
-                        },
-                        {
-                            index: 3,
-                            name: "April",
-                            days: 30
-                        },
-                        {
-                            index: 4,
-                            name: "May",
-                            days: 31
-                        },
-                        {
-                            index: 5,
-                            name: "June",
-                            days: 30
-                        },
-                        {
-                            index: 6,
-                            name: "July",
-                            days: 31
-                        },
-                        {
-                            index: 7,
-                            name: "August",
-                            days: 31
-                        },
-                        {
-                            index: 8,
-                            name: "September",
-                            days: 30
-                        },
-                        {
-                            index: 9,
-                            name: "October",
-                            days: 31
-                        },
-                        {
-                            index: 10,
-                            name: "November",
-                            days: 30
-                        },
-                        {
-                            index: 11,
-                            name: "December",
-                            days: 31
-                        }
-                    ],
+                    months: calendar.months,
                     years: []
                 }
             },
@@ -229,13 +166,34 @@ export default {
             return this.pubType.value === "Article";
         }
     },
+    mounted: function(){
+        var uploadElement = document.getElementById('drop-area');
+        upload.init(uploadElement, this.files);
+
+        var now = new Date();
+        for(var i=now.getFullYear() + 2; i > 1940; i--)
+            this.date.options.years.push(i);
+
+        var selected = this.date.selected;
+        selected.year = now.getFullYear();
+        selected.month = this.date.options.months[now.getMonth()];
+        selected.day = now.getDate();
+
+        this.updateDayOptions();
+    },
     methods:{
         handleFiles: function(event){
-            upload.setFiles(event.target.files); 
+            let selectedFiles = [...event.target.files];
+            
+            this.files.length = 0;
+            selectedFiles.forEach(file => {
+                this.files.push(file);
+            });
         },
         addTag: function (newTag) {
             const tag = {
                 name: newTag,
+                //"But random isn't unique!" - tell it to the docs: https://vue-multiselect.js.org/#sub-tagging
                 code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
             }
 
@@ -245,89 +203,48 @@ export default {
         },
         submitForm: function(){
             this.$ga.event('expert', 'upload', this.title);
-            upload.upload({
-                type: this.pubType.value,
-                visibility: this.visibility.value,
-                title: this.title,
-                authors: this.authors.value.map(x => x.name),
-                date: {
-                    day: this.date.selected.day,
-                    month: this.date.selected.month.index,
-                    year: this.date.selected.year
+            upload.upload(
+                this.$endpoints.aspnet + 'api/upload',
+                {
+                    type: this.pubType.value,
+                    visibility: this.visibility.value,
+                    title: this.title,
+                    authors: this.authors.value.map(x => x.name),
+                    date: {
+                        day: this.date.selected.day,
+                        month: this.date.selected.month.index,
+                        year: this.date.selected.year
+                    },
+                    abstract: this.abstract,
+                    doi: this.doi
                 },
-                abstract: this.abstract,
-                doi: this.doi
-            });
+                this.files,
+                document.getElementById('progress-bar')
+            );
         },
-        isLeapYear: function(year){
-            if(year % 4 === 0){
-                if(year % 100 === 0)
-                    return year % 400 === 0;
-                return true;
-            }
-            return false;
-        },
+        //Update the days options for the multiselect to reflect the number of days of the selected month.
         updateDayOptions: function(){
-            var month = this.date.selected.month;
+            let selected = this.date.selected;
 
-            var daysArray = this.date.options.days;
-            if(daysArray.length === month.days){
+            let numDays = calendar.getNumDays(selected.month.index, selected.year);
+            let days = this.date.options.days;
+            if(days.length === numDays)
                 return;
-            }
 
-            daysArray.length = 0;
-            for(var i=1; i <= month.days; i++){
-                daysArray.push(i);
-            }
+            days.length = 0;
+            for(let i=1; i <= numDays; i++)
+                days.push(i);
 
-            if(this.date.selected.day > month.days){
-                this.date.selected.day = month.days;
-            }
+            if(selected.day > numDays)
+                selected.day = numDays;
         },
-        updateIsLeapYear: function(year){
-            var year = this.date.selected.year;
-
-            var february = this.date.options.months[1];
-            if(this.isLeapYear(year)){
-                february.days = 29;
-            }else{
-                february.days = 28;
-            }
-
-            if(this.date.selected.month.index === february.index){
+        //Make sure that the days dropdown has 28/29 days in the month of February depending on if it's a leap year.
+        updateIsLeapYear: function(){
+            if(this.date.selected.month.index === 1){
                 this.updateDayOptions();
             }
         }
     },
-    mounted: function(){
-        var uploadElement = document.getElementById('drop-area');
-        var progressBar = document.getElementById('progress-bar');
-        upload.init({
-            element: uploadElement,
-            progressBar: progressBar,
-            files: this.files,
-            urls: {
-                uploadEndpoint: this.$endpoints.aspnet + 'api/upload'
-            }
-        });
-
-        var now = new Date();
-        for(var i=now.getFullYear() + 2; i > 1940; i--){
-            this.date.options.years.push(i);
-        }
-
-        var selected = this.date.selected;
-        selected.year = now.getFullYear();
-        this.updateIsLeapYear();
-
-        selected.month = this.date.options.months[now.getMonth()];
-        
-        selected.day = now.getDate();
-        this.updateDayOptions();
-    },
-    components: {
-        Multiselect
-    }
 }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
