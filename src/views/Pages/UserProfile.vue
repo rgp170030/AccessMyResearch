@@ -100,10 +100,6 @@ export default {
   },
   async mounted() {
     await this.getUserData();
-    if(this.$store.state.signedIn)
-    {
-      this.signedIn = true;
-    }
   },
   methods: {
     async getUserData() {
