@@ -126,13 +126,15 @@ export default {
       };
 
 
-      for(var i = 0; i < this.$store.state.user.requests.length; i++)
-      {
-        if(this.$store.state.user.requests[i] == user.username)
-        {
-          this.$store.state.requests.slice(i); //deletes request from the store's requests array
-        }
-      }
+      // console.log(this.$store.state.requests);
+
+      // for(var i = 0; i < this.$store.state.requests.length; i++)
+      // {
+      //   if(this.$store.state.user.requests[i] == user.username)
+      //   {
+      //     this.$store.state.requests.slice(i); //deletes request from the store's requests array
+      //   }
+      // }
 
 
       /*
