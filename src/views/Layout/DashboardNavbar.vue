@@ -91,9 +91,7 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.areaAccordion variant="primary"
-                        >Area</b-button
-                      >
+                      <b-button block v-b-toggle.areaAccordion variant="primary">Area</b-button>
                     </b-card-header>
                     <b-collapse
                       id="areaAccordion"
@@ -179,9 +177,7 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.yearAccordion variant="primary"
-                        >Year</b-button
-                      >
+                      <b-button block v-b-toggle.yearAccordion variant="primary">Year</b-button>
                     </b-card-header>
                     <b-collapse
                       id="yearAccordion"
@@ -190,7 +186,7 @@
                     >
                       <b-card-body>
                         <b-dropdown-group class="small">
-                          <br />
+                          <br/>
                           <vue-slider
                             v-model="yearRange"
                             :min="1950"
@@ -198,7 +194,7 @@
                             :enable-cross="false"
                             :tooltip="'always'"
                           ></vue-slider>
-                          <br />
+                          <br/>
                           <div>Years Selected: {{ yearRange }}</div>
                         </b-dropdown-group>
                       </b-card-body>
@@ -209,9 +205,7 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.typeAccordion variant="primary"
-                        >Type</b-button
-                      >
+                      <b-button block v-b-toggle.typeAccordion variant="primary">Type</b-button>
                     </b-card-header>
                     <b-collapse
                       id="typeAccordion"
@@ -325,9 +319,7 @@
                   @click="defaultFilterCheckboxChecked()"
                 />
                 Save current filters as default
-                <b-button class="btn float-right" variant="primary"
-                  >Search</b-button
-                >
+                <b-button class="btn float-right" variant="primary">Search</b-button>
               </b-dropdown>
             </div>
           </b-input-group>
