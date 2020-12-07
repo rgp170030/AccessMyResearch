@@ -416,7 +416,7 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="toPaypal"
+           @click="toPaypal('popup',500,600)"
          >
         <i class="fas fa-donate"></i>
       </a>
@@ -461,7 +461,7 @@
             <i class="fas fa-cog"></i>
             <span>Settings</span>
           </b-dropdown-item>
-          <b-dropdown-item  @click="toPaypal">
+          <b-dropdown-item   @click="toPaypal('popup',500,600)">
             <i class="fas fa-donate"></i>
             <span>Donate</span>
           </b-dropdown-item>
@@ -729,8 +729,11 @@ export default {
   },
   methods: {
 
-    toPaypal() {
-            location.href = 'https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS'
+    toPaypal: function(title, myWidth, myHeight) {
+             
+             const left = (screen.width - myWidth) / 2;
+            const top = (screen.height - myHeight) / 4;
+            return window.open('https://www.paypal.com/donate?hosted_button_id=A2S4AUZ8RTDYS', title, ' width=' + myWidth + ', height=' + myHeight + ', top=' + top + ', left=' + left);
           },
     async onSubmit(evt) {
       this.timeTotal = 0;
