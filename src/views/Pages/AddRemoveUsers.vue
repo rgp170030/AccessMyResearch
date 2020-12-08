@@ -127,9 +127,12 @@ export default {
           creates a new row in the Follow table with the column data provided above  
       */
       const followingUser = await API.graphql({query: mutations.createFollow, variables: {input: followUser}});
+      this.$ga.event('registered', 'follow-user');
     },
     async handleAddClick(user) 
     {
+      this.$ga.event('registered', 'add-friend');
+      
       /* 
           creates a user object with the id as the combination of the current user and the user added
           requestsUserId is the current user

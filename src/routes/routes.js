@@ -176,6 +176,11 @@ const routes = [
         name: 'User',
         component: (id) => import('../views/Pages/UserInformation.vue')
       },
+      {
+        path: 'add',
+        name: 'Add Users',
+        component: () => import('../views/Pages/AddRemoveUsers.vue')
+      },
     ]
   },
 
