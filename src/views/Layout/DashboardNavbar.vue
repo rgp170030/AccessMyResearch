@@ -479,10 +479,6 @@
             <i class="fas fa-user"/>
             <span>My profile</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/activity" v-if="signedIn">
-            <i class="far fa-calendar-alt"/>
-            <span>Activity</span>
-          </b-dropdown-item>
           <b-dropdown-item to="/search-history">
             <i class="fas fa-history"/>
             <span>Search History</span>

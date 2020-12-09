@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <notifications/>
-    <side-bar>
+    <!-- <side-bar>
       <template slot="links">
         <div v-if="!signedIn">
           <b-alert show>
@@ -58,7 +58,7 @@
           }"/>
         </div>
       </template>
-    </side-bar>
+    </side-bar> -->
     <div class="main-content">
       <dashboard-navbar :type="$route.meta.navbarType"/>
       <div @click="$sidebar.displaySidebar(false)">

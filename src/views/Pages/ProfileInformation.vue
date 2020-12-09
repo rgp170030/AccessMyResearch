@@ -156,7 +156,7 @@ export default {
     return {
       signedIn: false,
       user: {
-        company: 'Access My Research',
+        company: 'AccessMyResearch',
         username: '',
         email: '',
         firstName: '',

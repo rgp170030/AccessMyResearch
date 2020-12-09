@@ -68,10 +68,6 @@
                 <router-link to="/network-list" class="dropdown-item">
                     <i class="fas fa-user-friends"/>Network List
                 </router-link>
-                <!--TODO: Add Activity Page Link <router-link to="/activity" class="dropdown-item">
-                    <i class="far fa-calendar-alt"/>
-                    <span>Activity</span>
-                </router-link> -->
                 <router-link to="/collections" class="dropdown-item">
                     <i class="fas fa-layer-group"/>Collections
                 </router-link>
@@ -128,7 +124,7 @@
       logo: {
         type: String,
         default: '/img/brand/orange.png',
-        description: 'Access My Research Logo'
+        description: 'AccessMyResearch Logo'
       },
       autoClose: {
         type: Boolean,

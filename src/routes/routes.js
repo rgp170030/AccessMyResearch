@@ -117,11 +117,6 @@ const routes = [
         component: () => import('../views/Notifications.vue')
       },
       {
-        path: 'activity',
-        name: 'activity',
-        component: () => import('../views/Activity.vue')
-      },
-      {
         path: 'settings',
         name: 'settings',
         component: () => import('../views/Settings.vue')

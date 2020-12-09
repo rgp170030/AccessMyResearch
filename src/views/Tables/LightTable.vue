@@ -67,7 +67,7 @@
     </b-card>
 </template>
 <script>
-import articles from './articles'
+import articles from './articles' //TODO: Replace with AWS source
 import {Table, TableColumn} from 'element-ui'
 export default {
     name: 'light-table',

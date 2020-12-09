@@ -96,7 +96,7 @@
         signedIn: false,
         data: '',
         user: {
-            company: 'Access My Research',
+            company: 'AccessMyResearch',
             username: '',
             email: '',
             firstName: '',

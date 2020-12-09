@@ -3,7 +3,7 @@
     <b-row align-v="center" class="justify-content-lg-between">
       <b-col lg="6">
         <div class="copyright text-center text-lg-left text-muted">
-          © 2020 <a href="#" class="font-weight-bold ml-1" target="_blank">Access My Research</a>
+          © 2020 <a href="#" class="font-weight-bold ml-1" target="_blank">AccessMyResearch</a>
         </div>
       </b-col>
       <b-col lg="6">
