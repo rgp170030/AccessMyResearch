@@ -518,14 +518,14 @@ export default {
     //CollapseTransition,
     BaseNav,
     //Modal,
-    VueSlider,
+    VueSlider
   },
   props: {
     type: {
       type: String,
       default: "default", // default|light
       description:
-        "Look of the dashboard navbar. Default (Green) or light (gray)",
+        "Look of the dashboard navbar",
     },
   },
   computed: {
@@ -794,7 +794,7 @@ export default {
         .catch((err) => console.log(err));
     },
     redirect() {
-      if (this.$store.state.signedIn === false) {
+      if (!this.$store.state.signedIn) {
         this.$router.push("/login");
       }
     },

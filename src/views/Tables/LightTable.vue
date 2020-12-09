@@ -70,7 +70,7 @@
 </template>
 <script>
 import articles from './articles'
-import { Table, TableColumn} from 'element-ui'
+import {Table, TableColumn} from 'element-ui'
 export default {
     name: 'light-table',
     components: {
