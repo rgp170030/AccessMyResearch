@@ -1,16 +1,14 @@
 <template>
     <b-card no-body>
-        <b-card-header class="border-0">
-            <div style="padding-left:40%">
-                <small class="text-muted">1-10 of 6604 publications</small>
-                <span style="float:right">
-                    <small class="form-text text-muted">in 0.56 seconds</small> <!--TODO: Show real time-->
-                    <span class="form-text text-muted fas">
-                        <small>compact view</small>
-                        <i style="padding-left:6px" class="fas fa-expand-arrows-alt"/>
-                    </span>
+        <b-card-header class="py-3 border-1">
+            <small class="text-muted d-flex justify-content-center">1-10 of 6604 publications</small>
+            <span style="float:right">
+                <small class="form-text text-muted">in 0.56 seconds</small> <!--TODO: Show real time-->
+                <span class="form-text text-muted fas">
+                    <small>Compact View</small>
+                    <i style="padding-left:6px" class="fas fa-expand-arrows-alt"/>
                 </span>
-            </div>
+            </span>
             <h3 class="mb-0">Publications</h3>
             <p>Most Recent
                 <i style="padding-left:4px" class="fas fa-sort"/>
@@ -18,14 +16,16 @@
         </b-card-header>
         <el-table class="table-responsive table-light"
                   :data="articles"
+                  :show-header="false"
                   size="small"
                   style="width: 100%">
             <el-table-column type="expand">
                 <template v-slot="{row}">
-                    <!--TODO: Indicate the availability of an article <p class="font-weight-400 name mb-0 text-black"> Status: 
+                    <!--TODO: Indicate the availability of an article <p > Status: 
                         <span class="font-weight-700 name mb-0 text-blue">{{row.status}}</span>
                         <span style="float:right">{{row.date}}</span>
                     </p> -->
+                    <span style="float:right">{{row.date}}</span>
                     <p class="font-weight-400 name mb-0 text-black">{{row.abstract}}</p>
                     <button class="far fa-eye btn btn-success text-white"></button>
                     <button class="fas fa-file-download btn btn-primary"></button>
@@ -63,9 +63,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <b-card-footer class="py-4 d-flex justify-content-end"> <!--TODO: Make these buttons change table contents-->
-            <base-pagination v-model="currentPage" :per-page="10" :total="25"></base-pagination>
-        </b-card-footer>
+        <base-pagination class="py-3 d-flex justify-content-center" v-model="currentPage" :per-page="10" :total="25"></base-pagination>
     </b-card>
 </template>
 <script>

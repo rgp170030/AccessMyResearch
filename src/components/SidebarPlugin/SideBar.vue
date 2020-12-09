@@ -60,44 +60,36 @@
                     </div>
                 </a>
                 <div class=" dropdown-header noti-title">
-                    <h6 class="text-overflow m-0">Welcome!</h6>
+                    <h6 class="text-overflow m-0">Hi, Mehmet!</h6> <!--TODO: Show real first name-->
                 </div>
                 <router-link to="/profile" class="dropdown-item">
-                    <i class="fas fa-user"/>
-                    <span>My profile</span>
+                    <i class="fas fa-user"/>My profile
                 </router-link>
                 <router-link to="/network-list" class="dropdown-item">
-                    <i class="fas fa-user-friends"/>
-                    <span>Network List</span>
+                    <i class="fas fa-user-friends"/>Network List
                 </router-link>
                 <!--TODO: Add Activity Page Link <router-link to="/activity" class="dropdown-item">
                     <i class="far fa-calendar-alt"/>
                     <span>Activity</span>
                 </router-link> -->
                 <router-link to="/collections" class="dropdown-item">
-                    <i class="fas fa-layer-group"/>
-                    <span>Collections</span>
+                    <i class="fas fa-layer-group"/>Collections
                 </router-link>
                 <router-link to="/upload" class="dropdown-item">
-                    <i class="fas fa-plus"/>
-                    <span>Upload</span>
+                    <i class="fas fa-plus"/>Upload
                 </router-link>
                 <b-dropdown-item to="/search-history">
-                  <i class="fas fa-history"/>
-                  <span>Search History</span>
+                  <i class="fas fa-history"/>Search History
                 </b-dropdown-item>
                 <div class="dropdown-divider"></div>
                 <router-link to="/settings" class="dropdown-item">
-                    <i class="fas fa-cog"/>
-                    <span>Settings</span>
+                    <i class="fas fa-cog"/>Settings
                 </router-link>
                 <router-link to="/donate" class="dropdown-item">
-                    <i class="fas fa-donate"/>
-                    <span>Donate</span>
+                    <i class="fas fa-donate"/>Donate
                 </router-link>
                 <a to="/login" class="dropdown-item">
-                    <i class="fas fa-sign-out-alt"/>
-                    <span>Logout</span>
+                    <i class="fas fa-sign-out-alt"/>Logout
                 </a>
               </base-dropdown>
             </ul>

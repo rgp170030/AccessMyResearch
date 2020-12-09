@@ -334,7 +334,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-plus"/>
+          <i class="fas fa-plus TopIcon"/>
       </a>
 
       <a
@@ -346,7 +346,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-donate"/>
+          <i class="fas fa-donate TopIcon"/>
       </a>
 
       <a
@@ -358,7 +358,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-layer-group"/>
+          <i class="fas fa-layer-group TopIcon"/>
       </a>
 
       <a
@@ -370,7 +370,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-user-friends"/>
+          <i class="fas fa-user-friends TopIcon"/>
       </a>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
@@ -383,7 +383,7 @@
           aria-expanded="false"
           @click="toggleNotificationDropDown"
         >
-          <i class="fas fa-bell"/>
+          <i class="fas fa-bell TopIcon"/>
         </a>
         <a class="dropdown-item" to="/notifications" v-if="signedIn">
           <!-- TODO: Link to Notifications-->
@@ -429,7 +429,7 @@
           aria-expanded="false"
           @click="redirect"
         >
-          <i class="fas fa-comment"/>
+          <i class="fas fa-comment TopIcon"/>
         </a>
         <a class="dropdown-item" to="/messages" v-if="signedIn">
           <!-- TODO: Link to Messages-->
@@ -878,12 +878,18 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .AutoCompleteDropDown {
   position: absolute;
   background: white;
   border-radius: 4px;
   top: 45px;
   width: 350px;
+}
+.TopIcon {
+  color: white;
+} /*TODO: Get variables from assets/custom/_variables.scss instead*/
+.TopIcon:hover {
+  color: #F78626;
 }
 </style>

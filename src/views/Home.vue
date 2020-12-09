@@ -1,8 +1,11 @@
 <template>
   <div>
     <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
-    <b-container fluid class="mt--7">
+    <b-container fluid class="mt--9">
       <b-row>
+        <!-- <b-col sm="auto">
+          <filter-panel/>
+        </b-col> -->
         <b-col>
           <light-table/>
         </b-col>
@@ -12,6 +15,7 @@
   </div>
 </template>
 <script>
+  //import FilterPanel from '@/components/FilterPanel.vue'; //TODO: Add filter panel
   import LightTable from './Tables/LightTable';
   import { Auth } from 'aws-amplify';
   import { AmplifyEventBus } from 'aws-amplify-vue';
@@ -31,6 +35,7 @@
     },
     components: {
       LightTable,
+      //FilterPanel //TODO: Add filter panel
     },
     methods: {
       async findUser() 
