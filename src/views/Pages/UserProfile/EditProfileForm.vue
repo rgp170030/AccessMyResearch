@@ -219,7 +219,7 @@ export default {
     // It is being persisted in a local file of the API's. Work will have to be done also to associate a publication with an uploader
     //  so that only this user's uploaded publications appear here and no other user's uploaded publications appear.
 
-    axios.get(this.$endpoints.aspnet + 'api/publications')
+    axios.get(this.$endpoints.aspnet + 'publications')
       .then((response) => {
         if (response && response.status === 200) {
           self.publications.data = response.data;

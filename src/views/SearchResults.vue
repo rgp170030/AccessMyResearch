@@ -196,7 +196,7 @@ export default {
       return this.$route.query.text || 1;
     },
     doiEndpoint(){
-      return this.$endpoints.aspnet + "api/doi";
+      return this.$endpoints.aspnet + "doi";
     },
   },
   watch: {

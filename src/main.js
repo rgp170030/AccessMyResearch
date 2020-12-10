@@ -85,7 +85,7 @@ Vue.component('VueSlider', VueSlider)
 // end of code added
 
 Vue.prototype.$endpoints = {
-  aspnet: 'https://localhost:5001/',
+  aspnet: 'http://localhost:5000/',
   crossref: 'https://api.crossref.org/',
 };
 

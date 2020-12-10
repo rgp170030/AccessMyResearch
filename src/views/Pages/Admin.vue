@@ -78,7 +78,7 @@ export default {
 
       //Get the list of registered users from the ASP backend API.
       axios
-        .get(this.$endpoints.aspnet + "api/admin/list-users", options)
+        .get(this.$endpoints.aspnet + "admin/list-users", options)
         .then((res) => {
           let data = res.data;
           let users = [];
@@ -105,7 +105,7 @@ export default {
       // we only get a user's groups when they are specificly clicked on as opposed to page load.
       // This request gets the list of AWS Cognito groups that a user is in and converts them to roles for display.
       axios
-        .get(this.$endpoints.aspnet + "api/admin/get-user", options)
+        .get(this.$endpoints.aspnet + "admin/get-user", options)
         .then((res) => {
           let user = res.data;
 
@@ -130,7 +130,7 @@ export default {
 
       //Sets a user's AWS Cognito groups to reflect the changes to their website roles made by the active admin.
       axios
-        .post(this.$endpoints.aspnet + "api/admin/user-groups-save", request, options)
+        .post(this.$endpoints.aspnet + "admin/user-groups-save", request, options)
         .catch(console.log);
     },
   },

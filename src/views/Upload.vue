@@ -204,7 +204,7 @@ export default {
         submitForm: function(){
             this.$ga.event('expert', 'upload', this.title);
             upload.upload(
-                this.$endpoints.aspnet + 'api/upload',
+                this.$endpoints.aspnet + 'upload',
                 {
                     type: this.pubType.value,
                     visibility: this.visibility.value,
