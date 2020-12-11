@@ -90,7 +90,9 @@ export default {
             this.model.selectedCategoryIndex = index;
         },
         dbStuff: function(event){
-            alert("dbStuff");
+            //TODO - there is no where current to persist a user's interests. Should this functionality wish to be completed,
+            // we still need to implement a way to store any decisions a user makes regarding their interests.
+            alert("dbStuff"); 
         }
     },
     components: {

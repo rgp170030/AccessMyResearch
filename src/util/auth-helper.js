@@ -1,5 +1,6 @@
 import { Auth } from "aws-amplify"
 
+//Translations between Cognito group names and English-ified role names.
 const GroupToRoles = {
     "AMR_Admin": "Administrator",
     "AMR_Expert": "Expert"
@@ -10,6 +11,7 @@ const RolesToGroups = {
     "Expert": "AMR_Expert"
 }
 
+//A wrapper around Auth.currentAuthenticatedUser that returns null instead of throwing an error if the user is not logged in.
 async function getCurrentUser(){
     try{
         return await Auth.currentAuthenticatedUser();
@@ -20,8 +22,8 @@ async function getCurrentUser(){
 
 let AuthHelperRoles = {
     userRoles: ["Administrator", "Expert"],
+    // Gets the array of roles that the user has based on their cognito groups.
     getUserRoles: async function (user) {
-        // the array of groups that the user belongs to
         if(user == null){
             user = await getCurrentUser();
             if(user == null)
@@ -39,8 +41,13 @@ let AuthHelperRoles = {
         let roles = await AuthHelperRoles.getUserRoles(user);
         return roles.includes("Expert");
     },
+    //Translates the list of user Cognito groups into the website's roles. Not all Cognito groups map to a role. See below.
     translateGroupsToRoles: function(groups){
+        //groups: an array of Cognito groups.
         let roles = [];
+
+        //Cognito groups that are not website roles. This function separates them out and returns them so that any higher method that may attempt
+        // to modify the user's roles knows to include the Cognito groups that aren't roles. So they aren't accidently deleted.
         let nativeGroups = [];
 
         if(!groups) groups = [];
@@ -54,7 +61,10 @@ let AuthHelperRoles = {
 
         return { roles, nativeGroups };
     },
+    //Translates a user's website roles back into the complete list of Cognito groups.
     translateRolesToGroups: function(roles, nativeGroups){
+        //roles: an array of website roles
+        //nativeGroups: an array of the native Cognito groups that didn't match to a role, returned by the translateGroupsToRoles function.
         let groups = [];
 
         if(!roles) roles = [];
@@ -73,6 +83,7 @@ let AuthHelperRoles = {
 }
 
 let AuthHelperAxios = {
+    //Adds the Bearer authorization header to an HTTP request option object.
     attachAuthenticationHeader: async function(options){
         let user = await getCurrentUser();
         if(user == null)

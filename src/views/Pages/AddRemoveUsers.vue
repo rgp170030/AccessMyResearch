@@ -58,7 +58,7 @@
                 v-if="user.following == 'Follow'"
                 variant="warning"
                 id="button"
-                @click="handleClick(user)"
+                @click="handleFollowClick(user)"
                 >Follow</b-button
               >
               <b-button
@@ -67,7 +67,7 @@
                 v-if="user.following == 'Unfollow'"
                 variant="youtube"
                 id="button"
-                @click="handleClick(user)"
+                @click="handleFollowClick(user)"
                 >Unfollow</b-button
               >
             </div>
@@ -86,7 +86,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
 import * as mutations from '../../graphql/mutations.js';
 import { getUser, listUsers, listFriends, getUserFriend } from '../../graphql/queries';
-import { deleteRequests } from '../../graphql/mutations';
+import { deleteRequests, createFollow } from '../../graphql/mutations';
 
 export default {
   name: "suggestedpeople",
@@ -110,38 +110,76 @@ export default {
   },
   methods: 
   {
-    handleClick(user) 
+    async handleFollowClick(user) 
     {
+      /* 
+          creates a user object with the id as the combination of the current user and the user followed
+          followUserId is the current user
+          followFriendId is the following user 
+      */
+      const followUser = {
+        id: this.$store.state.user.username + "" + user.username,
+        followUserId: this.$store.state.user.username,
+        followFriendId: user.username
+      }
+
+      /* 
+          creates a new row in the Follow table with the column data provided above  
+      */
+      const followingUser = await API.graphql({query: mutations.createFollow, variables: {input: followUser}});
+      this.$ga.event('registered', 'follow-user');
     },
     async handleAddClick(user) 
     {
+      this.$ga.event('registered', 'add-friend');
+      
+      /* 
+          creates a user object with the id as the combination of the current user and the user added
+          requestsUserId is the current user
+          requestsFriendId is the following user 
+      */
       const addUser = {
         id: this.$store.state.user.username + "" + user.username, 
         requestsUserId: this.$store.state.user.username,
         requestsFriendId: user.username
       };
 
+      /* 
+          creates a user object with the id as the combination of the user added and current user
+          requestsFriendId is the current user
+          requestsUserId is the following user 
+      */
       const addUserT = {
         id: user.username + "" + this.$store.state.user.username, 
         requestsUserId: user.username,
         requestsFriendId: this.$store.state.user.username
       };
 
+      
+      /* 
+          creates two rows in the Requests table.
+          Since AWS GraphQL currently does not provide many-to-many relationships, this is one way to accomplish it  
+      */
       const addingUser = await API.graphql({ query: mutations.createRequests, variables: {input: addUser}});
       const addingUser2 = await API.graphql({ query: mutations.createRequests, variables: {input: addUserT}});
     },
     async listUsers()
     {
+        // get the table information of Friend table in DynamoDB
         const listAllUsers = await API.graphql(graphqlOperation(listFriends));
 
-        for (const [key, value] of Object.entries(listAllUsers.data.listFriends.items))
+        for (const [key, value] of Object.entries(listAllUsers.data.listFriends.items)) //for all the rows in the Friend table
         {
+            /*
+                gets the UserFriend row from the DynamoDB table of each Friend in listAllUsers
+            */
             const friend = await API.graphql({query: queries.getUserFriend, variables: {id: this.$store.state.user.username + "" + value.username}});
 
-            if(this.$store.state.user.username != value.username)
+            if(this.$store.state.user.username != value.username)  //if the friend is not the user logged in
             {
-              if(friend.data.getUserFriend == null)
+              if(friend.data.getUserFriend == null) //if the friend is not already a friend with current logged in user, then 
               {
+                //push the user to the can be added user array
                   this.users.push({
                   id: value.id,
                   name: value.name,

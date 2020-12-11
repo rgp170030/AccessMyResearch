@@ -167,6 +167,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -213,27 +215,17 @@ export default {
   mounted: function(){
     var self = this;
 
-    // 1. Create a new XMLHttpRequest object
-    let xhr = new XMLHttpRequest();
+    //Note: Because we lacked a database solution at the time of creating this story, this data is not being persisted there.
+    // It is being persisted in a local file of the API's. Work will have to be done also to associate a publication with an uploader
+    //  so that only this user's uploaded publications appear here and no other user's uploaded publications appear.
 
-    // 2. Configure it: GET-request for the URL /article/.../load
-    xhr.open('GET', this.$endpoints.aspnet + 'api/publications');
-
-    // 3. Send the request over the network
-    xhr.send();
-
-    // 4. This will be called after the response is received
-    xhr.onload = function() {
-      if (xhr.status === 200) { // analyze HTTP status of the response
-        var response = xhr.response;
-        var json = JSON.parse(response);
-        self.publications.data = json;
-      }
-    };
-
-    xhr.onerror = function() {
-      console.error("Request failed.");
-    };
+    axios.get(this.$endpoints.aspnet + 'publications')
+      .then((response) => {
+        if (response && response.status === 200) {
+          self.publications.data = response.data;
+        }
+      })
+      .catch(console.err);
   }
 };
 </script>

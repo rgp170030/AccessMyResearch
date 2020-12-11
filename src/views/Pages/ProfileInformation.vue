@@ -236,13 +236,12 @@ export default {
           first_name: this.user.firstName,
           last_name: this.user.lastName,
         }
-
-        console.log(userInformation);
         
+        //creates two rows (one in the User table, and Friend table of DynamoDB) with the user information provided in the profile fields
         const addingUsers = await API.graphql({ query: mutations.createUser, variables: {input: userInformation}});
         const addingFriend = await API.graphql({ query: mutations.createFriend, variables: {input: userInformation}});
 
-        this.$router.push('home');
+        this.$router.push('home'); //push to homepage
     }
   },
 };

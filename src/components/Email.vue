@@ -59,12 +59,13 @@ export default {
       this.show = true;
     },
     submitEmailForm: function(){
+      this.$ga.event('registered', 'email-author');
       const formData = new FormData();
       formData.append('to', this.to);
       formData.append('subject', this.subject);
       formData.append('body', this.body);
 
-      axios.post(this.$endpoints.aspnet + "api/doi/email", formData)
+      axios.post(this.$endpoints.aspnet + "email", formData)
         .then(function (response){
           console.log("ASPNET API EMAIL RESPONSE:")
           console.log(response);

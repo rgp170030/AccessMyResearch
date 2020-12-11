@@ -32,7 +32,6 @@
       <!-- <b-modal
         id="deleteUserModal"
         title="Delete user"
-        @ok="say('user deleted')"
         ok-title="Delete"
       >
         Are you sure you want to delete x?</b-modal
@@ -75,8 +74,9 @@ export default {
       let options = {};
       await AuthHelperAxios.attachAuthenticationHeader(options);
 
+      //Get the list of registered users from the ASP backend API.
       axios
-        .get(this.$endpoints.aspnet + "api/admin/list-users", options)
+        .get(this.$endpoints.aspnet + "admin/list-users", options)
         .then((res) => {
           let data = res.data;
           let users = [];
@@ -91,9 +91,6 @@ export default {
         })
         .catch(console.log);
     },
-    say: function (message) {
-      alert(message);
-    },
     getRole: async function (username) {
       let options = {
           params:{
@@ -101,9 +98,12 @@ export default {
           }
       };
       await AuthHelperAxios.attachAuthenticationHeader(options);
-
+      
+      //Since the backend API can only load a list of a particular user's groups one at a time,
+      // we only get a user's groups when they are specificly clicked on as opposed to page load.
+      // This request gets the list of AWS Cognito groups that a user is in and converts them to roles for display.
       axios
-        .get(this.$endpoints.aspnet + "api/admin/get-user", options)
+        .get(this.$endpoints.aspnet + "admin/get-user", options)
         .then((res) => {
           let user = res.data;
 
@@ -126,8 +126,9 @@ export default {
         ),
       };
 
+      //Sets a user's AWS Cognito groups to reflect the changes to their website roles made by the active admin.
       axios
-        .post(this.$endpoints.aspnet + "api/admin/user-groups-save", request, options)
+        .post(this.$endpoints.aspnet + "admin/user-groups-save", request, options)
         .catch(console.log);
     },
   },

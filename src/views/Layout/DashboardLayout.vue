@@ -82,7 +82,7 @@ export default {
     redirect() {
       if(!this.signedIn)
       {
-        this.$router.push('/login');
+        this.$router.push('/login'); //if not signed in, the page will redirect to login page
       }
     },
   },

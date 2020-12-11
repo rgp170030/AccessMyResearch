@@ -26,6 +26,14 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -64,6 +72,14 @@ export const updateUser = /* GraphQL */ `
         nextToken
       }
       requests {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      follows {
         items {
           id
           createdAt
@@ -116,6 +132,14 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -154,6 +178,14 @@ export const createFriend = /* GraphQL */ `
         nextToken
       }
       requests {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      follows {
         items {
           id
           createdAt
@@ -206,6 +238,14 @@ export const updateFriend = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -251,6 +291,14 @@ export const deleteFriend = /* GraphQL */ `
         }
         nextToken
       }
+      follows {
+        items {
+          id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       articles
       friendsCount
       comments
@@ -288,6 +336,9 @@ export const createUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -314,6 +365,9 @@ export const createUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -356,6 +410,9 @@ export const updateUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -382,6 +439,9 @@ export const updateUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -424,6 +484,9 @@ export const deleteUserFriend = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -450,6 +513,9 @@ export const deleteUserFriend = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -492,6 +558,9 @@ export const createRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -518,6 +587,9 @@ export const createRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -560,6 +632,9 @@ export const updateRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -586,6 +661,9 @@ export const updateRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles
@@ -628,6 +706,9 @@ export const deleteRequests = /* GraphQL */ `
         requests {
           nextToken
         }
+        follows {
+          nextToken
+        }
         articles
         friendsCount
         comments
@@ -654,6 +735,231 @@ export const deleteRequests = /* GraphQL */ `
           nextToken
         }
         requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFollow = /* GraphQL */ `
+  mutation CreateFollow(
+    $input: CreateFollowInput!
+    $condition: ModelFollowConditionInput
+  ) {
+    createFollow(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFollow = /* GraphQL */ `
+  mutation UpdateFollow(
+    $input: UpdateFollowInput!
+    $condition: ModelFollowConditionInput
+  ) {
+    updateFollow(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFollow = /* GraphQL */ `
+  mutation DeleteFollow(
+    $input: DeleteFollowInput!
+    $condition: ModelFollowConditionInput
+  ) {
+    deleteFollow(input: $input, condition: $condition) {
+      id
+      user {
+        id
+        username
+        name
+        friends {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
+          nextToken
+        }
+        articles
+        friendsCount
+        comments
+        education
+        city
+        state
+        country
+        university
+        expertise
+        bio
+        first_name
+        middle_name
+        last_name
+        zipcode
+        address
+        createdAt
+        updatedAt
+      }
+      friend {
+        id
+        username
+        name
+        user {
+          nextToken
+        }
+        requests {
+          nextToken
+        }
+        follows {
           nextToken
         }
         articles

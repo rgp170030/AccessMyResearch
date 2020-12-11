@@ -20,6 +20,7 @@ import { Auth } from 'aws-amplify';
 import { AmplifyPlugin } from 'aws-amplify-vue';
 import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
 import aws_exports from './aws-exports';
+import VueAnalytics from 'vue-analytics'
 
 Amplify.configure({
   ...aws_exports,
@@ -45,6 +46,13 @@ Vue.use(infiniteScroll);
 
 // router setup
 import router from './routes/router';
+
+// analytics setup
+Vue.use(VueAnalytics, {
+  id: 'UA-183671144-1', //google analytics tracking id
+  router
+});
+
 // plugin setup
 Vue.use(DashboardPlugin);
 
@@ -77,7 +85,7 @@ Vue.component('VueSlider', VueSlider)
 // end of code added
 
 Vue.prototype.$endpoints = {
-  aspnet: 'https://localhost:5001/',
+  aspnet: 'http://localhost:5000/',
   crossref: 'https://api.crossref.org/',
 };
 

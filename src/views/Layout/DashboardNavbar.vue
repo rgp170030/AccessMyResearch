@@ -381,17 +381,13 @@
         >
           <i class="fas fa-bell TopIcon"/>
         </a>
-        <a class="dropdown-item" to="/notifications" v-if="signedIn">
-          <!-- TODO: Link to Notifications-->
-          <i class="fas fa-book-open"/>
-          New Article by: Mehmet Günal
-          <small class="form-text text-muted">Yesterday</small>
-        </a>
-        <a class="dropdown-item" to="/notifications" v-if="signedIn">
-          <i class="fas fa-user-friends"/>
-          New friend: Mehmet Günal
-          <small class="form-text text-muted">1 week ago</small>
-        </a>
+        <div v-for="user in users" :key="user.id">
+          <a class="dropdown-item" @click="reroute(user)" v-if="signedIn">
+            <i class="fas fa-user-friends"></i>
+            {{ user.id }} {{ user.message }}
+            <small class="form-text text-muted">{{ user.created }}</small>
+          </a>
+        </div>
         <span v-for="(key, val) in this.reminders" v-bind:key="val">
           <a class="dropdown-item" to="/notifications">
             <i class="fas fa-search"/>
@@ -504,6 +500,9 @@ import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/default.css";
 import { Auth } from "aws-amplify";
 import axios from "axios";
+import { API, graphqlOperation } from 'aws-amplify';
+import * as queries from '../../graphql/queries.js';
+import { listFollows, listRequestss } from '../../graphql/queries.js';
 
 export default {
   components: {
@@ -552,9 +551,14 @@ export default {
     this.getSearchHistory();
     this.getReminders();
   },
+  created()
+  {
+    this.listUsers();
+  },
   data() {
     return {
       activeNotifications: false,
+      users: [],
       showMenu: false,
       searchModalVisible: false,
       searchQuery: "",
@@ -562,6 +566,7 @@ export default {
       reminders: [],
       //autocomplete start
       modal: false,
+      follows: [],
       recentSearches: [],
       filteredRecentSearches: [],
       defaultFilterCheckbox: false,
@@ -783,6 +788,9 @@ export default {
       this.activeNotifications = false;
     },
     signOut() {
+      /*If the user is signed in, the Auth.signOut 
+      function will sign the user out of the account and redirect to the login page. 
+      */
       Auth.signOut()
         .then((data) => {
           this.$store.state.signedIn = !!data;
@@ -793,6 +801,49 @@ export default {
     redirect() {
       if (!this.$store.state.signedIn) {
         this.$router.push("/login");
+      }
+    },
+    async listUsers() 
+    {
+      const listRequests = await API.graphql(graphqlOperation(listRequestss)); //returns a JSON of all the rows in the Requests table of DynamoDB
+
+      for(const [key, value] of Object.entries(listRequests.data.listRequestss.items)) //for all items in the rows
+      {
+        if(value.user != null && value.friend != null && value.user.id == this.$store.state.user.username) //if the user id equals the current user
+        {
+          //push the request row to the store (to show in notifications)
+          this.$store.state.requests.push(
+            {
+              id: value.friend.id,
+              created: value.createdAt,
+              message: "wants to add you as a connection"
+            });
+        }
+      }
+
+      this.users = this.$store.state.requests; //setting the current users array to the store's requests array
+
+      const followList = await API.graphql(graphqlOperation(listFollows)); //returns a JSON of all the rows in the Follows table of DynamoDB
+
+      for(const [key, value] of Object.entries(followList.data.listFollows.items)) //for all items in the rows
+      {
+        if(value.user != null && value.friend != null && value.friend.id == this.$store.state.user.username) //if the user id equals the current user
+        {
+          //push the follow row to the store (to show in notifications)
+          this.$store.state.follows.push(
+            {
+              id: value.user.id,
+              created: value.createdAt,
+              message: "followed you!"
+            });
+
+          //push the current row to the user array (to show in notifications)
+          this.users.push({
+              id: value.user.id,
+              created: value.createdAt,
+              message: "followed you!"
+            })
+        }
       }
     },
     sort() {
@@ -871,6 +922,18 @@ export default {
     },
     toNetwork() {
       this.$router.push('network-list');
+    },
+    reroute(user) {
+      //on click of follow notification, redirects to follows page
+      if(user.message == "followed you!")
+      {
+        this.$router.push('follows');
+      }
+      else
+      {
+        //on click of wants to add you as a connection notification, redirects to requests page
+          this.$router.push('requests');
+      }
     }
   },
 };
