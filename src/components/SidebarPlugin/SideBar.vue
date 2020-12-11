@@ -1,154 +1,104 @@
 <template>
-    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
-      <div class="container-fluid">
-          <!--Toggler-->
-          <navbar-toggle-button @click.native="showSidebar">
-          </navbar-toggle-button>
-          <router-link class="navbar-brand" to="/">
-              <img :src="logo" class="navbar-brand-img" alt="...">
-          </router-link>
-          <slot name="mobile-right">
-            <ul class="nav align-items-center d-md-none">
-              <base-dropdown class="nav-item" mens-on-right tag="li" title-tag="a">
-                <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-bell"/>
-                </a>
-                <a class="dropdown-item" to="/notifications"> <!--TODO: Link to notification-->
-                  <i class="fas fa-book-open"/>
-                  New Article by: Mehmet Günal
-                  <small class="form-text text-muted">Yesterday</small>
-                </a>
-                <a class="dropdown-item" to="/notifications">
-                  <i class="fas fa-user-friends"/>
-                  New friend: Mehmet Günal
-                  <small class="form-text text-muted">1 week ago</small>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" to="/notifications">
-                  <i class="fas fa-clock"/>
-                  All Notifications
-                </a>
-              </base-dropdown>
-              <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-                <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-comment"/>
-                </a>
-                <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
-                  <i class="fas fa-comment"/>
-                  Mehmet Günal: Check out my research!
-                  <small class="form-text text-muted">Yesterday</small>
-                </a>
-                <a class="dropdown-item" to="/messages">
-                  <i class="far fa-comment"/>
-                  Greg Kitchen: Check out his research!
-                  <small class="form-text text-muted">1 week ago</small>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" to="/messages">
-                  <i class="fas fa-clock"/>
-                  All Messages
-                </a>
-              </base-dropdown>
-              <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
-                <a slot="title-container" class="nav-link" href="#" role="button">
-                    <div class="media align-items-center">
-                      <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="img/theme/team-4.jpg"> <!--TODO: Show profile pic-->
-                      </span>
-                    </div>
-                </a>
-                <div class=" dropdown-header noti-title">
-                    <h6 class="text-overflow m-0">Hi, Mehmet!</h6> <!--TODO: Show real first name-->
-                </div>
-                <router-link to="/profile" class="dropdown-item">
-                    <i class="fas fa-user"/>My profile
-                </router-link>
-                <router-link to="/network-list" class="dropdown-item">
-                    <i class="fas fa-user-friends"/>Network List
-                </router-link>
-                <router-link to="/collections" class="dropdown-item">
-                    <i class="fas fa-layer-group"/>Collections
-                </router-link>
-                <router-link to="/upload" class="dropdown-item">
-                    <i class="fas fa-plus"/>Upload
-                </router-link>
-                <b-dropdown-item to="/search-history">
-                  <i class="fas fa-history"/>Search History
-                </b-dropdown-item>
-                <div class="dropdown-divider"></div>
-                <router-link to="/settings" class="dropdown-item">
-                    <i class="fas fa-cog"/>Settings
-                </router-link>
-                <router-link to="/donate" class="dropdown-item">
-                    <i class="fas fa-donate"/>Donate
-                </router-link>
-                <a to="/login" class="dropdown-item">
-                    <i class="fas fa-sign-out-alt"/>Logout
-                </a>
-              </base-dropdown>
-            </ul>
-          </slot>
-          <slot></slot>
-          <div v-show="$sidebar.showSidebar" class="navbar-collapse collapse show" id="sidenav-collapse-main">
-            <div class="navbar-collapse-header d-md-none">
-              <div class="row">
-                <div class="col-6 collapse-brand">
-                  <router-link to="/">
-                      <img :src="logo">
-                  </router-link>
-                </div>
-                <div class="col-6 collapse-close">
-                    <navbar-toggle-button @click.native="closeSidebar"></navbar-toggle-button>
-                </div>
+  <nav class="navbar navbar-vertical fixed-left-md navbar-light bg-white" id="sidenav-main">
+    <div class="container-fluid">
+      <router-link class="navbar-brand" to="/"> <!--TODO: Replace this logo with search bar-->
+          <img :src="logo" class="navbar-brand-img" alt="AccessMyResearch">
+      </router-link>
+      <slot name="mobile-right">
+        <ul class="nav align-items-center d-md-none">
+          <base-dropdown class="nav-item" mens-on-right tag="li" title-tag="a">
+            <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell"/>
+            </a>
+            <a class="dropdown-item" to="/notifications"> <!--TODO: Link to notification-->
+              <i class="fas fa-book-open"/>
+              New Article by: Mehmet Günal
+              <small class="form-text text-muted">Yesterday</small>
+            </a>
+            <a class="dropdown-item" to="/notifications">
+              <i class="fas fa-user-friends"/>
+              New friend: Mehmet Günal
+              <small class="form-text text-muted">1 week ago</small>
+            </a>
+            <div class="dropdown-divider"/>
+            <a class="dropdown-item" to="/notifications">
+              <i class="fas fa-clock"/>
+              All Notifications
+            </a>
+          </base-dropdown>
+          <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+            <a slot="title-container" class="nav-link nav-link-icon" href="#" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-comment"/>
+            </a>
+            <a class="dropdown-item" to="/messages"> <!-- TODO: Link to Messages-->
+              <i class="fas fa-comment"/>
+              Mehmet Günal: Check out my research!
+              <small class="form-text text-muted">Yesterday</small>
+            </a>
+            <a class="dropdown-item" to="/messages">
+              <i class="far fa-comment"/>
+              Greg Kitchen: Check out his research!
+              <small class="form-text text-muted">1 week ago</small>
+            </a>
+            <div class="dropdown-divider"/>
+            <a class="dropdown-item" to="/messages">
+              <i class="fas fa-clock"/>
+              All Messages
+            </a>
+          </base-dropdown>
+          <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
+            <a slot="title-container" class="nav-link" href="#" role="button">
+              <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="img/theme/team-4.jpg"> <!--TODO: Show profile pic-->
+                </span>
               </div>
+            </a>
+            <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Hi, Mehmet!</h6> <!--TODO: Show real first name-->
             </div>
-            <ul class="navbar-nav">
-              <slot name="links">
-              </slot>
-            </ul>
-          </div>
-        </div>
-    </nav>
+            <router-link to="/profile" class="dropdown-item">
+                <i class="fas fa-user"/>My profile
+            </router-link>
+            <router-link to="/network-list" class="dropdown-item">
+                <i class="fas fa-user-friends"/>Network List
+            </router-link>
+            <router-link to="/collections" class="dropdown-item">
+                <i class="fas fa-layer-group"/>Collections
+            </router-link>
+            <router-link to="/upload" class="dropdown-item">
+                <i class="fas fa-plus"/>Upload
+            </router-link>
+            <b-dropdown-item to="/search-history">
+              <i class="fas fa-history"/>Search History
+            </b-dropdown-item>
+            <div class="dropdown-divider"/>
+            <router-link to="/settings" class="dropdown-item">
+                <i class="fas fa-cog"/>Settings
+            </router-link>
+            <router-link to="/donate" class="dropdown-item">
+                <i class="fas fa-donate"/>Donate
+            </router-link>
+            <a to="/login" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"/>Logout
+            </a>
+          </base-dropdown>
+        </ul>
+      </slot>
+    </div>
+  </nav>
 </template>
 <script>
-  import NavbarToggleButton from '@/components/NavbarToggleButton'
-
-  export default {
-    name: 'sidebar',
-    components: {
-      NavbarToggleButton
-    },
-    props: {
-      logo: {
-        type: String,
-        default: '/img/brand/orange.png',
-        description: 'AccessMyResearch Logo'
-      },
-      autoClose: {
-        type: Boolean,
-        default: true,
-        description: 'Whether sidebar should autoclose on mobile when clicking an item'
-      }
-    },
-    provide() {
-      return {
-        autoClose: this.autoClose
-      };
-    },
-    methods: {
-      closeSidebar() {
-        this.$sidebar.displaySidebar(false)
-      },
-      showSidebar() {
-        this.$sidebar.displaySidebar(true)
-      }
-    },
-    beforeDestroy() {
-      if (this.$sidebar.showSidebar) {
-        this.$sidebar.showSidebar = false;
-      }
+export default {
+  name: 'sidebar',
+  props: {
+    logo: {
+      type: String,
+      default: '/img/brand/orange.png',
+      description: 'AccessMyResearch Logo'
     }
-  };
+  },
+};
 </script>

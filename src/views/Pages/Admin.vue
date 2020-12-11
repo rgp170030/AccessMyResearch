@@ -9,13 +9,11 @@
         </el-table-column>
         <el-table-column label="Roles">
           <template v-slot="{ row }">
-            <b-icon icon="eye-fill" font-scale="2" @click="getRole(row.username)">
-            </b-icon>
+            <b-icon icon="eye-fill" font-scale="2" @click="getRole(row.username)"/>
           </template>
         </el-table-column>
         <!-- <el-table-column prop="" label="" width="135">
-          <b-icon icon="trash-fill" font-scale="2" v-b-modal.deleteUserModal>
-          </b-icon>
+          <b-icon icon="trash-fill" font-scale="2" v-b-modal.deleteUserModal/>
         </el-table-column> -->
       </el-table>
 

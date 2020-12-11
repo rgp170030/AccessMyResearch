@@ -29,7 +29,6 @@
     </b-badge>
   </div>
 </template>
-
 <script>
 import Multiselect from "vue-multiselect";
 export default {
@@ -58,6 +57,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

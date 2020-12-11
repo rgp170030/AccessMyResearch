@@ -5,7 +5,7 @@
     :class="{ 'navbar-dark': type === 'default' }"
   >
     <router-link class="navbar-brand" to="/">
-      <img :src="logo" width="80%" class="navbar-brand-img" alt="...">
+      <img :src="logo" width="80%" class="navbar-brand-img" alt="AccessMyResearch">
     </router-link>
     <!-- Navbar links -->
     <b-form
@@ -399,7 +399,7 @@
             <small class="form-text text-muted">{{ key }}</small>
           </a>
         </span>
-        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"/>
         <router-link to="/notifications" class="dropdown-item">
           <i class="fas fa-clock"/>
           <span>All Requests </span>
@@ -438,7 +438,7 @@
           Greg Kitchen: Check out his research!
           <small class="form-text text-muted">1 week ago</small>
         </a>
-        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"/>
         <router-link to="/notifications" class="dropdown-item">
           <i class="fas fa-clock"/>
           <span>All Messages </span>
@@ -469,7 +469,7 @@
 
         <template>
           <b-dropdown-header class="noti-title" v-if="signedIn">
-            <h6 class="text-overflow m-0">Welcome!</h6>
+            <h6 class="text-overflow m-0">Hi, Mehmet!</h6>
           </b-dropdown-header>
           <b-dropdown-item to="/profile" v-if="signedIn">
             <i class="fas fa-user"/>
@@ -479,7 +479,7 @@
             <i class="fas fa-history"/>
             <span>Search History</span>
           </b-dropdown-item>
-          <div class="dropdown-divider" v-if="signedIn"></div>
+          <div class="dropdown-divider" v-if="signedIn"/>
           <b-dropdown-item to="/settings" v-if="signedIn">
             <i class="fas fa-cog"/>
             <span>Settings</span>

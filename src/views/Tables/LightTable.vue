@@ -3,10 +3,11 @@
         <b-card-header class="py-3 border-1">
             <small class="text-muted d-flex justify-content-center">1-10 of 6604 publications</small>
             <span style="float:right">
-                <small class="form-text text-muted">in 0.56 seconds</small> <!--TODO: Show real time-->
+                <small style="text-align:right" class="form-text text-muted">in 0.56 seconds</small> <!--TODO: Show real time-->
                 <span class="form-text text-muted fas">
-                    <small>Compact View</small>
-                    <i style="padding-left:6px" class="fas fa-expand-arrows-alt"/>
+                    <h5>Compact View
+                        <i style="padding-left:6px" class="fas fa-expand-arrows-alt"/>
+                    </h5>
                 </span>
             </span>
             <h4 class="mb-0">Most Recent

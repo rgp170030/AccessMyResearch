@@ -86,65 +86,61 @@
             >
             </el-table-column>
           </el-table> 
-          
-                <div class="accordion" role="tablist">
-                  <b-card no-body class="mb-1">
-                    <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.doajAccordion variant="primary"
-                        >DOAJ: About {{results_doaj.length}} results ({{timeTotal}} ms)</b-button>
-                    </b-card-header>
-                    <b-collapse
-                      id="doajAccordion"
-                      accordion="my-accordion"
-                      role="tabpanel"
-                    >
-                      <b-card-body>
-                          <div v-for="(result, i) in results_doaj" :key="i + result.bibjson.title">
-                            <p v-html="result.bibjson.title"></p>
-                                <p>Published Date: {{result.created_date}}</p>
-                                <p>Author: </p>
-                                <p v-for="(author, ii) in result.bibjson.author" :key="ii + author.name">
-                                  {{author.name}}
-                                </p>
-                                <p v-for="(link, iii) in result.bibjson.link" :key="iii + link.url"> 
-                                  Link/URL: <a :href="link.url">{{ link.url}}</a>
-                                </p>
-                                <p>Description/Abstract: {{result.bibjson.abstract}}</p>
-                                <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
-                          </div>
-                      </b-card-body>
-                    </b-collapse>
-                  </b-card>
-                </div>
-
-              
-                <div class="accordion" role="tablist">
-                  <b-card no-body class="mb-1">
-                    <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-button block v-b-toggle.unpaywallAccordion variant="primary"
-                        >DOI: About {{results_doi.length}} results ({{elapsed_time}} ms)</b-button>
-                    </b-card-header>
-                    <b-collapse
-                      id="unpaywallAccordion"
-                      accordion="my-accordion"
-                      role="tabpanel"
-                    >
-                      <b-card-body>
-                          <div v-for="(result, i) in results_doi" :key="i + result"><p v-html="result.snippet">
-                            </p><a :href="result.response.doi_url">{{ result.response.doi_url}}</a>
-                                <p> Published Date: 
-                                  {{ publishedDate(result.response.published_date) }}
-                                </p>
-                                <p> Authors: 
-                                  {{ commaSeparatedAuthors(result.response.z_authors) }}
-                                </p>
-                                <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
-                          </div>
-                      </b-card-body>
-                    </b-collapse>
-                  </b-card>
-                </div>
-
+          <div class="accordion" role="tablist">
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.doajAccordion variant="primary"
+                  >DOAJ: About {{results_doaj.length}} results ({{timeTotal}} ms)</b-button>
+              </b-card-header>
+              <b-collapse
+                id="doajAccordion"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                    <div v-for="(result, i) in results_doaj" :key="i + result.bibjson.title">
+                      <p v-html="result.bibjson.title"></p>
+                          <p>Published Date: {{result.created_date}}</p>
+                          <p>Author: </p>
+                          <p v-for="(author, ii) in result.bibjson.author" :key="ii + author.name">
+                            {{author.name}}
+                          </p>
+                          <p v-for="(link, iii) in result.bibjson.link" :key="iii + link.url"> 
+                            Link/URL: <a :href="link.url">{{ link.url}}</a>
+                          </p>
+                          <p>Description/Abstract: {{result.bibjson.abstract}}</p>
+                          <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
+                    </div>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+          </div>
+          <div class="accordion" role="tablist">
+            <b-card no-body class="mb-1">
+              <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block v-b-toggle.unpaywallAccordion variant="primary"
+                  >DOI: About {{results_doi.length}} results ({{elapsed_time}} ms)</b-button>
+              </b-card-header>
+              <b-collapse
+                id="unpaywallAccordion"
+                accordion="my-accordion"
+                role="tabpanel"
+              >
+                <b-card-body>
+                    <div v-for="(result, i) in results_doi" :key="i + result"><p v-html="result.snippet">
+                      </p><a :href="result.response.doi_url">{{ result.response.doi_url}}</a>
+                          <p> Published Date: 
+                            {{ publishedDate(result.response.published_date) }}
+                          </p>
+                          <p> Authors: 
+                            {{ commaSeparatedAuthors(result.response.z_authors) }}
+                          </p>
+                          <hr role="separator" aria-orientation="horizontal" class="dropdown-divider">
+                    </div>
+                </b-card-body>
+              </b-collapse>
+            </b-card>
+          </div>
         </div>
       </div>
     </card>
@@ -460,7 +456,6 @@ export default {
   },
 };
 </script>
-
 <style>
 div.emailIcon {
   display: inline-block;

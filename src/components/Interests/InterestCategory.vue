@@ -7,18 +7,16 @@
         class="my-4 text-nowrap"
         :pressed.sync="selected"
     >
-        <b-icon v-if="icon" :icon="icon" aria-hidden="true"></b-icon>
+        <b-icon v-if="icon" :icon="icon" aria-hidden="true"/>
         {{ name }}
     </b-button>
 </div>
 </template>
-
 <script>
 export default {
     props: ["name", "index", "icon", "selected"]
 }
 </script>
-
 <style scoped>
 .interest-tab {
     display: inline-block;
