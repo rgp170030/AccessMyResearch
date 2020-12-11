@@ -77,7 +77,7 @@ export default {
     return {
       data: "",
       user: {
-        company: "Access My Research",
+        company: "AccessMyResearch",
         username: "",
         email: "",
         firstName: "",

@@ -173,7 +173,7 @@ export default {
   data() {
     return {
       user: {
-        company: 'Access My Research',
+        company: 'AccessMyResearch',
         username: '',
         email: '',
         firstName: '',

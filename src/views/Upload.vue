@@ -1,7 +1,7 @@
 <template>
     <div>
-        <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
-        <card class="min-vh-100 main_body center">
+        <base-header class="pb-8 pt-md-8 bg-gradient-primary"></base-header>
+        <b-container fluid class="mt--9">
             <div class="row card text-black">
                 <div class="col-lg mx-auto form p-4">
                     <div id="mainUpload">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-        </card>
+        </b-container>
     </div>
 </template>
 

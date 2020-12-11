@@ -1,4 +1,4 @@
-# Access My Research
+# AccessMyResearch
 AccessMyResearch is a BootstrapVue + Vue.js web application designed to connect users with researchers, increase access to publications, & act as a space for teams to work on research-related projects.
 
 # Project Goals

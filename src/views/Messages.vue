@@ -15,7 +15,7 @@
                       <div class="stylish-input-group">
                         <input type="text" class="search-bar"  placeholder="Search" >
                         <span class="input-group-addon">
-                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button type="button"> <i class="fa fa-search" aria-hidden="true"/></button>
                         </span>
                       </div>
                     </div>
@@ -83,7 +83,7 @@
                   <div class="type_msg">
                     <div class="input_msg_write">
                       <input  @keyup.enter="saveMessage" v-model="message" type="text" class="write_msg" placeholder="Type a message"/>
-                      <button class="msg_send_btn" type="button"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                      <button class="msg_send_btn" type="button"><i class="fas fa-paper-plane" aria-hidden="true"/></button>
                     </div>
                   </div>
                 </div>

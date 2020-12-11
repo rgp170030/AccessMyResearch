@@ -10,7 +10,7 @@ export default new Vuex.Store({
     isExpert: false,
     username: "",
     user: {
-      company: 'Access My Research',
+      company: 'AccessMyResearch',
       username: '',
       email: '',
       firstName: '',

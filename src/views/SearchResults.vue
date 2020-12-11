@@ -86,7 +86,6 @@
             >
             </el-table-column>
           </el-table> 
-          
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -144,7 +143,6 @@
                     </b-collapse>
                   </b-card>
                 </div>
-
         </div>
       </div>
     </card>
@@ -400,7 +398,6 @@ export default {
   },
 };
 </script>
-
 <style>
 div.emailIcon {
   display: inline-block;

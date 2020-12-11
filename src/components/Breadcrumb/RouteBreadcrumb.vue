@@ -2,7 +2,7 @@
   <bread-crumb list-classes="breadcrumb-links breadcrumb-dark">
     <BreadCrumbItem>
         <router-link to="/">
-          <i class="fas fa-home"></i>
+          <i class="fas fa-home"/>
         </router-link>
     </BreadCrumbItem>
     <BreadCrumbItem

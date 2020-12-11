@@ -1,6 +1,6 @@
   <template>
 <div>
-    <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
+    <base-header class="pb-8 pt-md-8 bg-gradient-primary"></base-header>
     <card class="min-vh-100 main_body center">
         <div class="row card text-black">
             <div class="col-lg mx-auto form p-4">
@@ -11,7 +11,7 @@
                         <!-- Three columns of text below the carousel -->
                         <div class="row">
                             <div class="col-lg-4">
-                                <i class="fas fa-user-circle fa-5x" ></i>
+                                <i class="fas fa-user-circle fa-5x" />
                                 <h2>Account</h2>
                                 <p><a class="btn btn-secondary" href="#" role="button">Password Reset &raquo;</a></p>
                                 <p><a class="btn btn-secondary" href="#" role="button">Account settings &raquo;</a></p>
@@ -21,7 +21,7 @@
                                 <p><a class="btn btn-secondary" href="#" role="button">Deleting your account &raquo;</a></p>
                             </div><!-- /.col-lg-4 -->
                             <div class="col-lg-4">
-                                <i class="fas fa-book fa-5x"></i>
+                                <i class="fas fa-book fa-5x"/>
                                 <h2>Publishing</h2>
                                 <p><a class="btn btn-secondary" href="#" role="button">Terminology &raquo;</a></p>
                                 <p><a class="btn btn-secondary" href="#" role="button">Discovering and requesting research &raquo;</a></p>
@@ -30,7 +30,7 @@
                                 <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
                             </div><!-- /.col-lg-4 -->
                             <div class="col-lg-4">
-                                <i class="fas fa-share-alt-square fa-5x"></i>
+                                <i class="fas fa-share-alt-square fa-5x"/>
                                 <h2>Community</h2>
                                 <p><a class="btn btn-secondary" href="#" role="button">Commenting Guidelines &raquo;</a></p>
                                 <p><a class="btn btn-secondary" href="#" role="button">Interacting with others &raquo;</a></p>

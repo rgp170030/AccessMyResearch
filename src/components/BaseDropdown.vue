@@ -14,7 +14,7 @@
         data-toggle="dropdown"
       >
         <slot name="title" :is-open="isOpen">
-          <i :class="icon"></i> {{ title }}
+          <i :class="icon"/> {{ title }}
         </slot>
       </component>
     </slot>

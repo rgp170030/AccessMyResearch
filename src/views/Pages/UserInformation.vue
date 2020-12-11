@@ -61,13 +61,13 @@
                     <h5 class="h3">{{user.firstName + " " + user.lastName}}<span class="font-weight-light">, {{user.education}}</span>
                     </h5>
                     <div class="h5 font-weight-300">
-                    <i class="fas fa-map-marker-alt mr-2"></i>{{user.city + ", " + user.state + ", " + user.country}}
+                    <i class="fas fa-map-marker-alt mr-2"/>{{user.city + ", " + user.state + ", " + user.country}}
                     </div>
                     <div class="h5 mt-4">
-                    <i class="fas fa-briefcase mr-2"></i>{{user.expertise}}
+                    <i class="fas fa-briefcase mr-2"/>{{user.expertise}}
                     </div>
                     <div>
-                    <i class="fas fa-user-graduate mr-2"></i>{{user.university}}
+                    <i class="fas fa-user-graduate mr-2"/>{{user.university}}
                     </div>
                     <hr class="my-4">
                     <p>{{user.aboutMe}}</p>
@@ -96,7 +96,7 @@
         signedIn: false,
         data: '',
         user: {
-            company: 'Access My Research',
+            company: 'AccessMyResearch',
             username: '',
             email: '',
             firstName: '',

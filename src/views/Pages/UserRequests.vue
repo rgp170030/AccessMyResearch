@@ -13,10 +13,10 @@
             class="mb-2 mr-3 ml-5 mt-5 mb-3 h-60 rounded-10"
           >
             <div class="text-right" v-if="user.usertype == 'expert'">
-              <b-icon icon="star-fill" class="h2" variant="warning"></b-icon>
+              <b-icon icon="star-fill" class="h2" variant="warning"/>
             </div>
             <div class="text-right" v-else>
-              <b-icon icon="" class="h2" variant="warning"></b-icon>
+              <b-icon icon="" class="h2" variant="warning"/>
             </div>
 
             <b-img

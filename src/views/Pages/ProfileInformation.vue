@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-header class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"></base-header>
+        <base-header class="pb-8 pt-md-8 bg-gradient-primary"></base-header>
           <card>
             <b-row align-v="center" slot="header" >
                 <b-col cols="8">
@@ -156,7 +156,7 @@ export default {
     return {
       signedIn: false,
       user: {
-        company: 'Access My Research',
+        company: 'AccessMyResearch',
         username: '',
         email: '',
         firstName: '',

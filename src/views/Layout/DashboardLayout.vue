@@ -1,64 +1,7 @@
 <template>
   <div class="wrapper">
-    <notifications/>
-    <side-bar>
-      <template slot="links">
-        <div v-if="!signedIn">
-          <b-alert show>
-          <i class="fas fa-exclamation-circle fa-lg"></i>
-          &nbsp; In order to access these features, you must login. You can login <router-link class="font-weight-bolder text-white" to="/login">here.</router-link></b-alert>
-        </div>
-        <b-dropdown-divider/>
-        <div v-if="isExpert">
-          <sidebar-item
-          :link="{
-            name: 'Add Research Material',
-            path: '/upload',
-            icon: 'fas fa-arrow-up text-pink'
-          }"/>
-          <b-dropdown-divider/>
-        </div>
-        <sidebar-item
-        :link="{
-          name: 'Home',
-          path: '/home',
-          icon: 'fas fa-home text-primary',
-        }"/>
-        <div @click="redirect">
-          <sidebar-item
-          :link="{
-            name: 'Ask an Expert',
-            path: '/ask',
-            icon: 'fas fa-glasses text-red'
-          }"/>
-        </div>
-        <div @click="redirect">
-          <sidebar-item
-          :link="{
-            name: 'My Projects',
-            path: '/projects',
-            icon: 'fas fa-project-diagram text-green'
-          }"/>
-        </div>
-        <div @click="redirect">
-          <sidebar-item
-          :link="{
-            name: 'My Collections',
-            path: '/collections',
-            icon: 'fas fa-layer-group text-orange'
-          }"/>
-        </div>
-        <div v-if="isAdmin">
-          <b-dropdown-divider/>
-          <sidebar-item
-          :link="{
-            name: 'Administration',
-            path: '/admin/home',
-            icon: 'fas fa-users-cog text-grey'
-          }"/>
-        </div>
-      </template>
-    </side-bar>
+    <notifications/> <!--TODO: Add some code back here for mobile navigation -->
+    <!--<side-bar/>-->
     <div class="main-content">
       <dashboard-navbar :type="$route.meta.navbarType"/>
       <div @click="$sidebar.displaySidebar(false)">
