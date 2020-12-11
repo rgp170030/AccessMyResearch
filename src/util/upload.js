@@ -1,80 +1,18 @@
-//************************ Drag and drop *****************//
-//Prevents default drag behaviors on drag
-
-// ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-//     dropArea.addEventListener(eventName, preventDefaults, false)   
-//     document.body.addEventListener(eventName, preventDefaults, false)
-// })
-// //Highlight drop area when item is dragged over it
-// ;['dragenter', 'dragover'].forEach(eventName => {
-//     dropArea.addEventListener(eventName, highlight, false)
-// })
-// //Unhighlight drop area when item is no longer over it
-// ;['dragleave', 'drop'].forEach(eventName => { //TODO: Fix this
-//     dropArea.addEventListener(eventName, unhighlight, false)
-// })
-// //Handle dropped files
-//dropArea.addEventListener('drop', handleDrop, false)
-
 import axios from "axios";
 import { AuthHelperAxios }  from "./auth-helper.js";
 
-//Prevents default drag behaviors as event
-function preventDefaults (e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-//Highlights drop area
-function highlight(e) {
-    this.classList.add('highlight')
-}
-
-//Unhighlights drop area
-function unhighlight(e) {
-    this.classList.remove('highlight')
-}
-
-//Updated the progress bar as files upload
-function updateProgress(fileNumber, percent) {
-    uploadProgress[fileNumber] = percent
-    let total = uploadProgress.reduce((tot, curr) => tot + curr, 0) / uploadProgress.length
-    console.debug('update', fileNumber, percent, total)
-    progressBar.value = total
-}
-
-//Shows file previews (useful for article cover uploads)
-function previewFile(file) {
-    let reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onloadend = function() {
-        let img = document.createElement('img')
-        img.src = reader.result
-        document.getElementById('gallery').appendChild(img)
-    }
-}
-
+//The main export for this util script. Contains an object of all the utility functions related to uploading and file management for the drag-and-drop file uploader, such as what is used in Upload.vue.
 export default {
-    init: function(opts){
-        
-        var element = opts.element;
+    //Initializes the upload handlers on the upload dropzone. See Upload.vue's mounted method for example.
+    init: function(element, files){
+        // element: page element for file drop zone.
+        // files: a reference to the array of selected files (rather, the array that *will* contain the select files).
 
-        var self = this;
-
-        //Handles a file drop, calling handleFiles()
-        function handleDrop(e) {
-            handleFiles(e.dataTransfer.files)
-        }
-
-        //Handles files for upload
-        function handleFiles(files) {
-            if(files.length > 1){
-                alert("Only one file can be added at a time");
-                return;
-            }
-
-            self.setFiles(files);
-        }
+        //Prevents default drag behaviors as event
+        var preventDefaults = e => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
 
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             element.addEventListener(eventName, preventDefaults, false)   
@@ -83,35 +21,49 @@ export default {
     
         //Highlight drop area when item is dragged over it
         ['dragenter', 'dragover'].forEach(eventName => {
-            element.addEventListener(eventName, highlight, false)
+            element.addEventListener(eventName, e=>{
+                this.classList.add('highlight');
+            }, false)
         });
     
         //Unhighlight drop area when item is no longer over it
         ['dragleave', 'drop'].forEach(eventName => {
-            element.addEventListener(eventName, unhighlight, false)
+            element.addEventListener(eventName, e=>{
+                this.classList.remove('highlight');
+            }, false)
         });
     
         //Handle dropped files
-        element.addEventListener('drop', handleDrop, false);
+        element.addEventListener('drop', e => {
+            let droppedFiles = e.dataTransfer.files;
 
-        this.opts = opts;
-    },
-    setFiles: function(files) {
-        this.opts.files.length = 0;
-        this.addFiles(...files);
-    },
-    addFiles: function(...files){
-        files.forEach(file => {
-            this.opts.files.push(file);
-        });
-    },
-    updateProgress: function(percent){
-        this.opts.progressBar.value = percent;
-    },
-    upload: async function(data){
-        var self = this;
+            if(droppedFiles.length > 1){
+                alert("Only one file can be added at a time");
+                return;
+            }
 
-        var files = this.opts.files;
+            files.length = 0;
+            droppedFiles.forEach(file => {
+                files.push(file);
+            });
+        }, false);
+    },
+    upload: async function(url, data, files, progressBar){
+        if(!url){
+            console.err("No endpoint provided to for upload");
+            return;
+        }
+
+        if(!data){
+            console.err("No form data was provided for upload");
+            return;
+        }
+
+        if(!files){
+            console.err("No files array was provided for upload.");
+            return;
+        }
+
         if(files.length === 0){
             alert("Please select a publication to upload.");
             return;
@@ -122,13 +74,18 @@ export default {
             return;
         }
 
-        var file = files[0];
+        let file = files[0];
+
+        let updateProgress = p => {
+            if(progressBar)
+                progressBar.value = p;
+        };
 
         let options = {
             onUploadProgress: e => {
                 if (e.lengthComputable) {
                     const percentage = Math.round((e.loaded * 100) / e.total);
-                    self.updateProgress(percentage);
+                    updateProgress(percentage);
                 }
             }
         };
@@ -139,13 +96,13 @@ export default {
         formData.append('data', JSON.stringify(data));
         formData.append('file', file);
 
-        axios.post(this.opts.urls.uploadEndpoint, formData, options)
+        axios.post(url, formData, options)
             .then(res => {
-                self.updateProgress(100);
+                updateProgress(100);
                 alert("File Upload Completed!");
             })
             .catch(err => {
-                self.updateProgress(0);
+                updateProgress(0);
                 alert(err.message);
             });
     }
