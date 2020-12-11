@@ -9,10 +9,12 @@
                     <i style="padding-left:6px" class="fas fa-expand-arrows-alt"/>
                 </span>
             </span>
-            <h3 class="mb-0">Publications</h3>
-            <p>Most Recent
-                <i style="padding-left:4px" class="fas fa-sort"/>
-            </p>
+            <h4 class="mb-0">Most Recent
+                <i style="padding-left:4px" class="fas fa-chevron-down"/>
+            </h4>
+            <h5 class="mb-0">Results per page: 50
+                <i style="padding-left:3px" class="fas fa-chevron-down"/>
+            </h5>
         </b-card-header>
         <el-table class="table-responsive table-light"
                   :data="articles"

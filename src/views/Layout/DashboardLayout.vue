@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <notifications/>
+    <notifications/> <!--TODO: Add some code back here for mobile navigation -->
     <!-- <side-bar>
       <template slot="links">
         <div v-if="!signedIn">
