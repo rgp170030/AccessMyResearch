@@ -58,7 +58,7 @@
             <!-- autocomplete start -->
             <!-- start here  -->
             <div class="SearchDropDown">
-              <b-dropdown variant="" right text="">
+              <b-dropdown variant="primary" right text="">
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -104,7 +104,7 @@
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
                             id="areaFilter"
-                            v-model="selectedFilters"
+                            v-model="selectedAreaFilters" 
                             @input="sort"
                             :options="areas"
                             name="area"
@@ -147,6 +147,38 @@
                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.accessibilityAccordion
+                        variant="primary"
+                        >Accessibility</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="accessibilityAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-group>
+                          <b-form-checkbox-group 
+                            style="column-count: 2;"
+                            id="accessibilityFilter"
+                            v-model="selectedFilters"
+                            :options="accessibilityOptions"
+                            name="acccessibility"
+                          ></b-form-checkbox-group>
+                          </b-form-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                <div class="accordion" role="tablist">
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button block v-b-toggle.yearAccordion variant="primary"
                         >Year</b-button
                       >
@@ -165,6 +197,7 @@
                             :max="2020"
                             :enable-cross="false"
                             :tooltip="'always'"
+                            @input="sort()"
                           ></vue-slider>
                           <br />
                           <div>Years Selected: {{ yearRange }}</div>
@@ -189,11 +222,14 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
+                            style="column-count: 2;"
                             id="typeFilter"
-                            v-model="selectedFilters"
+                            v-model="selectedTypeFilters"
                             :options="types"
                             name="type"
+                            @input="sort()"
                           ></b-form-checkbox-group>
+                          <div>{{ this.selectedTypeFilters }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -218,8 +254,9 @@
                       <b-card-body>
                         <b-dropdown-group class="small">
                           <b-form-checkbox-group
+                            style="column-count: 2;"
                             id="databaseFilter"
-                            v-model="selectedFilters"
+                            v-model="selectedDataFilters"
                             :options="databases"
                             name="database"
                           ></b-form-checkbox-group>
@@ -230,6 +267,37 @@
                 </div>
 
                 <div class="accordion" role="tablist">
+
+                  <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-button
+                        block
+                        v-b-toggle.journalAccordion
+                        variant="primary"
+                        >Journals</b-button
+                      >
+                    </b-card-header>
+                    <b-collapse
+                      id="journalAccordion"
+                      accordion="my-accordion"
+                      role="tabpanel"
+                    >
+                      <b-card-body>
+                        <b-dropdown-group class="small">
+                          <b-form-checkbox-group
+                            id="journalFilter"
+                            v-model="selectedFilters"
+                            @input="sort()"
+                            :options="journals"
+                            name="journals"
+                          ></b-form-checkbox-group>
+                        </b-dropdown-group>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>
+                </div>
+
+                 <div class="accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button
@@ -246,7 +314,7 @@
                     >
                       <b-card-body v-if="defaultFilterCheckbox">
                         <b-dropdown-group class="small">
-                          <div>{{ selectedFilters }}</div>
+                          <div>{{ selectedFilters }}{{ selectedAreaFilters }}{{ selectedDataFilters }}</div>
                         </b-dropdown-group>
                       </b-card-body>
                     </b-collapse>
@@ -260,7 +328,7 @@
                   @click="defaultFilterCheckboxChecked()"
                 />
                 Save current filters as default
-                <b-button class="btn float-right" variant="primary"
+                <b-button class="btn float-right" variant="primary" @click="sort()"
                   >Search</b-button
                 >
               </b-dropdown>
@@ -463,6 +531,14 @@ export default {
       this.selectedFilters = localStorage.selectedFilters.split(",");
     }
 
+    if (localStorage.selectedAreaFilters) {
+      this.selectedAreaFilters = localStorage.selectedAreaFilters.split(" ");
+    }
+
+    if (localStorage.selectedDataFilters) {
+      this.selectedDataFilters = localStorage.selectedDataFilters.split(" ");
+    }
+
     if (localStorage.yearRange) {
       this.yearRange = localStorage.yearRange.split(",");
     }
@@ -500,8 +576,12 @@ export default {
       results_data: [],*/
       yearRange: [1950, 2020],
       selectedFilters: [],
+      selectedAreaFilters: [],
+      selectedTypeFilters: [],
+      selectedDataFilters: [],
       search: { filter: null, text: "" },
       selectedSortBy: "most-recent",
+      areasStringify: "", 
       sortBy: [
         {
           text: "Most Recent",
@@ -535,15 +615,15 @@ export default {
       areas: [
         {
           text: "Computer Science",
-          value: "cs",
+          value: "computer science",
         },
         {
           text: "Electrical Engineering",
-          value: "ee",
+          value: "electrical engineering",
         },
         {
           text: "Neuroscience",
-          value: "ns",
+          value: "neuroscience",
         },
       ],
       expertise: [
@@ -568,78 +648,145 @@ export default {
           value: "100+",
         },
       ],
+      accessibilityOptions: [
+        {
+          text: "Open",
+          value: "open",
+        },
+        {
+          text: "With Permission",
+          value: "with-permission",
+        },
+        {
+          text: "Embargoed",
+          value: "embargoed",
+        },
+        {
+          text: "Restricted",
+          value: "restricted",
+        },
+      ],
       types: [
+        {
+          text: "Title",
+          value: "title",
+        },
+        {
+          text: "Author",
+          value: "authors",
+        },
+        {
+          text: "DOI",
+          value: "doi",
+        },
         {
           text: "Peer Review",
           value: "peer-review",
+          disabled: true
         },
         {
           text: "Pre Print",
           value: "pre-print",
+          disabled: true
         },
         {
           text: "Book Chapter",
           value: "book-chapter",
+          disabled: true
         },
         {
           text: "Poster",
           value: "poster",
+          disabled: true
         },
         {
           text: "Presentation",
           value: "presentation",
+          disabled: true
         },
         {
           text: "Results",
           value: "results",
+          disabled: true
         },
         {
           text: "Figures",
           value: "figures",
+          disabled: true
         },
         {
           text: "Video",
           value: "video",
+          disabled: true
         },
         {
           text: "Stream",
           value: "stream",
+          disabled: true
         },
         {
           text: "Blog",
           value: "blog",
+          disabled: true
         },
         {
           text: "Vlog",
           value: "vlog",
+          disabled: true
         },
         {
           text: "Courses",
           value: "courses",
+          disabled: true
         },
       ],
       databases: [
         {
           text: "arXiv",
-          value: "arxiv",
+          value: "database:arxiv",
+          disabled: true
         },
         {
           text: "CORE",
-          value: "core",
+          value: "CORE",
         },
         {
           text: "DBLP",
-          value: "dblp",
+          value: "database:dblp",
+          disabled: true
         },
         {
           text: "PubMed",
-          value: "pubmed",
+          value: "database:pubmed",
+          disabled: true
         },
         {
           text: "Unpaywall",
-          value: "unpaywall",
+          value: "Unpaywall",
+        },
+        {
+          text: "DOAJ",
+          value: "DOAJ",
         },
       ],
+      journals: [
+        {
+          text: "PLOS ONE", 
+          value: "plos one"
+        },
+        {
+          text: "Royal Society Open Science",
+          value: "royal society open science"
+        },
+        {
+          text: "Nature",
+          value: "nature"
+        },
+        {
+          text: "Science",
+          value: "science"
+        },
+      ]
     };
   },
   methods: {
@@ -659,7 +806,11 @@ export default {
       this.$router
         .push({
           path: "results",
-          query: { text: this.search.text, filter: this.search.filter },
+          query: { text: this.search.text, filter: this.search.filter, 
+          yearRange: this.yearRange, 
+          types: this.selectedTypeFilters, 
+          areas:this.selectedAreaFilters,
+          databases: this.selectedDataFilters },
         })
         .catch(() => {});
     },
@@ -690,48 +841,23 @@ export default {
       }
     },
     sort() {
-      if (this.search.text) {
-        this.onSubmit();
-      }
-
-      /*make a if-statement for the Sort By filter.
-      console.log(this.search.filter);
-      this.search.filter == "b"
-        ? this.results_data.sort(function(a, b) {
-            return b.likes - a.likes;
-          })
-        : this.results_data.sort(function(a, b) {
-            return b.ratings - a.ratings;
-          });*/
+      this.onSubmit();
     },
-    search_text() {
-      //FOR DATABASE IN FUTURE
-      /*console.log(this.search.text);
-      var inside = this;
-      this.results_data = this.results_data_actual.filter(function (results) {
-        if (
-          results.place //https://www.freecodecamp.org/news/how-to-set-up-responsive-ui-search-in-vue-js-bf6007b7fc0f/
-            .toLowerCase()
-            .indexOf(inside.search.text.toLowerCase()) != "-1"
-        ) {
-          return results;
-        }
-      });*/
-    },
+    
     //autocomplete start
     filterRecentSearches() {
       this.getSearchHistory();
-      this.filteredRecentSearches = this.recentSearches.filter((s) => {
-        return (
-          this.search.text &&
-          s[1].toLowerCase().startsWith(this.search.text.toLowerCase())
-        );
-      });
-      this.filteredRecentSearches = this.filteredRecentSearches
-        .map((item) => item[1])
-        .filter((val, index, self) => self.indexOf(val) == index);
-    },
-    setSearch(recentSearch) {
+
+      this.filteredRecentSearches = this.recentSearches.filter(
+        (s) => {
+          return this.search.text && JSON.parse(s[1]).query
+            .toLowerCase()
+            .startsWith(this.search.text.toLowerCase());
+        }
+      );
+      this.filteredRecentSearches = this.filteredRecentSearches.map(item => JSON.parse(item[1]).query).filter((val, index, self) => self.indexOf(val) == index)
+},
+    setSearch (recentSearch) {
       this.search.text = recentSearch;
       this.modal = false;
     },
@@ -742,6 +868,8 @@ export default {
 
     //default filter start
     defaultFilterCheckboxChecked() {
+      localStorage.selectedAreaFilters = this.selectedAreaFilters; //AREA FILTER DATABASE; NEED TO FIX
+      localStorage.selectedDataFilters = selectedDataFilters
       localStorage.selectedFilters = this.selectedFilters;
       localStorage.yearRange = this.yearRange;
       localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;

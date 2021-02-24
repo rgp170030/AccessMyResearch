@@ -6,57 +6,47 @@
     <Email ref="doiEmailModal" :emails="emailModal.emailOpts"></Email>
     <b-card-header class="border-0">
       <h3 class="mb-0">
-        About {{ results.length }} results ({{ timeTotal }} ms)
+        About {{ results.length }} results ({{ elapsed_time }} ms)
       </h3>
-      <h4>{{ searchStatus }}</h4>
     </b-card-header>
     <card class="min-vh-100 main_body center">
       <div class="row card text-black">
         <div class="col-lg mx-auto form p-4">
+          <!--  <b-table striped hover :items="results" :fields="fields"></b-table>  -->
           <el-table
             class="table-responsive table"
             header-row-class-name="thead-light"
             :data="results"
           >
-            <el-table-column label="Title" min-width="300px" prop="name">
-              <template v-slot="{ row }">
-                <b-media no-body class="align-items-center">
-                  <b-media-body>
-                    <span class="font-weight-600 name mb-0 text-sm">{{
-                      row._source.title
-                    }}</span>
-                  </b-media-body>
-                </b-media>
-              </template>
-            </el-table-column>
             <el-table-column
-              label="Author"
-              prop="_source.author"
-              min-width="150px"
-            >
-              <template v-slot="{ row }">
-                {{row._source.author}}
-     
-                  <div 
-                    class="emailIcon"
-                    @click="doiEmailIconClick(row._source.doi)"
-                    v-if="row._source.isDoi"
-                  >
-                    <b-icon
-                        icon="envelope-fill"
-                        font-scale="2"
-                        aria-hidden="true"
-                        ><span class="sr-only">Email Author</span>
-                    </b-icon>
-                  </div>
-
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="Message"
-              prop="_source.message"
+              label="Title"
+              prop="_source.title"
               min-width="350px"
             >
+            </el-table-column>
+            <el-table-column
+              label="Author(s)"
+              prop="_source.authors"
+              min-width="150px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="Description"
+              prop="_source.description"
+              min-width="350px"
+            >
+            </el-table-column>
+            <el-table-column
+              label="Date Published"
+              prop="_source.datePublished"
+              min-width="200px"
+            >
+            </el-table-column>
+            <el-table-column label="URL" prop="_source.url" min-width="350px">
+            </el-table-column>
+            <el-table-column label="DOI" prop="_source.doi" min-width="200px">
+            </el-table-column>
+            <el-table-column label="Database" prop="_source.database" min-width="200px">
             </el-table-column>
             <el-table-column
               label="View Count"
@@ -76,7 +66,7 @@ import LightTable from "./Tables/LightTable";
 import { Client } from "elasticsearch";
 import { Table, TableColumn } from "element-ui";
 import axios from "axios";
-import Email from '@/components/Email.vue';
+import Email from "@/components/Email.vue";
 
 const client = new Client({ node: "http://localhost:9600/" });
 
@@ -85,17 +75,22 @@ export default {
     LightTable,
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
-    Email
+    Email,
   },
   data() {
     return {
       results: [],
-      searchStatus: '',
+      //results_doaj: [],
+      //results_doi: [],
+      //fields: ['snippet', 'response.doi_url'],
+      elapsed_time: 0,
       timeTotal: 0,
       blacklistText: "",
+      lengthResults: 0,
+
       emailModal: {
-        emailOpts: []
-      }
+        emailOpts: [],
+      },
     };
   },
   computed: {
@@ -111,7 +106,7 @@ export default {
       //alert(this.blacklistText)
       return this.$route.query.text || 1;
     },
-    doiEndpoint(){
+    doiEndpoint() {
       return this.$endpoints.aspnet + "api/doi";
     },
   },
@@ -125,42 +120,94 @@ export default {
     this.performSearch();
   },
   methods: {
+    postSearchHistory(startTime, totalResults, queryText) {
+      const searchQuery = {};
+
+      var queryTime = startTime.toDateString();
+      searchQuery[startTime] = JSON.stringify({
+        time: queryTime,
+        total: totalResults,
+        query: queryText,
+      });
+      //searchQuery[queryTime] =  queryText;
+      axios
+        .post("http://localhost:3000/search", searchQuery)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     async performSearch() {
       var startTime, endTime;
+      var searchFields = [
+        "title",
+        "authors",
+        "description",
+        "datePublished",
+        "url",
+        "journal",
+        "doi",
+        "database"
+      ];
       this.results = [];
-
+      this.lengthResults = 0;
       startTime = new Date();
-      const searchQuery = {};
-      searchQuery[startTime] = this.$route.query.text;
+      var betterQuery = this.queryBuilder(
+        this.$route.query.types,
+        this.$route.query.text
+      );
+      console.log(this.$route.query.areas)
 
-      // axios
-      //   .post("http://localhost:3000/search", searchQuery)
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
-
-      this.searchStatus = 'Searching AMR Database...';
+      this.searchStatus = "Searching AMR Database...";
       let searchResults = await client
         .search({
-          index: "amr",
+          size: 500,
           body: {
             query: {
               bool: {
                 must_not: {
                   query_string: {
-                    fields: ["title", "author", "message", "count"],
+                    fields: searchFields,
+
                     query: this.blacklistText,
                   },
                 },
-                should: {
-                  query_string: {
-                    fields: ["title", "author", "message", "count"],
-                    query: this.$route.query.text,
+                must: [
+                  {
+                    range: {
+                      datePublished: {
+                        gte: this.$route.query.yearRange[0],
+                        lte: this.$route.query.yearRange[1],
+                      },
+                    },
                   },
-                },
+                  {
+                    bool: {
+                      should: betterQuery,
+                    },
+                  },
+                  /* AREA FILTER HERE
+                  {
+                    should: {
+                      query_string: {
+                        fields: ["title","authors","description"],
+                        query: this.$route.query.areas,
+                      },
+                    }
+                  },
+                  */
+                  /* DATABASE FILTER HERE
+                  {
+                    must: {
+                      database: {
+                        query: this.$route.query.databases,
+                      },
+                    }
+                  },
+                */ 
+                ],
               },
             },
           },
@@ -170,13 +217,23 @@ export default {
           console.log(e);
         });
 
-      this.searchStatus = '';
+      this.searchStatus = "";
 
       endTime = new Date();
       var timeDiff = endTime - startTime;
       this.timeTotal = this.timeTotal + timeDiff;
-      if (searchResults)
-        this.results.push(...searchResults.hits.hits);
+
+      for (var hit of searchResults.hits.hits) {
+        hit._source.authors = this.arrayToString(hit._source.authors);
+        hit._source.url = this.arrayToString(hit._source.url);
+        hit._source.description = this.shortenDescription(
+          hit._source.description
+        );
+      }
+      this.results.push(...searchResults.hits.hits);
+
+      //if (searchResults)
+      //this.results.push(...searchResults.hits.hits);
 
       //Subject to change - if Elasticsearch doesn't get any results from this search (i.e., we don't have anything about DOI in our data),
       // then check to see if there is a valid in the query string (e.g. 10.1510/12616/asghja/125)
@@ -184,6 +241,36 @@ export default {
       if (this.results.length === 0) {
         this.checkDoi();
       }
+      this.lengthResults = this.results.length;
+      this.elapsed_time = this.timeTotal;
+      this.postSearchHistory(
+        startTime,
+        this.lengthResults,
+        this.$route.query.text
+      );
+    },
+    queryBuilder(fields, text) {
+      var searchFields = [
+        "title",
+        "authors",
+        "description",
+        "datePublished",
+        "url",
+        "journal",
+        "doi",
+      ];
+      if (typeof fields == "string") {
+        searchFields = [fields];
+      } else if (Array.isArray(fields) && fields.length > 0) {
+        searchFields = fields;
+      }
+      var arr = [];
+      searchFields.forEach(function (item, index) {
+        var obj = {};
+        obj["match"] = { [item]: text };
+        arr.push(obj);
+      });
+      return arr;
     },
     checkDoi() {
       var self = this;
@@ -192,18 +279,22 @@ export default {
       var search = reg.exec(this.$route.query.text);
       if (search.length > 0) {
         //matched a doi in the string.
-        this.searchStatus = 'Recognized DOI. Checking Crossref.org for info...';
+        this.searchStatus = "Recognized DOI. Checking Crossref.org for info...";
 
         var doi = search[0]; //This is the first match for the regex. This currently only searches the first under the assumption that only one would be searched at a time...
-        axios.get(this.$endpoints.crossref + 'works/' + doi) //sends a query to Crossref.org for basic article details like title and author.
+        axios
+          .get(this.$endpoints.crossref + "works/" + doi) //sends a query to Crossref.org for basic article details like title and author.
           .then(function (response) {
             if (response && response.status === 200) {
               var newRow = {
                 _source: {
                   title: response.data.message.title[0],
-                  author: response.data.message.author[0].family + ", " + response.data.message.author[0].given,
+                  author:
+                    response.data.message.author[0].family +
+                    ", " +
+                    response.data.message.author[0].given,
                   isDoi: true,
-                  doi: doi
+                  doi: doi,
                 },
               };
 
@@ -213,32 +304,50 @@ export default {
           .catch(function (error) {
             alert("invalid or no doi result");
           })
-          .then(function(){
-            self.searchStatus = '';
+          .then(function () {
+            self.searchStatus = "";
           });
       }
     },
-    doiEmailIconClick(doi){
+    doiEmailIconClick(doi) {
       const self = this;
 
-      this.searchStatus = 'Getting email from publisher...';
-      axios.get(this.doiEndpoint + '/' + doi)
+      this.searchStatus = "Getting email from publisher...";
+      axios
+        .get(this.doiEndpoint + "/" + doi)
         .then(function (response) {
           if (response) {
-            if(response.status === 200){
+            if (response.status === 200) {
               self.emailModal.emailOpts = response.data;
               self.$refs.doiEmailModal.showModal();
             }
           }
         })
         .catch(function (error) {
-          if(error.response && error.response.data && error.response.data.detail){
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.detail
+          ) {
             alert(error.response.data.detail);
           }
         })
-        .then(function() {
-          self.searchStatus = '';
+        .then(function () {
+          self.searchStatus = "";
         });
+    },
+    arrayToString(data) {
+      if (Array.isArray(data)) {
+        return data.join(", ");
+      }
+      return data;
+    },
+    shortenDescription(data) {
+      if (data && data.length > 250) {
+        return data.slice(0, 250) + "...";
+      } else {
+        return data;
+      }
     },
   },
 };
