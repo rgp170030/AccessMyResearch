@@ -1,0 +1,1020 @@
+[
+	{
+		"total": 15,
+		"page": 1,
+		"pageSize": 100,
+		"timestamp": "2021-02-25T04:24:28.575546Z",
+		"query": "\"computer AND science\"",
+		"results": [
+			{
+				"last_updated": "2020-11-24T22:48:56Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1683-1470", "type": "eissn" },
+						{ "id": "10.5334/dsj-2015-002", "type": "doi" }
+					],
+					"journal": {
+						"volume": "14",
+						"country": "GB",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://datascience.codata.org/about/submissions/"
+							}
+						],
+						"issns": ["1683-1470"],
+						"publisher": "Ubiquity Press",
+						"language": ["EN"],
+						"title": "Data Science Journal"
+					},
+					"month": "5",
+					"year": "2015",
+					"subject": [
+						{
+							"code": "Q1-390",
+							"scheme": "LCC",
+							"term": "Science (General)"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "School of Computer and Science, Fudan University, No. 220, Han Dan Road, Shanghai\n\nSchool of Software, Yunnan University, No. 2 North Road of Cui Hu, Kunming",
+							"name": "Li Cai"
+						},
+						{
+							"affiliation": "Shanghai Key Laboratory of Data Science, Fudan University, Shanghai",
+							"name": "Yangyong Zhu"
+						}
+					],
+					"link": [
+						{
+							"content_type": "html",
+							"type": "fulltext",
+							"url": "http://datascience.codata.org/articles/553"
+						}
+					],
+					"abstract": "High-quality data are the precondition for analyzing and using big data and for guaranteeing the value of the data. Currently, comprehensive analysis and research of quality standards and quality assessment methods for big data are lacking. First, this paper summarizes reviews of data quality research. Second, this paper analyzes the data characteristics of the big data environment, presents quality challenges faced by big data, and formulates a hierarchical data quality framework from the perspective of data users. This framework consists of big data quality dimensions, quality characteristics, and quality indexes. Finally, on the basis of this framework, this paper constructs a dynamic assessment process for data quality. This process has good expansibility and adaptability and can meet the needs of big data quality assessment. The research results enrich the theoretical scope of big data and lay a solid foundation for the future by establishing an assessment model and studying evaluation algorithms.",
+					"title": "The Challenges of Data Quality and Data Quality Assessment in the Big Data Era"
+				},
+				"admin": { "seal": true },
+				"created_date": "2017-02-17T08:02:06Z",
+				"id": "15d909ea1f1645ecb132f49ea2c29350"
+			},
+			{
+				"last_updated": "2020-11-24T21:36:56Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1300-0039", "type": "pissn" },
+						{ "id": "2147-9682", "type": "eissn" }
+					],
+					"end_page": "768",
+					"keywords": [
+						"say\u0131sal yetkinlik",
+						"say\u0131sal ucurum",
+						"say\u0131sal teknolojiler",
+						"say\u0131sal okuryazarl\u0131k"
+					],
+					"year": "2010",
+					"subject": [
+						{
+							"code": "Z",
+							"scheme": "LCC",
+							"term": "Bibliography. Library science. Information resources"
+						}
+					],
+					"author": [
+						{ "name": "Buket Akkoyunlu" },
+						{ "name": "Y\u0131lmaz Soylu" }
+					],
+					"link": [
+						{
+							"content_type": "html",
+							"type": "fulltext",
+							"url": "http://tk.org.tr/index.php/TK/article/view/449"
+						}
+					],
+					"abstract": "Technological development has flourished lately and its role in education might play a key role in young people\u2019s social, educational, and professional life. Educators must teach young people relevant information and skills not only to give them a chance to explore and understand the world around them but also to familiarize them with digital technologies. But before we can educate young people we must empower teachers using digital technology. Because teachers who use digital technologies appropriately are not only good models but also help students develop positive attitudes towards such technologies. Considering that, the purpose of this study is to determine the levels of teachers\u2019 digital enpowerment. Descriptive methods were used in this study to determine current level of teachers\u2019 digital empowerment. It was found that teachers have average levels of digital enpowerment. Looking closer at sub-categories, it was found that their awareness and motivation levels were higher, however, technical access and empowerment levels were average. Comparing males and females showed that both teachers had high scores on awareness and technical access but motivation, empowerment, and over all males and females were roughly average. When sub\u00adcategories of digital empowerment was analyzed according to teachers\u2019 specialties, it showed that Computer and Science teachers\u2019 had high scores on awareness, motivation, technical access empowerment and overall average. However, Social Science, Turkish and Language teachers had high scores on awareness and motivation, but technical access, empowerment and overall average were average.",
+					"title": "A Study on Teachers\u2019 Digital Empowerment",
+					"journal": {
+						"volume": "24",
+						"number": "4",
+						"country": "TR",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.tk.org.tr/index.php/TK/index"
+							}
+						],
+						"issns": ["1300-0039"],
+						"publisher": "T\u00fcrk K\u00fct\u00fcphaneciler Derne\u011fi (Turkish Librarians' Association)",
+						"language": ["EN", "TR"],
+						"title": "T\u00fcrk K\u00fct\u00fcphanecili\u011fi "
+					},
+					"month": "12",
+					"start_page": "748"
+				},
+				"created_date": "2017-10-05T21:37:20Z",
+				"id": "1d94f2726aa84d278c264ed4c89b62d2"
+			},
+			{
+				"last_updated": "2020-11-25T01:08:00Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1099-4300", "type": "eissn" },
+						{ "id": "10.3390/e20090716", "type": "doi" }
+					],
+					"journal": {
+						"volume": "20",
+						"number": "9",
+						"country": "CH",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.mdpi.com/journal/entropy/about"
+							}
+						],
+						"issns": ["1099-4300"],
+						"publisher": "MDPI AG",
+						"language": ["EN"],
+						"title": "Entropy"
+					},
+					"month": "9",
+					"keywords": [
+						"chaotic system",
+						"image encryption",
+						"permutation-diffusion",
+						"SHA-256 hash value",
+						"dynamic index"
+					],
+					"year": "2018",
+					"start_page": "716",
+					"subject": [
+						{ "code": "Q", "scheme": "LCC", "term": "Science" },
+						{
+							"code": "QB460-466",
+							"scheme": "LCC",
+							"term": "Astrophysics"
+						},
+						{
+							"code": "QC1-999",
+							"scheme": "LCC",
+							"term": "Physics"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "School of Computer and Science, Liaocheng University, Liaocheng 252059, China",
+							"name": "Shuqin Zhu"
+						},
+						{
+							"affiliation": "School of Information Science and Engineering, Central South University, Changsha 410083, China",
+							"name": "Congxu Zhu"
+						},
+						{
+							"affiliation": "School of Computer and Science, Liaocheng University, Liaocheng 252059, China",
+							"name": "Wenhong Wang"
+						}
+					],
+					"link": [
+						{
+							"content_type": "pdf",
+							"type": "fulltext",
+							"url": "http://www.mdpi.com/1099-4300/20/9/716"
+						}
+					],
+					"abstract": "In order to overcome the difficulty of key management in &ldquo;one time pad&rdquo; encryption schemes and also resist the attack of chosen plaintext, a new image encryption algorithm based on chaos and SHA-256 is proposed in this paper. The architecture of confusion and diffusion is adopted. Firstly, the surrounding of a plaintext image is surrounded by a sequence generated from the SHA-256 hash value of the plaintext to ensure that each encrypted result is different. Secondly, the image is scrambled according to the random sequence obtained by adding the disturbance term associated with the plaintext to the chaotic sequence. Third, the cyphertext (plaintext) feedback mechanism of the dynamic index in the diffusion stage is adopted, that is, the location index of the cyphertext (plaintext) used for feedback is dynamic. The above measures can ensure that the algorithm can resist chosen plaintext attacks and can overcome the difficulty of key management in &ldquo;one time pad&rdquo; encryption scheme. Also, experimental results such as key space analysis, key sensitivity analysis, differential analysis, histograms, information entropy, and correlation coefficients show that the image encryption algorithm is safe and reliable, and has high application potential.",
+					"title": "A New Image Encryption Algorithm Based on Chaos and Secure Hash SHA-256"
+				},
+				"admin": { "seal": true },
+				"created_date": "2018-09-20T06:13:03Z",
+				"id": "1e487552b8084433ae2f2273bacfc704"
+			},
+			{
+				"last_updated": "2020-11-25T00:03:44Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1424-8220", "type": "eissn" },
+						{ "id": "10.3390/s18061916", "type": "doi" }
+					],
+					"journal": {
+						"volume": "18",
+						"number": "6",
+						"country": "CH",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.mdpi.com/journal/sensors/about"
+							}
+						],
+						"issns": ["1424-8220"],
+						"publisher": "MDPI AG",
+						"language": ["EN"],
+						"title": "Sensors"
+					},
+					"month": "6",
+					"keywords": [
+						"shunting mode",
+						"feature fusion refine neural network",
+						"depthwise-pointwise convolution",
+						"effectiveness and real time"
+					],
+					"year": "2018",
+					"start_page": "1916",
+					"subject": [
+						{
+							"code": "TP1-1185",
+							"scheme": "LCC",
+							"term": "Chemical technology"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "Beijing Institute of Remote Sensing and Equipment, 52 Yongding Road, Haidian District, Beijing 100039, China",
+							"name": "Tao Ye"
+						},
+						{
+							"affiliation": "College of Computer and Science Technology, North China University of Technology, 5 Jin Yuan Zhuang Road, Shijingshan District, Beijing 100144, China",
+							"name": "Baocheng Wang"
+						},
+						{
+							"affiliation": "School of Instrumentation Science and Opto-Electronics Engineering, Key Laboratory of Precision Opto-Mechatronics Technology, Ministry of Education, Beihang University, Beijing 100191, China",
+							"name": "Ping Song"
+						},
+						{
+							"affiliation": "School of Instrumentation Science and Opto-Electronics Engineering, Key Laboratory of Precision Opto-Mechatronics Technology, Ministry of Education, Beihang University, Beijing 100191, China",
+							"name": "Juan Li"
+						}
+					],
+					"link": [
+						{
+							"content_type": "pdf",
+							"type": "fulltext",
+							"url": "http://www.mdpi.com/1424-8220/18/6/1916"
+						}
+					],
+					"abstract": "Many accidents happen under shunting mode when the speed of a train is below 45 km/h. In this mode, train attendants observe the railway condition ahead using the traditional manual method and tell the observation results to the driver in order to avoid danger. To address this problem, an automatic object detection system based on convolutional neural network (CNN) is proposed to detect objects ahead in shunting mode, which is called Feature Fusion Refine neural network (FR-Net). It consists of three connected modules, i.e., the depthwise-pointwise convolution, the coarse detection module, and the object detection module. Depth-wise-pointwise convolutions are used to improve the detection in real time. The coarse detection module coarsely refine the locations and sizes of prior anchors to provide better initialization for the subsequent module and also reduces search space for the classification, whereas the object detection module aims to regress accurate object locations and predict the class labels for the prior anchors. The experimental results on the railway traffic dataset show that FR-Net achieves 0.8953 mAP with 72.3 FPS performance on a machine with a GeForce GTX1080Ti with the input size of 320 &times; 320 pixels. The results imply that FR-Net takes a good tradeoff both on effectiveness and real time performance. The proposed method can meet the needs of practical application in shunting mode.",
+					"title": "Automatic Railway Traffic Object Detection System Using Feature Fusion Refine Neural Network under Shunting Mode"
+				},
+				"admin": { "seal": true },
+				"created_date": "2018-06-13T07:03:24Z",
+				"id": "245b837753574f7aa7d8fba9f445de7c"
+			},
+			{
+				"last_updated": "2020-11-24T21:18:47Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1677-2504", "type": "pissn" },
+						{ "id": "2178-2822", "type": "eissn" }
+					],
+					"end_page": "190",
+					"keywords": [
+						"Aprendizado com computadores",
+						"Pol\u00edtica educacional",
+						"Educa\u00e7\u00e3o"
+					],
+					"year": "2012",
+					"subject": [
+						{
+							"code": "HD45-45.2",
+							"scheme": "LCC",
+							"term": "Technological innovations. Automation"
+						},
+						{
+							"code": "HF5001-6182",
+							"scheme": "LCC",
+							"term": "Business"
+						}
+					],
+					"author": [
+						{ "name": "Renan Gomes De Pieri" },
+						{ "name": "Sergio Pinheiro Firpo" }
+					],
+					"link": [
+						{
+							"type": "fulltext",
+							"url": "http://www.ige.unicamp.br/ojs/index.php/rbi/article/view/528"
+						}
+					],
+					"abstract": "O presente artigo tem como objetivo analisar os efeitos do uso de computadores e outras tecnologias de informa\u00e7\u00e3o e comunica\u00e7\u00e3o nas escolas. Para isso, avalia-se a primeira etapa de um programa que distribuiu computadores e outros acess\u00f3rios de inform\u00e1tica e treinou professores de escolas pertencentes a munic\u00edpios com baixo IDH. Estimou-se o impacto do programa sobre vari\u00e1veis de desempenho dos alunos e vari\u00e1veis de recursos nas escolas. Como resultado, observa-se que, a despeito do aumento significativo do acesso aos laborat\u00f3rios de inform\u00e1tica e ci\u00eancia pelas escolas participantes, o impacto do programa no curto prazo tende a ser negativo sobre o desempenho dos alunos da 4\u00aa e 8\u00aa s\u00e9ries do ensino fundamental. Contudo, para alunos da 4\u00aa s\u00e9rie, esse resultado negativo fica menor em termos absolutos ao longo do tempo, indicando que parece haver um efeito de longo prazo positivo, por\u00e9m pequeno, entre crian\u00e7as mais novas e expostas \u00e0s novas tecnologias de informa\u00e7\u00e3o. Tal resultado n\u00e3o \u00e9 encontrado para a 8\u00aa s\u00e9rie, onde foram verificados resultados de longo prazo nulos ou negativos, indicando que crian\u00e7as mais velhas, quando expostas a tecnologias de informa\u00e7\u00e3o nas escolas, n\u00e3o apresentam ganhos de aprendizado.<br>This paper analyzes the effects of using computers and other information and communication technologies in schools. For this, we evaluate the first stage of a program that distributed computers and other computer accessories and trained teachers from schools belonging to municipalities with low HDI. We estimate the program\u2019s impact on student performance variables and school resources variables. As a result, we find that despite the significant increase in access to computer and science labs by participant schools, the program\u2019s impact in the short term is negative on performance of students of grades 4th and 8th. However, for students in 4th grade, this negative result is smaller over time, indicating that there seems to be a long term positive effect, although small, between younger children and exposed to new information technologies. This result is not found for the 8th grade, where we find longterm outcomes null or negative, indicating that older children, when exposed to information technology in schools, do not exhibit learning gains.",
+					"title": "Avaliando os efeitos da introdu\u00e7\u00e3o de computadores em escolas p\u00fablicas brasileiras ",
+					"journal": {
+						"volume": "11",
+						"number": "Especial",
+						"country": "BR",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY-NC",
+								"type": "CC BY-NC",
+								"url": "https://periodicos.sbu.unicamp.br/ojs/index.php/rbi/about/submissions#copyrightNotice"
+							}
+						],
+						"issns": ["1677-2504", "2178-2822"],
+						"publisher": "Universidade Estadual de Campinas",
+						"language": ["PT"],
+						"title": "Revista Brasileira de Inova\u00e7\u00e3o"
+					},
+					"month": "07",
+					"start_page": "153"
+				},
+				"created_date": "2013-11-29T20:25:19Z",
+				"id": "3dd12184adcf4cf7aeb0e0e6752c6002"
+			},
+			{
+				"last_updated": "2020-11-25T03:40:53Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1550-1477", "type": "eissn" },
+						{ "id": "10.1155/2013/493678", "type": "doi" }
+					],
+					"journal": {
+						"volume": "9",
+						"country": "US",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "https://journals.sagepub.com/author-instructions/dsn"
+							}
+						],
+						"issns": ["1550-1329", "1550-1477"],
+						"publisher": "SAGE Publishing",
+						"language": ["EN"],
+						"title": "International Journal of Distributed Sensor Networks"
+					},
+					"month": "3",
+					"year": "2013",
+					"subject": [
+						{
+							"code": "QA75.5-76.95",
+							"scheme": "LCC",
+							"term": "Electronic computers. Computer science"
+						}
+					],
+					"author": [
+						{
+							"affiliation": " School of Mathematics and Computer Science, Hubei University of Arts and Science, Xiangyang 441053, China",
+							"name": "Zhao Wu"
+						},
+						{
+							"affiliation": " School of Computer Science, Colorado Technical University, Colorado Springs, CO 80907, USA",
+							"name": "NaiXue Xiong"
+						},
+						{
+							"affiliation": " Department of Computer and Science, University of Alabama, Tuscaloosa, AL 35487, USA",
+							"name": "Wenlin Han"
+						},
+						{
+							"affiliation": " School of Mathematics and Computer Science, Hubei University of Arts and Science, Xiangyang 441053, China",
+							"name": "Yan N. Huang"
+						},
+						{
+							"affiliation": " School of Mathematics and Computer Science, Hubei University of Arts and Science, Xiangyang 441053, China",
+							"name": "Chun Y. Hu"
+						},
+						{
+							"affiliation": " School of Mathematics and Computer Science, Hubei University of Arts and Science, Xiangyang 441053, China",
+							"name": "Qiong Gu"
+						},
+						{
+							"affiliation": " School of Mathematics and Computer Science, Hubei University of Arts and Science, Xiangyang 441053, China",
+							"name": "Bo Hang"
+						}
+					],
+					"link": [
+						{
+							"content_type": "HTML",
+							"type": "fulltext",
+							"url": "https://doi.org/10.1155/2013/493678"
+						}
+					],
+					"abstract": "In recent years, some approaches have been presented for the seamless integration of WSNs with the existing, widely deployed SOA technologies such as XML, Web services, and the Business Process Execution Language (BPEL) to build a wireless sensor networks service application. However, there a great challenge on fault tolerant in WSNs. In this paper, we present our framework and approach to enhance the reliability of service composition applications in WSNs through modeling and analyzing a wireless sensor networks service application based on BPEL with exception handler and compensation mechanism. At first, we analyze all possible states during the execution of BPEL instance in WSNs. Then, we present a state framework for modeling execution context in BPEL instance in WSNs. Based on this framework, we analyze state transition and operational semantics in the case of both correct execution and exceptional execution of BPEL instance in WSNs. Furthermore, we propose the state transition models for three types of activities in BPEL instance. In the end, we present a formal approach to model the execution context in BPEL for WSNs. Using this formal model, one can describe and analyze the control flow result from the exception handler and compensation mechanism in BPEL instance for WSNs.",
+					"title": "A Fault-Tolerant Method for Enhancing Reliability of Services Composition Application in WSNs Based on BPEL"
+				},
+				"created_date": "2013-04-16T17:29:07Z",
+				"id": "43a5300c47e345cda6abd5c50c2ba28a"
+			},
+			{
+				"last_updated": "2020-11-24T22:21:28Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "2046-0430", "type": "pissn" },
+						{ "id": "10.1260/2046-0430.1.2.109", "type": "doi" }
+					],
+					"end_page": "130",
+					"keywords": [
+						"Yard crane scheduling",
+						"container terminals",
+						"multi-agent systems",
+						"deferred acceptance algorithm"
+					],
+					"year": "2012",
+					"subject": [
+						{
+							"code": "TA1001-1280",
+							"scheme": "LCC",
+							"term": "Transportation engineering"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "Department of Civil and Environmental Engineering, University of South Carolina, Columbia, SC 29208, USA",
+							"name": "Omor Sharif"
+						},
+						{
+							"affiliation": "Department of Civil and Environmental Engineering, University of South Carolina, Columbia, SC 29208, USA",
+							"name": "Nathan Huynh"
+						},
+						{
+							"affiliation": "Glenn Department of Civil Engineering, Clemson University, Clemson, SC 29634, USA",
+							"name": "Mashrur Chowdhury"
+						},
+						{
+							"affiliation": "Department of Computer and Science Engineering, University of South Carolina, Columbia, SC 29208, USA",
+							"name": "Jose M. Vidal"
+						}
+					],
+					"link": [
+						{
+							"type": "fulltext",
+							"url": "http://www.sciencedirect.com/science/article/pii/S2046043016301538"
+						}
+					],
+					"abstract": "The efficiency of yard operations is critical to the overall productivity of a container terminal because the yard serves as the interface between the landside and waterside operations. Most container terminals use yard cranes to transfer containers between the yard and trucks (both external and internal). To facilitate vessel operations, an efficient work schedule for the yard cranes is necessary given varying work volumes among yard blocks with different planning periods. This paper investigated an agent-based approach to assign and relocate yard cranes among yard blocks based on the forecasted work volumes. The goal of our study is to reduce the work volume that remains incomplete at the end of a planning period. We offered several preference functions for yard cranes and blocks which are modeled as agents. These preference functions are designed to find effective schedules for yard cranes. In addition, we examined various rules for the initial assignment of yard cranes to blocks. Our analysis demonstrated that our model can effectively and efficiently reduce the percentage of incomplete work volume for any real-world sized problem.",
+					"title": "An Agent-Based Solution Framework for Inter-Block Yard Crane Scheduling Problems",
+					"journal": {
+						"volume": "1",
+						"number": "2",
+						"country": "NL",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY-NC-ND",
+								"type": "CC BY-NC-ND",
+								"url": "https://www.elsevier.com/journals/international-journal-of-transportation-science-and-technology/2046-0430/open-access-journal"
+							}
+						],
+						"issns": ["2046-0430", "2046-0449"],
+						"publisher": "Elsevier",
+						"language": ["EN"],
+						"title": "International Journal of Transportation Science and Technology"
+					},
+					"month": "6",
+					"start_page": "109"
+				},
+				"created_date": "2017-09-05T04:22:18Z",
+				"id": "4431dfc35f40445cadc89c7c7979e8f2"
+			},
+			{
+				"last_updated": "2020-11-24T23:41:40Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1110-8665", "type": "pissn" },
+						{ "id": "10.1016/j.eij.2011.10.001", "type": "doi" }
+					],
+					"end_page": "229",
+					"keywords": [
+						"Task scheduling",
+						"Directed acyclic graph",
+						"Parallel processing",
+						"Heterogeneous distributed computing systems",
+						"Sleek time"
+					],
+					"year": "2011",
+					"subject": [
+						{
+							"code": "QA75.5-76.95",
+							"scheme": "LCC",
+							"term": "Electronic computers. Computer science"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "Faculty of Engineering, Menoufia University, Egypt",
+							"name": "Nirmeen A. Bahnasawy"
+						},
+						{
+							"affiliation": "Faculty of Computer and Science, Cairo University, Egypt",
+							"name": "Fatma Omara"
+						},
+						{
+							"affiliation": "Faculty of Engineering, Menoufia University, Egypt",
+							"name": "Magdy A. Koutb"
+						},
+						{
+							"affiliation": "Faculty of Engineering, Menoufia University, Egypt",
+							"name": "Mervat Mosa"
+						}
+					],
+					"link": [
+						{
+							"type": "fulltext",
+							"url": "http://www.sciencedirect.com/science/article/pii/S1110866511000417"
+						}
+					],
+					"abstract": "In distributed computing, the schedule by which tasks are assigned to processors is critical to minimizing the execution time of the application. However, the problem of discovering the schedule that gives the minimum execution time is NP-complete. In this paper, a new task scheduling algorithm called Sorted Nodes in Leveled DAG Division (SNLDD) is introduced and developed for HeDCSs with consider a bounded number of processors. The main principle of the developed algorithm is to divide the Directed Acyclic Graph (DAG) into levels and sort the tasks in each level according to their computation size in descending order. To evaluate the performance of the developed SNLDD algorithm, a comparative study has been done between the developed SNLDD algorithm and the Longest Dynamic Critical Path (LDCP) algorithm which is considered the most efficient existing algorithm. According to the comparative results, it is found that the performance of the developed algorithm provides better performance than the LDCP algorithm in terms of speedup, efficiency, complexity, and quality. Also, a new procedure called Superior Performance Optimization Procedure (SPOP) has been introduced and implemented in the developed SNLDD algorithm and the LDCP algorithm to minimize the sleek time of the processors in the system. Again, the performance of the SNLDD algorithm outperforms the existing LDCP algorithm after adding the SPOP procedure.",
+					"title": "Optimization procedure for algorithms of task scheduling in high performance heterogeneous distributed computing systems",
+					"journal": {
+						"volume": "12",
+						"number": "3",
+						"country": "EG",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY-NC-ND",
+								"type": "CC BY-NC-ND",
+								"url": "https://www.elsevier.com/journals/egyptian-informatics-journal/1110-8665/open-access-journal"
+							}
+						],
+						"issns": ["1110-8665"],
+						"publisher": "Elsevier",
+						"language": ["EN"],
+						"title": "Egyptian Informatics Journal"
+					},
+					"month": "11",
+					"start_page": "219"
+				},
+				"created_date": "2016-11-11T10:30:57Z",
+				"id": "5f8db147292b43778a267293e310b73c"
+			},
+			{
+				"last_updated": "2020-11-25T01:25:26Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "2079-9292", "type": "eissn" },
+						{ "id": "10.3390/electronics8101143", "type": "doi" }
+					],
+					"journal": {
+						"volume": "8",
+						"number": "10",
+						"country": "CH",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.mdpi.com/journal/electronics/about"
+							}
+						],
+						"issns": ["2079-9292"],
+						"publisher": "MDPI AG",
+						"language": ["EN"],
+						"title": "Electronics"
+					},
+					"month": "10",
+					"keywords": [
+						"linear regulator",
+						"low noise",
+						"wide input range",
+						"high voltage (hv)",
+						"high stability",
+						"large current load",
+						"bandgap",
+						"protection circuits"
+					],
+					"year": "2019",
+					"start_page": "1143",
+					"subject": [
+						{
+							"code": "TK7800-8360",
+							"scheme": "LCC",
+							"term": "Electronics"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "School of Electrical and Electronic Engineering and Tianjin Key Laboratory of Film Electronic and Communication Devices, Tianjin University of Technology, Tianjin 300384, China",
+							"name": "Quanzhen Duan"
+						},
+						{
+							"affiliation": "School of Electrical and Electronic Engineering and Tianjin Key Laboratory of Film Electronic and Communication Devices, Tianjin University of Technology, Tianjin 300384, China",
+							"name": "Weidong Li"
+						},
+						{
+							"affiliation": "School of Electrical and Electronic Engineering and Tianjin Key Laboratory of Film Electronic and Communication Devices, Tianjin University of Technology, Tianjin 300384, China",
+							"name": "Shengming Huang"
+						},
+						{
+							"affiliation": "School of Computer and Science Engineering, Tianjin University of Technology, Tianjin 300384, China",
+							"name": "Yuemin Ding"
+						},
+						{
+							"affiliation": "Institute of Microelectronics of the Chinese Academy of Sciences, Beijing 100029, China",
+							"name": "Zhen Meng"
+						},
+						{
+							"affiliation": "School of Computer and Science Engineering, Tianjin University of Technology, Tianjin 300384, China",
+							"name": "Kai Shi"
+						}
+					],
+					"link": [
+						{
+							"content_type": "pdf",
+							"type": "fulltext",
+							"url": "https://www.mdpi.com/2079-9292/8/10/1143"
+						}
+					],
+					"abstract": "A linear regulator with an input range of 3.9&#8722;10 V, 2.5 V output, and a maximal 500 mA load for use with battery systems was developed and presented here. The linear regulator featured two modules of a preregulator and a linear regulator core circuit, offering minimized power dissipation and high-level stability. The preregulator delivered an internal power voltage of 3 V and supplied internal circuits including the second module (the linear regulator core). The preregulator fitted with an active, low-pass filter provided a low-noise reference voltage to the linear regulator core circuit. To ensure operational stability for the linear regulator, error amplifiers incorporating the Miller compensation technique and featuring a large slewing rate were employed in the two modules. The circuit was successfully implemented in a 0.25 &#181;m, 5 V complementary metal-oxide semiconductor (CMOS) process featuring 20 V drain-extended MOS (DMOS)/bipolar high-voltage devices. The total silicon area, including all pads, was approximately 1.67 mm<sup>2</sup>. To reduce chip area, bipolar rather than DMOS transistors served as the power transistors. Measured results demonstrated that the designed linear regulator was able to operate at an input voltage ranging from 3.9 to 10 V and offer a maximum 500 mA load current with fixed 2.5 V output voltage.",
+					"title": "A Two-Module Linear Regulator with 3.9\u201310 V Input, 2.5 V Output, and 500 mA Load"
+				},
+				"admin": { "seal": true },
+				"created_date": "2019-10-11T16:14:14Z",
+				"id": "8a1b1b0b0e5e45e38bf38d8051a98393"
+			},
+			{
+				"last_updated": "2020-11-25T02:55:15Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1550-1477", "type": "eissn" },
+						{ "id": "10.1155/2015/247371", "type": "doi" }
+					],
+					"journal": {
+						"volume": "11",
+						"country": "US",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "https://journals.sagepub.com/author-instructions/dsn"
+							}
+						],
+						"issns": ["1550-1329", "1550-1477"],
+						"publisher": "SAGE Publishing",
+						"language": ["EN"],
+						"title": "International Journal of Distributed Sensor Networks"
+					},
+					"month": "8",
+					"year": "2015",
+					"subject": [
+						{
+							"code": "QA75.5-76.95",
+							"scheme": "LCC",
+							"term": "Electronic computers. Computer science"
+						}
+					],
+					"author": [
+						{
+							"affiliation": " School of Electronic Engineering, Soongsil University, Seoul 156-743, Republic of Korea",
+							"name": "Myungsik Yoo"
+						},
+						{
+							"affiliation": " Department of Computer and Science Engineering, Shanghai Jiao Tong University, Shanghai 200240, China",
+							"name": "Fan Wu"
+						},
+						{
+							"affiliation": " Department of Computer and Science Engineering, SUNY at Buffalo, Buffalo, NY 14201, USA",
+							"name": "Chunming Qiao"
+						}
+					],
+					"link": [
+						{
+							"content_type": "HTML",
+							"type": "fulltext",
+							"url": "https://doi.org/10.1155/2015/247371"
+						}
+					],
+					"title": "Recent Advances of ICT Convergence on WSN Applications"
+				},
+				"created_date": "2015-09-15T15:01:38Z",
+				"id": "989b235cd2a841f19a458c2834531d10"
+			},
+			{
+				"last_updated": "2020-11-25T00:37:03Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1424-8220", "type": "eissn" },
+						{ "id": "10.3390/s19143044", "type": "doi" }
+					],
+					"journal": {
+						"volume": "19",
+						"number": "14",
+						"country": "CH",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.mdpi.com/journal/sensors/about"
+							}
+						],
+						"issns": ["1424-8220"],
+						"publisher": "MDPI AG",
+						"language": ["EN"],
+						"title": "Sensors"
+					},
+					"month": "7",
+					"keywords": ["n/a"],
+					"year": "2019",
+					"start_page": "3044",
+					"subject": [
+						{
+							"code": "TP1-1185",
+							"scheme": "LCC",
+							"term": "Chemical technology"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "Beijing Institute of Remote Sensing and Equipment, 52 Yongding Road, Haidian District, Beijing 100039, China",
+							"name": "Tao Ye"
+						},
+						{
+							"affiliation": "College of Computer and Science Technology, North China University of Technology, 5 Jin Yuan Zhuang Road, Shijingshan District, Beijing 100144, China",
+							"name": "Baocheng Wang"
+						},
+						{
+							"affiliation": "School of Instrumentation Science and Opto-Electronics Engineering, Key Laboratory of Precision Opto-Mechatronics Technology, Ministry of Education, Beihang University, Beijing 100191, China",
+							"name": "Ping Song"
+						},
+						{
+							"affiliation": "School of Instrumentation Science and Opto-Electronics Engineering, Key Laboratory of Precision Opto-Mechatronics Technology, Ministry of Education, Beihang University, Beijing 100191, China",
+							"name": "Juan Li"
+						}
+					],
+					"link": [
+						{
+							"content_type": "pdf",
+							"type": "fulltext",
+							"url": "https://www.mdpi.com/1424-8220/19/14/3044"
+						}
+					],
+					"abstract": "The authors wish to make the following corrections to this paper [...]",
+					"title": "Correction: Ye, T.; et al. Automatic Railway Traffic Object Detection System Using Feature Fusion Refine Neural Network under Shunting Mode. <i>Sensors</i> 2018, <i>18</i>, 1916"
+				},
+				"admin": { "seal": true },
+				"created_date": "2019-07-11T07:56:11Z",
+				"id": "a6b90da9d95e4566a80f316e90497624"
+			},
+			{
+				"last_updated": "2020-11-30T09:11:22Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1530-8669", "type": "pissn" },
+						{ "id": "1530-8677", "type": "eissn" },
+						{ "id": "10.1155/2020/8837751", "type": "doi" }
+					],
+					"journal": {
+						"volume": "2020",
+						"country": "GB",
+						"issns": ["1530-8669", "1530-8677"],
+						"publisher": "Hindawi-Wiley",
+						"language": ["EN"],
+						"title": "Wireless Communications and Mobile Computing"
+					},
+					"year": "2020",
+					"subject": [
+						{ "code": "T", "scheme": "LCC", "term": "Technology" },
+						{
+							"code": "TK5101-6720",
+							"scheme": "LCC",
+							"term": "Telecommunication"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "School of Computer and Science Engineering, Xi\u2019an University of Technology, Xi\u2019an 710048, China",
+							"name": "Kan Wang"
+						},
+						{
+							"affiliation": "School of Computer and Science Engineering, Xi\u2019an University of Technology, Xi\u2019an 710048, China",
+							"name": "Ruijie Wang"
+						},
+						{
+							"affiliation": "School of Computer and Science Engineering, Xi\u2019an University of Technology, Xi\u2019an 710048, China",
+							"name": "Junhuai Li"
+						},
+						{
+							"affiliation": "Faculty of Information Technology, Beijing University of Technology, Beijing 100124, China",
+							"name": "Meng Li"
+						}
+					],
+					"link": [
+						{
+							"type": "fulltext",
+							"url": "http://dx.doi.org/10.1155/2020/8837751"
+						}
+					],
+					"abstract": "As an emerging type of Internet of Things (IoT), Internet of Vehicles (IoV) denotes the vehicle network capable of supporting diverse types of intelligent services and has attracted great attention in the 5G era. In this study, we consider the multimedia content caching with multicast beamforming in IoV-based vehicular edge networks. First, we formulate a joint vehicle-to-vehicle- (V2V-) assisted clustering, caching, and multicasting optimization problem, to minimize the weighted sum of flow cost and power cost, subject to the quality-of-service (QoS) constraints for each multicast group. Then, with the two-timescale setup, the intractable and stochastic original problem is decoupled at separate timescales. More precisely, at the large timescale, we leverage the sample average approximation (SAA) technique to solve the joint V2V-assisted clustering and caching problem and then demonstrate the equivalence of optimal solutions between the original problem and its relaxed linear programming (LP) counterpart; and at the small timescale, we leverage the successive convex approximation (SCA) method to solve the nonconvex multicast beamforming problem, whereby a series of convex subproblems can be acquired, with the convergence also assured. Finally, simulations are conducted with different system parameters to show the effectiveness of the proposed algorithm, revealing that the network performance can benefit from not only the power saving from wireless multicast beamforming in vehicular networks but also the content caching among vehicles.",
+					"title": "Joint V2V-Assisted Clustering, Caching, and Multicast Beamforming in Vehicular Edge Networks"
+				},
+				"admin": { "seal": true },
+				"created_date": "2020-11-30T02:31:07Z",
+				"id": "ad420b1908084f73b884ca2e290e3199"
+			},
+			{
+				"last_updated": "2020-11-24T21:15:17Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "2072-4292", "type": "eissn" },
+						{ "id": "10.3390/rs10060906", "type": "doi" }
+					],
+					"journal": {
+						"volume": "10",
+						"number": "6",
+						"country": "CH",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.mdpi.com/journal/remotesensing/about"
+							}
+						],
+						"issns": ["2072-4292"],
+						"publisher": "MDPI AG",
+						"language": ["EN"],
+						"title": "Remote Sensing"
+					},
+					"month": "6",
+					"keywords": [
+						"statistical distribution",
+						"reaction\u2013diffusion",
+						"level set",
+						"synthetic aperture radar",
+						"active contour"
+					],
+					"year": "2018",
+					"start_page": "906",
+					"subject": [
+						{ "code": "Q", "scheme": "LCC", "term": "Science" }
+					],
+					"author": [
+						{
+							"affiliation": "School of Computer and Science and Engineering, Tianjin University of Technology, Binshuixidao No. 391, Tianjin 300384, China",
+							"name": "Jiaxing Liu"
+						},
+						{
+							"affiliation": "School of Computer and Science and Engineering, Tianjin University of Technology, Binshuixidao No. 391, Tianjin 300384, China",
+							"name": "Xianbin Wen"
+						},
+						{
+							"affiliation": "School of Computer and Science and Engineering, Tianjin University, No. 135 Yaguan Road, Haihe Education Park, Tianjin 300350, China",
+							"name": "Qingxia Meng"
+						},
+						{
+							"affiliation": "School of Computer and Science and Engineering, Tianjin University of Technology, Binshuixidao No. 391, Tianjin 300384, China",
+							"name": "Haixia Xu"
+						},
+						{
+							"affiliation": "School of Computer and Science and Engineering, Tianjin University of Technology, Binshuixidao No. 391, Tianjin 300384, China",
+							"name": "Liming Yuan"
+						}
+					],
+					"link": [
+						{
+							"content_type": "pdf",
+							"type": "fulltext",
+							"url": "http://www.mdpi.com/2072-4292/10/6/906"
+						}
+					],
+					"abstract": "This paper presents a method for synthetic aperture radar (SAR) image segmentation by draing upon a reaction&ndash;diffusion (RD) level set evolution (LSE) equation. The well-known RD theory consists of two main parts: reaction and diffusion terms. We first constructed the reaction term using an energy functional, which integrates the gamma statistical distribution with region&ndash;edge information from SAR images that can simultaneously suppress speckle noise and drive the active contour toward the object boundaries. Then, we used partial differential equation-based LSE to solve the proposed energy functional. Finally, a diffusion term was introduced into the LSE to ensure stability of the level set function and regularize the segmented region. The experimental results of both simulated and real SAR images showed that the proposed model has good robustness against a speckle noise as well as higher segmentation efficiency and accuracy than some existing models.",
+					"title": "Synthetic Aperture Radar Image Segmentation with Reaction Diffusion Level Set Evolution Equation in an Active Contour Model"
+				},
+				"admin": { "seal": true },
+				"created_date": "2018-06-11T07:13:22Z",
+				"id": "c34f40f0d89149d3b29989b85de8c9ba"
+			},
+			{
+				"last_updated": "2020-11-25T00:13:11Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "10.3934/math.2019.3.1019", "type": "doi" },
+						{ "id": "2473-6988", "type": "eissn" }
+					],
+					"end_page": "1033",
+					"keywords": [
+						"complex valued b-metric space",
+						"common fixed point",
+						"compatible mapping",
+						"weakly compatible mapping",
+						"integral equations",
+						"linear system"
+					],
+					"year": "2019",
+					"subject": [
+						{
+							"code": "QA1-939",
+							"scheme": "LCC",
+							"term": "Mathematics"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "1 Department of Mathematics and Computer and Science, Larbi ben M\u2019hidi University, Oum el Bouaghi, Algeria 2 Laboratory of mathematics, informatics and systems (LAMIS) Larbi Tebessi university, Tebessa, Algeria",
+							"name": "Khaled Berrah"
+						},
+						{
+							"affiliation": "1 Department of Mathematics and Computer and Science, Larbi ben M\u2019hidi University, Oum el Bouaghi, Algeria",
+							"name": "Abdelkrim Aliouche"
+						},
+						{
+							"affiliation": "1 Department of Mathematics and Computer and Science, Larbi ben M\u2019hidi University, Oum el Bouaghi, Algeria",
+							"name": "Taki eddine Oussaeif"
+						}
+					],
+					"link": [
+						{
+							"type": "fulltext",
+							"url": "https://www.aimspress.com/article/10.3934/math.2019.3.1019/fulltext.html"
+						}
+					],
+					"abstract": "In this paper, a common fixed point theorem for four self-mappings satisfying rational contraction has been proved in complex valued b-metric space. Then, examples are provided to verify the effectiveness and usability of our main results. Finally, we validate our results by proving both the existence and the uniqueness of a common solution of the system of Urysohn integral equations and the existence of a unique solution for linear equations system.",
+					"title": "Applications and theorem on common fixed point in complex valued b-metric space",
+					"journal": {
+						"volume": "4",
+						"number": "3",
+						"country": "US",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "http://www.aimspress.com/about.html"
+							}
+						],
+						"issns": ["2473-6988"],
+						"publisher": "AIMS Press",
+						"language": ["EN"],
+						"title": "AIMS Mathematics"
+					},
+					"month": "7",
+					"start_page": "1019"
+				},
+				"created_date": "2019-10-17T03:11:54Z",
+				"id": "c3f67b3095b2484fbbc52c40b6685960"
+			},
+			{
+				"last_updated": "2020-11-24T23:26:40Z",
+				"bibjson": {
+					"identifier": [
+						{ "id": "1085-3375", "type": "pissn" },
+						{ "id": "1687-0409", "type": "eissn" },
+						{ "id": "10.1155/2013/689495", "type": "doi" }
+					],
+					"journal": {
+						"volume": "2013",
+						"country": "GB",
+						"license": [
+							{
+								"open_access": true,
+								"title": "CC BY",
+								"type": "CC BY",
+								"url": "https://www.hindawi.com/journals/aaa/guidelines/"
+							}
+						],
+						"issns": ["1085-3375", "1687-0409"],
+						"publisher": "Hindawi Limited",
+						"language": ["EN"],
+						"title": "Abstract and Applied Analysis"
+					},
+					"year": "2013",
+					"subject": [
+						{
+							"code": "QA1-939",
+							"scheme": "LCC",
+							"term": "Mathematics"
+						}
+					],
+					"author": [
+						{
+							"affiliation": "Department of Mathematics, Southeast University, Nanjing 210096, China",
+							"name": "Cheng Ju"
+						},
+						{
+							"affiliation": "Department of Mathematics, Southeast University, Nanjing 210096, China",
+							"name": "Jinde Cao"
+						},
+						{
+							"affiliation": "School of Computer and Science and Engineering, Southeast University, Nanjing 210096, China",
+							"name": "Weiqi Zhang"
+						},
+						{
+							"affiliation": "College of Economics, Zhejiang University, Hangzhou 310058, China",
+							"name": "Mengxin Ji"
+						}
+					],
+					"link": [
+						{
+							"type": "fulltext",
+							"url": "http://dx.doi.org/10.1155/2013/689495"
+						}
+					],
+					"abstract": "We study opinion dynamics in social networks and present a new strategy to control the invasive opinion. A developed continuous-opinion evolution model is proposed to describe the mechanism of making decision in closed community. Two basic strategies of evolution are determined, and some basic features of our new model are analyzed. We study the different invasive strategies. It is shown via using Monte Carlo simulations that our new model shows different invulnerability with traditional model. Node degree and cohesion in invasive small-world community plays less significant role when the evolution of opinion is continuous rather than dichotomous. Using simulation, we find one kind of Influential Nodes that can affect the outcome dramatically, while these Influential Nodes are sensitive to their node degree and the evolution weight. Thus, we develop invasive control strategy based on these features.",
+					"title": "Influential Node Control Strategy for Opinion Evolution on Social Networks"
+				},
+				"admin": { "seal": true },
+				"created_date": "2014-03-09T16:37:16Z",
+				"id": "e9d5c48612664f05b7f1d48c3ccb6f23"
+			}
+		],
+		"last": "https://doaj.org/api/v2/search/articles/%22computer%20AND%20science%22?page=1&pageSize=100"

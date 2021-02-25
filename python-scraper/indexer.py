@@ -4,34 +4,14 @@ import time
 import os
 import ssl
 import logging
+import json
 
 # from elasticsearch import Elasticsearch
 from database_Core import core
-# from database_DOAJ import doaj
+from Logger import getLogger
+from database_DOAJ import doaj
 # from database_Unpaywall import unpaywall
 
-# Set the logger format
-#logging.basicConfig(format='[%(asctime)s] [%(name)s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p') 
-
-def getLogger(name): 
-    # create logger
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
-
-    # create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-
-    # create formatter
-    formatter = logging.Formatter(
-        '[%(asctime)s] [%(name)s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
-    # add formatter to ch
-    ch.setFormatter(formatter)
-
-    # add ch to logger
-    logger.addHandler(ch)
-    return logger
 
 
 # Fix SSL issues if they are present: 
@@ -41,26 +21,27 @@ if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
     
 
 
-# Path to keywords that need to be searched
-keywords = "python-scraper/search.json"
-# keywords = 'search.json'
+# Get logger in context of main indexer class: 
+logger = getLogger("mainIndexer")
 
 def runThreads(): 
+    keywords = getSearchKeywords()
+
+    # Track runtime
     start_time = time.time()
 
     # Define the threads that need to be run:
-    threadCallBacks = [core]
+    threadCallBacks = [doaj]
     params = (keywords,)
 
-    # Create the thread objects 
+    # Create the thread objects: 
     threadObjects = []
     for callback in threadCallBacks: 
-        print(params)
         t = Thread(target=callback, args=params)
         threadObjects.append(t)
         t.start()
     
-    # Join back with all threads
+    # Join back with all threads to make sure they terminate: 
     for thread in threadObjects:
         try: 
             thread.join()
@@ -75,15 +56,29 @@ def runThreads():
     print('All processes done')  
     print('Total indexing time: {:02d}:{:02d}:{:02d}'.format(e // 3600, (e % 3600 // 60), e % 60))
 
-# def log():
-#     print "%s: %s" % ( threadName, time.ctime(time.time()) )
+def getSearchKeywords(): 
+    # Path to keywords that need to be searched
+    # keywords = "python-scraper/search.json"
+    keywords = 'search.json'
+
+    # Reading in the search keywords needed and formatting them
+    with open(keywords) as f:
+        search_terms = json.load(f)['search']
+        # Placing quotes and the "AND" keyword at every space
+        for i in range(len(search_terms)):
+            search_terms[i] = '"' + search_terms[i].replace(' ', ' AND ') + '"'
+        # logger.info("Parsed search terms: %s" % search_terms)
+
+        # Returning the list of formatter keywords
+        return search_terms
+    pass
 
 
 #Main method: 
 if __name__ == '__main__':
-    logger = getLogger("mainIndexer")
     logger.info("Running processes")
-    # runThreads()
+    
+    runThreads()
     logger.info("Running the schedule")
 
     # try:
@@ -99,8 +94,3 @@ if __name__ == '__main__':
     #     except:
     #         print("Error with scheduling")
 
-"""
-- make a log function to print time
-- move api keys to separate file
-- move the thing that opens the search terms to indexer.py
-"""

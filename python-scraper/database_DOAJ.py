@@ -2,121 +2,156 @@ import urllib.request
 import urllib.parse
 import json
 import uuid
-from elasticsearch import Elasticsearch
 
-def doaj(keywords):
-    with open(keywords) as f:
-        search_terms = json.load(f)['search']
-        for i in range(len(search_terms)):
-            search_terms[i] = '"' + search_terms[i].replace(' ', ' AND ') + '"'
-
-    class DOAJApiRequestor:
-        def __init__(self, endpoint):
-            self.endpoint = endpoint
-            # defaults
-            self.pagesize = 100
-            self.page = 1
-
-        def request_url(self, url):
-            with urllib.request.urlopen(url) as response:
-                html = response.read()
-            return html
-
-        def get_method_query_request_url(self, method, query, page):
-            params = {
-                'page': page,
-                'pageSize': self.pagesize,
-            }
-            return self.endpoint + method + '/' + urllib.parse.quote(query) + '?' + urllib.parse.urlencode(params)
-
-        def get_up_to_x_pages_of_query(self, method, query, x = 20):
-            url = self.get_method_query_request_url(method, query, 1)
-            all_articles = []
-            resp = self.request_url(url)
-            result = json.loads(resp.decode('utf-8'))
-            #print(url)
-            all_articles.append(result)
-            if (result['total'] > 100):
-                numOfPages = int(result['total']/self.pagesize)  # rounds down
-                if (numOfPages > x + 1):
-                    numOfPages = x + 1
-                for i in range(2, numOfPages):
-                    url = self.get_method_query_request_url(
-                        method, query, i)
-                    #print(url)
-                    resp = self.request_url(url)
-                    all_articles.append(json.loads(resp.decode('utf-8')))
-            return all_articles
+#from elasticsearch import Elasticsearch
+from HttpUtils import *
 
 
-    endpoint = 'https://doaj.org/api/v1/'
+class DOAJApiRequestor:
+    
+    # Class constructor:
+    # Endpoint: The "URL" of the CORE database
+    # API key: the key used to access the API
+    def __init__(self, endpoint):
+        # Default class variables for the CORE database request:
+        # CORE API states the default page size is 100
+        self.pagesize = 100
+        self.endpoint = endpoint
+        self.logger = getLogger("DOAJ")
+
+
+    # Description: Forms the URL used to query the database.
+    # query (string): the string used to query CORE
+    # @return (string): an absolute URL that be used with self.requestURL()
+    def getRequestURL(self, method, query, page):
+        params = {
+            'page': page,
+            'pageSize': self.pagesize,
+        }
+        return self.endpoint + method + '/' + urllib.parse.quote(query) + '?' + urllib.parse.urlencode(params)
+  
+    # Method (JSON array): Request a variable amount of pages
+    # query (string): the string used to query CORE
+    # maxPages (integer): The amount of pages to be requested
+    # @return: Request a variable amount of pages
+    def getNumberOfPages(self, method, query, maxPages=20):
+        # Get the formatted url
+        url = self.getRequestURL(method, query, 1)
+
+        # Creating an array to store all page responses
+        pageResponses = []
+
+        # Request the first page
+        response = requestURL(url)
+        # Return an empty array if CORE did not respond with valid data
+        if response is None:
+            return []
+        pageOneResponse = json.loads(response.decode('utf-8'))
+        pageResponses.append(pageOneResponse)
+
+        # Check if any additional pages need to be requested
+        if (pageOneResponse['total'] > self.pagesize):
+            # Calculate the total number of pages that need to be requested
+            totalRequiredPages = int(pageOneResponse['total'] / self.pagesize) + 1
+            totalRequiredPages = min(totalRequiredPages, maxPages)
+
+            # Loop from page 2 (since page 1 is already stored) to totalRequiredPages
+            for currPage in range(2, totalRequiredPages + 1):
+                # Get the next URL to request
+                url = self.getRequestURL(method, query, currPage)
+                response = requestURL(url)
+
+                # Must error check and see that response is not 'None'
+                if response is not None:
+                    pageResponses.append(json.loads(response.decode('utf-8')))
+                    self.logger.info("Recieved page #%s" % str(currPage))
+                else:
+                    self.logger.info("Server error on page #%s" % str(currPage))
+        self.logger.info("Finished term: %s" % query)
+        return pageResponses
+
+    def clean(self, result):
+        cleanedResult = []
+        for page in result:
+            for fullArticle in page['results']:
+                try:
+                    article = fullArticle['bibjson']
+                    cleanedArticle = {}
+
+                    # get the title and year
+                    if 'title' in article:
+                        cleanedArticle['title'] = article['title']
+
+                    # Format the author names into a string array
+                    if 'author' in article:
+                        cleanedArticle['author'] = []
+                        # DOAJ has multiple authors
+                        for auth in article['author']:
+                            if 'name' in auth:
+                                cleanedArticle['author'].append(auth['name'])
+
+                    # Get the description (which is the abstract, but have to rename it):
+                    if 'abstract' in article:
+                        cleanedArticle['description'] = article['abstract']
+
+                    # Get the date published
+                    if 'year' in article:
+                        cleanedArticle['datePublished'] = fullArticle['created_date']
+
+                    # Process all the links and add them to a 'url'
+                    if 'link' in article:
+                        cleanedArticle['url'] = []
+                        for link in article['link']:
+                            if 'url' in link:
+                                cleanedArticle['url'].append(link['url'])
+
+                    # Add relavant identifiers
+                    for identifier in article['identifier']:
+                        cleanedArticle[identifier['type']] = identifier['id']
+
+                    # Add database name:
+                    cleanedArticle['database'] = "DOAJ"
+                    cleanedResult.append(cleanedArticle)
+                except Exception as error:
+                    self.logger.error('Error occured while cleaning:')
+                    self.logger.error(str(error))
+
+        return cleanedResult
+
+
+
+def doaj(search_terms):
+    logger = getLogger("DOAJ")
+    logger.info("Indexing the DOAJ database...")
+    endpoint = 'https://doaj.org/api/v2/'
     method = 'search/articles'
-    #topic = '*'
 
     api = DOAJApiRequestor(endpoint)
     result = []
     for term in search_terms:
-        result += api.get_up_to_x_pages_of_query(method, term, x = 2)
+        result += api.getNumberOfPages(method, term, maxPages=2)
 
 
-    def clean(result):
-        mega_json = []
-        for p in result:
-            for a in p['results']:
-                try:
-                    obj = {}
-                    k = ['author','title', 'abstract','year','link']
-                    for i in k:
-                        if i in a['bibjson']:
-                            obj[i] = a['bibjson'][i]     
-                    if 'author' in obj:
-                        authorz = []
-                        for auth in obj['author']: #DOAJ has multiple authors
-                            if 'name' in auth:
-                                authorz.append(auth['name'])
-                        #print(authorz) 
-                        #authJson = json.dumps(authorz)
-                        obj['authors'] = authorz
-                        #print(obj.pop('author')[0]['name'])
-                    if 'abstract' in obj:
-                        obj['description'] = obj['abstract']            
-                    if 'year' in obj:
-                        obj['datePublished'] = obj['year']      
-                    if 'link' in obj:
-                        linkz = []
-                        for lin in obj['link']: #DOAJ has multiple links 
-                            if 'url' in lin:
-                                linkz.append(lin['url'])
-                        obj['url'] = linkz #   obj['url'] = obj['link'][0]['url']       
-                    obj['database'] = "DOAJ"
-                    mega_json.append(obj)
-                except:
-                    print('Error occured while cleaning')
-        return mega_json
+    cleaned_data = api.clean(result)
+    # Following code is to temporarily save the output
+    f = open("output/DOAJ-cleaned-data.json", "w")
+    f.write(json.dumps(cleaned_data))
+    f.close()
 
-    # added id generator method
-    # uuid3 creates a unique id from a namespace and a string(the title, in our example)
-    # these id's are reproducible, so if 2 id's are made with the same namespace 
-    # and the same name(article_name) they should be equal
-    # i messed with uuid in pycharm for a while and this method seemed to work
+    f = open("output/DOAJ-raw-data.json", "w")
+    f.write(json.dumps(result))
+    f.close()
 
-    def id_generator(article_name):
-        unique_id = uuid.uuid3(uuid.NAMESPACE_DNS, article_name)
-        return unique_id
+    #es = Elasticsearch()
 
+    # for doc in range(len(cleaned_data)):
+    #     #res = es.index(index="core", id=doc, body=cleaned_data[doc])
 
-    cleaned_data = clean(result)
+    #     # changed index and id
+    #     # i assume we need to replace article_name, but not sure with what
+    #     res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
+    #     #if doc%100 == 0:
+    #     #    print(doc)
 
-    es = Elasticsearch()
-
-    for doc in range(len(cleaned_data)):
-        #res = es.index(index="core", id=doc, body=cleaned_data[doc])
-
-        # changed index and id
-        # i assume we need to replace article_name, but not sure with what
-        res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
-        #if doc%100 == 0:
-        #    print(doc)
-
-    es.indices.refresh(index="amr")
-    print('Total documents in DOAJ: ' , len(cleaned_data))
+    #es.indices.refresh(index="amr")
+    logger.info('Total documents in CORE: %s' % len(cleaned_data))
