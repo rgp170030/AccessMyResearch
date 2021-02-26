@@ -3,6 +3,7 @@ const path = require('path');
 function resolveSrc(_path) {
   return path.join(__dirname, _path);
 }
+
 // vue.config.js
 module.exports = {
   lintOnSave: true,

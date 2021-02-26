@@ -1,81 +1,32 @@
 {
   "name": "access-my-research",
   "version": "1.0.0",
+  "description": "Access my research",
+  "main": "index.js",
+  "repository": "git@github.com:AccessMyResearch/AccessMyResearch.git",
+  "author": "none",
+  "license": "NONE",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "dev": "npm run serve"
+    "bootstrap": "yarn lerna bootstrap",
+    "build": "yarn lerna run build --stream",
+    "dev": "yarn lerna run dev --stream --parallel",
+    "lerna": "lerna"
   },
-  "dependencies": {
-    "@aws-amplify/ui-vue": "^0.2.21",
-    "amazon-cognito-auth-js": "^1.3.3",
-    "amazon-cognito-identity-js": "^4.5.0",
-    "amplify": "0.0.11",
-    "aws-amplify": "^3.3.3",
-    "aws-amplify-vue": "^2.1.2",
-    "aws-sdk": "^2.777.0",
-    "axios": "^0.20.0",
-    "body-parser": "^1.19.0",
-    "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.18.0",
-    "chart.js": "^2.9.3",
-    "cors": "^2.8.5",
-    "d3": "^5.7.0",
-    "date-fns": "^1.30.1",
-    "dropzone": "^5.5.1",
-    "elasticsearch": "^16.7.1",
-    "element-ui": "^2.13.2",
-    "es6-promise": "^4.1.1",
-    "eslint-plugin-vue": "^7.0.1",
-    "express": "^4.17.1",
-    "firebase": "^7.24.0",
-    "flatpickr": "^4.5.7",
-    "fuse.js": "^3.2.0",
-    "mdn-data": "^2.0.11",
-    "nouislider": "^12.1.0",
-    "perfect-scrollbar": "^1.3.0",
-    "quill": "^1.3.6",
-    "sweetalert2": "^9.5.4",
-    "vee-validate": "^3.2.1",
-    "vue": "^2.6.12",
-    "vue-chartjs": "^3.5.0",
-    "vue-clipboard2": "^0.3.0",
-    "vue-flatpickr-component": "^8.1.2",
-    "vue-infinite-scroll": "^2.0.2",
-    "vue-multiselect": "^2.1.6",
-    "vue-router": "^3.4.4",
-    "vue-slider-component": "^3.2.5",
-    "vue-spinner": "^1.0.4",
-    "vue2-transitions": "^0.2.3",
-    "vuex": "^3.5.1"
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@babel/**",
+      "**/babel**",
+      "**/jest",
+      "**/react-scripts**"
+    ]
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "@vue/eslint-config-prettier": "^4.0.1",
-    "babel-plugin-component": "^1.1.0",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "eslintConfig": {
-    "rules": {
-      "no-console": "off"
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 10"
-  ],
-  "author": "Caleb Hoff",
-  "description": "A website to freely access research"
+    "lerna": "^3.22.1",
+    "lerna-changelog": "^1.0.1",
+    "npm-run-all": "^4.1.5"
+  }
 }
