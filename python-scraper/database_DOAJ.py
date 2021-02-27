@@ -3,9 +3,10 @@ import urllib.parse
 import json
 import uuid
 
-#from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch
 from HttpUtils import *
 
+logger = getLogger("DOAJ")
 
 class DOAJApiRequestor:
     
@@ -17,7 +18,7 @@ class DOAJApiRequestor:
         # CORE API states the default page size is 100
         self.pagesize = 100
         self.endpoint = endpoint
-        self.logger = getLogger("DOAJ")
+        self.logger = logger
 
 
     # Description: Forms the URL used to query the database.
@@ -120,8 +121,7 @@ class DOAJApiRequestor:
 
 
 
-def doaj(search_terms):
-    logger = getLogger("DOAJ")
+def doaj(elasticsearch, search_terms):
     logger.info("Indexing the DOAJ database...")
     endpoint = 'https://doaj.org/api/v2/'
     method = 'search/articles'
@@ -134,24 +134,17 @@ def doaj(search_terms):
 
     cleaned_data = api.clean(result)
     # Following code is to temporarily save the output
-    f = open("output/DOAJ-cleaned-data.json", "w")
+    f = open("python-scraper/output/DOAJ-cleaned-data.json", "w")
     f.write(json.dumps(cleaned_data))
     f.close()
 
-    f = open("output/DOAJ-raw-data.json", "w")
+    f = open("python-scraper/output/DOAJ-raw-data.json", "w")
     f.write(json.dumps(result))
     f.close()
 
-    #es = Elasticsearch()
 
-    # for doc in range(len(cleaned_data)):
-    #     #res = es.index(index="core", id=doc, body=cleaned_data[doc])
+    for article in cleaned_data:
+        res = elasticsearch.index(index="amr", id=id_generator(article['title']), body=article)
 
-    #     # changed index and id
-    #     # i assume we need to replace article_name, but not sure with what
-    #     res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
-    #     #if doc%100 == 0:
-    #     #    print(doc)
 
-    #es.indices.refresh(index="amr")
-    logger.info('Total documents in CORE: %s' % len(cleaned_data))
+    logger.info('Total documents in DOAJ: %s' % len(cleaned_data))

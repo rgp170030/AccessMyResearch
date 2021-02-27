@@ -2,123 +2,133 @@ import urllib.request
 import urllib.parse
 import json
 import uuid
-from elasticsearch import Elasticsearch
+# from elasticsearch import Elasticsearch
 
-def unpaywall(keywords):
-    with open(keywords) as f:
-        search_terms = json.load(f)['search']
-        for i in range(len(search_terms)):
-            search_terms[i] = '"' + search_terms[i].replace(' ', ' ') + '"'
 
-    class UnpaywallApiRequestor:
-        # took api_key out of __init__
-        # took page and pageSize out of __init__ since unpaywall doesn't have either
-        def __init__(self, endpoint):
-            self.endpoint = endpoint
+from Logger import getLogger
+from HttpUtils import *
 
-        # Same as syed's
-        def request_url(self, url):
-            with urllib.request.urlopen(url) as response:
-                html = response.read()
-            return html
+logger = getLogger("Unpaywall")
 
-        # Took out the fullText and params since it isn't relevant to unpaywall. 
-        def get_query_request_url(self, query):
-            return self.endpoint + urllib.parse.quote(query) + '&email=your_email&is_oa=true'
+class UnpaywallApiRequestor:
+    def __init__(self, endpoint):
+        self.endpoint = endpoint
+        self.logger = logger
 
-        # changed parameters to query and is_oa
-        def get_query(self, query, is_oa):
-            url = self.get_query_request_url(query)
-            all_articles = []
-            resp = self.request_url(url)
-            result = json.loads(resp.decode('utf-8'))
-            #print(url)
-            all_articles.append(result)
-        # deleted for loop and anything with numOfPages since it's irrelevant to unpaywall. 
-        # just need to return all articles
-            return all_articles
+
+    def getRequestURL(self, method, query):
+        return self.endpoint + method + '/?query=' + urllib.parse.quote(query) + '&email=your_email&is_oa=true'
+
+
+    def get_query(self, method, query):
+        url = self.getRequestURL(method, query)
+        all_articles = []
+        resp = requestURL(url)
+        result = json.loads(resp.decode('utf-8'))
+        all_articles.append(result)
+        return all_articles
+
+    def clean(self, result):
+        cleanedResult = []
+        for page in result:
+            for article in page['results']:
+                try:
+                    cleanedArticle = {}
+                    # set k as parameters from unpaywall
+                    key = ['title', 'doi_url', 'doi',
+                           'journal_name', 'publisher']
+                    for item in key:
+                        # added response to get articles
+                        if item in article['response']:
+                            cleanedArticle[item] = article['response'][item]
+                    # if 'title' in obj:
+                    #     obj['description'] = obj['title']
+                    
+                    if 'z_authors' in article['response']:
+                        cleanedArticle['authors'] = self.parseAuthorName(article['response']['z_authors'])
+
+
+
+                    if 'published_date' in article['response']:
+                        cleanedArticle['datePublished'] = article['response']['published_date']
+
+                    cleanedArticle['url'] = self.extractUrls(article)
+                    cleanedArticle['database'] = "Unpaywall"
+                    cleanedResult.append(cleanedArticle)
+                except Exception as error:
+                    self.logger.error('Error occured while cleaning:')
+                    self.logger.error(str(error))
+        return cleanedResult
+
+    # A helper method to parse out the name of an author_z object returned by unpaywall
+    def parseAuthorName(self, authorArray):
+        if authorArray is None: 
+            return []
+
+        authorNames = []
+        for auth in authorArray:
+            name = ""
+
+            if 'given' in auth:
+                name = auth['given'] + " "
+
+            if 'family' in auth:
+                    name += auth['family'] + " " 
+                    
+            if 'sequence' in auth:
+                name += auth['sequence']
+            authorNames.append(name)
+            # else:
+            #     author.append("")
+        return authorNames
+
+    def extractUrls(self, articleObject):
+        url = []
+        field = "url"
+        for key in articleObject.keys():
+
+            if field in key:
+                url.append(articleObject[key])
+
+            elif isinstance(articleObject[key], dict):
+                results = self.extractUrls(articleObject[key])
+                for result in results:
+                    url.append(result)
+
+            elif isinstance(articleObject[key], list):
+                for item in articleObject[key]:
+                    if isinstance(item, dict):
+                        more_results = self.extractUrls(item)
+                        for another_result in more_results:
+                            url.append(another_result)
+
+        return list(set(url))
+        
+
+def unpaywall(elasticsearch, search_terms):
+    logger.info("Indexing the Unpaywall database...")
 
     # set endpoint as beginning of api call for unpaywall
-    endpoint = "https://api.unpaywall.org/v2/search/?query="
-
-    # took out topic since that was for syed's query 
+    endpoint = "https://api.unpaywall.org/v2/"
+    method = "search"
 
     api = UnpaywallApiRequestor(endpoint)
 
-    # set is_oa as true
     result = []
     for term in search_terms:
-        result += api.get_query(term, True)
+        result += api.get_query(method, term)
 
+    cleaned_data = api.clean(result)
 
-    def clean(result):
-        mega_json = []
-        for p in result:
-            for a in p['results']:
-                try:
-                    obj = {}
-                    # set k as parameters from unpaywall
-                    k = ['z_authors', 'title', 'published_date', 'doi_url', 'doi']
-                    for i in k:
-			        # added response to get articles
-                        if i in a['response']:
-                            obj[i] = a['response'][i]
-                    if 'title' in obj:
-                        obj['description'] = obj['title']
-                        obj['title'] = obj['title']
-                        #print(obj['description'])  
-                    if 'z_authors' in obj: 
-                        try:
-                            authorz = []
-                            for auth in obj['z_authors']: 
-                                if 'family' in auth:
-                                    if 'given' in auth:
-                                        name = auth['given'] + " " + auth['family'] + " "
-                                        authorz.append(name)
-                                    else:
-                                        authorz.append(auth['family'])
-                                else: 
-                                    authorz.append("")
-                            #authJson = json.dumps(authorz)
-                            obj['authors'] = authorz  
-                        except:
-                            obj['authors'] = obj['z_authors']
-                        #print(authorz) 
-                    if 'published_date' in obj:
-                        obj['datePublished'] = obj['published_date']        
-                    if 'doi_url' in obj:
-                        obj['url'] = obj['doi_url']
-                    obj['database'] = "Unpaywall"
-                    mega_json.append(obj)
-                except:
-                    print('Error occurred while cleaning')
-        return mega_json
+    f = open("python-scraper/output/UnPaywall-cleaned-data.json", "w")
+    f.write(json.dumps(cleaned_data))
+    f.close()
 
+    f = open("python-scraper/output/UnPaywall-raw-data.json", "w")
+    f.write(json.dumps(result))
+    f.close()
 
+    for article in cleaned_data:
+        res = elasticsearch.index(index="amr", id=id_generator(article['title']), body=article)
 
-    # added id generator method
-    # uuid3 creates a unique id from a namespace and a string(the title, in our example)
-    # these id's are reproducible, so if 2 id's are made with the same namespace 
-    # and the same name(article_name) they should be equal
-    # i messed with uuid in pycharm for a while and this method seemed to work
-
-    def id_generator(article_name):
-        unique_id = uuid.uuid3(uuid.NAMESPACE_DNS, article_name)
-        return unique_id
-
-
-    cleaned_data = clean(result)
-
-    es = Elasticsearch()
-
-    for doc in range(len(cleaned_data)):
-        #res = es.index(index="core", id=doc, body=cleaned_data[doc])
-
-        # changed index and id
-        # i assume we need to replace article_name, but not sure with what
-        res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
-        #if doc%100 == 0:
-        #    print(doc)
-
-    es.indices.refresh(index="amr")
-    print('Total documents in Unpaywall: ' , len(cleaned_data))
+    logger.info('Total documents in Unpaywall: %s' % len(cleaned_data))

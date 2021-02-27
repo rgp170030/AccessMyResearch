@@ -1,4 +1,5 @@
 import logging
+from random import random
 
 def getLogger(name):
     # create logger
@@ -9,9 +10,8 @@ def getLogger(name):
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
 
-    # create formatter
-    formatter = logging.Formatter(
-        '[%(asctime)s] [%(name)s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    # # create formatter
+    formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] [%(name)s]: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
     # add formatter to ch
     ch.setFormatter(formatter)

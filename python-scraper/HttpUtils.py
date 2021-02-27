@@ -28,8 +28,8 @@ def requestURL(url):
 # these id's are reproducible, so if 2 id's are made with the same namespace
 # and the same name(article_name) they should be equal
 # i messed with uuid in pycharm for a while and this method seemed to work
-# def id_generator(article_name):
-#     unique_id = uuid.uuid3(uuid.NAMESPACE_DNS, article_name)
-#     return unique_id
+def id_generator(article_name):
+    unique_id = uuid.uuid3(uuid.NAMESPACE_DNS, article_name)
+    return unique_id
 
 

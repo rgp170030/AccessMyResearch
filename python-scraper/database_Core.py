@@ -2,10 +2,13 @@ import urllib.request
 import urllib.parse
 import json
 import uuid
-# from elasticsearch import Elasticsearch
+import re
 
+from elasticsearch import Elasticsearch
 from Logger import getLogger
 from HttpUtils import *
+
+logger = getLogger("CORE")
 
 class CoreApiRequestor:
 
@@ -15,7 +18,7 @@ class CoreApiRequestor:
     def __init__(self, endpoint, api_key):
         self.endpoint = endpoint
         self.api_key = api_key
-        self.logger = getLogger("CORE")
+        self.logger = logger
 
         # Default class variables for the CORE database request:
         # CORE API states the default page size is 100
@@ -85,6 +88,8 @@ class CoreApiRequestor:
                     'datePublished', 'fulltextUrls',
                     'journal', 'doi', 'database', 'publisher',
                     'subjects', 'year', 'aoi', 'downloadUrl']
+        regexp = re.compile(
+            r'^[0-9]+-[0-9]+-[0-9]+T[0-9]+[0-9]+:[0-9]+[0-9]+:[0-9]+[0-9]+$')
         
         # Go through all pages in result
         for page in result:
@@ -99,6 +104,10 @@ class CoreApiRequestor:
                         if item in article:
                             cleanedArticle[item] = article[item]
 
+                    if 'datePublished' in cleanedArticle and not regexp.search(cleanedArticle['datePublished']):
+                            cleanedArticle['datePublished'] = "2100-01-12T00:00:00"
+                        
+
                     # Specify which database the article was taken from: 
                     cleanedArticle['database'] = "CORE"
                     if 'fulltextUrls' in cleanedArticle:
@@ -112,8 +121,8 @@ class CoreApiRequestor:
 
         return cleanedResult
 
-def core(search_terms):
-    logger = getLogger("CORE")
+
+def core(elasticsearch, search_terms):
     logger.info("Indexing the CORE database...")
     # Notify console that the CORE thread has started
 
@@ -125,30 +134,20 @@ def core(search_terms):
 
     api = CoreApiRequestor(endpoint, api_key)
     result = []
-    # for term in search_terms:
-    #     result += api.getNumberOfPages(method, term, False, maxPages = 2)
-    result += api.getNumberOfPages(method, search_terms[1], False, maxPages=7)
+    for term in search_terms:
+        result += api.getNumberOfPages(method, term, False, maxPages = 2)
 
     # Following code is to temporarily save the output
     cleaned_data = api.clean(result)
-    f = open("output/CORE-cleaned-data.json", "w")
+    f = open("python-scraper/output/CORE-cleaned-data.json", "w")
     f.write(json.dumps(cleaned_data))
     f.close()
 
-    # f = open("output/CORE-raw-data.json", "w")
-    # f.write(json.dumps(result))
-    # f.close()
+    f = open("python-scraper/output/CORE-raw-data.json", "w")
+    f.write(json.dumps(result))
+    f.close()
 
-    # es = Elasticsearch()
+    for article in cleaned_data:
+        res = elasticsearch.index(index="amr", id=id_generator(article['title']), body=article)
 
-    # for doc in range(len(cleaned_data)):
-    #     #res = es.index(index="core", id=doc, body=cleaned_data[doc])
-
-    #     # changed index and id
-    #     # i assume we need to replace article_name, but not sure with what
-    #     res = es.index(index="amr", id=id_generator(cleaned_data[doc]['title']), body=cleaned_data[doc])
-    #     #if doc%100 == 0:
-    #     #    print(doc)
-
-    # es.indices.refresh(index="amr")
     logger.info('Total documents in CORE: %s' % len(cleaned_data))

@@ -1,10 +1,9 @@
 {
-	"search-original": [
+	"search": [
 		"deep learning",
 		"computer science",
 		"biology",
 		"electrical engineering",
 		"neuroscience"
-	],
-	"search": ["computer science"]
+	]
 }

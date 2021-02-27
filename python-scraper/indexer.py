@@ -5,41 +5,47 @@ import os
 import ssl
 import logging
 import json
+import sys
 
-# from elasticsearch import Elasticsearch
-from database_Core import core
+from elasticsearch import Elasticsearch
+
 from Logger import getLogger
+from database_Core import core
 from database_DOAJ import doaj
-# from database_Unpaywall import unpaywall
-
-
+from database_Unpaywall import unpaywall
 
 # Fix SSL issues if they are present: 
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
     getattr(ssl, '_create_unverified_context', None)): 
     ssl._create_default_https_context = ssl._create_unverified_context
-    
-
 
 # Get logger in context of main indexer class: 
 logger = getLogger("mainIndexer")
+es = Elasticsearch()
 
-def runThreads(): 
-    keywords = getSearchKeywords()
-
+# will run after every schedule call
+def runThreads(threadCallBacks, threadObjects):
     # Track runtime
     start_time = time.time()
 
-    # Define the threads that need to be run:
-    threadCallBacks = [doaj]
-    params = (keywords,)
+    params = (es, getSearchKeywords(),)
+    logger.debug("params passed in: %s" % str(params))
 
-    # Create the thread objects: 
-    threadObjects = []
-    for callback in threadCallBacks: 
-        t = Thread(target=callback, args=params)
-        threadObjects.append(t)
-        t.start()
+    # This block will only run once to initialize the threadObjects array
+    if len(threadObjects) == 0: 
+        # Create the thread objects:
+        for callback in threadCallBacks:
+            t = Thread(target=callback, args=params)
+            threadObjects.append(t)
+            t.start()
+
+
+    # #Only run the thread if it finished running in the previous iteration
+    for index in range(len(threadObjects)):
+        # if the thread is not active, then replace it with a new thread
+        if not threadObjects[index].is_alive():
+            threadObjects[index] = Thread(target=threadCallBacks[index], args=params)
+            threadObjects[index].start()
     
     # Join back with all threads to make sure they terminate: 
     for thread in threadObjects:
@@ -48,18 +54,27 @@ def runThreads():
         except Exception as error: 
             print(error)
   
-    # es = Elasticsearch()
-    # es.indices.refresh("amr")
-    # elasticSearchTotal = es.cat.count("amr")
-    # print("Total documents indexed (epoch|timestamp|count): ", elasticSearchTotal)
+    #Calculate start and end time: 
     e = int(time.time() - start_time) 
-    print('All processes done')  
-    print('Total indexing time: {:02d}:{:02d}:{:02d}'.format(e // 3600, (e % 3600 // 60), e % 60))
+    #Print resulting time: 
+    logger.info('All processes done')  
+    logger.info(str('Total indexing time: {:02d}:{:02d}:{:02d}').format(e // 3600, (e % 3600 // 60), e % 60))
+
+    
+    displayElasticSearchIndexCount()
+
+
+#Logs the result of the complete indexing process on screen: 
+def displayElasticSearchIndexCount():
+    es.indices.refresh("amr")
+    elasticSearchTotal = es.cat.count("amr")
+    logger.info("Total documents indexed (epoch|timestamp|count): " + elasticSearchTotal)
+
+
 
 def getSearchKeywords(): 
     # Path to keywords that need to be searched
-    # keywords = "python-scraper/search.json"
-    keywords = 'search.json'
+    keywords = sys.argv[3]
 
     # Reading in the search keywords needed and formatting them
     with open(keywords) as f:
@@ -73,24 +88,53 @@ def getSearchKeywords():
         return search_terms
     pass
 
-
 #Main method: 
 if __name__ == '__main__':
-    logger.info("Running processes")
-    
-    runThreads()
-    logger.info("Running the schedule")
 
-    # try:
-    #     print(" Will rerun the scrapers at 11:59 PM")
-    #     schedule.every().day.at("23:59").do(runThreads) #Rerun the scrapers every 11:59 PM
-    # except:
-    #     print("Error with scheduling")
+    #Check for correct command line arguments: 
+    if len(sys.argv) != 4:
+        logger.info("Usage: %s <-m for minutes | -h for hours | -d for days> <delay in units> <search terms file path>" % sys.argv[0])
+        exit()
 
-    # while True: 
-    #     try:
-    #         schedule.run_pending()
-    #         time.sleep(1)
-    #     except:
-    #         print("Error with scheduling")
+    # Get the scheduled time command line args
+    scheduledTime = None
+    try:
+        scheduledTime = int(sys.argv[2])
+    except ValueError:
+        logger.error("You must enter a numerical value for delay in units.")
+        exit()
+
+
+    # Define the threads that need to be run:
+    threadCallBacks = [doaj, core, unpaywall]
+    threadObjects = [] #NOTE: this will be modified by reference inside runThreads()
+    job = lambda: runThreads(threadCallBacks, threadObjects)
+
+    logger.info("Running indexing: (Scheduled every %s %s)" % (scheduledTime, sys.argv[1]))
+
+    # Schedule the job based on the frequency inputted by the user
+    if sys.argv[1] == "-m":
+        schedule.every(scheduledTime).minutes.do(job)
+    elif sys.argv[1] == "-h":
+        schedule.every(scheduledTime).hours.do(job)
+    elif sys.argv[1] == "-d":
+        schedule.every(scheduledTime).days.do(job)
+    else:
+        logger.error("You must enter a valid time unit flag.")
+        exit()
+
+    # Immediately run the first batch of threads
+    schedule.run_all(delay_seconds=0)
+
+    # After the threads finish running for the first time, 
+    # schedule the next job using on the scheduler library
+    while True: 
+        try:
+            schedule.run_pending()
+            time.sleep(1)
+        except KeyboardInterrupt: 
+            logger.info("Exiting")
+            exit()
+        except:
+            print("Error with scheduling.")
 
