@@ -347,7 +347,19 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-donate fa-lg TopIcon"/>
+          <i class="fas fa-hand-holding-usd fa-lg TopIcon"/>
+      </a>
+
+      <a
+          slot="title-container"
+          class="nav-link nav-link-icon nav-item"
+          href="#"
+          role="button"
+          @click="toProject"
+          aria-expanded="false"
+          v-if="signedIn"
+        >
+          <i class="fas fa-project-diagram fa-lg TopIcon"/>
       </a>
 
       <a
@@ -924,6 +936,9 @@ export default {
     },
     toDonate() {
       this.$router.push('donate');
+    },
+    toProject() {
+      this.$router.push('project');
     },
     toCollections() {
       this.$router.push('collections');

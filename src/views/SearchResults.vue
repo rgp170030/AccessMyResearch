@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-header
-      class="pb-6 pt-md-3 bg-gradient-primary"
+      class="pb-5 pt-md-3 bg-gradient-primary"
     ></base-header>
     <Email ref="doiEmailModal" :emails="emailModal.emailOpts"></Email>
     <b-card-header class="border-0">

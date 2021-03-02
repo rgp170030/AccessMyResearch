@@ -55,12 +55,12 @@
       </zoom-center-transition>
     </div>
 
-    <footer class="py-5" id="footer-main">
+    <footer class="py-2" id="footer-main">
       <b-container >
         <b-row align-v="center" class="justify-content-xl-between">
           <b-col xl="6">
             <div class="copyright text-center text-xl-left text-muted">
-              © 2020 <a href="#" class="font-weight-bold ml-1" target="_blank">AccessMyResearch</a>
+              © 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">AccessMyResearch</a>
             </div>
           </b-col>
           <b-col xl="6" class="col-xl-6">
