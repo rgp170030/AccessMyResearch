@@ -69,6 +69,8 @@ export default {
   outline: none;
   height: 15x;
   line-height: 25px;
+  font-family:Roboto; 
+  font-size: 16px;
 }
 
 .custom-select1 .selected1 {

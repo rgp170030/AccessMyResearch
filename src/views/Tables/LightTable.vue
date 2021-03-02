@@ -1,6 +1,6 @@
 <template>
     <b-card no-body style="box-shadow: 0 3px 5px #8898AA;">
-        <b-card-header class="border-1" style = "height: 100px;">
+        <b-card-header class="border-1" style = "height: 80px;">
             <span>
                 <!-- <dropdown title="Most Recent" items="options1" style="text-align:left; float:left;"/> -->
                 <CustomSelect
@@ -9,13 +9,14 @@
                     Selector="Sort by: "
                     Icon="fas fa-chevron-down"
                     class="select my-select"
-                    style="text-align:left; float:left;"
+                    style="text-align:left; float:left; "
                     @input="alert(displayToKey($event))"/>
-                <h5 style="text-align:right; float:right;" class="form-text text-muted">in 0.56 seconds</h5> 
-                <h5 class="text-muted d-flex justify-content-center">1-25 of 6604 publications</h5>
-            </span>    
+                <span style="text-align:right; float:right; font-family:Roboto; font-size: 16px;" class="form-text text-muted">in 0.56 seconds</span> 
+                <span class="text-muted d-flex justify-content-center" style="font-family:Roboto; font-size: 16px;">1-25 of 6604 results</span>
+            </span>  
+              
                 <br>
-            <span style="position:relative; top:-20px;">
+            <span style="position:relative; top:-25px;">
                <CustomSelect
                     :options="['25', '50', '100', '200']"
                     :default="'25'"
@@ -34,30 +35,27 @@
                 <b-pagination v-model="currentPage" :per-page="10" :total-rows="100" first-text="First" prev-text="Prev" next-text="Next" last-text="Last" size="sm" style="float:left; padding-left:350px;"></b-pagination>
             </span>
         </b-card-header>
-        <div style="height: 67vh" class="scroll">
+        <div style="height: 77vh">
+        <splitpanes class="default-theme">
+        <pane class="scroll">
         <el-table class="table-responsive table-light"
                   :data="articles"
+                  :row-style="tableRowStyle"
                   :show-header="false"
+                  :cell-style="{padding: '0', height: '12px'}"
                   size="small"
                   style="width: 100%;"
                   >
-            <el-table-column type="expand" >
+            <el-table-column type="expand">
                 <template v-slot="{row}">
                     <!--TODO: Indicate the availability of an article <p > Status: 
                         <span class="font-weight-700 name mb-0 text-blue">{{row.status}}</span>
                         <span style="float:right">{{row.date}}</span>
                     </p> -->
                     <!--<span style="float:right">{{row.date}}</span>-->
-                    <div style="font-size: 16px; font-weight: 400; padding-bottom:5px;">
+                    <div style="font-family:Roboto; font-size: 17px; font-weight: 400; padding-bottom:0px; position:relative; top:-15px; margin-bottom:-25px;">
                         <span class="text-black" >{{row.abstract}}</span>
                     </div>
-                    <span class="button-options border-0" style="padding-left: 10px;">
-                        <button title="View"  class="far fa-eye fa-lg button-options"></button>
-                        <button title="Download" class="fas fa-file-download fa-lg button-options"></button>
-                        <button title="E-Mail" class="fas fa-envelope fa-lg button-options"></button>
-                        <button title="Collections" v-b-modal.modal class="fas fa-layer-group fa-lg button-options"></button>
-                        <button title="Cite" class="fas fa-quote-left fa-lg button-options"></button>
-                    </span>
                     <b-modal id="modal" title="Add article to Collection"> <!--TODO: Move this modal to separate function-->
                         <b-list-group>
                             <button class="btn btn-primary">Artificial Intelligence Collection</button>
@@ -68,29 +66,45 @@
                     </b-modal>
                 </template>
             </el-table-column>
-            <el-table-column prop="name">
+            <el-table-column prop="name" >
                 <template v-slot="{row}">
-                    <b-media no-body class="align-items-center">
+                    <b-media no-body class="align-items-center" style="padding-top: 8px">
                         <b-media-body>
-                            <span style="font-family:Verdana" class="font-weight-800 name mb-0 text-sm">{{row.name}}</span>
+                            <span style="font-family:Roboto; font-size: 18px;" class="font-weight-400 name mb-0">{{row.name}}</span>
                         </b-media-body>
                     </b-media>
-                    <b-media no-body class="align-items-center">
+                    <b-media no-body class="align-items-center" style="position: relative; top:-10px; margin-bottom: -10px;">
                         <!--<a href="#" class="mr-3">
                             <b-img class="avatar" rounded="circle" alt="Article Image" :src="row.img" />
                         </a>-->
-                        <p class="font-weight-600 name mb-0 text-blue">{{row.author}}</p>
+                        <p class="font-weight-400 name mb-0 text-blue" style="font-family:Roboto; font-size: 16px;">{{row.author}}</p>
                         <pre> </pre>
-                        <p class="font-weight-400 name mb-0"> &#8211; {{row.journal}}</p>
+                        <p class="font-weight-200 name mb-0" style="font-family:Roboto; font-size: 16px;"> &#8211; {{row.journal}}</p>
                         <pre> </pre>
-                        <p class="font-weight-400 name mb-0"> &#8211; ({{row.year}})</p>
+                        <p class="font-weight-200 name mb-0" style="font-family:Roboto; font-size: 16px;"> &#8211; ({{row.year}})</p>
                         <!--TODO: Add ratings <span class="font-weight-400 name mb-0 text-black right"> Rating
                             <base-progress :type="row.statusType" :value="row.rating"/>
                         </span> -->
                     </b-media>
+                    <span class="button-options border-0" style="padding-left: 10px; position: relative; top:-5px; margin-bottom: -20px;">
+                        <button @click="hidePane2 = !hidePane2" title="View"  class="far fa-eye fa-lg button-options"></button>
+                        <button title="Download" class="fas fa-file-download fa-lg button-options" ></button>
+                        <button title="Links" class="fas fa-external-link-alt fa-lg button-options" ></button>
+                        <button title="E-Mail" class="fas fa-envelope fa-lg button-options" ></button>
+                        <button title="Collections" v-b-modal.modal class="fas fa-layer-group fa-lg button-options"></button>
+                        <button title="Cite" class="fas fa-quote-left fa-lg button-options"></button>
+                    </span>
                 </template>
             </el-table-column>
         </el-table>
+        
+        </pane>
+        <pane v-if="!hidePane2" class="scroll">
+            <template>
+                <CustomPDF></CustomPDF>
+            </template>
+        </pane>
+        </splitpanes>
         </div>
     </b-card>
 </template>
@@ -99,6 +113,10 @@ import articles from './articles' //TODO: Replace with AWS source
 import {Table, TableColumn} from 'element-ui'
 import Dropdown from '../../components/Dropdown.vue'
 import CustomSelect from "../../components/CustomSelect.vue";
+import CustomPDF from "../../components/CustomPDF.vue";
+import { Splitpanes, Pane } from 'splitpanes'
+import 'splitpanes/dist/splitpanes.css'
+import pdf from 'vue-pdf'
 
 export default {
     name: 'light-table',
@@ -106,7 +124,12 @@ export default {
         [Table.name]: Table,
         [TableColumn.name]: TableColumn,
         //Dropdown,
-        CustomSelect
+        CustomSelect,
+        CustomPDF,
+        Splitpanes, 
+        Pane,
+        
+
 
     },
     data() {
@@ -114,6 +137,9 @@ export default {
             articles,
             currentPage: 1,
             index: 1,
+            count:0,
+            url: 'https://bitcoin.org/bitcoin.pdf',
+            hidePane2: false,
             options1: [{
                 title:'Most Recent',
                 link: '#'
@@ -202,10 +228,7 @@ export default {
     overflow-y: scroll;
 }
 
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
+
 
 .btn-group button:not(:last-child) {
   border-bottom: none; /* Prevent double borders */
@@ -214,8 +237,8 @@ export default {
 .button-options{
     width: 20px;
     border: 0px;
+    background-color: inherit;
     padding: 10px 45px 10px 0px;
-    background-color: white;
     color:  #4577B8;
 }
 

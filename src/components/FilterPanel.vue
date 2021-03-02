@@ -25,14 +25,14 @@
             <b-card-body style="max-width:220px">
             <b-form-group class="small slider">
                 <br/>
-                <vue-slider
-                v-model="yearRange"
-                :min="1950"
-                :max="2021"
-                :enable-cross="false"
-                :tooltip="'always'"
-                stacked
-                ></vue-slider>
+                 <vue-range-slider 
+                 :bg-style="bgStyle" 
+                 :tooltip-style="tooltipStyle" 
+                 :process-style="processStyle" 
+                 v-model="yearRange"
+                 :min="1950"
+                 :max="2021"
+                 ></vue-range-slider>
             </b-form-group>
             </b-card-body>
         </b-card>
@@ -184,11 +184,14 @@
                 class="collapseAccordion"
                 v-model="selectedFilters"
                 @input="sort"
-                :options="areas"
                 name="area"
                 disabled-field="notEnabled"
                 stacked
-                ></b-form-checkbox-group>
+                >
+                <b-form-checkbox value="orange">Orange<b-button size="sm" pill v-b-popover.hover.right="'Info about fruits!'" variant="primary"><i class="fas fa-info-circle"></i></b-button></b-form-checkbox>
+                <b-form-checkbox value="apple">Apple</b-form-checkbox>
+                <b-form-checkbox value="pineapple">Pineapple</b-form-checkbox>
+                </b-form-checkbox-group>
             </b-form-group>
             </b-card-body>
         </b-collapse>
@@ -228,13 +231,34 @@
             </b-card-body>
         </b-collapse>
         </b-card>
-
+        <b-card no-body class="mb-1" style = "box-shadow: 0 2px 3px #9b9d9e;">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+            <b-button
+            block
+            v-b-toggle.collectionAccordion
+            squared variant="outline-primary"
+            class = "dropdownButton"
+            ><div>Collections<span><i class="fas fa-chevron-down downArrow"></i></span></div></b-button
+            >
+        </b-card-header>
+        <b-collapse
+            id="collectionAccordion"
+            accordion="my-accordion"
+            role="tabpanel"
+        >
+            <b-card-body style="max-width:220px">
+            </b-card-body>
+        </b-collapse>
+        </b-card>
     
         
     </div>
 </div>
 </template>
 <script>
+import 'vue-range-component/dist/vue-range-slider.css'
+import VueRangeSlider from 'vue-range-component'
+import { VBPopoverPlugin } from 'bootstrap-vue'
 export default {
     name: 'filter-panel',
     mounted() {
@@ -249,6 +273,9 @@ export default {
         if (localStorage.defaultFilterCheckbox) {
         this.defaultFilterCheckbox = localStorage.defaultFilterCheckbox;
         }
+    },
+    components: {
+        VueRangeSlider,
     },
     data() {
         return {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-header
-      class="pb-6 pb-8 pt-5 pt-md-8 bg-gradient-primary"
+      class="pb-5 pb-8 pt-5 pt-md-8 bg-gradient-primary"
     ></base-header>
 
     <h1 class="pl-5 pt-4">Add Users</h1>
