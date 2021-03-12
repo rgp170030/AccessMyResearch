@@ -21,7 +21,7 @@
 <script>
   import FilterPanel from '@/components/FilterPanel.vue'; //TODO: Add filter panel
   import LightTable from './Tables/LightTable';
-  import RightPanel from '@/components/RightPanel.vue';
+ // import RightPanel from '@/components/RightPanel.vue';
   import { Auth } from 'aws-amplify';
   import { AmplifyEventBus } from 'aws-amplify-vue';
 
