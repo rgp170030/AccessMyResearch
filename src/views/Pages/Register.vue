@@ -90,6 +90,14 @@
                       </base-input>
                     </b-col>
                   </b-row>
+
+                   <!-- Creates a checkbox for the subscription newsletter !-->
+              <div class = "custom-control custom-checkbox checkbox-lg">
+                <input type="checkbox" class="custom-control-input" id="checkbox-2" v-model="subscription" checked="">
+                <label class="custom-control-label" for="checkbox-2"><div class="text-muted">Would you like to subscribe to AMR Newsletter?</div></label>
+               </div>
+
+
                   <div class="text-center">
                     <b-button type="submit" variant="primary" class="mt-4">Create account</b-button>
                   </div>
@@ -114,6 +122,7 @@
       {
           this.$router.push('home');
       }
+      
 
       AmplifyEventBus.$on('authState', info => {
         if(info == 'signedIn')
@@ -134,33 +143,59 @@
     components: {},
     methods: {
       onSubmit() {
-        //if username provided does not exist in Cognito User Pool, then register the user
+        //TODO: API call to register user here
           Auth.signUp({
                 username: this.username,
                 password: this.password,
                 attributes: {
                     email: this.email
                 },
+                
                 validationData: [],  //optional
                 })
                 .then(data => {
                     this.user = data.user
-                    this.$router.push('interests'); //once registered, push to interests page
+                    this.$router.push('interests');
+                    this.$router.push('welcome');
+                   
                   })
                 .catch(err => console.log(err));
+                if(this.checked!=""){
+                 // alert('isSelected');
+                  const { GoogleSpreadsheet } = require('google-spreadsheet');
+                  const creds = require('./GSkeys.json'); //this file has the credentials that helps connect it 
+                  // spreadsheet key is the long id in the sheets URL
+                  const doc = new GoogleSpreadsheet('1wTaoPnrS41MkRYlq_18fy-9YrK-giUUCn1OvkpgFO-Y'); //create the doc that has the id of the google sheets
+                  async function accessSpreadsheet() {
+                    await doc.useServiceAccountAuth({
+                      client_email: creds.client_email,
+                      private_key: creds.private_key,
+                      }); //information that is from the GSkeys.json files 
+                      await doc.loadInfo(); // loads document properties and worksheets
+                      console.log(doc.title);
+                      const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+                      const row = {
+                        //add implementaion that will update with the right info 
+                        Name: this.username,
+                        Email: this.username,
+                        } //row instance that will be added to google sheet *test*
+                        await (sheet.addRow)(row); //add the row
+                        }
+                        accessSpreadsheet(); //call the async function
+                }
+
+                 
       },
       googleSignIn() {
-        //can also be registered through Google
         Auth.federatedSignIn({ provider: 'Google' });
       },
       facebookSignIn() {
-        //can also be registered through Facebook
         Auth.federatedSignIn({ provider: 'Facebook' });
       },
       linkedInSignIn() {
-        //can also be registered through LinkedIn
         Auth.federatedSignIn({ provider: 'LinkedIn' });
       },
     }
   };
 </script>
+<style></style>
