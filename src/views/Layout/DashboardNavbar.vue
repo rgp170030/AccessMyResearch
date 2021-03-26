@@ -348,7 +348,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-hand-holding-usd fa-lg TopIcon"/>
+          <i class="fas fa-dollar-sign fa-lg TopIcon"/>
       </a>
 
       <a
@@ -372,7 +372,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-layer-group fa-lg TopIcon"/>
+          <i class="fas fa-book-open fa-lg TopIcon"/>
       </a>
 
       <a
@@ -439,7 +439,7 @@
           aria-expanded="false"
           @click="redirect"
         >
-          <i class="fas fa-comment fa-lg TopIcon"/>
+          <i class="fas fa-envelope fa-lg TopIcon"/>
         </a>
         
 <!-- Div for the dropdown menu, sets the vertical scroll and height -->
@@ -553,7 +553,7 @@ export default {
   props: {
     logo: {
       type: String,
-      default: '/img/brand/orange.png',
+      default: '/img/brand/orangeandwhite.png',
       description: 'AccessMyResearch Logo'
     },
     type: {
@@ -1033,4 +1033,3 @@ img{ max-width:100%;}
 .chat_people{ overflow:hidden; clear:both;}
 
 </style>
-
