@@ -1,5 +1,5 @@
 <template>
-    <b-card no-body style="box-shadow: 0 3px 5px #8898AA;">
+    <b-card no-body class="lightTable-card">
         <b-card-header class="border-1" style = "height: 80px;">
             <span>
                 <!-- <dropdown title="Most Recent" items="options1" style="text-align:left; float:left;"/> -->
@@ -228,7 +228,11 @@ export default {
     overflow-y: scroll;
 }
 
-
+.lightTable-card{
+    box-shadow: 0 3px 5px #8898AA; 
+    margin-left:15px;
+    display: flex;
+}
 
 .btn-group button:not(:last-child) {
   border-bottom: none; /* Prevent double borders */
