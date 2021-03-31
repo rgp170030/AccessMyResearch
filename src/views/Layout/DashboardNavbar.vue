@@ -19,7 +19,7 @@
       
     >
       
-        <b-input-group class="input-group-alternative input-group-merge bg-white border-0 rounded-0 w-75" style="height:40px; position: relative; left: -62px;" >
+        <b-input-group class="input-group-alternative input-group-merge border-0 rounded-0 w-75" style="height:40px; position: relative; left: -62px; min-width: 15px" >
           
           <b-form-input
             id="search"
@@ -31,13 +31,14 @@
             autocomplete="off"
             type="text"
             placeholder="Search by keyword"
-            class="text-primary"
+            class="text-primary bg-white"
+            style="border-radius: .375rem"
             
           >
           </b-form-input>
           <b-input-group-append style="height:40px">
             
-              <button class="bg-orange border-0" type="submit"><i class="fas fa-search text-white lrgIcon p-1 " /></button>
+              <button class="bg-orange border-0" type="submit" style="border-radius:4px"><i class="fas fa-search text-white lrgIcon p-1 " /></button>
             
           </b-input-group-append>
           <!-- autocomplete start -->
