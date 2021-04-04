@@ -19,7 +19,7 @@
       
     >
       
-        <b-input-group class="input-group-alternative input-group-merge border-0 rounded-0 w-75" style="height:40px; position: relative; left: -62px; min-width: 15px" >
+        <b-input-group class="input-group-alternative input-group-merge border-0 rounded-0 w-75" style="height:40px; position: relative; left: -62px; min-width: 15px">
           
           <b-form-input
             id="search"
@@ -328,6 +328,8 @@
     </b-form>
     
     <b-navbar-nav class="align-items-center ml-auto">
+      <!-- <div v-bind:style="{color: iconColor}"> </div> -->
+
       <a
           slot="title-container"
           class="nav-link nav-link-icon nav-item"
@@ -337,7 +339,8 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-plus fa-lg TopIcon"/>
+        <!-- v-bind binds a style element based on a condition, so here we use the iconColor styling only if the website reroutes to the Uploads page -->
+          <i v-bind:class="{iconColor: this.$route.path == '/upload'}" class="fas fa-plus fa-lg TopIcon"/>
       </a>
 
       <a
@@ -349,7 +352,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-dollar-sign fa-lg TopIcon"/>
+          <i  v-bind:class="{iconColor: this.$route.path == '/donate' }" class="fas fa-dollar-sign fa-lg TopIcon"/>
       </a>
 
       <a
@@ -361,7 +364,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-project-diagram fa-lg TopIcon"/>
+          <i v-bind:class="{iconColor: this.$route.path == '/project' }" class="fas fa-project-diagram fa-lg TopIcon"/>
       </a>
 
       <a
@@ -373,7 +376,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-book-open fa-lg TopIcon"/>
+          <i v-bind:class="{iconColor: this.$route.path == '/collections' }" class="fas fa-book-open fa-lg TopIcon"/>
       </a>
 
       <a
@@ -385,7 +388,7 @@
           aria-expanded="false"
           v-if="signedIn"
         >
-          <i class="fas fa-user-friends fa-lg TopIcon"/>
+          <i v-bind:class="{iconColor: this.$route.path == '/network-list' }" class="fas fa-user-friends fa-lg TopIcon"/>
       </a>
 
       <base-dropdown class="nav-item" menu-on-right tag="li" title-tag="a">
@@ -396,9 +399,9 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="toggleNotificationDropDown"
+          @click="toggleNotificationDropDown('notifications')"
         >
-          <i class="fas fa-bell fa-lg TopIcon"/>
+          <i v-bind:class="{iconColor: (this.$route.path == '/notifications') || (this.setActiveIcon == 'notifications') }" class="fas fa-bell fa-lg TopIcon"/>
         </a>
         <div v-for="user in users" :key="user.id">
           <a class="dropdown-item" @click="reroute(user)" v-if="signedIn">
@@ -440,7 +443,7 @@
           aria-expanded="false"
           @click="redirect"
         >
-          <i class="fas fa-envelope fa-lg TopIcon"/>
+          <i v-bind:class="{iconColor: (this.$route.path == '/messages')}" class="fas fa-envelope fa-lg TopIcon"/>
         </a>
         
 <!-- Div for the dropdown menu, sets the vertical scroll and height -->
@@ -533,6 +536,7 @@
     </b-navbar-nav>
   </base-nav>
 </template>
+
 <script>
 import { CollapseTransition } from "vue2-transitions";
 import { BaseNav, Modal } from "@/components";
@@ -572,6 +576,14 @@ export default {
     }
   },
   computed: {
+
+    // iconColor() {
+    //      if (this.activeIcon === "donate") { // if it is a dark route
+    //         return "#11bbfd"; // basically any light color you want
+    //      }
+    //      return "#800080"; // the dark color of your choice.
+    //   }, 
+
     routeName() {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);
@@ -580,7 +592,7 @@ export default {
       return this.$store.state.signedIn;
     }
   },
-  mounted() {
+    mounted() {
     if (localStorage.selectedFilters) {
       this.selectedFilters = localStorage.selectedFilters.split(",");
     }
@@ -617,6 +629,7 @@ export default {
       recentSearches: [],
       filteredRecentSearches: [],
       defaultFilterCheckbox: false,
+      activeIcon: "",
       // autocomplete end
       /*results_data_actual: [],
       results_data: [],*/
@@ -828,8 +841,12 @@ export default {
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },   
-    toggleNotificationDropDown() {
+    toggleNotificationDropDown(string) {
+      console.log('Reaches toggle method');
       this.activeNotifications = !this.activeNotifications;
+      // this.setActiveIcon('notifications');
+      this.setActiveIcon = 'notifications';
+      console.log(this.setActiveIcon);
     },
      togglePopupChat() {
        console.log(this.chatIsOpen);
@@ -965,20 +982,30 @@ export default {
     getReminders() {
       this.reminders = JSON.parse(localStorage.reminders);
     },
+    // setActiveIcon(string){
+    //   this.activeIcon = string;
+    //   console.log(this.activeIcon);
+    // },
     toUpload() {
       this.$router.push('upload');
+      // this.setActiveIcon('upload');
     },
     toDonate() {
       this.$router.push('donate');
+      // this.setActiveIcon('donate'); 
     },
     toProject() {
       this.$router.push('project');
     },
     toCollections() {
       this.$router.push('collections');
+      
     },
     toNetwork() {
       this.$router.push('network-list');
+    },
+    toMessages() {
+      this.$router.push('messages');
     },
     reroute(user) {
       //on click of follow notification, redirects to follows page
@@ -1033,4 +1060,7 @@ img{ max-width:100%;}
 
 .chat_people{ overflow:hidden; clear:both;}
 
+.iconColor{
+  color: #F78626;
+}
 </style>
