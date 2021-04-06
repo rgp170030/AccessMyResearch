@@ -49,6 +49,11 @@ const routes = [
         name: 'about',
         component: () => import('../views/About.vue')
       },
+      {
+        path: '/welcome',
+        name: 'wecolme',
+        component: () => import('../views/Pages/Welcome.vue')
+      },
     ]
   },
 
@@ -140,6 +145,12 @@ const routes = [
         path: 'search-history',
         name: 'search history',
         component: () => import('../views/SearchHistory.vue')
+      },
+      {
+        path: '/welcome',
+        name: 'wecolme',
+        component: () => import('../views/Pages/Welcome.vue')
+
       },
       {
         path: 'profile-information',

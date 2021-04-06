@@ -87,7 +87,7 @@
                         </span> -->
                     </b-media>
                     <span class="button-options border-0" style="padding-left: 10px; position: relative; top:-5px; margin-bottom: -20px;">
-                        <button @click="hidePane2 = !hidePane2" title="View"  class="far fa-eye fa-lg button-options"></button>
+                        <button @click="hidePane2 = !hidePane2" title="View"  class="far fa-eye fa-lg button-options"> </button>
                         <button title="Download" class="fas fa-file-download fa-lg button-options" ></button>
                         <button title="Links" class="fas fa-external-link-alt fa-lg button-options" ></button>
                         <button title="E-Mail" class="fas fa-envelope fa-lg button-options" ></button>
@@ -139,7 +139,7 @@ export default {
             index: 1,
             count:0,
             url: 'https://bitcoin.org/bitcoin.pdf',
-            hidePane2: false,
+            hidePane2: true,
             options1: [{
                 title:'Most Recent',
                 link: '#'
@@ -196,6 +196,7 @@ export default {
           methodToRunOnSelect(payload) {
             this.object = payload;
           }
+
         }
 }
 </script>
