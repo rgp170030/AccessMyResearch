@@ -24,7 +24,9 @@ export default new Vuex.Store({
       university: '',
     },
     requests: [],
-    follows: []
+    follows: [], 
+    articles: [],
+    newArticles: [],
   },
   mutations: {
 

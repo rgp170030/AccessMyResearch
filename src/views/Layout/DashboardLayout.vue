@@ -3,7 +3,7 @@
     <notifications/> <!--TODO: Add some code back here for mobile navigation -->
     <!--<side-bar/>-->
     <div class="main-content">
-      <dashboard-navbar :type="$route.meta.navbarType"/>
+      <dashboard-navbar :type="$route.meta.navbarType"/> 
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
@@ -39,6 +39,7 @@ import DashboardNavbar from './DashboardNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import DashboardContent from './Content.vue';
 import { FadeTransition } from 'vue2-transitions';
+
 
 export default {
   components: {

@@ -521,6 +521,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
 import { listFollows, listRequestss } from '../../graphql/queries.js';
 
+// import articles from "../Tables/articles.js"
+
 export default {
   components: {
     //CollapseTransition,
@@ -772,6 +774,35 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
+      // this.$store.state.articles = articles;
+      this.$store.state.newArticles = [];
+
+      const queryTitle = this.search.text;
+
+      axios
+        .get("http://localhost:3000/search-es", {
+          params: {
+            title: queryTitle
+          }
+        })
+        .then((results) => {
+          // The "results" argument is the response received from the elastic search instance
+          // Note, this result is redirect from es to the node back end server,  which should live in port 3000
+         
+          for (var i = 0; i < results.data.length; i ++) {
+            this.$store.state.newArticles.push(results.data[i]._source);
+          }
+          console.dir(this.$store.state.newArticles);
+
+          
+        })
+        .catch((err) => {
+          console.log("Elasticsearch error response:");
+          console.log(err);
+        });
+        
+      
+      return;
       this.timeTotal = 0;
       let duplication = false;
       for (let i = 0; i < this.recentSearches.length; i++) {
@@ -784,16 +815,17 @@ export default {
         //No duplication for recent searches allowed
         this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
       }
-      this.$router
-        .push({
-          name: "results",
-          query: { text: this.search.text, filter: this.search.filter },
-        })
-        .catch(() => {});
+      console.log("The query was: " + this.search.text);
+      // this.$router
+      //   .push({
+      //     name: "home",
+      //     query: { text: this.search.text, filter: this.search.filter },
+      //   })
+      //   .catch(() => {});
     },
     async getSearchHistory() {
-      let history = await axios.get("http://localhost:3001/search");
-      this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
+      // let history = await axios.get("http://localhost:3001/search");
+      // this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
