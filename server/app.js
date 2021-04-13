@@ -24,13 +24,25 @@ app.use(function(req, res, next) {
 });
 
 app.get("/search-es", (req, res) => {
-  const titleQuery = req.query.title;
-  console.log("Query title: " + titleQuery);
+	const titleQuery = req.query.title;
+	const pageNum = parseInt(req.query.pageNum);
+	const resultsPerPage = parseInt(req.query.resultsPerPage);
+
+	if(isNaN(pageNum) || isNaN(resultsPerPage)) {
+		console.log("Invalid integer: ", pageNum, resultsPerPage);
+		return;
+	}
+
+	console.log("Query title: " + titleQuery);
+	console.log("Page num: " + pageNum);
+	console.log("Results Per Page: " + resultsPerPage);
 
 
 	client
 		.search({
 			index: "articles",
+			from: pageNum,
+			size: resultsPerPage,
 			body: {
 				query: {
 					match: {

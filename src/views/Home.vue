@@ -39,16 +39,15 @@ export default {
 	},
 	computed: {
 		lightTableContents() {
-			return this.$store.state.newArticles;
+			return this.$store.state.search.articles;
 		},
 	},
 	watch: {
-		lightTableContents: function(newVal, oldVal) {
-			// console.log("Old Articles:");
-			// console.dir(oldVal);
-			console.log("New Articles:");
-			console.dir(newVal);
-		},
+	  // This function is for debugging purposes only
+		// lightTableContents: function(newVal, oldVal) {
+		// 	console.log("New articles received:");
+		// 	console.dir(newVal);
+		// },
 	},
 	mounted() {},
 	components: {

@@ -24,9 +24,13 @@ export default new Vuex.Store({
       university: '',
     },
     requests: [],
-    follows: [], 
-    articles: [],
-    newArticles: [],
+    follows: [],
+    search: {
+        articles: [],
+        queryText: '',
+        resultsPerPage: 25,
+        pageNumber: 1,
+    },
   },
   mutations: {
 
