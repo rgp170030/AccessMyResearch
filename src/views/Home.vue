@@ -39,7 +39,7 @@ export default {
 	},
 	computed: {
 		lightTableContents() {
-			return this.$store.state.search.articles;
+			return this.$store.state.articles;
 		},
 	},
 	watch: {

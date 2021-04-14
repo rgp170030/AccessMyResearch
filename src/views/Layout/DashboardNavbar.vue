@@ -773,13 +773,12 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
-      this.$store.state.search.articles = [];
+      this.$store.state.articles = [];
       this.$store.state.search.queryText = this.search.text;
+      this.$store.state.search.pageNumber = 1;
 
-      esRequestor.requestPage(this.$store.state.search.queryText, this.$store.state.search.pageNumber, this.$store.state.search.resultsPerPage).then(((newArticles) => {
-        this.$store.state.search.articles = newArticles;
-        console.log("new store articles:");
-        console.log( this.$store.state.search.articles);
+      esRequestor.requestPage(this.$store.state.search).then(((newArticles) => {
+        this.$store.state.articles = newArticles;
       }).bind(this));
 
       // From here, the Home.vue component will notice the change in the store value (since it watched it)

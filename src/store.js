@@ -25,11 +25,14 @@ export default new Vuex.Store({
     },
     requests: [],
     follows: [],
+    articles: [],
     search: {
-        articles: [],
         queryText: '',
         resultsPerPage: 25,
         pageNumber: 1,
+        filters: {
+          databases: [],
+        },
     },
   },
   mutations: {

@@ -58,7 +58,7 @@
             last-text="Last"
             size="sm"
             style="float:left; padding-left:350px;"
-        ></b-pagination>
+        />
 			</span>
     </b-card-header>
     <div style="height: 77vh">
@@ -110,7 +110,7 @@
 										<span
                         style="font-family:Roboto; font-size: 18px;"
                         class="font-weight-400 name mb-0"
-                    >{{ row.title }}</span
+                    >{{ row.database + " : " + row.title }}</span
                     >
                   </b-media-body>
                 </b-media>
@@ -168,6 +168,7 @@ import CustomPDF from "../../components/CustomPDF.vue";
 import {Splitpanes, Pane} from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 import pdf from "vue-pdf";
+import * as esRequestor from "@/util/elasticsearch-requestor";
 
 export default {
   name: "light-table",
@@ -190,7 +191,14 @@ export default {
       },
       set: function (newResultsPerPage) {
         this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
-        console.log(this.$store.state.search.resultsPerPage);
+      }
+    },
+    currentPage: {
+      get: function () {
+        return this.$store.state.search.pageNumber;
+      },
+      set: function (newPageNumber) {
+        this.$store.state.search.pageNumber = newPageNumber;
       }
     }
   },
@@ -199,10 +207,16 @@ export default {
       console.log("New table contents:");
       console.dir(newVal);
     },
+    currentPage: function (newVal, oldVal) {
+      this.$store.state.search.pageNumber = newVal;
+      esRequestor.requestPage(this.$store.state.search).then(((newArticles) => {
+        this.$store.state.articles = newArticles;
+      }).bind(this));
+    }
+
   },
   data() {
     return {
-      currentPage: 1,
       hidePane2: false,
       options1: [
         {
@@ -259,22 +273,26 @@ export default {
   methods: {
     setResultsPerPage(newResultsPerPage) {
       this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
-      console.log(this.$store.state.search.resultsPerPage);
+
+      // Update the table since the user changed how they want to view the data
+      esRequestor.requestPage(this.$store.state.search).then(((newArticles) => {
+        this.$store.state.articles = newArticles;
+      }).bind(this));
     },
     methodToRunOnSelect(payload) {
       this.object = payload;
     },
     formatDate(d) {
-
-      if(d === undefined || d.length === 0) {
+      try {
+        let date = new Date(d);
+        let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+        let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+        let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+        return `${month} ${day}, ${year}`;
+      }
+      catch(err) {
         return "No date";
       }
-
-      let date = new Date(d);
-      let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-      let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
-      let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-      return `${month} ${day}, ${year}`;
     },
   },
   mounted() {
