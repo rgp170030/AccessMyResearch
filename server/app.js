@@ -1,9 +1,9 @@
 const express = require("express");
+const { Client } = require("@elastic/elasticsearch");
 
 const app = express();
 const port = 3000;
 
-const { Client } = require("@elastic/elasticsearch");
 const client = new Client({
 	node:
 		"https://search-accessmyresearch-rxbdfxn7frebom3di4du5ld464.us-east-2.es.amazonaws.com",
