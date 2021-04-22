@@ -25,7 +25,7 @@
 				<span
             class="text-muted d-flex justify-content-center"
             style="font-family:Roboto; font-size: 16px;"
-        >1-25 of {{ tableContents.length }} results</span
+        > {{ formattedResultsString }} </span
         >
 			</span>
 
@@ -200,6 +200,17 @@ export default {
       set: function (newPageNumber) {
         this.$store.state.search.pageNumber = newPageNumber;
       }
+    },
+    formattedResultsString: function() {
+        if (this.tableContents.length === 0) {
+          return `0 of ${this.$store.state.search.totalResults} results`;
+        }
+
+        const startPosition = (this.currentPage - 1) * this.resultsPerPage + 1;
+        const endPosition = startPosition + this.tableContents.length - 1;
+
+        return `${startPosition}-${endPosition} of ${this.$store.state.search.totalResults} results`
+
     }
   },
   watch: {
@@ -209,8 +220,11 @@ export default {
     },
     currentPage: function (newVal, oldVal) {
       this.$store.state.search.pageNumber = newVal;
-      esRequestor.requestPage(this.$store.state.search).then(((newArticles) => {
-        this.$store.state.articles = newArticles;
+
+
+      esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
+        this.$store.state.articles = searchResults.articles;
+        this.$store.state.search.totalResults = searchResults.totalResults;
       }).bind(this));
     }
 
@@ -275,8 +289,9 @@ export default {
       this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
 
       // Update the table since the user changed how they want to view the data
-      esRequestor.requestPage(this.$store.state.search).then(((newArticles) => {
-        this.$store.state.articles = newArticles;
+      esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
+        this.$store.state.articles = searchResults.articles;
+        this.$store.state.search.totalResults = searchResults.totalResults;
       }).bind(this));
     },
     methodToRunOnSelect(payload) {

@@ -28,6 +28,7 @@ export default new Vuex.Store({
     articles: [],
     search: {
         queryText: '',
+        totalResults: 0,
         resultsPerPage: 25,
         pageNumber: 1,
         filters: {
