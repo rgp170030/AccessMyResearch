@@ -23,11 +23,20 @@ export default {
 	components: {
 		pdf: pdf
 	},
+  props: {
+    currSelectedArticle: Object,
+  },
+  watch: {
+    currSelectedArticle: function(newArticle, oldArticle) {
+      this.pdfList = newArticle.url;
+      console.log(this.pdfList);
+    },
+  },
 	data () {
 		return {
 			show: true,
 			pdfList: [
-				'https://cdn.mozilla.net/pdfjs/tracemonkey.pdf',
+				'https://core.ac.uk/download/pdf/6701086.pdf',
 				'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/freeculture.pdf',
 				'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/annotation-link-text-popup.pdf',
 				'https://cdn.rawgit.com/mozilla/pdf.js/c6e8ca86/test/pdfs/calrgb.pdf',
@@ -41,9 +50,13 @@ export default {
 			rotate: 0,
 		}
 	},
-	methods: {
+  mounted() {
+	  console.log("ran mounted");
+	  console.log(this.currSelectedArticle);
+    this.pdfList = this.currSelectedArticle.url;
+  },
+  methods: {
 		error: function(err) {
-
 			console.log(err);
 		}
 	}

@@ -137,7 +137,7 @@
                 </b-media>
                 <span class="button-options border-0"
                       style="padding-left: 10px; position: relative; top:-5px; margin-bottom: -20px;">
-                                    <button @click="hidePane2 = !hidePane2" title="View"
+                                    <button @click="onPdfViewClick(row)" title="View"
                                             class="far fa-eye fa-lg button-options"></button>
                                     <button title="Download" class="fas fa-file-download fa-lg button-options"></button>
                                     <button title="Links"
@@ -151,9 +151,9 @@
             </el-table-column>
           </el-table>
         </pane>
-        <pane v-if="!hidePane2" class="scroll">
+        <pane v-if="showPDFViewer" class="scroll">
           <template>
-            <CustomPDF></CustomPDF>
+            <CustomPDF v-bind:currSelectedArticle="currSelectedArticle"></CustomPDF>
           </template>
         </pane>
       </splitpanes>
@@ -215,8 +215,9 @@ export default {
   },
   watch: {
     tableContents: function (newVal, oldVal) {
-      console.log("New table contents:");
-      console.dir(newVal);
+      // For debugging purposes
+      // console.log("New table contents:");
+      // console.dir(newVal);
     },
     currentPage: function (newVal, oldVal) {
       this.$store.state.search.pageNumber = newVal;
@@ -231,7 +232,8 @@ export default {
   },
   data() {
     return {
-      hidePane2: false,
+      showPDFViewer: false,
+      currSelectedArticle: undefined,
       options1: [
         {
           title: "Most Recent",
@@ -287,6 +289,8 @@ export default {
   methods: {
     setResultsPerPage(newResultsPerPage) {
       this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
+      if (this.$store.state.search.queryText === "")
+        return;
 
       // Update the table since the user changed how they want to view the data
       esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
@@ -309,6 +313,17 @@ export default {
         return "No date";
       }
     },
+    onPdfViewClick(selectedArticle) {
+      if (this.currSelectedArticle === selectedArticle) {
+        this.currSelectedArticle = undefined;
+        this.showPDFViewer = false;
+        return;
+      }
+
+      this.showPDFViewer = true;
+      this.currSelectedArticle = selectedArticle;
+      console.log(selectedArticle);
+    }
   },
   mounted() {
     this.resultsPerPage = 25;

@@ -13,8 +13,8 @@ export function requestPage(searchParams) {
         return searchResult;
     }
 
-    console.log("search params: ");
-    console.dir(searchParams);
+    // console.log("search params: ");
+    // console.dir(searchParams);
     searchParams.query = searchParams.queryText;
     searchParams.pageNum = searchParams.pageNumber;
 
@@ -26,8 +26,8 @@ export function requestPage(searchParams) {
         .then((results) => {
             // The "results" argument is the response received from the elastic search instance
             // Note, this result is redirect from es to the node back end server,  which should live in port 3000
-            console.log("results from es");
-            console.log(results);
+            // console.log("results from es");
+            // console.log(results);
             searchResult.totalResults = results.data.body.hits.total.value;
 
             results = results.data.body.hits.hits;
@@ -36,7 +36,7 @@ export function requestPage(searchParams) {
             for (let i = 0; i < results.length; i++) {
                 searchResult.articles.push(results[i]._source);
             }
-            console.dir(searchResult.articles);
+            // console.dir(searchResult.articles);
             return searchResult;
         })
         .catch((err) => {
