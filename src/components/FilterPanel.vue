@@ -23,20 +23,30 @@
         </b-collapse>
       </b-card>
 
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e; max-height:70px;">
-        <b-card-body style="max-width:220px">
-          <b-form-group class="small slider">
+      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e; max-height:80px;">
+          <b-form-group class="histSlider">
             <br/>
-            <vue-range-slider
-            :bg-style="bgStyle"
-            :tooltip-style="tooltipStyle"
-            :process-style="processStyle"
-            v-model="yearRange"
-            :min="1950"
-            :max="2021"
-            ></vue-range-slider>
+            <HistogramSlider
+                :min="Math.min.apply(Math, results_data)"
+                :max="Math.max.apply(Math, results_data)"
+                :data="results_data"
+                :barHeight="50"
+                :barRadius="2"
+                :barWidth="2"
+                :barGap="1"
+                :gridNum="1"
+                :histSliderGap="5"
+                :grid="true"
+                :handleSize="13"
+                :lineHeight="5"
+                :width="190"
+                :force-edges="false"
+                :handleColor="['#f78626']"
+                :gridTextColor="['white']"
+                :prettify="prettify"
+                :dragInterval="true"
+                ></HistogramSlider>
           </b-form-group>
-        </b-card-body>
       </b-card>
 
       <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
@@ -266,6 +276,8 @@
 </template>
 <script>
 import 'vue-range-component/dist/vue-range-slider.css'
+import HistogramSlider from 'vue-histogram-slider'
+import 'vue-histogram-slider/dist/histogram-slider.css'
 import VueRangeSlider from 'vue-range-component'
 import {VBPopoverPlugin} from 'bootstrap-vue'
 
@@ -285,7 +297,7 @@ export default {
     }
   },
   components: {
-    // VueRangeSlider,
+    HistogramSlider,
   },
   computed: {
     selectedDatabaseFilters: {
@@ -296,6 +308,21 @@ export default {
         this.$store.state.search.filters.databases = newSelectedDbFilters;
       }
     },
+    // yearsForArticles: {
+    //   get: function() {
+    //     return this.$store.state.articles.datePublished;
+    //   },
+    //   set: function(newData) {
+    //     this.$store.state.articles.datePublished = newData;
+    //   }
+    // },
+    results_data: function(){
+      const obj = this.$store.state.articles.forEach((article) => {
+        return this.formatYear(article.datePublished)
+      })
+      console.log(obj)
+      return obj
+    }
   },
   data() {
     return {
@@ -305,8 +332,6 @@ export default {
       filteredRecentSearches: [],
       defaultFilterCheckbox: false,
       // autocomplete end
-      /*results_data_actual: [],
-      results_data: [],*/
       yearRange: [1950, 2021],
       selectedFilters: [],
       search: {filter: null, text: ""},
@@ -496,6 +521,16 @@ export default {
         return;
       }
     },
+    formatYear(d) {
+      try {
+        let date = new Date(d);
+        let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+        return `${year}`;
+      }
+      catch(err) {
+        return "No date";
+      }
+    },
   }
 }
 </script>
@@ -527,7 +562,10 @@ export default {
   background-color: #F78626;
 }
 
-.slider .vue-slider .tooltip {
-  background-color: #4577B8;
+.histSlider{
+    left: 18px;
+    bottom: 15px;
+    position:relative;
+    
 }
 </style>
