@@ -29,6 +29,7 @@
             <HistogramSlider
                 :min="Math.min.apply(Math, results_data)"
                 :max="Math.max.apply(Math, results_data)"
+                :key="results_data"
                 :data="results_data"
                 :barHeight="50"
                 :barRadius="2"
@@ -43,8 +44,8 @@
                 :force-edges="false"
                 :handleColor="['#f78626']"
                 :gridTextColor="['white']"
-                :prettify="prettify"
                 :dragInterval="true"
+                :prettify="prettify"
                 ></HistogramSlider>
           </b-form-group>
       </b-card>
@@ -317,9 +318,9 @@ export default {
     //   }
     // },
     results_data: function(){
-      const obj = this.$store.state.articles.forEach((article) => {
+      const obj = this.$store.state.articles.map((article) => {
         return this.formatYear(article.datePublished)
-      })
+      }).filter(article => article !== undefined)
       console.log(obj)
       return obj
     }
@@ -331,6 +332,9 @@ export default {
       recentSearches: [],
       filteredRecentSearches: [],
       defaultFilterCheckbox: false,
+      prettify: function(num) {
+        return `${num}`; 
+      },
       // autocomplete end
       yearRange: [1950, 2021],
       selectedFilters: [],
@@ -523,12 +527,12 @@ export default {
     },
     formatYear(d) {
       try {
-        let date = new Date(d);
-        let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-        return `${year}`;
+        let date = new Date(d)
+        let year = new Intl.DateTimeFormat('en', { year: 'numeric', day: "numeric" }).format(date);
+        return parseInt(year);
       }
       catch(err) {
-        return "No date";
+        return undefined;
       }
     },
   }
