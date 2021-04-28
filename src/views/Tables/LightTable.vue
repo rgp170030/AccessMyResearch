@@ -57,7 +57,7 @@
             next-text="Next"
             last-text="Last"
             size="sm"
-            style="float:left; padding-left:350px;"
+            style="float:left; padding-left:360px; position: relative; top: -25px"
         />
 			</span>
     </b-card-header>
@@ -108,9 +108,9 @@
                 >
                   <b-media-body>
 										<span
-                        style="font-family:Roboto; font-size: 18px;"
+                        style="font-family:Roboto; font-size: 18px; "
                         class="font-weight-400 name mb-0"
-                    >{{ row.database + " : " + row.title }}</span
+                    ><v-clamp autoresize :max-lines="1">{{ row.database + " : " + row.title }}</v-clamp></span
                     >
                   </b-media-body>
                 </b-media>
@@ -122,13 +122,13 @@
                   <!--<a href="#" class="mr-3">
                             <b-img class="avatar" rounded="circle" alt="Article Image" :src="row.img" />
                         </a>-->
-                  <p class="font-weight-400 name mb-0 text-blue" style="font-family:Roboto; font-size: 16px;">
+                  <p class="font-weight-400 name mb-0 text-blue" style="font-family:Roboto; font-size: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                     {{ row.authors === undefined ? "No author(s)" : row.authors.join(", ") }}</p>
                   <pre> </pre>
-                  <p class="font-weight-200 name mb-0" style="font-family:Roboto; font-size: 16px;"> &#8211;
+                  <p class="font-weight-200 name mb-0" style="font-family:Roboto; font-size: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"> &#8211;
                     {{ row.journal === undefined ? "" : row.journal }}</p>
                   <pre> </pre>
-                  <p class="font-weight-200 name mb-0" style="font-family:Roboto; font-size: 16px;"> &#8211;
+                  <p class="font-weight-200 name mb-0" style="font-family:Roboto; font-size: 16px; white-space: nowrap;"> &#8211;
                     ({{ formatDate(row.datePublished) }})</p>
 
                   <!--TODO: Add ratings <span class="font-weight-400 name mb-0 text-black right"> Rating
@@ -168,6 +168,7 @@ import CustomPDF from "../../components/CustomPDF.vue";
 import {Splitpanes, Pane} from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 import pdf from "vue-pdf";
+import VClamp from 'vue-clamp';
 import * as esRequestor from "@/util/elasticsearch-requestor";
 
 export default {
@@ -180,6 +181,7 @@ export default {
     CustomPDF,
     Splitpanes,
     Pane,
+    VClamp
   },
   props: {
     tableContents: Array,
