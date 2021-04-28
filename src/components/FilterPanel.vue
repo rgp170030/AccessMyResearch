@@ -317,12 +317,10 @@ export default {
     //     this.$store.state.articles.datePublished = newData;
     //   }
     // },
-    results_data: function(){
-      const obj = this.$store.state.articles.map((article) => {
+    results_data: function () {
+      return this.$store.state.articles.map((article) => {
         return this.formatYear(article.datePublished)
       }).filter(article => article !== undefined)
-      console.log(obj)
-      return obj
     }
   },
   data() {

@@ -51,7 +51,6 @@ export default {
 		}
 	},
   mounted() {
-	  console.log("ran mounted");
 	  console.log(this.currSelectedArticle);
     this.pdfList = this.currSelectedArticle.url;
   },
