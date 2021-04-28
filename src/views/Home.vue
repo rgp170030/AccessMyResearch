@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<base-header class="pb-5 pt-md-3 bg-gradient-primary"></base-header>
-		<b-container fluid class="pt-4">
-			<!-- <b-row>
+  <div>
+    <base-header class="pb-5 pt-md-3 bg-gradient-primary"></base-header>
+    <b-container fluid class="pt-2">
+      <!-- <b-row>
         <b-col sm="6">
           <filter-panel/>
         </b-col>

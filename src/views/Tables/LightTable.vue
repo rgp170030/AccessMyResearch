@@ -1,68 +1,52 @@
 <template>
-  <b-card no-body style="box-shadow: 0 3px 5px #8898AA;">
-    <b-card-header class="border-1" style="height: 80px;">
-			<span>
-				<!-- <dropdown title="Most Recent" items="options1" style="text-align:left; float:left;"/> -->
-				<CustomSelect
-            :options="[
-						'Most Recent',
-						'Most Citied',
-						'Most Discussed',
-						'Trending',
-					]"
-            :default="'Most Recent'"
-            Selector="Sort by: "
-            Icon="fas fa-chevron-down"
-            class="select my-select"
-            style="text-align:left; float:left; "
-            @input="alert(displayToKey($event))"
-        />
-				<span
-            style="text-align:right; float:right; font-family:Roboto; font-size: 16px;"
-            class="form-text text-muted"
-        >in 0.56 seconds</span
-        >
-				<span
-            class="text-muted d-flex justify-content-center"
-            style="font-family:Roboto; font-size: 16px;"
-        > {{ formattedResultsString }} </span
-        >
-			</span>
-
-      <br/>
-      <span style="position:relative; top:-25px;">
-				<CustomSelect
-            :options="['25', '50', '100', '200']"
-            :default="String(resultsPerPage)"
-            Selector="Results per page: "
-            Icon="fas fa-chevron-down"
-            class="select my-select-2 size-sm"
-            style="text-align:left; float:left;"
-            @input="setResultsPerPage($event)"
-        />
-				<CustomSelect
-            :options="['Mini ', 'Compact ', 'Expanded ']"
-            :default="'Compact '"
-            Icon="fas fa-expand-arrows-alt"
-            class="select my-select-2 size-sm"
-            style="text-align:right; float:right; "
-            @input="alert(displayToKey($event))"
-        />
-				<b-pagination
-            v-model="currentPage"
-            :per-page="10"
-            :total-rows="100"
-            first-text="First"
-            prev-text="Prev"
-            next-text="Next"
-            last-text="Last"
-            size="sm"
-            style="float:left; padding-left:360px; position: relative; top: -25px"
-        />
-			</span>
-    </b-card-header>
-    <div style="height: 77vh">
-      <splitpanes class="default-theme">
+    <b-card no-body class="lightTable-card">
+        <b-card-header class="border-1" style = "height: 80px;">
+            <span>
+                <!-- <dropdown title="Most Recent" items="options1" style="text-align:left; float:left;"/> -->
+                <CustomSelect
+                    :options="['Most Recent', 'Most Citied', 'Most Discussed', 'Trending']"
+                    :default="'Most Recent'"
+                    Selector="Sort by: "
+                    Icon="fas fa-chevron-down"
+                    class="select my-select"
+                    style="text-align:left; float:left; "
+                    @input="alert(displayToKey($event))"/>
+                <span style="text-align:right; float:right; font-family:Roboto; font-size: 16px;" class="form-text text-muted">in 0.56 seconds</span> 
+                <span class="text-muted d-flex justify-content-center" style="font-family:Roboto; font-size: 16px;"> {{ formattedResultsString }} </span>
+            </span>  
+              
+            <br/>
+            <span style="position:relative; top:-25px;">
+               <CustomSelect
+                    :options="['25', '50', '100', '200']"
+                    :default="String(resultsPerPage)"
+                    Selector="Results per page: "
+                    Icon="fas fa-chevron-down"
+                    class="select my-select-2 size-sm"
+                    style="text-align:left; float:left;"
+                    @input="setResultsPerPage($event)"/>
+                <CustomSelect
+                    :options="['Mini ', 'Compact ', 'Expanded ']"
+                    :default="'Compact '"
+                    Icon="fas fa-expand-arrows-alt"
+                    class="select my-select-2 size-sm"
+                    style="text-align:right; float:right; "
+                    @input="alert(displayToKey($event))"/>
+               <b-pagination
+                  v-model="currentPage"
+                  :per-page="10"
+                  :total-rows="100"
+                  first-text="First"
+                  prev-text="Prev"
+                  next-text="Next"
+                  last-text="Last"
+                  size="sm"
+                  style="float:left; padding-left:350px;"
+              />
+           </span>
+        </b-card-header>
+        <div style="height: 77vh">
+        <splitpanes class="default-theme">
         <pane class="scroll">
           <el-table
               class="table-responsive table-light"
@@ -134,19 +118,15 @@
                   <!--TODO: Add ratings <span class="font-weight-400 name mb-0 text-black right"> Rating
                             <base-progress :type="row.statusType" :value="row.rating"/>
                         </span> -->
-                </b-media>
-                <span class="button-options border-0"
-                      style="padding-left: 10px; position: relative; top:-5px; margin-bottom: -20px;">
-                                    <button @click="onPdfViewClick(row)" title="View"
-                                            class="far fa-eye fa-lg button-options"></button>
-                                    <button title="Download" class="fas fa-file-download fa-lg button-options"></button>
-                                    <button title="Links"
-                                            class="fas fa-external-link-alt fa-lg button-options"></button>
-                                    <button title="E-Mail" class="fas fa-envelope fa-lg button-options"></button>
-                                    <button title="Collections" v-b-modal.modal
-                                            class="fas fa-layer-group fa-lg button-options"></button>
-                                    <button title="Cite" class="fas fa-quote-left fa-lg button-options"></button>
-                                </span>
+                    </b-media>
+                    <span class="button-options border-0" style="padding-left: 10px; position: relative; top:-5px; margin-bottom: -20px;">
+                        <button @click="onPdfViewClick(row)" title="View" class="far fa-eye fa-lg button-options"></button>
+                        <button title="Download" class="fas fa-file-download fa-lg button-options"></button>
+                        <button title="Links" class="fas fa-external-link-alt fa-lg button-options"></button>
+                        <button title="E-Mail" class="fas fa-envelope fa-lg button-options"></button>
+                        <button title="Collections" v-b-modal.modal class="fas fa-layer-group fa-lg button-options"></button>
+                        <button title="Cite" class="fas fa-quote-left fa-lg button-options"></button>
+                     </span>
               </template>
             </el-table-column>
           </el-table>
@@ -232,105 +212,105 @@ export default {
     }
 
   },
-  data() {
-    return {
-      showPDFViewer: false,
-      currSelectedArticle: undefined,
-      options1: [
-        {
-          title: "Most Recent",
-          link: "#",
-        },
-        {
-          title: "Most Citied",
-          link: "#",
-        },
-      ],
-
-      placement: "down",
-      selected: {text: "Most Recent", value: "most-recent"},
-      options: [
-        {
-          text: "c",
-          value: "most-recent",
-          link: "#",
-        },
-        {
-          text: "Most Cited",
-          value: "most-cited",
-          link: "#",
-        },
-        {
-          text: "Most Discussed",
-          value: "most-discussed",
-          link: "#",
-        },
-        {
-          text: "Most Rated",
-          value: "most-rated",
-          link: "#",
-        },
-        {
-          text: "Highest Rated",
-          value: "highest-rated",
-          link: "#",
-        },
-        {
-          text: "Trending",
-          value: "trending",
-          link: "#",
-        },
-        {
-          text: "Expertise",
-          value: "expertise",
-          link: "#",
-        },
-      ],
-    };
-  },
-  methods: {
-    setResultsPerPage(newResultsPerPage) {
-      this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
-      if (this.$store.state.search.queryText === "")
-        return;
-
-      // Update the table since the user changed how they want to view the data
-      esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
-        this.$store.state.articles = searchResults.articles;
-        this.$store.state.search.totalResults = searchResults.totalResults;
-      }).bind(this));
+    data() {
+        return {
+            showPDFViewer: false,
+            currSelectedArticle: undefined,
+            options1: [
+              {
+                title: "Most Recent",
+                link: "#",
+              },
+              {
+                title: "Most Citied",
+                link: "#",
+              },
+            ],
+           
+            placement:'down',
+            selected: {text: "Most Recent", value: "most-recent"},
+            options: [
+                {
+                text: "c",
+                value: "most-recent",
+                link: '#'
+                },
+                {
+                text: "Most Cited",
+                value: "most-cited",
+                link: '#'
+                },
+                {
+                text: "Most Discussed",
+                value: "most-discussed",
+                link: '#'
+                },
+                {
+                text: "Most Rated",
+                value: "most-rated",
+                link: '#'
+                },
+                {
+                text: "Highest Rated",
+                value: "highest-rated",
+                link: '#'
+                },
+                {
+                text: "Trending",
+                value: "trending",
+                link: '#'
+                },
+                {
+                text: "Expertise",
+                value: "expertise",
+                link: '#'
+                },
+            ]
+        };
     },
-    methodToRunOnSelect(payload) {
-      this.object = payload;
-    },
-    formatDate(d) {
-      try {
-        let date = new Date(d);
-        let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-        let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
-        let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-        return `${month} ${day}, ${year}`;
-      }
-      catch(err) {
-        return "No date";
-      }
-    },
-    onPdfViewClick(selectedArticle) {
-      if (this.currSelectedArticle === selectedArticle) {
-        this.currSelectedArticle = undefined;
-        this.showPDFViewer = false;
-        return;
-      }
+    methods: {
+      setResultsPerPage(newResultsPerPage) {
+        this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
+        if (this.$store.state.search.queryText === "")
+          return;
 
-      this.showPDFViewer = true;
-      this.currSelectedArticle = selectedArticle;
-      console.log(selectedArticle);
-    }
-  },
-  mounted() {
-    this.resultsPerPage = 25;
-  },
-};
+        // Update the table since the user changed how they want to view the data
+        esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
+          this.$store.state.articles = searchResults.articles;
+          this.$store.state.search.totalResults = searchResults.totalResults;
+        }).bind(this));
+      },
+      methodToRunOnSelect(payload) {
+        this.object = payload;
+      },
+      formatDate(d) {
+        try {
+          let date = new Date(d);
+          let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+          let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+          let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+          return `${month} ${day}, ${year}`;
+        }
+        catch(err) {
+          return "No date";
+        }
+      },
+      onPdfViewClick(selectedArticle) {
+        if (this.currSelectedArticle === selectedArticle) {
+          this.currSelectedArticle = undefined;
+          this.showPDFViewer = false;
+          return;
+        }
+
+        this.showPDFViewer = true;
+        this.currSelectedArticle = selectedArticle;
+        console.log(selectedArticle);
+      }
+    },
+    mounted() {
+      this.resultsPerPage = 25;
+    },
+}
 </script>
 <style>
 *,
@@ -363,6 +343,12 @@ export default {
   overflow-y: scroll;
 }
 
+.lightTable-card{
+    box-shadow: 0 3px 5px #8898AA; 
+    margin-left:15px;
+    display: flex;
+}
+
 .btn-group button:not(:last-child) {
   border-bottom: none; /* Prevent double borders */
 }
@@ -388,8 +374,4 @@ export default {
   border: 0px;
 }
 
-.open-item {
-  background-color: #dee2e6;
-  background: #dee2e6;
-}
 </style>

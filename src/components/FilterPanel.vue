@@ -1,17 +1,12 @@
 <template>
   <div class="SearchDropDown">
     <div class="accordion" role="tablist">
-      <b-card no-body class="mb-1">
+        <b-card no-body class="filterPanelCard" style="max-height:70px;">
         <b-card-header header-tag="header" class="p-1 firstFilter" role="tab">
-          <b-button
-              block
-              v-b-toggle.SortByAccordion
-              squared variant="#4577B8"
-              class="dropdownButton"
-          >
-            <div>Publications<span><i class="fas fa-list-ul downArrow"></i></span></div>
-          </b-button
-          >
+            <b-button
+            block v-b-toggle.SortByAccordion squared variant="#4577B8"
+            class = "dropdownButton"><div>Research<span><i class="fas fa-plus fa-sm addItem"></i></span></div>
+            </b-button>
         </b-card-header>
         <b-collapse
             id="SortByAccordion"
@@ -21,41 +16,44 @@
           <b-card-body style="max-width:220px">
           </b-card-body>
         </b-collapse>
-      </b-card>
 
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e; max-height:80px;">
-          <b-form-group class="histSlider">
-            <br/>
-            <HistogramSlider
-                :min="Math.min.apply(Math, results_data)"
-                :max="Math.max.apply(Math, results_data)"
-                :key="results_data"
-                :data="results_data"
-                :barHeight="50"
-                :barRadius="2"
-                :barWidth="2"
-                :barGap="1"
-                :gridNum="1"
-                :histSliderGap="5"
-                :grid="true"
-                :handleSize="13"
-                :lineHeight="5"
-                :width="190"
-                :force-edges="false"
-                :handleColor="['#f78626']"
-                :gridTextColor="['white']"
-                :dragInterval="true"
-                :prettify="prettify"
-                ></HistogramSlider>
-          </b-form-group>
       </b-card>
-
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
+    
+        <b-card no-body class="filterPanelCard">
+            <b-card-body style="max-width:220px">
+            <b-form-group class="small slider">
+                <br/>
+                 <HistogramSlider
+                  :min="Math.min.apply(Math, results_data)"
+                  :max="Math.max.apply(Math, results_data)"
+                  :key="results_data"
+                  :data="results_data"
+                  :barHeight="50"
+                  :barRadius="2"
+                  :barWidth="2"
+                  :barGap="1"
+                  :gridNum="1"
+                  :histSliderGap="5"
+                  :grid="true"
+                  :handleSize="13"
+                  :lineHeight="5"
+                  :width="190"
+                  :force-edges="false"
+                  :handleColor="['#f78626']"
+                  :gridTextColor="['white']"
+                  :dragInterval="true"
+                  :prettify="prettify"
+                  ></HistogramSlider>
+            </b-form-group>
+            </b-card-body>
+        </b-card>
+    
+        <b-card no-body class="filterPanelCard">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.typeAccordion squared variant="outline-primary"
-                    class="dropdownButton toggleBg">
-            <div>Type<span><i class="fas fa-chevron-down downArrow"></i></span></div>
-          </b-button>
+            <b-button block v-b-toggle.typeAccordion squared variant="outline-primary"
+            class = "dropdownButton toggleBg" 
+            ><div>Type<span><i class="fas fa-chevron-down downArrow"></i></span></div>
+            </b-button>
         </b-card-header>
         <b-collapse
             id="typeAccordion"
@@ -78,8 +76,7 @@
         </b-collapse>
       </b-card>
 
-
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
+        <b-card no-body class="filterPanelCard">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button
               block
@@ -88,8 +85,9 @@
               class="dropdownButton toggleBg"
           >
             <div>Accessibility<span><i class="fas fa-chevron-down downArrow"></i></span></div>
-          </b-button
-          >
+
+            </b-button>
+
         </b-card-header>
         <b-collapse
             id="accessibilityAccordion"
@@ -112,9 +110,11 @@
             </b-form-group>
           </b-card-body>
         </b-collapse>
-      </b-card>
 
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
+        </b-card>
+        
+        <b-card no-body class="filterPanelCard">
+
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button
               block
@@ -147,7 +147,8 @@
         </b-collapse>
       </b-card>
 
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
+        <b-card no-body class="filterPanelCard">
+
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button
               block
@@ -181,7 +182,8 @@
         </b-collapse>
       </b-card>
 
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
+        <b-card no-body class="filterPanelCard">
+
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button block v-b-toggle.areaAccordion squared variant="outline-primary"
                     class="dropdownButton toggleBg">
@@ -215,9 +217,9 @@
           </b-card-body>
         </b-collapse>
       </b-card>
+ 
+        <b-card no-body class="filterPanelCard">
 
-
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button
               block
@@ -248,8 +250,10 @@
             </b-form-group>
           </b-card-body>
         </b-collapse>
-      </b-card>
-      <b-card no-body class="mb-1" style="box-shadow: 0 2px 3px #9b9d9e;">
+
+        </b-card>
+        <b-card no-body class="filterPanelCard">
+
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button
               block
@@ -551,17 +555,34 @@ export default {
   color: white;
 }
 
-.downArrow {
-  float: right;
-  padding-top: 3px;
+.accordion{
+    overflow-y: auto;
+    max-height: 50rem;
+}
+
+.addItem{
+    float: right;
+    padding: 3px 0px 0px 4px;
+    
+}
+
+.downArrow{
+    float:right;
+    padding: 3px 0px 0px 4px;
 }
 
 .collapseAccordion {
   column-count: 1;
 }
 
-.firstFilter {
-  background-color: #F78626;
+.filterPanelCard{
+    margin-right: 0rem;
+    margin-bottom: .25rem !important;
+    box-shadow: 0 2px 3px #9b9d9e;
+}
+
+.firstFilter{
+    background-color: #F78626;
 }
 
 .histSlider{

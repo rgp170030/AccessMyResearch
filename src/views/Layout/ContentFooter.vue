@@ -1,5 +1,5 @@
-<template>
-  <footer class="footer px-5"><!--TODO: Finish footer links-->
+<!-- <template>
+  <footer class="footer px-5"><!--TODO: Finish footer links--
     <b-row align-v="center" class="justify-content-lg-between">
       <b-col lg="6">
         <div class="copyright text-center text-lg-left text-muted">
@@ -21,4 +21,4 @@
       </b-col>
     </b-row>
   </footer>
-</template>
+</template> -->
