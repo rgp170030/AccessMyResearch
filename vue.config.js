@@ -17,6 +17,7 @@ module.exports = {
   devServer:{
     https:{
       key: fs.readFileSync('access-my-research.com-key.pem'), cert: fs.readFileSync('access-my-research.com.pem')
-    }
+    },
+    proxy: "https://j9mov8hjg8.execute-api.us-east-2.amazonaws.com/search-es-api-test/search-es-api-test",
   }
 };

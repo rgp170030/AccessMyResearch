@@ -547,6 +547,7 @@ import axios from "axios";
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
 import { listFollows, listRequestss } from '../../graphql/queries.js';
+import * as esRequestor from '../../util/elasticsearch-requestor'
 
 export default {
   components: {
@@ -815,28 +816,21 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
-      this.timeTotal = 0;
-      let duplication = false;
-      for (let i = 0; i < this.recentSearches.length; i++) {
-        //check for recent searches
-        if (this.recentSearches[i] == this.search.text) {
-          duplication = true;
-        }
-      }
-      if (!duplication) {
-        //No duplication for recent searches allowed
-        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
-      }
-      this.$router
-        .push({
-          name: "results",
-          query: { text: this.search.text, filter: this.search.filter },
-        })
-        .catch(() => {});
+      this.$store.state.articles = [];
+      this.$store.state.search.queryText = this.search.text;
+      this.$store.state.search.pageNumber = 1;
+
+      esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
+        this.$store.state.articles = searchResults.articles;
+        this.$store.state.search.totalResults = searchResults.totalResults;
+      }).bind(this));
+
+      // From here, the Home.vue component will notice the change in the store value (since it watched it)
+      // and passes that information to Light-table.
     },
     async getSearchHistory() {
-      let history = await axios.get("http://localhost:3001/search");
-      this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
+      // let history = await axios.get("http://localhost:3001/search");
+      // this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
