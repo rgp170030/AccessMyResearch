@@ -823,6 +823,7 @@ export default {
       esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
         this.$store.state.articles = searchResults.articles;
         this.$store.state.search.totalResults = searchResults.totalResults;
+        this.$store.state.search.timeElapsed = searchResults.timeElapsed;
       }).bind(this));
 
       // From here, the Home.vue component will notice the change in the store value (since it watched it)

@@ -30,6 +30,7 @@ export default new Vuex.Store({
         queryText: '',
         totalResults: 0,
         resultsPerPage: 25,
+        timeElapsed: 0,
         pageNumber: 1,
         filters: {
           databases: [],

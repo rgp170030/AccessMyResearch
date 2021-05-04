@@ -11,7 +11,7 @@
                     class="select my-select"
                     style="text-align:left; float:left; "
                     @input="alert(displayToKey($event))"/>
-                <span style="text-align:right; float:right; font-family:Roboto; font-size: 16px;" class="form-text text-muted">in 0.56 seconds</span> 
+                <span style="text-align:right; float:right; font-family:Roboto; font-size: 16px;" class="form-text text-muted">in {{this.$store.state.search.timeElapsed}} seconds</span>
                 <span class="text-muted d-flex justify-content-center" style="font-family:Roboto; font-size: 16px;"> {{ formattedResultsString }} </span>
             </span>  
               
@@ -150,6 +150,7 @@ import "splitpanes/dist/splitpanes.css";
 import pdf from "vue-pdf";
 import VClamp from 'vue-clamp';
 import * as esRequestor from "@/util/elasticsearch-requestor";
+import axios from "axios";
 
 export default {
   name: "light-table",
@@ -208,6 +209,7 @@ export default {
       esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
         this.$store.state.articles = searchResults.articles;
         this.$store.state.search.totalResults = searchResults.totalResults;
+        this.$store.state.search.timeElapsed = searchResults.timeElapsed;
       }).bind(this));
     }
 
@@ -278,6 +280,7 @@ export default {
         esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
           this.$store.state.articles = searchResults.articles;
           this.$store.state.search.totalResults = searchResults.totalResults;
+          this.$store.state.search.timeElapsed = searchResults.timeElapsed;
         }).bind(this));
       },
       methodToRunOnSelect(payload) {
@@ -302,9 +305,43 @@ export default {
           return;
         }
 
-        this.showPDFViewer = true;
-        this.currSelectedArticle = selectedArticle;
-        console.log(selectedArticle);
+        function forceFileDownload(response, title) {
+          console.log(title)
+          const url = window.URL.createObjectURL(new Blob([response.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', title)
+          document.body.appendChild(link)
+          link.click()
+        }
+
+        function downloadWithAxios(url, title) {
+          axios({
+            method: 'get',
+            url: "https://cors.accessmyresearch.org/" + url,
+            responseType: 'arraybuffer',
+          })
+          .then((response) => {
+            console.log(response);
+            forceFileDownload(response, title)
+          })
+          .catch(() => console.log('error occurred'))
+        }
+
+        console.log(urls);
+        urls.forEach(url => downloadWithAxios(url, article.title + ".pdf"));
+
+      },
+      downloadAvailable: function(article) {
+        if (article.url=== undefined || article.url === null)
+          return false;
+
+        for (let i = 0; i < article.url.length; i ++) {
+          if (article.url[i] !== undefined && article.url[i] !== null && article.url[i].endsWith(".pdf"))
+            return true;
+        }
+
+        return false;
       }
     },
     mounted() {
@@ -372,6 +409,14 @@ export default {
 
 .button-options :active {
   border: 0px;
+}
+
+.valid {
+  color: green;
+}
+
+.invalid {
+  color: red;
 }
 
 </style>
