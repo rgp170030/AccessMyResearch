@@ -3,6 +3,7 @@
     container-classes="container-fluid"
     class="navbar-top navbar-expand"
     :class="{ 'navbar-dark': type === 'default' }"
+    
   >
     <router-link class="navbar-brand" to="/">
       <img :src="logo" width="70%" class="navbar-brand-img" alt="AccessMyResearch">
@@ -59,290 +60,29 @@
           <!-- autocomplete start -->
           <!-- start here  -->
           <div class="SearchDropDown">
-            <!-- <b-dropdown variant="transparent" style="width:0%" right text="">
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle.SortByAccordion
-                      variant="primary"
-                      >Sort By</b-button
-                    >
-                  </b-card-header>
-                  <b-collapse
-                    id="SortByAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-select
-                          id="sortByFilter"
-                          @input="sort"
-                          v-model="selectedSortBy"
-                          :options="sortBy"
-                        ></b-form-select>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.areaAccordion variant="primary">Area</b-button>
-                  </b-card-header>
-                  <b-collapse
-                    id="areaAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-checkbox-group
-                          id="areaFilter"
-                          v-model="selectedFilters"
-                          @input="sort"
-                          :options="areas"
-                          name="area"
-                        ></b-form-checkbox-group>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle.expertiseAccordion
-                      variant="primary"
-                      >Expertise</b-button
-                    >
-                  </b-card-header>
-                  <b-collapse
-                    id="expertiseAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-checkbox-group
-                          id="expertiseFilter"
-                          v-model="selectedFilters"
-                          :options="expertise"
-                          name="expertise"
-                        ></b-form-checkbox-group>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle.accessibilityAccordion
-                      variant="primary"
-                      >Accessibility</b-button
-                    >
-                  </b-card-header>
-                  <b-collapse
-                    id="accessibilityAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-group>
-                        <b-form-checkbox-group 
-                          style="column-count: 2;"
-                          id="accessibilityFilter"
-                          v-model="selectedFilters"
-                          :options="accessibilityOptions"
-                          name="acccessibility"
-                        ></b-form-checkbox-group>
-                        </b-form-group>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.yearAccordion variant="primary">Year</b-button>
-                  </b-card-header>
-                  <b-collapse
-                    id="yearAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <br/>
-                        <vue-slider
-                          v-model="yearRange"
-                          :min="1950"
-                          :max="2020"
-                          :enable-cross="false"
-                          :tooltip="'always'"
-                        ></vue-slider>
-                        <br/>
-                        <div>Years Selected: {{ yearRange }}</div>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block v-b-toggle.typeAccordion variant="primary">Type</b-button>
-                  </b-card-header>
-                  <b-collapse
-                    id="typeAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-checkbox-group
-                          style="column-count: 2;"
-                          id="typeFilter"
-                          v-model="selectedFilters"
-                          :options="types"
-                          name="type"
-                        ></b-form-checkbox-group>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle.databaseAccordion
-                      variant="primary"
-                      >Database</b-button
-                    >
-                  </b-card-header>
-                  <b-collapse
-                    id="databaseAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-checkbox-group
-                          style="column-count: 2;"
-                          id="databaseFilter"
-                          v-model="selectedFilters"
-                          :options="databases"
-                          name="database"
-                        ></b-form-checkbox-group>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              <div class="accordion" role="tablist">
-
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle.journalAccordion
-                      variant="primary"
-                      >Journals</b-button
-                    >
-                  </b-card-header>
-                  <b-collapse
-                    id="journalAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body>
-                      <b-dropdown-group class="small">
-                        <b-form-checkbox-group
-                          id="journalFilter"
-                          v-model="selectedFilters"
-                          @input="sort"
-                          :options="journals"
-                          name="journals"
-                        ></b-form-checkbox-group>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-                <div class="accordion" role="tablist">
-                <b-card no-body class="mb-1">
-                  <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle.defaultAccordion
-                      variant="primary"
-                      >Default</b-button
-                    >
-                  </b-card-header>
-                  <b-collapse
-                    id="defaultAccordion"
-                    accordion="my-accordion"
-                    role="tabpanel"
-                  >
-                    <b-card-body v-if="defaultFilterCheckbox">
-                      <b-dropdown-group class="small">
-                        <div>{{ selectedFilters }}</div>
-                      </b-dropdown-group>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-
-              TODO: figure out why click isn't working first 3 times 
-              <input
-                type="checkbox"
-                v-model="defaultFilterCheckbox"
-                @click="defaultFilterCheckboxChecked()"
-              />
-              Save current filters as default
-              <b-button class="btn float-right" variant="primary">Search</b-button>
-            </b-dropdown> -->
           </div>
         </b-input-group>
       
     </b-form>
     
-    <b-navbar-nav class="align-items-center ml-auto">
-      <!-- <div v-bind:style="{color: iconColor}"> </div> -->
-
+    <b-navbar-nav class="align-items-center ml-auto" >
       <a
           slot="title-container"
           class="nav-link nav-link-icon nav-item"
           href="#"
           role="button"
-          @click="toUpload"
+          @click="toggleResearchWindow"
           aria-expanded="false"
           v-if="signedIn"
+          id = "uploadButton"
         >
         <!-- v-bind binds a style element based on a condition, so here we use the iconColor styling only if the website reroutes to the Uploads page -->
-          <i v-bind:class="{iconColor: this.$route.path == '/upload'}" class="fas fa-plus fa-lg TopIcon"/>
+          <i v-bind:class="{iconColor: researchWindowIsOpen == true}" class="fas fa-plus fa-lg TopIcon"/>     
       </a>
-
+      <div id="outer-overlay" class="overlay" @click="overlay" v-if="researchWindowIsOpen" >
+          <Upload :researchWindowIsOpen="researchWindowIsOpen" v-on:update="researchWindowToggle($event)" class="research-window"/>
+      </div>
+     
       <a
           slot="title-container"
           class="nav-link nav-link-icon nav-item"
@@ -399,9 +139,10 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="toggleNotificationDropDown('notifications')"
+          @click="toggleNotificationDropDown"
         >
-          <i v-bind:class="{iconColor: (this.$route.path == '/notifications') || (this.setActiveIcon == 'notifications') }" class="fas fa-bell fa-lg TopIcon"/>
+          <!-- <i v-bind:class="{iconColor: (this.$route.path == '/notifications') || (@click="toggleNotificationDropDown") }" class="fas fa-bell fa-lg TopIcon"/> -->
+          <i v-bind:class="{iconColor: (this.$route.path == '/notifications')}" class="fas fa-bell fa-lg TopIcon"/>
         </a>
         <div v-for="user in users" :key="user.id">
           <a class="dropdown-item" @click="reroute(user)" v-if="signedIn">
@@ -441,7 +182,7 @@
           role="button"
           aria-haspopup="true"
           aria-expanded="false"
-          @click="redirect"
+          @click="toggleMessageDropDown"
         >
           <i v-bind:class="{iconColor: (this.$route.path == '/messages')}" class="fas fa-comment-dots fa-lg TopIcon"/>
         </a>
@@ -467,7 +208,6 @@
               </div>
             </div>
           
-          <!-- same as above but currently set to router-link for testing purposes, returns to the main messages page -->
           <div class="chat_people dropdown-item" to="/notifications" @click="togglePopupChat">
             <div class="chat_img"> <img src="img/theme/team-4.jpg" alt="sunil"> </div>
             <div class="chat_ib">
@@ -478,7 +218,7 @@
         </div>       
 
         <div class="dropdown-divider"/>
-        <router-link to="/notifications" class="dropdown-item">
+        <router-link to="/messages" class="dropdown-item" v-if="signedIn">
           <i class="fas fa-clock"/>
           <span>All Messages </span>
         </router-link>
@@ -547,12 +287,13 @@ import axios from "axios";
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
 import { listFollows, listRequestss } from '../../graphql/queries.js';
-import * as esRequestor from '../../util/elasticsearch-requestor'
+import Upload from "./../Upload.vue";
 
 export default {
   components: {
     //CollapseTransition,
-    BaseNav
+    BaseNav,
+    Upload
     //Modal,
     //VueSlider
   },
@@ -574,7 +315,9 @@ export default {
       default: false,
       description:
         "Whether the popup chatboxes are open or closed",
-    }
+    }, 
+
+   
   },
   computed: {
 
@@ -617,7 +360,7 @@ export default {
   },
   data() {
     return {
-      activeNotifications: false,
+      //activeNotifications: false;
       users: [],
       showMenu: false,
       searchModalVisible: false,
@@ -630,10 +373,12 @@ export default {
       recentSearches: [],
       filteredRecentSearches: [],
       defaultFilterCheckbox: false,
-      activeIcon: "",
+      //activeIcon: "",
       // autocomplete end
       /*results_data_actual: [],
       results_data: [],*/
+      researchWindowIsOpen: false,
+      // chatIsMinimized: false
       yearRange: [1950, 2020],
       selectedFilters: [],
       search: { filter: null, text: "" },
@@ -816,39 +561,75 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
-      this.$store.state.articles = [];
-      this.$store.state.search.queryText = this.search.text;
-      this.$store.state.search.pageNumber = 1;
-
-      esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
-        this.$store.state.articles = searchResults.articles;
-        this.$store.state.search.totalResults = searchResults.totalResults;
-      }).bind(this));
-
-      // From here, the Home.vue component will notice the change in the store value (since it watched it)
-      // and passes that information to Light-table.
+      this.timeTotal = 0;
+      let duplication = false;
+      for (let i = 0; i < this.recentSearches.length; i++) {
+        //check for recent searches
+        if (this.recentSearches[i] == this.search.text) {
+          duplication = true;
+        }
+      }
+      if (!duplication) {
+        //No duplication for recent searches allowed
+        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
+      }
+      this.$router
+        .push({
+          name: "results",
+          query: { text: this.search.text, filter: this.search.filter },
+        })
+        .catch(() => {});
+    },
+    showModal: function(){
+      this.show = true;
     },
     async getSearchHistory() {
-      // let history = await axios.get("http://localhost:3001/search");
-      // this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
+      let history = await axios.get("http://localhost:3001/search");
+      this.recentSearches = Object.entries(history.data).reverse().slice(0, 5);
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },   
-    toggleNotificationDropDown(string) {
-      console.log('Reaches toggle method');
+    // toggleNotificationDropDown(string) {
+      toggleNotificationDropDown(){
+      //console.log('Reaches toggle method');
       this.activeNotifications = !this.activeNotifications;
+      },
+
+      toggleMessageDropDown(){
+        this.activeMessages = !this.activeMessages;
+      },
+      
       // this.setActiveIcon('notifications');
-      this.setActiveIcon = 'notifications';
-      console.log(this.setActiveIcon);
-    },
+      //this.setActiveIcon = 'notifications';
+      //console.log(this.setActiveIcon);
+
      togglePopupChat() {
-       console.log(this.chatIsOpen);
+      //  console.log(this.chatIsOpen);
       this.$emit('update', !this.chatIsOpen); // $emit notifies the parent component that a variable's value changed
     },
+    toggleResearchWindow(){
+      this.researchWindowIsOpen = !this.researchWindowIsOpen;
+    },
+
+    overlay: function(event) {
+    	if(event.target == event.currentTarget)
+        this.toggleResearchWindow();
+    },    
+  
+    researchWindowToggle(event){
+      console.log("Navbar" + event);
+        this.researchWindowIsOpen = event;    // updates the event variable each time chat is opened or closed
+      },
+      
     closeDropDown() {
       this.activeNotifications = false;
     },
+
+    closeMessageDropDown(){
+      this.activeMessages = false;
+    },
+
     signOut() {
       /*If the user is signed in, the Auth.signOut 
       function will sign the user out of the account and redirect to the login page. 
@@ -1054,7 +835,26 @@ img{ max-width:100%;}
 
 .chat_people{ overflow:hidden; clear:both;}
 
+.overlay {
+  position:fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  display:flex;
+  align-items: center;
+  /* height:100vh; */
+  /* width:100%; */
+  background-color:rgba(128, 128, 128, 0.5);
+}
+
+.research-window {
+    margin:auto;
+    /* position: absolute;
+    z-index:999; */
+  }
+  
 .iconColor{
-  color: #F78626;
+  color: #f78626;
 }
 </style>
