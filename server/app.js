@@ -76,7 +76,7 @@ const s3 = new AWS.S3({
   //secretAccessKey: "<aws_secret_access_key>", // aws secret access key here
   useAccelerateEndpoint: true
 });
-const all_works = [];
+//const all_works = [];
 
 // api endpoint to get signed url
 app.get("/get-signed-url", async (req, res) => {
@@ -182,10 +182,59 @@ app.get("/get-signed-url", async (req, res) => {
   // });
 });
 
+//gets all the objects and puts it in an array
+app.get("/files", async(req,res) => {
+
+  const params = {
+    Bucket: "amruserdocs",
+    Delimiter: '/',
+    Prefix: 'krishnab/'
+  };
+  try{
+    const data = await s3.listObjects(params).promise();
+    let all_works = []
+    let work = []
+    
+    if(data) {
+      for (let index = 1; index < data['Contents'].length; index++) {
+        all_works.push(data['Contents'][index]['Key'])
+        //console.log(data['Contents'][index]['Key'])        
+      }
+    }
+
+    for (i = 0; i < all_works.length; i++) {
+      //console.log(i + ". " + all_works[i]);
+      var keyval = all_works[i].toString()
+      //console.log(keyval);
+      var params2 = {
+        Bucket: "amruserdocs",
+        Key: keyval,
+      }
+
+      var file = await s3.getObject(params2).promise();
+      //console.log(file.Metadata['title'])
+      //console.log(file.Metadata['abstract'])
+
+      var title = file.Metadata['title'];
+      var abstract = file.Metadata['abstract'];
+
+      work.push([title,abstract]);
+    }
+    console.log("title: " + work[0][0]);
+    console.log("abstract: " + work[0][1]);
+    res.json({data: {work}})
+    return work
+  } catch(e) {
+    console.log(e)
+    return
+  }
+});
 
 app.get("/data", async(req,res) => {
 
   //FIX: THE KEY HAS TO GO THROUGH ALL THE OBJECTS IN all_works
+  //console.log(all_works)
+
   const params = {
     Bucket: "amruserdocs",
     Key: "krishnab/e571d8fc-d9ec-4681-8d08-b9712ad57d9a.pdf",
@@ -214,32 +263,7 @@ app.get("/data", async(req,res) => {
 });
 
 
-//gets all the objects and puts it in an array
-app.get("/files", async(req,res) => {
 
-  const params = {
-    Bucket: "amruserdocs",
-    Delimiter: '/',
-    Prefix: 'krishnab/'
-  };
-
-  try{
-    const data = await s3.listObjects(params).promise();
-
-    if(data) {
-      for (let index = 1; index < data['Contents'].length; index++) {
-        all_works.push(data['Contents'][index]['Key'])
-        //console.log(data['Contents'][index]['Key'])        
-      }
-    }
-    res.json({data: {all_works}})
-    console.log(all_works[0])
-    return all_works
-  } catch(e) {
-    console.log(e)
-    return
-  }
-});
 
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
