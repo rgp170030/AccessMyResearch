@@ -249,17 +249,19 @@
                 
                 <!-- research -->
                 <!-- FIX: AUTHOR ISSUE -->
-
-                <div id="PublishedWorks">
-                  <!--<p style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{infoText.title}}</p>
-                  <div id="content">
-                  <p style="padding-left: 10px; padding-right: 10px"> {{infoText.abstract}} </p>
-                  </div> -->
-                  <p id=info_title; style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{this.infoText.works[0][0]}}</p>
-                  <div id="info_abstract">
-                  <p style="padding-left: 10px; padding-right: 10px">{{this.infoText.works[0][1]}}</p>
-                  </div> 
-                </div><hr style="margin:15px">
+                <div v-for="item in this.infoText.works" :key="item[0]">
+                  <div id="PublishedWorks">
+                    <!--<p style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{infoText.title}}</p>
+                    <div id="content">
+                    <p style="padding-left: 10px; padding-right: 10px"> {{infoText.abstract}} </p>
+                    </div> -->
+                    <p id=info_title; style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{item[0]}}</p>
+                    <div id="info_abstract">
+                    <p style="padding-left: 10px; padding-right: 10px">{{item[1]}}</p>
+                    </div> 
+                  </div>
+                  <hr style="margin:15px">
+                </div>
 
                 <!-- end research test -->
 
