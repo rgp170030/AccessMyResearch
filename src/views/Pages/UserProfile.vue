@@ -251,10 +251,14 @@
                 <!-- FIX: AUTHOR ISSUE -->
 
                 <div id="PublishedWorks">
-                  <p style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{infoText.title}}</p>
+                  <!--<p style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{infoText.title}}</p>
                   <div id="content">
                   <p style="padding-left: 10px; padding-right: 10px"> {{infoText.abstract}} </p>
-                  </div>
+                  </div> -->
+                  <p id=info_title; style="color: rgb(69, 119, 184); font-size: 24px; padding-left: 10px">{{this.infoText.works[0][0]}}</p>
+                  <div id="info_abstract">
+                  <p style="padding-left: 10px; padding-right: 10px">{{this.infoText.works[0][1]}}</p>
+                  </div> 
                 </div><hr style="margin:15px">
 
                 <!-- end research test -->
@@ -413,7 +417,8 @@ export default {
         professional: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
         expertise: "Brain Imaging",
         title:"",
-        abstract: ""
+        abstract: "",
+        works:[]
       }
     };
   },
@@ -430,6 +435,7 @@ export default {
 
     await this.getUserData();
     this.getPublishedWorks();
+    this.showWorks();
   },
   methods: {
     async getUserData() {
@@ -455,7 +461,7 @@ export default {
       const getData = () => {
         return new Promise((resolve, reject) => {
         axios
-        .get(`http://localhost:3000/data`)
+        .get(`http://localhost:3000/files`)
         .then(data => {
             resolve(data);
         })
@@ -467,12 +473,25 @@ export default {
       
       const putData = async () => {
         const { data } = await getData()
-        console.log(JSON.stringify(data.data.works[1]));
-        this.infoText.title = data.data.works[0];
-        this.infoText.abstract = data.data.works[1];
+        console.log(JSON.stringify(data.data.work[0][0]));
+        console.log(JSON.stringify(data.data.work[0][1]));
+        //this.infoText.title = data.data.work[0][0];
+        //this.infoText.abstract = data.data.work[0][1];
+        this.infoText.works = data.data.work;
       }
       
       putData()
+    },
+
+    showWorks() {
+      var publishedworks = this.infoText.works;
+      var eachwork = {"title": this.infoText.works[0][0]};
+      t = document.getElementById("info_title");
+      //t.displayObject("info_title",eachwork);
+
+      var node = document.createTextNode("This is new.");
+      t.appendChild(node);
+      
     },
 
     // openResearch(){
