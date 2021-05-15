@@ -17,6 +17,8 @@
     .form-control {
         width: $navbar-search-width;
         background-color: transparent;
+        height: $navbar-search-height;
+        margin-right: 2px;
     }
 }
 

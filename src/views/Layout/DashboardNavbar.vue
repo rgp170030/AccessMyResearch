@@ -82,7 +82,6 @@
       <div id="outer-overlay" class="overlay" @click="overlay" v-if="researchWindowIsOpen" >
           <Upload :researchWindowIsOpen="researchWindowIsOpen" v-on:update="researchWindowToggle($event)" class="research-window"/>
       </div>
-      
 
       <a
           slot="title-container"
@@ -314,15 +313,21 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries.js';
 import { listFollows, listRequestss } from '../../graphql/queries.js';
 import Upload from "./../Upload.vue";
+
 import Login from "./../Pages/Login.vue"
 import About from "./../About.vue"
+
 export default {
   components: {
     //CollapseTransition,
     BaseNav,
+
     Upload,
     Login,
     About
+
+    Upload
+
     //Modal,
     //VueSlider
   },
@@ -338,21 +343,29 @@ export default {
       description:
         "Look of the dashboard navbar",
     },
+
     chatIsOpen: {
       type: Boolean,
       default: false,
       description:
         "Whether the popup chatboxes are open or closed",
     }, 
+
+  computed: {
+=======
+
    
   },
   computed: {
+
+
     // iconColor() {
     //      if (this.activeIcon === "donate") { // if it is a dark route
     //         return "#11bbfd"; // basically any light color you want
     //      }
     //      return "#800080"; // the dark color of your choice.
     //   }, 
+
     routeName() {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);
@@ -400,7 +413,9 @@ export default {
       /*results_data_actual: [],
       results_data: [],*/
       researchWindowIsOpen: false,
+
       loginWindowIsOpen: false,
+
       // chatIsMinimized: false
       yearRange: [1950, 2020],
       selectedFilters: [],
@@ -618,6 +633,9 @@ export default {
       //console.log('Reaches toggle method');
       this.activeNotifications = !this.activeNotifications;
       },
+
+
+
       toggleMessageDropDown(){
         this.activeMessages = !this.activeMessages;
       },
@@ -625,6 +643,9 @@ export default {
       // this.setActiveIcon('notifications');
       //this.setActiveIcon = 'notifications';
       //console.log(this.setActiveIcon);
+
+
+
      togglePopupChat() {
       //  console.log(this.chatIsOpen);
       this.$emit('update', !this.chatIsOpen); // $emit notifies the parent component that a variable's value changed
@@ -632,6 +653,7 @@ export default {
     toggleResearchWindow(){
       this.researchWindowIsOpen = !this.researchWindowIsOpen;
     },
+
     toggleloginWindow(){
       this.loginWindowIsOpen = !this.loginWindowIsOpen;
       console.log(this.loginWindowIsOpen);
@@ -647,11 +669,19 @@ if(event.target == event.currentTarget){
 this.toggleloginWindow();
 }
 },
+
+
+    overlay: function(event) {
+    	if(event.target == event.currentTarget)
+        this.toggleResearchWindow();
+    },    
+
   
     researchWindowToggle(event){
       console.log("Navbar" + event);
         this.researchWindowIsOpen = event;    // updates the event variable each time chat is opened or closed
       },
+
      loginWindowToggle(event){
       console.log("Navbar" + event);
         this.loginWindowIsOpen = event;    // updates the event variable each time chat is opened or closed
@@ -663,6 +693,16 @@ this.toggleloginWindow();
     closeMessageDropDown(){
       this.activeMessages = false;
     },
+     
+    closeDropDown() {
+      this.activeNotifications = false;
+    },
+
+    closeMessageDropDown(){
+      this.activeMessages = false;
+    },
+
+
     signOut() {
       /*If the user is signed in, the Auth.signOut 
       function will sign the user out of the account and redirect to the login page. 
@@ -788,9 +828,11 @@ this.toggleloginWindow();
     toUpload() {
       this.$router.push('upload');
       // this.setActiveIcon('upload');
+
     },
     toLogin(){
       this.$router('login');
+
     },
     toDonate() {
       this.$router.push('donate');
@@ -832,6 +874,7 @@ this.toggleloginWindow();
   top: 45px;
   width: 350px;
 }
+
 b-form-input::placeholder{
   color:#F78626
 }
@@ -841,8 +884,13 @@ b-form-input::placeholder{
 } /*TODO: Get variables from assets/custom/_variables.scss instead*/
 .TopIcon:hover {
   color: #F78626;
-}
+}<<<<<<< Sprint7
 img{ max-width:100%;}
+
+
+img{ max-width:100%;}
+
+
 .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
 .chat_ib h5 span{ font-size:13px; float:right;}
 .chat_ib p{ font-size:14px; color:#989898; margin:auto}
@@ -850,12 +898,19 @@ img{ max-width:100%;}
   float: left;
   width: 11%;
 }
+
 .chat_ib {
   float: left;
   padding: 0 0 0 15px;
   width: 88%;
 }
+
 .chat_people{ overflow:hidden; clear:both;}
+
+
+.chat_people{ overflow:hidden; clear:both;}
+
+
 .overlay {
   position:fixed;
   top:0;
@@ -868,11 +923,13 @@ img{ max-width:100%;}
   /* width:100%; */
   background-color:rgba(128, 128, 128, 0.5);
 }
+
 .research-window {
     margin:auto;
     /* position: absolute;
     z-index:999; */
   }
+
 .login-window {
     margin:auto;
     /* position: absolute;
@@ -890,6 +947,7 @@ img{ max-width:100%;}
   /* width:100%; */
   background-color:rgba(128, 128, 128, 0.5);
 }
+
   
 .iconColor{
   color: #f78626;

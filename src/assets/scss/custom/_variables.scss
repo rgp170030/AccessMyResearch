@@ -198,7 +198,7 @@ $love-color: $red !default;
 // Body
 
 
-$body-bg: #F8F9FE !default;
+$body-bg: #E9ECEF !default;
 $body-color: $gray-700 !default;
 
 
@@ -678,8 +678,8 @@ $nav-pills-box-shadow:              $btn-box-shadow !default;
 
 // Navbar
 $navbar-transition:                 all .15s linear !default;
-$navbar-padding-y:                  1rem !default;
-$navbar-padding-x:                  1rem !default;
+$navbar-padding-y:                  0.3rem !default;
+$navbar-padding-x:                  1.2rem !default;
 
 $navbar-nav-link-padding-x:         1rem !default;
 $navbar-nav-link-padding-y:         1rem !default;
@@ -692,6 +692,7 @@ $navbar-nav-link-border-radius:     $border-radius !default;
 
 $navbar-search-width:               270px !default;
 $navbar-search-bg:                  transparent !default;
+$navbar-search-height:              40px !default;
 
 $navbar-search-border-radius:       2rem !default;
 $navbar-search-border-width:        2px !default;
@@ -938,12 +939,12 @@ $datepicker-highlighted-bg: $datepicker-active-background !default;
 
 
 // Footer
-$footer-padding-y:              2.5rem;
+$footer-padding-y:              1.0rem;
 $footer-padding-x:              0;
 
 
 $footer-link-font-size: .85rem !default;
-$footer-bg: theme-color("secondary") !default;
+$footer-bg: #E9ECEF;//theme-color("secondary") !default;
 $footer-color: $gray-600 !default;
 $footer-link-color: $gray-600 !default;
 $footer-link-hover-color: $gray-700 !default;
