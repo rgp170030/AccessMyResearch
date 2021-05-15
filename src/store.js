@@ -13,6 +13,8 @@ export default new Vuex.Store({
       company: 'AccessMyResearch',
       username: '',
       email: '',
+
+
       firstName: '',
       lastName: '',
       education: '',
@@ -27,14 +29,16 @@ export default new Vuex.Store({
     follows: [],
     articles: [],
     search: {
-        queryText: '',
-        totalResults: 0,
-        resultsPerPage: 25,
-        timeElapsed: 0,
-        pageNumber: 1,
-        filters: {
-          databases: [],
-        },
+      query: '',
+      totalResults: 0,
+      resultsPerPage: 25,
+      timeElapsed: 0,
+      pageNum: 1,
+      filters: {
+        databases: [],
+        minYear: -1,
+        maxYear: -1,
+      },
     },
   },
   mutations: {

@@ -10,19 +10,18 @@ export function requestPage(searchParams) {
 
 
     // Return an empty list if user has not entered any text in the search bar
-    if (searchParams.queryText.length === 0) {
+    if (searchParams.query.length === 0) {
         return searchResult;
     }
 
-    // console.log("search params: ");
-    // console.dir(searchParams);
-    searchParams.query = searchParams.queryText;
-    searchParams.pageNum = searchParams.pageNumber;
+    // Rename the fields to the ones that the lambda function expects
+    // searchParams.pageNum = searchParams.pageNumber;
 
     // Start the timer:
     const start = new Date().getTime();
 
     return axios
+        // TODO: Move this url to this.$endpoints.elasticsearch
         .post("https://wvzjho1dq4.execute-api.us-east-2.amazonaws.com/search-es-api-prod/search-es-api-lambda",
             searchParams
         )

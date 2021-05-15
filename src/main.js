@@ -85,8 +85,11 @@ Vue.component('VueSlider', VueSlider)
 // end of code added
 
 Vue.prototype.$endpoints = {
-  aspnet: 'http://localhost:5000/',
+  aspnet: 'https://cors.accessmyresearch.org/3.22.221.5:5000/',
   crossref: 'https://api.crossref.org/',
+  // TODO: elasticsearch-requestor.js does not yet try to use the elasticsearch field
+  // elasticsearch: "https://wvzjho1dq4.execute-api.us-east-2.amazonaws.com/search-es-api-prod/search-es-api-lambda",
+  amrCors: "https://cors.accessmyresearch.org/",
 };
 
 /* eslint-disable no-new */
