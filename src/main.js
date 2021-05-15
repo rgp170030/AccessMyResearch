@@ -79,6 +79,11 @@ window.db = db;
 // end firebase
 
 // added for sliders in year filter
+//ADDED FROM slider-changes branch
+import HistogramSlider from 'vue-histogram-slider'
+import 'vue-histogram-slider/dist/histogram-slider.css'
+Vue.component('HistogramSlider', HistogramSlider)
+//end added
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 Vue.component('VueSlider', VueSlider)

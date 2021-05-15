@@ -50,9 +50,9 @@ const routes = [
         component: () => import('../views/About.vue')
       },
       {
-        path: '/welcome',
-        name: 'wecolme',
-        component: () => import('../views/Pages/Welcome.vue')
+        path: 'upload',
+        name: 'Upload Research Window',
+        component: () => import('../views/Upload.vue')
       },
     ]
   },
@@ -147,12 +147,6 @@ const routes = [
         component: () => import('../views/SearchHistory.vue')
       },
       {
-        path: '/welcome',
-        name: 'wecolme',
-        component: () => import('../views/Pages/Welcome.vue')
-
-      },
-      {
         path: 'profile-information',
         name: 'profile information',
         component: () => import('../views/Pages/ProfileInformation.vue')
@@ -186,6 +180,11 @@ const routes = [
         path: 'add',
         name: 'Add Users',
         component: () => import('../views/Pages/AddRemoveUsers.vue')
+      },
+      {
+        path: '/upload',
+        name: 'Upload',
+        component: () => import('../views/Upload.vue')
       },
     ]
   },

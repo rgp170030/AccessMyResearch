@@ -1,131 +1,172 @@
+/*
 const express = require("express");
-const { Client } = require("@elastic/elasticsearch");
-
+var bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
+const redis = require("redis");
+const client = redis.createClient(process.env.REDIS_URL);
 
-const client = new Client({
-	node:
-		"https://search-accessmyresearch-rxbdfxn7frebom3di4du5ld464.us-east-2.es.amazonaws.com",
-	auth: {
-		username: "amr",
-		password: "Amr123!!",
-	},
-});
+const USER_ID = 1; //TODO: Remove fake user id
 
-console.log("Starting node server");
+app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-	res.setHeader("Access-Control-Allow-Credentials", true);
-	next();
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
 });
 
-app.get("/search-es", (req, res) => {
-	const titleQuery = req.query.queryText;
-	const pageNum = parseInt(req.query.pageNumber) - 1;
-	const resultsPerPage = parseInt(req.query.resultsPerPage);
-	const databases = JSON.parse(req.query.filters).databases;
+app.get("/search", (req, res) => {
+  console.log(req.body);
+  client.hgetall(USER_ID, function(err, value) {
+    res.status(200);
+    res.send(value);
+  });
+});
 
-	console.log(req.query);
-	console.log("databases");
-	console.log(databases);
+app.post("/search", (req, res) => {
+  for (const [key, value] of Object.entries(req.body)) {
+    client.hmset(USER_ID, key, value);
+  }
 
-	if(isNaN(pageNum) || isNaN(resultsPerPage)) {
-		console.log("Invalid integer: ", pageNum, resultsPerPage);
-		return;
-	}
-
-	// Check if no filters are added
-	if (databases.length === 0) {
-		wildcardQuery(req, res, titleQuery, pageNum, resultsPerPage)
-		return;
-	}
-
-	let searches = databases.map((dbName) => {
-		return getQueryObject(titleQuery, dbName)
-	});
-
-	console.log("Query title: " + titleQuery);
-	console.log("Page num: " + pageNum);
-	console.log("Results Per Page: " + resultsPerPage)
-
-	client.search({
-			index: "articles",
-			from: pageNum * resultsPerPage,
-			size: resultsPerPage,
-			body: {
-				query: {
-					bool: {
-						should: searches
-					}
-
-				}
-			},
-		})
-		.then((results) => {
-			//console.dir(results);
-			// console.log(results.body);
-			res.send(results.body.hits.hits);
-		})
-		.catch((err) => {
-			console.log(err);
-			res.send([]);
-		});
-	});
-
-
-function getQueryObject(searchTerm, database) {
-	let obj = {
-		bool: {
-			must: [
-				{
-					match: {
-						title: searchTerm
-					}
-				},
-				{
-					match: {
-						database: database
-					}
-				},
-			]
-		}
-	};
-
-	return obj;
-}
-
-
-function wildcardQuery(req, res, titleQuery, pageNum, resultsPerPage) {
-	client.search({
-			index: "articles",
-			from: pageNum,
-			size: resultsPerPage,
-			body: {
-				query: {
-					match: {
-						title: titleQuery,
-					},
-				},
-			},
-		})
-		.then((results) => {
-			// console.dir(results);
-			res.send(results.body.hits.hits);
-		})
-		.catch((err) => {
-			console.log(err);
-			res.send([]);
-		});
-}
-
-app.get("/health", (req, res) => {
-	console.log("It is healthy");
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {
-	console.log(`Listening at http://localhost:${port}`);
+  console.log(`Example app listening at http://localhost:${port}`);
 });
+*/
+
+// server
+// npm install aws-sdk
+
+const express = require("express");
+const mime = require("mime");
+const app = express();
+require("dotenv").config();
+
+const port = 3000;
+
+const { v4: uuidv4 } = require('uuid');
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+
+function isNumeric(str) {
+  if (typeof str != "string") return false // we only process strings!  
+  return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
+const AWS = require("aws-sdk");
+const { default: axios } = require("axios");
+const s3 = new AWS.S3({
+  signatureVersion: 'v4',
+  region: "us-east-2",
+  //accessKeyId: "<aws_access_key_id>", // aws access id here
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY, 
+  //secretAccessKey: "<aws_secret_access_key>", // aws secret access key here
+  useAccelerateEndpoint: true
+});
+
+// api endpoint to get signed url
+app.get("/get-signed-url", async (req, res) => {
+  const { scope, type, count, title} = req.query
+
+  if (!scope) {
+    res.status(400).json({
+      message: "Scope parameter is required"
+    })
+    return
+  }
+
+  if (!type) {
+    res.status(400).json({
+      message: "Type parameter is required"
+    })
+    return
+  }
+
+  if(!title) {
+    res.status(400).json({
+      message: "Title of work required"
+    })
+    return
+  }
+
+  const parsedCount = isNumeric(count) ? parseInt(count) : 1
+
+  const parsedType = decodeURIComponent(`${type}`)
+  const extension = mime.getExtension(parsedType) || "pdf"
+
+  const key = `${scope}/${uuidv4()}.${extension}`
+
+  const md = `${title}`
+
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET || "amrtestdocs",
+    // expiry time
+    Expires: 60*60, // 60 minutes
+    ACL: "public-read",
+    ContentType: parsedType
+  };
+
+  try {
+    let urls = []
+    for (let i = 0; i < parsedCount; i++) {
+      const key = `${scope}/${uuidv4()}.${extension}`
+      const md = `${title}`
+      const finalParams = {
+        ...params,
+        Key: key,
+        Metadata: {
+          "Title": md,
+        }
+      }
+      const signedUrl = await s3.getSignedUrlPromise("putObject", finalParams)
+
+      if (signedUrl) {
+        urls.push({ signedUrl, key })
+      }
+    }
+
+    res.json({ data: { urls } })
+    return
+  } catch (e) {
+    res.status(400).json({message: `Bad request: ${e}`})
+    return
+  }
+
+  // const fileurls = [];
+  // s3.getSignedUrl("putObject", params, function(err, url) {
+  //   if (err) {
+  //     console.log("Error getting presigned url from AWS S3");
+  //     res.json({
+  //       success: false,
+  //       message: "Pre-Signed URL error",
+  //       urls: fileurls
+  //     });
+  //     return err;
+  //   } else {
+  //     fileurls[0] = url;
+  //     console.log("Presigned URL: ", fileurls[0]);
+  //     res.json({
+  //       success: true,
+  //       message: "AWS SDK S3 Pre-signed urls generated successfully.",
+  //       urls: fileurls
+  //     });
+  //     return url;
+  //   }
+  // });
+});
+
+
+app.listen(port, () => console.log(`Server listening on port ${port}!`));
