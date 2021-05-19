@@ -599,27 +599,15 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
-      this.timeTotal = 0;
-      let duplication = false;
-      for (let i = 0; i < this.recentSearches.length; i++) {
-        //check for recent searches
-        if (this.recentSearches[i] == this.search.text) {
-          duplication = true;
-        }
-      }
-      if (!duplication) {
-        //No duplication for recent searches allowed
-        this.recentSearches.push(this.search.text); //autocomplete adding to recentSearches array
-      }
-      this.$router
-        .push({
-          name: "results",
-          query: { text: this.search.text, filter: this.search.filter },
-        })
-        .catch(() => {});
-    },
-    showModal: function(){
-      this.show = true;
+      this.$store.state.articles = [];
+      this.$store.state.search.query = this.search.text;
+      this.$store.state.search.pageNum = 1;
+
+      esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
+        this.$store.state.articles = searchResults.articles;
+        this.$store.state.search.totalResults = searchResults.totalResults;
+        this.$store.state.search.timeElapsed = searchResults.timeElapsed;
+      }).bind(this));
     },
     async getSearchHistory() {
       let history = await axios.get("http://localhost:3001/search");
