@@ -843,7 +843,7 @@ this.toggleloginWindow();
           this.$router.push('requests');
       }
     }
-  },
+  }
 };
 </script>
 <style scoped>
