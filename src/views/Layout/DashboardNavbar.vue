@@ -321,13 +321,10 @@ export default {
   components: {
     //CollapseTransition,
     BaseNav,
-
     Upload,
     Login,
-    About
-
-    Upload
-
+    About,
+    Upload,
     //Modal,
     //VueSlider
   },
@@ -350,12 +347,7 @@ export default {
       description:
         "Whether the popup chatboxes are open or closed",
     }, 
-
-  computed: {
-=======
-
-   
-  },
+    
   computed: {
 
 
