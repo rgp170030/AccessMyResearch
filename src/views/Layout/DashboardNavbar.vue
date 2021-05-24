@@ -844,7 +844,7 @@ this.toggleloginWindow();
       }
     }
   }
-};
+},
 </script>
 <style scoped>
 .AutoCompleteDropDown {
