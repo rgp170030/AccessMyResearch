@@ -24,10 +24,10 @@
             <b-form-group class="small slider">
                 <br/>
                  <HistogramSlider
-                  :min="Math.min.apply(Math, results_data)"
-                  :max="Math.max.apply(Math, results_data)"
-                  :key="results_data"
-                  :data="results_data"
+                  :min="Math.min.apply(Math, articleYears)"
+                  :max="Math.max.apply(Math, articleYears)"
+                  :key="articleYears"
+                  :data="articleYears"
                   :barHeight="50"
                   :barRadius="2"
                   :barWidth="2"
@@ -43,7 +43,9 @@
                   :gridTextColor="['white']"
                   :dragInterval="true"
                   :prettify="prettify"
+                  @change="onSliderChange"
                   ></HistogramSlider>
+                <button v-if="resetAvailable"  title="Reset" class="fas fa-redo fa-lg button-options border-0" @click="resetTimeFilter"/>
             </b-form-group>
             </b-card-body>
         </b-card>
@@ -313,16 +315,16 @@ export default {
         this.$store.state.search.filters.databases = newSelectedDbFilters;
       }
     },
-    // yearsForArticles: {
-    //   get: function() {
-    //     return this.$store.state.articles.datePublished;
-    //   },
-    //   set: function(newData) {
-    //     this.$store.state.articles.datePublished = newData;
-    //   }
-    // },
-    results_data: function () {
-      return this.$store.state.articles.map((article) => {
+    resetAvailable() {
+      return this.$store.state.search.filters.maxYear !== -1 || this.$store.state.search.filters.minYear !== -1;
+    },
+    storeArticles: function () {
+      return this.$store.state.articles;
+    },
+  },
+  watch: {
+    storeArticles: function(newArticles) {
+      this.articleYears = newArticles.map((article) => {
         return this.formatYear(article.datePublished)
       }).filter(article => article !== undefined)
     }
@@ -337,6 +339,7 @@ export default {
       prettify: function(num) {
         return `${num}`; 
       },
+      articleYears: [],
       // autocomplete end
       yearRange: [1950, 2021],
       selectedFilters: [],
@@ -537,6 +540,16 @@ export default {
         return undefined;
       }
     },
+    onSliderChange(e) {
+      this.$store.state.search.filters.minYear = e.from;
+      this.$store.state.search.filters.maxYear = e.to;
+      // console.log(e);
+    },
+    resetTimeFilter(e) {
+      this.$store.state.search.filters.minYear = -1;
+      this.$store.state.search.filters.maxYear = -1;
+      this.articleYears = [];
+    }
   }
 }
 </script>
@@ -590,5 +603,17 @@ export default {
     bottom: 15px;
     position:relative;
     
+}
+
+.button-options {
+  width: 20px;
+  border: 0px;
+  background-color: inherit;
+  padding: 10px 45px 10px 0px;
+  color: #4577b8;
+}
+
+.button-options :hover {
+  color: #f78626;
 }
 </style>

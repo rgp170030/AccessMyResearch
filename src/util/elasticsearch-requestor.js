@@ -4,39 +4,42 @@ import axios from "axios";
 export function requestPage(searchParams) {
     const searchResult = {
         articles: [],
-        totalResults: 0
+        totalResults: 0,
+        timeElapsed: 0,
     };
 
 
     // Return an empty list if user has not entered any text in the search bar
-    if (searchParams.queryText.length === 0) {
+    if (searchParams.query.length === 0) {
         return searchResult;
     }
 
-    // console.log("search params: ");
-    // console.dir(searchParams);
-    searchParams.query = searchParams.queryText;
-    searchParams.pageNum = searchParams.pageNumber;
+    // Rename the fields to the ones that the lambda function expects
+    // searchParams.pageNum = searchParams.pageNumber;
 
+    // Start the timer:
+    const start = new Date().getTime();
 
     return axios
+        // TODO: Move this url to this.$endpoints.elasticsearch
         .post("https://wvzjho1dq4.execute-api.us-east-2.amazonaws.com/search-es-api-prod/search-es-api-lambda",
             searchParams
         )
         .then((results) => {
-            // The "results" argument is the response received from the elastic search instance
-            // Note, this result is redirect from es to the node back end server,  which should live in port 3000
-            // console.log("results from es");
-            // console.log(results);
+            // Stop the timer
+            const end = new Date().getTime();
+            searchResult.timeElapsed = (end - start)/1000; // Convert from ms to seconds
+
+            // The "results" argument is the response received from the elastic search
+            // instance (which comes from a lambda call)
             searchResult.totalResults = results.data.body.hits.total.value;
 
             results = results.data.body.hits.hits;
 
-            // TODO: move to a different function to help reuse the code
             for (let i = 0; i < results.length; i++) {
                 searchResult.articles.push(results[i]._source);
             }
-            // console.dir(searchResult.articles);
+
             return searchResult;
         })
         .catch((err) => {
