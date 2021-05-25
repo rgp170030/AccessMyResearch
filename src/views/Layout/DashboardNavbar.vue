@@ -645,17 +645,15 @@ export default {
       
     },    
     overlay2: function(event) {
-if(event.target == event.currentTarget){
-this.toggleloginWindow();
-}
-},
-
+      if(event.target == event.currentTarget){
+        this.toggleloginWindow();
+      }
+    },
 
     overlay: function(event) {
     	if(event.target == event.currentTarget)
         this.toggleResearchWindow();
     },    
-
   
     researchWindowToggle(event){
       console.log("Navbar" + event);
@@ -776,76 +774,76 @@ this.toggleloginWindow();
         }
       );
       this.filteredRecentSearches = this.filteredRecentSearches.map(item => JSON.parse(item[1]).query).filter((val, index, self) => self.indexOf(val) == index)
-},
-    setSearch (recentSearch) {
-      this.search.text = recentSearch;
-      this.modal = false;
-    },
-    openAutoComplete() {
-      this.modal = true;
-    },
-    closeModal(){
-      this.modal = false;
-    },
-    //autocomplete end
-    //default filter start
-    defaultFilterCheckboxChecked() {
-      localStorage.selectedFilters = this.selectedFilters;
-      localStorage.yearRange = this.yearRange;
-      localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;
-      if (localStorage.defaultFilterCheckbox == "true") {
-        localStorage.clear();
-        return;
-      }
-    },
-    getReminders() {
-      this.reminders = JSON.parse(localStorage.reminders);
-    },
-    // setActiveIcon(string){
-    //   this.activeIcon = string;
-    //   console.log(this.activeIcon);
-    // },
-    toUpload() {
-      this.$router.push('upload');
-      // this.setActiveIcon('upload');
+  },
+      setSearch (recentSearch) {
+        this.search.text = recentSearch;
+        this.modal = false;
+      },
+      openAutoComplete() {
+        this.modal = true;
+      },
+      closeModal(){
+        this.modal = false;
+      },
+      //autocomplete end
+      //default filter start
+      defaultFilterCheckboxChecked() {
+        localStorage.selectedFilters = this.selectedFilters;
+        localStorage.yearRange = this.yearRange;
+        localStorage.defaultFilterCheckbox = this.defaultFilterCheckbox;
+        if (localStorage.defaultFilterCheckbox == "true") {
+          localStorage.clear();
+          return;
+        }
+      },
+      getReminders() {
+        this.reminders = JSON.parse(localStorage.reminders);
+      },
+      // setActiveIcon(string){
+      //   this.activeIcon = string;
+      //   console.log(this.activeIcon);
+      // },
+      toUpload() {
+        this.$router.push('upload');
+        // this.setActiveIcon('upload');
 
-    },
-    toLogin(){
-      this.$router('login');
+      },
+      toLogin(){
+        this.$router('login');
 
-    },
-    toDonate() {
-      this.$router.push('donate');
-      // this.setActiveIcon('donate'); 
-    },
-    toProject() {
-      this.$router.push('project');
-    },
-    toCollections() {
-      this.$router.push('collections');
-      
-    },
-    toNetwork() {
-      this.$router.push('network-list');
-    },
-    toMessages() {
-      this.$router.push('messages');
-    },
-    reroute(user) {
-      //on click of follow notification, redirects to follows page
-      if(user.message == "followed you!")
-      {
-        this.$router.push('follows');
-      }
-      else
-      {
-        //on click of wants to add you as a connection notification, redirects to requests page
-          this.$router.push('requests');
+      },
+      toDonate() {
+        this.$router.push('donate');
+        // this.setActiveIcon('donate'); 
+      },
+      toProject() {
+        this.$router.push('project');
+      },
+      toCollections() {
+        this.$router.push('collections');
+        
+      },
+      toNetwork() {
+        this.$router.push('network-list');
+      },
+      toMessages() {
+        this.$router.push('messages');
+      },
+      reroute(user) {
+        //on click of follow notification, redirects to follows page
+        if(user.message == "followed you!")
+        {
+          this.$router.push('follows');
+        }
+        else
+        {
+          //on click of wants to add you as a connection notification, redirects to requests page
+            this.$router.push('requests');
+        }
       }
     }
   }
 }
-,
 </script>
 <style scoped>
 .AutoCompleteDropDown {
