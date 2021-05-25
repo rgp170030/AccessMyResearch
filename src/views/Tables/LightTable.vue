@@ -15,7 +15,7 @@
                     Icon="fas fa-chevron-down"
                     class="select my-select"
                     style="text-align:left; float:left; "
-                    @input="alert(displayToKey($event))"/>
+                    @input="alert(displayToKey($event))"/> 
                 <span style="text-align:right; float:right; font-family:Roboto; font-size: 16px;" class="form-text text-muted">in 0.56 seconds</span> 
 
                 <span class="text-muted d-flex justify-content-center" style="font-family:Roboto; font-size: 16px;">1-25 of 6604 results</span>
@@ -26,14 +26,14 @@
                <CustomSelect
                     :options="['25', '50', '100', '200']"
                     :default="'25'"
-
+ 
                 <span class="text-muted d-flex justify-content-center" style="font-family:Roboto; font-size: 16px;"> {{ formattedResultsString }} </span>
             </span>  
               
             <br/>
             <span style="position:relative; top:-25px;">
                <CustomSelect
-                    :options="['25', '50', '100', '200']"
+                    :options="['25', '50', '100', '150']"
                     :default="String(resultsPerPage)"
 
                     Selector="Results per page: "
@@ -207,6 +207,7 @@
                         </span> -->
                     </b-media>
                     <span class="button-options border-0" style="padding-left: 10px; position: relative; top:-5px; margin-bottom: -20px;">
+ 
 
                         <button id = "button1" @click="hidePane2 = !hidePane2" title="View" title2=row.author class="far fa-eye fa-lg button-options"> </button>
                         <button @click = "download" title="Download" class="fas fa-file-download fa-lg button-options" ></button>
@@ -258,10 +259,12 @@ export default {
 
                         <button @click="onPdfViewClick(row)" title="View" class="far fa-eye fa-lg button-options"></button>
                         <button title="Download" class="fas fa-file-download fa-lg button-options"></button>
+ 
                         <button title="Links" class="fas fa-external-link-alt fa-lg button-options"></button>
-                        <button title="E-Mail" class="fas fa-envelope fa-lg button-options"></button>
+                        <button @click="onGetEmail(row)" title="E-Mail" class="fas fa-envelope fa-lg button-options"/>
                         <button title="Collections" v-b-modal.modal class="fas fa-layer-group fa-lg button-options"></button>
                         <button title="Cite" class="fas fa-quote-left fa-lg button-options"></button>
+<!--                                :class="[!downloadAvailable(row) ? 'disabled-button': 'enabled-button']"-->
                      </span>
               </template>
             </el-table-column>
@@ -286,6 +289,7 @@ import "splitpanes/dist/splitpanes.css";
 import pdf from "vue-pdf";
 import VClamp from 'vue-clamp';
 import * as esRequestor from "@/util/elasticsearch-requestor";
+import axios from "axios";
 
 export default {
   name: "light-table",
@@ -313,10 +317,10 @@ export default {
     },
     currentPage: {
       get: function () {
-        return this.$store.state.search.pageNumber;
+        return this.$store.state.search.pageNum;
       },
       set: function (newPageNumber) {
-        this.$store.state.search.pageNumber = newPageNumber;
+        this.$store.state.search.pageNum = newPageNumber;
       }
 
     },
@@ -339,12 +343,13 @@ export default {
       // console.dir(newVal);
     },
     currentPage: function (newVal, oldVal) {
-      this.$store.state.search.pageNumber = newVal;
+      this.$store.state.search.pageNum = newVal;
 
 
       esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
         this.$store.state.articles = searchResults.articles;
         this.$store.state.search.totalResults = searchResults.totalResults;
+        this.$store.state.search.timeElapsed = searchResults.timeElapsed;
       }).bind(this));
     }
 
@@ -532,13 +537,14 @@ export default {
 
       setResultsPerPage(newResultsPerPage) {
         this.$store.state.search.resultsPerPage = parseInt(newResultsPerPage);
-        if (this.$store.state.search.queryText === "")
+        if (this.$store.state.search.query === "")
           return;
 
         // Update the table since the user changed how they want to view the data
         esRequestor.requestPage(this.$store.state.search).then(((searchResults) => {
           this.$store.state.articles = searchResults.articles;
           this.$store.state.search.totalResults = searchResults.totalResults;
+          this.$store.state.search.timeElapsed = searchResults.timeElapsed;
         }).bind(this));
       },
       methodToRunOnSelect(payload) {
@@ -550,7 +556,7 @@ export default {
           let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
           let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
           let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-          return `${month} ${day}, ${year}`;
+          return `${year}`;
         }
         catch(err) {
           return "No date";
@@ -562,10 +568,49 @@ export default {
           this.showPDFViewer = false;
           return;
         }
-
-        this.showPDFViewer = true;
         this.currSelectedArticle = selectedArticle;
-        console.log(selectedArticle);
+        this.showPDFViewer = true;
+      },
+      onGetEmail(selectedArticle) {
+        if (selectedArticle.doi === undefined) {
+          alert("Could not find a doi for the article")
+        }
+
+
+        this.searchStatus = 'Getting email from publisher...'
+        axios.get(this.$endpoints.aspnet + 'doi/' + selectedArticle.doi)
+            .then(function (response) {
+              if (response) {
+                if(response.status === 200){
+                  console.log("response: ");
+                  console.log(response);
+                  window.open("mailto:" + response.data);
+                }
+                else {
+                  alert("Could not find an email!");
+                }
+              }
+            })
+            .catch(function (error) {
+              if(error.response && error.response.data){
+                alert("Could not find an email!");
+              }
+            })
+            .then(function(){
+              //this.searchStatus = '';
+            });
+
+      },
+      downloadAvailable: function(article) {
+        if (article.url=== undefined || article.url === null)
+          return false;
+
+        for (let i = 0; i < article.url.length; i ++) {
+          if (article.url[i] !== undefined && article.url[i] !== null && article.url[i].endsWith(".pdf"))
+            return true;
+        }
+
+        return false;
       }
     },
     mounted() {
@@ -628,15 +673,14 @@ export default {
   color: #f78626;
 }
 
-.button-options :focus {
-  color: #f78626;
-  border: 0px;
-}
+/*.button-options :focus {*/
+/*  color: #f78626;*/
+/*  border: 0px;*/
+/*}*/
 
 .button-options :active {
   border: 0px;
-}
-
+} 
 .bForms {
     border: 0px;
     width: 250px;
@@ -714,7 +758,6 @@ export default {
 }
 
 </style>
-
-
+ 
 </style>
 
